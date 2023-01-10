@@ -2,6 +2,7 @@ module.exports = {
   // ...
   extends: [
     // ...
+    'airbnb-base',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
   ],
