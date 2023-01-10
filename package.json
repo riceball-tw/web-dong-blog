@@ -8,9 +8,16 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint --ext .js,.astro src"
   },
   "dependencies": {
     "astro": "^1.9.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "^5.48.1",
+    "eslint": "^8.31.0",
+    "eslint-plugin-astro": "^0.21.1",
+    "eslint-plugin-jsx-a11y": "^6.7.0"
   }
 }
