@@ -1,0 +1,65 @@
+---
+import Base from '@/layouts/Base.astro';
+import HeroBanner from '@/components/banner/Hero.astro';
+import Card from '@/components/card/Card.astro';
+import { socials } from '@/config.ts';
+
+const title = '關於';
+const description = '關於我們';
+interface Social {
+  name: string;
+  url: string;
+  imgUrl: string;
+}
+---
+
+<Base title={title} description={description}>
+  <HeroBanner title={`我希望網頁東東，是個分享「學習歷程」的地方，協助你把知識一桿進洞是我的榮幸⛳`}>
+    <img
+      class="dark:invert drop-shadow-2xl"
+      slot="image"
+      width="1200"
+      height="600"
+      src="/images/about-banner.svg"
+      alt="About Banner"
+    />
+  </HeroBanner>
+  <section class="mx-8 grid grid-cols-1 gap-8 md:grid-cols-3 mb-36">
+    <!-- Intro -->
+    <h2 class="md:text-3xl text-2xl">
+      目前在<a style="color: #69F0AE;" href="https://www.hexschool.com/">六角學院</a
+      >擔任助教並提供前端開發方面的技術協助……
+    </h2>
+    <!-- Paragraph -->
+    <div class="prose dark:prose-invert max-w-none prose-p:m-0 column-2 columns-1 md:columns-2 col-span-2">
+      <p>
+        自 2022 年 7 月開始在六角學院擔任實習助教，期間協助 切版課程、React 讀書會、JS 基礎課程、JS 工程師養成直播班
+        ……等課程素材修訂與解惑同學疑問，提供意見反饋與討論，和六角學院的同學們一同學習與進步！
+        目前是國立臺中科技大學四年級學生，主修商業設計，藉由自學橫跨設計與開發領域，在諸多領域都有學習熱誠，在此與你/妳分享我的學習歷程。m(_
+        _)m
+      </p>
+    </div>
+  </section>
+  <section class="mx-8 grid grid-cols-1 gap-8 md:grid-cols-3 mb-36">
+    <!-- Intro -->
+    <h2 class="md:text-3xl text-2xl mb-8">其他社群與聯絡管道</h2>
+    <ul class="flex flex-wrap gap-8 col-span-2">
+      {
+        socials.map((social: Social) => (
+          <Card>
+            <a class="text-center p-4 inline-block" href={social.url}>
+              <img
+                width="40"
+                height="40"
+                class="mb-8 mx-auto filter dark:invert"
+                src={social.imgUrl}
+                alt={`${social.name} + Logo`}
+              />
+              {social.name}
+            </a>
+          </Card>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
