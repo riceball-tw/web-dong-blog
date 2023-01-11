@@ -1,0 +1,140 @@
+---
+import { copyright, socials } from '@/config.ts';
+
+interface Social {
+  url: string;
+  imgUrl: string;
+  name: string;
+}
+---
+
+<footer class="flex items-center mt-16 justify-between sm:mb-0 mb-16">
+  <!-- Copyrihgt -->
+  <div class="flex p-4 md:text-base opacity-60 md:opacity-100">
+    <a href={copyright.url}>
+      {copyright.title}
+    </a>
+  </div>
+  <div class="flex items-center mr-4 md:mr-0">
+    <ul class="flex items-center">
+      {
+        socials.map((social: Social) => (
+          <li class="flex-1">
+            <a class="p-4 inline-block" href={social.url}>
+              <img
+                loading="lazy"
+                width="16"
+                height="16"
+                class=" mx-auto filter dark:invert"
+                src={social.imgUrl}
+                alt={social.name}
+              />
+            </a>
+          </li>
+        ))
+      }
+
+      <li class="flex-1">
+        <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
+          <svg
+            width="16"
+            height="16"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1005 1005"
+            xmlns="https://vecta.io/nano"
+            ><path
+              d="M785.2 1005c-43.6 0-80.7-15.3-111.2-45.8s-45.8-67.6-45.8-111.2c0-7 .4-13.3 1.3-19s2.2-12 3.9-19L321.9 620.3c-13.1 13.9-28.6 24-46.5 30.1s-36.4 9.2-55.6 9.2c-43.6 0-80.7-15.3-111.2-45.8s-45.8-67.6-45.8-111.2 15.3-80.7 45.8-111.2 67.6-45.8 111.2-45.8c19.2 0 37.7 3.3 55.6 9.8s33.4 16.4 46.5 29.5L633.3 195c-1.7-7-3-13.3-3.9-19s-1.3-12-1.3-19c0-43.6 15.3-80.7 45.8-111.2S741.5 0 785.2 0s80.7 15.3 111.2 45.8 45.8 67.6 45.8 111.2-15.3 80.7-45.8 111.2S828.8 314 785.2 314c-19.2 0-37.7-3.1-55.6-9.2s-33.4-16.1-46.5-30.1L371.7 464.6c1.7 7 3 13.3 3.9 19s1.3 12 1.3 19-.4 13.3-1.3 19-2.2 12-3.9 19l311.4 189.8c13.1-14.8 28.6-25.1 46.5-30.8s36.4-8.5 55.6-8.5c43.6 0 80.7 15.3 111.2 45.8s45.8 67.6 45.8 111.2-15.3 80.7-45.8 111.2c-30.5 30.4-67.6 45.7-111.2 45.7zm0-785.2c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5 27 18.3 44.5 18.3zM219.8 565.3c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5c12.3 12.2 27.1 18.3 44.5 18.3zm565.4 345.5c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5 27 18.3 44.5 18.3z"
+            ></path></svg
+          >
+        </button>
+      </li>
+
+      <li class="flex-1">
+        <button
+          data-theme-toggle
+          aria-label="網頁外觀樣式切換 Theme Toggle"
+          type="button"
+          class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-4"
+        >
+          <!-- Dark -->
+          <svg
+            width="16"
+            height="16"
+            class="hidden dark:block"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1005 1005"
+            xmlns="https://vecta.io/nano"
+            ><path
+              d="M502.5 0C225 0 0 225 0 502.5S225 1005 502.5 1005 1005 780 1005 502.5c0-25.7-2.2-51.4-5.6-75.9-54.7 76.5-144 126.2-245.7 126.2-166.4 0-301.5-135.1-301.5-301.5 0-101.1 49.7-191 126.2-245.7C553.9 2.2 528.2 0 502.5 0h0z"
+            ></path></svg
+          >
+
+          <!-- Light -->
+          <svg
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="dark:hidden"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1005 1005"
+            xmlns="https://vecta.io/nano"
+            ><path
+              d="M502.5 274.1c-126.1 0-228.4 102.3-228.4 228.4s102.3 228.4 228.4 228.4 228.4-102.3 228.4-228.4-102.3-228.4-228.4-228.4h0zM45.7 548.2H137c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H45.7C20.6 456.8 0 477.4 0 502.5s20.6 45.7 45.7 45.7zm822.3 0h91.4c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H868c-25.1 0-45.7 20.6-45.7 45.7s20.5 45.7 45.7 45.7zM456.8 45.7V137c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V45.7c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.6-45.7 45.7zm0 822.3v91.4c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V868c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.5-45.7 45.7zM228 163.5c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.4-17.8 17.8-47.1 0-64.4L228 163.5zm565 565.1c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.8-17.8 17.8-47.1 0-64.4L793 728.6zM841.5 228c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L728.6 212c-17.8 17.8-17.8 47.1 0 64.4 17.8 17.4 47.1 17.8 64.4 0l48.5-48.4zM276.4 793c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L163.5 777c-17.8 17.8-17.8 47.1 0 64.4s47.1 17.8 64.4 0l48.5-48.4z"
+            ></path></svg
+          >
+        </button>
+      </li>
+    </ul>
+  </div>
+</footer>
+
+<script is:inline>
+  // Share
+  const dataShareBtn = document.querySelector('[data-share-btn]');
+  dataShareBtn.addEventListener('click', () => {
+    const { title } = document;
+    const url = document.querySelector('link[rel=canonical]')
+      ? document.querySelector('link[rel=canonical]').href
+      : document.location.href;
+    if (navigator.share) {
+      navigator
+        .share({
+          title,
+          url,
+        })
+        .then(() => {
+          // console.log('Thanks for sharing!');
+        })
+        .catch(() => {
+          // console.error(err);
+        });
+    } else {
+      alert('沒有支援分享功能，有空補上這個功能 -_-');
+    }
+  });
+
+  // Theme Toggle
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  function themeUpdate() {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+
+  themeToggle.addEventListener('click', () => {
+    if (localStorage.theme === 'light') {
+      localStorage.theme = 'dark';
+    } else {
+      localStorage.theme = 'light';
+    }
+    themeUpdate();
+  });
+  themeUpdate();
+</script>
