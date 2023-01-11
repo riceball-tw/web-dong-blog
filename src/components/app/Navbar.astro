@@ -1,0 +1,52 @@
+---
+import { brand, mainNav } from '@/config.ts';
+
+interface NavbarItem {
+  url: string;
+  name: string;
+}
+---
+
+<nav
+  class="h-[80px] fixed bottom-0 left-0 flex items-center justify-between w-full sm:fixed sm:top-0 sm:bottom-auto z-50 filter md:backdrop-blur-none backdrop-blur-xl"
+>
+  <div class="h-full grid grid-cols-3 md:grid-cols-2 w-full">
+    <!-- Brand -->
+    <div class="flex items-center md:mx-8 mx-4">
+      <a href="/">
+        <h2>
+          <img
+            loading="lazy"
+            class="dark:hidden"
+            width="140"
+            height="40"
+            src="/images/me/webdongLogo.svg"
+            alt={`${brand.name} Logo`}
+          />
+          <img
+            loading="lazy"
+            class="hidden dark:block"
+            width="140"
+            height="40"
+            src="/images/me/webdongLogo-dark.svg"
+            alt={`${brand.name} Logo Dark Version`}
+          />
+        </h2>
+      </a>
+    </div>
+
+    <!-- Navbar List -->
+
+    <ul class="md:col-span-1 col-span-2 font-medium flex whitespace-nowrap">
+      {
+        mainNav.map((navbarLink: NavbarItem) => (
+          <li class="flex-1">
+            <a href={navbarLink.url} class=" inline-block w-full h-full flex justify-center items-center ">
+              {navbarLink.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
