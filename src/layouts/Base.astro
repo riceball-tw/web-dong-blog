@@ -1,0 +1,32 @@
+---
+import Head from '@/components/app/Head.astro';
+import Navbar from '@/components/app/Navbar.astro';
+import Footer from '@/components/app/Footer.astro';
+
+const { title, description, image, themeColor } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <slot name="head">
+      <Head title={title} description={description} image={image} />
+    </slot>
+  </head>
+  <body
+    class={`bg-primary-50 from-white text-primary-800 dark:bg-primary-800 dark:from-primary-800 dark:to-primary-900
+   dark:text-primary-50 bg-no-repeat bg-cover bg-center
+  ${
+    themeColor
+      ? ''
+      : "dark:bg-[url('/images/hero-banner/site-gradient-dark.svg')] bg-[url('/images/hero-banner/site-gradient-light.svg')]"
+  }
+  `}
+  >
+    <Navbar />
+    <div class="min-h-screen">
+      <slot />
+    </div>
+    <Footer />
+  </body>
+</html>
