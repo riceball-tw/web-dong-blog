@@ -1,0 +1,32 @@
+---
+import Base from '@/layouts/Base.astro';
+import PageBanner from '@/components/banner/Page.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
+import PostCard from '@/components/card/PostCard.astro';
+import { getCollection, CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'post'>;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection('post');
+  const tags = [...new Set(posts.map((post) => post.data.tags).flat())];
+  return tags.map((tag) => [{ params: { slug: tag }, props: { posts } }]);
+}
+const { slug } = Astro.params;
+
+const targetTagPosts = Astro.props.posts.filter((post) => post.data.tags.includes(slug));
+
+const title = `搜尋文章標籤：${Astro.params.slug}`;
+const description = `搜尋文章標籤`;
+---
+
+<Base title={title} description={description}>
+  <PageBanner title={title} />
+  <section class="px-4">
+    <CardGallery>
+      {targetTagPosts.map((data) => <PostCard data={data} />)}
+    </CardGallery>
+  </section>
+</Base>

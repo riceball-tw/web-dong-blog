@@ -1,0 +1,15 @@
+---
+const { tags } = Astro.props;
+---
+
+<ul class="flex gap-4 whitespace-nowrap">
+  {
+    tags.map((tag: string) => (
+      <li>
+        <a class="opacity-40 hover:opacity-100" href={`/post/tags/${tag}`}>
+          # {tag}
+        </a>
+      </li>
+    ))
+  }
+</ul>
