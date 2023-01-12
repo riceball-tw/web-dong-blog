@@ -1,0 +1,42 @@
+---
+import Card from '@/components/card/Card.astro';
+import Category from '@/components/taxonomy/category.astro';
+import Tags from '@/components/taxonomy/tags.astro';
+
+const { featureIcon, publishDate, titleTC, excerpt, themeColor, tags, category } = Astro.props.data.data;
+const { slug } = Astro.props.data;
+---
+
+<li class="flex-1 self-stretch list-none">
+  <Card themeColor={themeColor}>
+    <article class="pt-8 flex flex-col gap-8 justify-between h-full">
+      <!-- Featured-Icon -->
+      <div
+        style={`background-color: ${themeColor}`}
+        class="absolute top-0 left-0 rounded-lg overflow-hidden transform-gpu -translate-y-1/2 ml-4"
+      >
+        <img src={featureIcon.url} width={featureIcon.width} height={featureIcon.height} alt={featureIcon.alt} />
+      </div>
+      <div>
+        <a href={`/post/${slug}`}>
+          <h3 class="text-2xl mb-4">{titleTC}</h3>
+        </a>
+        <!-- Paragraph -->
+        <p>{excerpt}</p>
+      </div>
+      <!-- Footer -->
+      <div class="flex flex-wrap justify-between items-center">
+        <!-- Time -->
+        <time class="inline-block text-sm opacity-60 hover:opacity-100">
+          {publishDate}
+        </time>
+        <div class="flex flex-wrap">
+          <!-- Category -->
+          <Category category={category} />
+          <!-- Tags -->
+          <Tags tags={tags} />
+        </div>
+      </div>
+    </article>
+  </Card>
+</li>
