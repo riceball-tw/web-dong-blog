@@ -1,0 +1,26 @@
+---
+const { themeColor, themeColorBg } = Astro.props;
+const cardBody = themeColor ? themeColor + 40 : '';
+const cardBorder = themeColor ? themeColor + 40 : '';
+const cardBg = themeColorBg ? themeColorBg : '';
+const cardshadow = themeColor ? themeColor + 20 : 'rgb(0 0 0 / 0.05)';
+---
+
+<div
+  class="filter backdrop-blur-xl relative rounded-lg border border-primary-200 dark:border-primary-600 hover:bg-white hover:border-primary-300 dark:hover:bg-primary-700 dark:hover:border-primary-600 transition"
+>
+  <div class="card rounded-lg p-6 transition-all">
+    <slot />
+  </div>
+</div>
+
+<style define:vars={{ cardBody, cardBorder, cardBg, cardshadow }}>
+  .card {
+    background-color: var(--cardBg);
+  }
+  .card:hover {
+    background-color: var(--cardBody);
+    border-color: var(--cardBorder);
+    box-shadow: 0 0 30px 10px var(--cardshadow);
+  }
+</style>
