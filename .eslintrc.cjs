@@ -5,7 +5,7 @@ module.exports = {
     'airbnb-base',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
-    'prettier'
+    'prettier',
   ],
   // ...
   settings: {
@@ -33,7 +33,7 @@ module.exports = {
         // "astro/no-set-html-directive": "error"
       },
     },
-    plugins: ['prettier'],
+
     // ...
   ],
 };
