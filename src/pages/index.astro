@@ -1,19 +1,86 @@
 ---
-import Foobar from '@/foobar.astro';
-
-console.log('x');
+import Base from '@/layouts/Base.astro';
+import HeroBanner from '@/components/banner/Hero.astro';
+import Card from '@/components/card/Card.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <Foobar />
-    <h1>Astro</h1>
-  </body>
-</html>
+<Base>
+  <HeroBanner title="咚！咚！咚！🏑<br>把網頁開發知識一桿桿打進洞，就這樣開啟簡單直覺的學習方式～" />
+
+  <!-- Article Section -->
+  <section class="px-4 md:pb-48 pb-24">
+    <div class="grid lg:grid-cols-4 grid-cols-1 gap-y-4 md:gap-x-4 mt-8 md:mt-0">
+      <!-- Intro Card -->
+      <Card>
+        <div class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-primary-300">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_102_267)">
+              <g clip-path="url(#clip1_102_267)">
+                <path
+                  d="M29.4 36.6L24.8 32L29.4 27.4L28 26L22 32L28 38L29.4 36.6ZM34.6 36.6L39.2 32L34.6 27.4L36 26L42 32L36 38L34.6 36.6V36.6Z"
+                  fill="black"></path>
+              </g>
+            </g>
+            <defs>
+              <clipPath id="clip0_102_267">
+                <rect width="64" height="64" fill="white"></rect>
+              </clipPath>
+              <clipPath id="clip1_102_267">
+                <rect width="24" height="24" fill="white" transform="translate(20 20)"></rect>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="flex flex-col justify-between h-full pt-8">
+          <h2 class="sr-only">近期文章</h2>
+          <p class="text-xl mb-16">
+            網咚撰寫設計思考、前端開發、現代程式設計……等議題的文章。歡迎提供建議或點擊以下連結聯絡我。
+          </p>
+          <a
+            href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
+            class="-mx-6 -mb-6 px-6 py-6 border-t border-t-primary-200 dark:border-t-primary-600 border-primary-200 text-left rounded-br-lg rounded-bl-lg hover:bg-primary-200 dark:hover:bg-primary-600"
+          >
+            提供意見
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 inline-block"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+            </svg>
+          </a>
+        </div>
+      </Card>
+    </div>
+  </section>
+
+  <!-- Feedback Section -->
+  <section class="px-4 md:pb-48 pb-24">
+    <h2
+      class="dark:text-white text-black leading-normal lg:leading-normal text-3xl lg:text-4xl font-medium mb-20 md:h-auto"
+    >
+      由衷感謝各種形式的支持～<br />
+      反饋是我創作文章的動力之一🤗
+    </h2>
+    <CardGallery>
+      <div class="max-w-[600px]">
+        <Card>
+          <div class="flex flex-col">
+            <div class="md:text-2xl text-lg mb-16">
+              覺得部落格好可愛，配色跟排版都很舒服，而且資料也整理得清楚，很棒內～
+            </div>
+
+            <span class="opacity-60">由 六角 JS 直播同學 m_m 提供反饋</span>
+          </div>
+        </Card>
+
+        <!-- Newest Posts -->
+      </div>
+    </CardGallery>
+  </section>
+</Base>
