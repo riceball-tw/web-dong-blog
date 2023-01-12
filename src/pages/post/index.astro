@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import PageBanner from '@/components/banner/Page.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
+import PostCard from '@/components/card/PostCard.astro';
+
+const posts = await getCollection('post');
+const title = '所有文章';
+const description = '所有種類的文章';
+---
+
+<Base>
+  <PageBanner title={title} description={description} />
+  <section class="px-4">
+    <CardGallery>
+      {posts.map((data) => <PostCard data={data} />)}
+    </CardGallery>
+  </section>
+</Base>
