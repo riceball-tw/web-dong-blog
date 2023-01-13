@@ -11,7 +11,8 @@
     "astro": "astro",
     "sync": "astro sync",
     "lint": "eslint --ext .js,.astro src",
-    "prettier": "prettier -w ."
+    "prettier": "prettier -w .",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@astrojs/mdx": "^0.14.0",
@@ -30,6 +31,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.7.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "gh-pages": "^4.0.0",
     "prettier": "^2.8.2",
     "prettier-plugin-astro": "^0.7.2"
   }
