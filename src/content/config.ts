@@ -15,6 +15,7 @@ const post = defineCollection({
   },
 
   schema: {
+    isDraft: z.boolean().default(true),
     featureIcon: z
       .object({
         width: z.number().default(64),
