@@ -18,7 +18,12 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { posts } = Astro.props;
 
-const targetCategoryPosts = posts.filter((post) => post.data.category.includes(slug));
+const targetCategoryPosts = posts.filter((post) => {
+  if (post.data.isDraft === true) {
+    return false;
+  }
+  return post.data.category.includes(slug);
+});
 const title = `搜尋文章分類：${slug}`;
 const description = `搜尋文章分類`;
 ---

@@ -6,6 +6,13 @@ import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 
 const posts = await getCollection('post');
+const filteredPosts = posts.filter((post) => {
+  if (post.data.isDraft === true) {
+    return false;
+  }
+  return true;
+});
+
 const title = '所有文章';
 const description = '所有種類的文章';
 ---
@@ -15,7 +22,7 @@ const description = '所有種類的文章';
   <section class="px-4">
     <CardGallery>
       {
-        posts.map((post) => (
+        filteredPosts.map((post) => (
           <PostCard
             postData={{
               slug: post.slug,
