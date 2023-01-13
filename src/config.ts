@@ -1,12 +1,13 @@
 export const brand = {
   name: 'WebDong',
-  nameTC: '網東',
+  nameTC: '網頁咚咚',
   short: 'WD',
-  slogan: '專業的角度有趣的玩網頁',
-  description: '專注於用簡白好懂的方式來傳遞網頁開發與設計相關知識。更快的學習最新出爐的技術，更早的實踐夢想中的專案。',
+  slogan: '把網頁開發知識打進洞口',
+  description:
+    '網頁咚咚是一個分享網頁開發與設計學習歷程的地方，專注於提升技能並實現項目需求。幫助你我都可以把知識一桿進洞 ⛳ ',
   thumbnail: {
-    width: 100,
-    height: 100,
+    width: 1200,
+    height: 627,
     src: '/images/placeholder/webdongOg.jpg',
     alt: '預設縮圖',
   },
