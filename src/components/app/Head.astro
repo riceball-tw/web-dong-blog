@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const { title, description, thumbnail } = Astro.props;
-const seoTitle = `${title || brand.slogan} - ${brand.name}`;
+const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
 const seoDescription = description || brand.description;
 const seoImage = thumbnail || brand.thumbnail;
 seoImage.src = new URL(seoImage.src, Astro.url).href;
