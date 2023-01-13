@@ -16,6 +16,7 @@ export interface Props {
 }
 
 const { title, description, themeColor, thumbnail } = Astro.props;
+const themeColorTransparent = themeColor + 40;
 ---
 
 <!DOCTYPE html>
@@ -35,6 +36,7 @@ const { title, description, themeColor, thumbnail } = Astro.props;
   }
   mt-0
   md:mt-[var(--mainNav-height)]
+  body
   `}
   >
     <Navbar themeColor={themeColor} />
@@ -44,3 +46,16 @@ const { title, description, themeColor, thumbnail } = Astro.props;
     <Footer />
   </body>
 </html>
+<style define:vars={{ themeColorTransparent }}>
+  .body::before {
+    content: '';
+    display: block;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(var(--themeColorTransparent), transparent 40%);
+  }
+</style>
