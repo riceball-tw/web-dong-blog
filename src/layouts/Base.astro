@@ -33,6 +33,8 @@ const { title, description, themeColor, thumbnail } = Astro.props;
       ? ''
       : "dark:bg-[url('/images/hero-banner/site-gradient-dark.svg')] bg-[url('/images/hero-banner/site-gradient-light.svg')]"
   }
+  mt-0
+  md:mt-[var(--mainNav-height)]
   `}
   >
     <Navbar themeColor={themeColor} />
