@@ -1,11 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import HeroBanner from '@/components/banner/Hero.astro';
 import Card from '@/components/card/Card.astro';
+import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
+
+const posts = await getCollection('post');
+const first3Posts = posts.filter((post, index) => (index + 1 <= 3 ? post : ''));
 ---
 
-<Base>
+<Base title={''} description={''}>
   <HeroBanner title="咚！咚！咚！🏑<br>把網頁開發知識一桿桿打進洞，就這樣開啟簡單直覺的學習方式～" />
 
   <!-- Article Section -->
@@ -56,6 +61,24 @@ import CardGallery from '@/components/card/CardGallery.astro';
           </a>
         </div>
       </Card>
+
+      {
+        first3Posts.map((post) => (
+          <PostCard
+            postData={{
+              slug: post.slug,
+              featureIcon: post.data.featureIcon,
+              titleTC: post.data.titleTC,
+              excerpt: post.data.excerpt,
+              publishDate: post.data.publishDate,
+              themeColor: post.data.themeColor,
+              tags: post.data.tags,
+              category: post.data.category,
+            }}
+          />
+        ))
+      }
+      <!-- {posts.map((post) => <PostCard data={post.data} />)} -->
     </div>
   </section>
 

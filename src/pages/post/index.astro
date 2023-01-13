@@ -10,11 +10,27 @@ const title = '所有文章';
 const description = '所有種類的文章';
 ---
 
-<Base>
-  <PageBanner title={title} description={description} />
+<Base title={title} description={description}>
+  <PageBanner title={title} />
   <section class="px-4">
     <CardGallery>
-      {posts.map((data) => <PostCard data={data} />)}
+      {
+        posts.map((post) => (
+          <PostCard
+            postData={{
+              slug: post.slug,
+              featureIcon: post.data.featureIcon,
+              titleTC: post.data.titleTC,
+              excerpt: post.data.excerpt,
+              publishDate: post.data.publishDate,
+              themeColor: post.data.themeColor,
+              tags: post.data.tags,
+              category: post.data.category,
+            }}
+          />
+        ))
+      }
+      <!-- {posts.map((post) => <PostCard data={post.data} />)} -->
     </CardGallery>
   </section>
 </Base>

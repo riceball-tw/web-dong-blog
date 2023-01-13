@@ -1,9 +1,14 @@
 ---
-const { themeColor, themeColorBg } = Astro.props;
-const cardBody = themeColor ? themeColor + 40 : '';
-const cardBorder = themeColor ? themeColor + 40 : '';
-const cardBg = themeColorBg ? themeColorBg : '';
-const cardshadow = themeColor ? themeColor + 20 : 'rgb(0 0 0 / 0.05)';
+export interface Props {
+  themeColor?: string;
+  fillColor?: string;
+}
+
+const { themeColor, fillColor } = Astro.props;
+const cardBorderColor = themeColor ? themeColor + 40 : '';
+const cardShadowColor = themeColor ? themeColor + 20 : 'rgb(0 0 0 / 0.05)';
+const cardFillColor = fillColor || '';
+const cardHoverFillColor = themeColor ? themeColor + 40 : '';
 ---
 
 <div
@@ -14,13 +19,14 @@ const cardshadow = themeColor ? themeColor + 20 : 'rgb(0 0 0 / 0.05)';
   </div>
 </div>
 
-<style define:vars={{ cardBody, cardBorder, cardBg, cardshadow }}>
+<style define:vars={{ cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
   .card {
-    background-color: var(--cardBg);
+    background-color: var(--cardFillColor);
   }
   .card:hover {
-    background-color: var(--cardBody);
-    border-color: var(--cardBorder);
-    box-shadow: 0 0 30px 10px var(--cardshadow);
+    background-color: var(--cardHoverFillColor);
+    background-color: var(--cardFillColor);
+    border-color: var(--cardBorderColor);
+    box-shadow: 0 0 30px 10px var(--cardShadowColor);
   }
 </style>

@@ -5,10 +5,10 @@ export const brand = {
   slogan: '專業的角度有趣的玩網頁',
   description: '專注於用簡白好懂的方式來傳遞網頁開發與設計相關知識。更快的學習最新出爐的技術，更早的實踐夢想中的專案。',
   thumbnail: {
-    attributes: {
-      width: 100,
-      height: 100,
-    },
+    width: 100,
+    height: 100,
+    src: '/images/placeholder/webdongOg.jpg',
+    alt: '預設縮圖',
   },
 };
 
@@ -31,6 +31,7 @@ export const copyright = {
   title: 'CC BY-NC 4.0',
   url: 'https://creativecommons.org/licenses/by-nc/4.0/deed.zh_TW',
 };
+
 export const socials = [
   {
     name: 'CodePen',

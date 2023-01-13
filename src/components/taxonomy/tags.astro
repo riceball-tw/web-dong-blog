@@ -1,5 +1,9 @@
 ---
 const { tags } = Astro.props;
+
+export interface Props {
+  tags: string;
+}
 ---
 
 <ul class="flex gap-4 whitespace-nowrap">

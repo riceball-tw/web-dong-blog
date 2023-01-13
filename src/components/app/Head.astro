@@ -2,10 +2,22 @@
 import '@/styles/global.css';
 import { brand } from '@/config.ts';
 
-const { title, description, image } = Astro.props;
+export interface Props {
+  title: string;
+  description: string;
+  thumbnail?: {
+    width?: number;
+    height?: number;
+    src: string;
+    alt: string;
+  };
+}
+
+const { title, description, thumbnail } = Astro.props;
 const seoTitle = `${title || brand.slogan} - ${brand.name}`;
 const seoDescription = description || brand.description;
-const seoImage = image || brand.thumbnail;
+const seoImage = thumbnail || brand.thumbnail;
+seoImage.src = new URL(seoImage.src, Astro.url).href;
 ---
 
 <!-- Global -->
@@ -24,16 +36,23 @@ const seoImage = image || brand.thumbnail;
 <meta property="og:type" content="website" />
 <meta property="og:title" content={seoTitle} />
 <meta property="og:description" content={seoDescription} />
-<meta
-  property="og:image"
-  content={seoImage?.attributes?.url ?? new URL('/images/placeholder/webdongOg.jpg', Astro.url)}
-/>
-<meta property="og:image:alt" content={seoImage?.attributes?.alternativeText ?? '預設 og 圖片'} />
+<meta property="og:image" content={seoImage.src} />
+<meta property="og:image:alt" content={seoImage.alt} />
+
 {
-  seoImage.attributes ? (
+  seoImage.width ? (
     <>
-      <meta property="og:image:width" content={seoImage.attributes.width} />
-      <meta property="og:image:height" content={seoImage.attributes.height} />
+      <meta property="og:image:width" content={seoImage.width} />
+    </>
+  ) : (
+    ''
+  )
+}
+
+{
+  seoImage.height ? (
+    <>
+      <meta property="og:image:height" content={seoImage.height} />
     </>
   ) : (
     ''
@@ -45,7 +64,4 @@ const seoImage = image || brand.thumbnail;
 <meta property="twitter:domain" content={Astro.url.origin} />
 <meta property="twitter:title" content={seoTitle} />
 <meta property="twitter:description" content={seoDescription} />
-<meta
-  property="og:image"
-  content={seoImage?.attributes?.url ?? new URL('/images/placeholder/placeholder-og.jpg', Astro.url)}
-/>
+<meta property="og:image" content={seoImage.src} />

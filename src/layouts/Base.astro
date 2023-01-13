@@ -3,14 +3,26 @@ import Head from '@/components/app/Head.astro';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
 
-const { title, description, image, themeColor } = Astro.props;
+export interface Props {
+  title: string;
+  description: string;
+  themeColor?: string;
+  thumbnail?: {
+    width?: number;
+    height?: number;
+    src: string;
+    alt: string;
+  };
+}
+
+const { title, description, themeColor, thumbnail } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
   <head>
     <slot name="head">
-      <Head title={title} description={description} image={image} />
+      <Head title={title} description={description} thumbnail={thumbnail} />
     </slot>
   </head>
   <body
@@ -23,7 +35,7 @@ const { title, description, image, themeColor } = Astro.props;
   }
   `}
   >
-    <Navbar />
+    <Navbar themeColor={themeColor} />
     <div class="min-h-screen">
       <slot />
     </div>

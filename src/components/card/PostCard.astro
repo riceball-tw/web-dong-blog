@@ -3,8 +3,23 @@ import Card from '@/components/card/Card.astro';
 import Category from '@/components/taxonomy/category.astro';
 import Tags from '@/components/taxonomy/tags.astro';
 
-const { featureIcon, publishDate, titleTC, excerpt, themeColor, tags, category } = Astro.props.data.data;
-const { slug } = Astro.props.data;
+export interface Props {
+  featureIcon?: {
+    width: number;
+    height: number;
+    alt: string;
+    url: string;
+  };
+  slug: string;
+  titleTC: string;
+  excerpt: string;
+  publishDate: string;
+  themeColor: string;
+  tags: string[];
+  category: string;
+}
+const { postData } = Astro.props;
+const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, slug } = postData;
 ---
 
 <li class="flex-1 self-stretch list-none">

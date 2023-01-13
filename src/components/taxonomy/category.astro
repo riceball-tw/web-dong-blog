@@ -1,5 +1,8 @@
 ---
 const { category } = Astro.props;
+export interface Props {
+  category: string;
+}
 ---
 
 <a class="relative mr-4 opacity-40 hover:opacity-100 whitespace-nowrap" href={`/post/categories/${category}`}>
