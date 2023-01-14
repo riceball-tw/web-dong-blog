@@ -5,6 +5,9 @@ export interface Props {
 }
 ---
 
-<a class="relative mr-4 opacity-40 hover:opacity-100 whitespace-nowrap" href={`/post/categories/${category}`}>
+<a
+  class="relative mr-4 opacity-40 hover:opacity-100 whitespace-nowrap"
+  href={`${import.meta.env.BASE_URL}/post/categories/${category}`}
+>
   {`@ ${category}`}
 </a>

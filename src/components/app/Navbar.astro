@@ -20,7 +20,7 @@ const { themeColor } = Astro.props;
   <div class="h-full grid grid-cols-3 md:grid-cols-2 w-full">
     <!-- Brand -->
     <div class="flex items-center md:mx-8 mx-4">
-      <a href="/">
+      <a href={`${import.meta.env.BASE_URL}/`}>
         <h2>
           <svg width="140" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40"
             ><path
@@ -65,7 +65,10 @@ const { themeColor } = Astro.props;
       {
         mainNav.map((navbarLink: NavbarItem) => (
           <li class="flex-1">
-            <a href={navbarLink.url} class=" inline-block w-full h-full flex justify-center items-center ">
+            <a
+              href={import.meta.env.BASE_URL + navbarLink.url}
+              class=" inline-block w-full h-full flex justify-center items-center "
+            >
               {navbarLink.name}
             </a>
           </li>

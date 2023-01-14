@@ -33,7 +33,7 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
         <img src={featureIcon.url} width={featureIcon.width} height={featureIcon.height} alt={featureIcon.alt} />
       </div>
       <div>
-        <a href={`/post/${slug}`}>
+        <a href={`${import.meta.env.BASE_URL}/post/${slug}`}>
           <h3 class="text-2xl mb-4">{titleTC}</h3>
         </a>
         <!-- Paragraph -->
