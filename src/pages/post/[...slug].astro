@@ -21,60 +21,57 @@ const { Content } = await post.render();
 ---
 
 <Base title={title} description={excerpt} themeColor={themeColor}>
-  <div class="prose dark:prose-invert mx-auto">
-    <main>
-      <article class="mt-40 prose-lg">
-        <header class="mb-16 not-prose md:mx-auto mx-8">
-          <!-- FeatureImageImage -->
+  <main>
+    <article class="mt-40 prose-lg">
+      <header class="mb-16 not-prose md:mx-auto mx-8">
+        <!-- FeatureImageImage -->
+        {
+          featureImage ? (
+            <img
+              class="mx-auto mb-16"
+              src={import.meta.env.URL_PREFIX + featureImage.url}
+              width={featureImage.width}
+              height={featureImage.height}
+              alt={featureImage.alt}
+            />
+          ) : (
+            ''
+          )
+        }
+        <div class="relative mx-auto max-w-prose">
+          <!-- Heading -->
+          <h1>
+            <div class="mb-2">{title}</div>
+            <div class="text-4xl mb-4 font-bold">{titleTC}</div>
+          </h1>
+          <!-- Categories -->
+          <Category category={category} />
+          <!-- Tags -->
+          <Tags tags={tags} />
           {
-            featureImage ? (
-              <img
-                class="mx-auto mb-16"
-                src={import.meta.env.URL_PREFIX + featureImage.url}
-                width={featureImage.width}
-                height={featureImage.height}
-                alt={featureImage.alt}
-              />
+            featureIcon ? (
+              <div
+                class="mx-auto absolute top-0 left-0 rounded-lg transform-gpu -translate-y-full -mt-8 overflow-hidden"
+                style={`background-color: ${themeColor}`}
+              >
+                <img
+                  src={featureIcon.url}
+                  width={featureIcon.width}
+                  height={featureIcon.height}
+                  alt={featureIcon.alt}
+                />
+              </div>
             ) : (
               ''
             )
           }
-          <div class="relative mx-auto max-w-prose">
-            <!-- Heading -->
-            <h1>
-              <div class="mb-2">{title}</div>
-              <div class="text-4xl mb-4 font-bold">{titleTC}</div>
-            </h1>
-            <!-- Categories -->
-            <Category category={category} />
-            <!-- Tags -->
-            <Tags tags={tags} />
-            {
-              featureIcon ? (
-                <div
-                  class="mx-auto absolute top-0 left-0 rounded-lg transform-gpu -translate-y-full -mt-8 overflow-hidden"
-                  style={`background-color: ${themeColor}`}
-                >
-                  <img
-                    src={featureIcon.url}
-                    width={featureIcon.width}
-                    height={featureIcon.height}
-                    alt={featureIcon.alt}
-                  />
-                </div>
-              ) : (
-                ''
-              )
-            }
-          </div>
-        </header>
-        <div class="mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark singlePost wrapper">
-          <Content />
         </div>
-      </article>
-    </main>
-    <!-- {JSON.stringify(post)} -->
-  </div>
+      </header>
+      <div class="mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark singlePost wrapper">
+        <Content />
+      </div>
+    </article>
+  </main>
 </Base>
 
 <style is:inline>
@@ -88,10 +85,16 @@ const { Content } = await post.render();
   .wrapper > * {
     grid-column: 2;
   }
+  /* .wrapper p:has(> img) { */
 
-  .wrapper p:has(> img) {
+  .wrapper p:has(img) {
     margin: 0 auto;
     width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .wrapper > img {
+    margin: 0 auto;
     grid-column: 1 / -1;
   }
 
