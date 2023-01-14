@@ -15,10 +15,6 @@ export const brand = {
 
 export const mainNav = [
   {
-    name: '首頁',
-    url: '/',
-  },
-  {
     name: '關於',
     url: '/about',
   },
