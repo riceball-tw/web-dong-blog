@@ -10,6 +10,7 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: 'https://riceball-tw.github.io',
   base: '/astro-blog',
+  trailingSlash: 'never',
   experimental: {
     contentCollections: true,
   },
