@@ -18,6 +18,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# custom
+# large binary files (Images)
 public/
+
+# generated type
 src/content/types.generated.d.ts
+
+# markdown files
+src/content/post
