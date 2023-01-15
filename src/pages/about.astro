@@ -5,55 +5,93 @@ import Card from '@/components/card/Card.astro';
 import { socials, brand } from '@/config.ts';
 
 const title = '關於';
-const description = '關於我們';
 interface Social {
   name: string;
   url: string;
   imgUrl: string;
+  themeColor: string;
 }
 ---
 
-<Base title={title} description={description}>
-  <HeroBanner title={brand.description}>
-    <img
-      class="dark:invert drop-shadow-2xl"
-      slot="image"
-      width="1200"
-      height="600"
-      src="/images/about-banner.svg"
-      alt="About Banner"
-    />
-  </HeroBanner>
-  <section class="mx-8 grid grid-cols-1 gap-8 md:grid-cols-3 mb-36">
-    <!-- Intro -->
-    <h2 class="md:text-3xl text-2xl md:leading-normal">
-      我目前在 <a style="color: #69F0AE;" href="https://www.hexschool.com/"> 六角學院</a> 擔任助教並提供前端開發方面的技術協助……並在空閒期間自由接案與承攬教學相關業務。
-    </h2>
+<Base title={title} description={brand.description}>
+  <HeroBanner
+    className="bg-fixed bg-no-repeat bg-center bg-cover"
+    style={`background-image: url('${import.meta.env.BASE_URL}/images/hero-banner/gradient.svg')`}
+    title={`我的文章著重於<span class='text-accent dark:text-accent-light'>圖像化</span>以及<span class='text-accent dark:text-accent-light'>實例操作</span>，累積教學上的經驗，<br class='hidden 2xl:block'>降低每次學習新事物的成本。`}
+  />
+  <section class="mx-4 grid grid-cols-1 gap-y-4 md:gap-4 md:grid-cols-3 mb-36">
+    <Card>
+      <div
+        style={`background-color: #b887f7`}
+        class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2"
+      >
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_201_2)">
+            <path
+              d="M24 41C23.45 41 22.9793 40.8043 22.588 40.413C22.196 40.021 22 39.55 22 39V28C22 27.45 22.196 26.9793 22.588 26.588C22.9793 26.196 23.45 26 24 26H28V24C28 23.45 28.196 22.979 28.588 22.587C28.9793 22.1957 29.45 22 30 22H34C34.55 22 35.021 22.1957 35.413 22.587C35.8043 22.979 36 23.45 36 24V26H40C40.55 26 41.021 26.196 41.413 26.588C41.8043 26.9793 42 27.45 42 28V39C42 39.55 41.8043 40.021 41.413 40.413C41.021 40.8043 40.55 41 40 41H24ZM24 39H40V28H24V39ZM30 26H34V24H30V26Z"
+              fill="black"></path>
+          </g>
+          <defs>
+            <clipPath id="clip0_201_2">
+              <rect width="64" height="64" fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="flex flex-col justify-between h-full pt-8">
+        <h2 class="text-2xl md:leading-normal mb-16">
+          目前在 <a class="underline" href="https://www.hexschool.com/"> 六角學院</a> 擔任助教並提供前端開發方面的技術協助……並在空閒期間自由接案與承攬教學相關業務。
+        </h2>
+        <a
+          href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
+          class="-mx-6 -mb-6 px-6 py-6 border-t border-t-primary-200 dark:border-t-primary-600 border-primary-200 text-left rounded-br-lg rounded-bl-lg hover:bg-primary-200 dark:hover:bg-primary-600"
+        >
+          聯絡我
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 inline-block"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
+          </svg>
+        </a>
+      </div>
+    </Card>
+
     <!-- Paragraph -->
-    <div class="prose dark:prose-invert max-w-none prose-p:m-0 column-2 columns-1 md:columns-2 col-span-2">
-      <p>
-        自 2022 年 7 月開始在六角學院擔任助教，期間協助 <a
-          href="https://www.hexschool.com/courses/web-layout-training-1st.html">切版課程</a
-        > 、<a href="https://www.hexschool.com/2022/06/27/2022-06-27-react-study-circle/">React 讀書會</a>、<a
-          href="https://www.hexschool.com/courses/javascript.html">JS 基礎課程</a
-        >、<a href="https://www.hexschool.com/courses/js-training.html">JS 工程師養成直播班</a> ……等課程素材修訂與解惑同學疑問，提供意見反饋與討論，和六角學院的同學們一同學習與進步！
-        目前是國立臺中科技大學四年級學生，主修商業設計，藉由自學橫跨設計與開發領域，在諸多領域都有學習熱誠，在此與你/妳分享我的學習歷程。m(_
-        _)m
-      </p>
-    </div>
+    <Card className="prose dark:prose-invert max-w-none prose-p:m-0 col-span-2">
+      <div class="py-8">
+        <h2 class="m-0 mb-4 font-medium">關於近期</h2>
+        <div class="columns-1 md:columns-2 gap-8">
+          <p>
+            自 2022 年 7 月開始在六角學院擔任助教，期間協助 <a
+              href="https://www.hexschool.com/courses/web-layout-training-1st.html">切版課程</a
+            > 、<a href="https://www.hexschool.com/2022/06/27/2022-06-27-react-study-circle/">React 讀書會</a>、<a
+              href="https://www.hexschool.com/courses/javascript.html">JS 基礎課程</a
+            >、<a href="https://www.hexschool.com/courses/js-training.html">JS 工程師養成直播班</a> ……等課程素材修訂與解惑同學疑問，提供意見反饋與討論，和六角學院的同學們一同學習與進步！
+            目前是國立臺中科技大學四年級學生，主修商業設計，藉由自學橫跨設計與開發領域，在諸多領域都有學習熱誠，在此與你/妳分享我的學習歷程。m(_
+            _)m
+          </p>
+        </div>
+      </div>
+    </Card>
   </section>
   <section class="mx-8 grid grid-cols-1 gap-8 md:grid-cols-3 mb-36">
     <!-- Intro -->
     <h2 class="md:text-3xl text-2xl mb-8">其他社群與聯絡管道</h2>
-    <ul class="flex flex-wrap gap-8 col-span-2">
+    <ul class="grid grid-cols-3 gap-4 col-span-2">
       {
         socials.map((social: Social) => (
-          <Card>
-            <a class="text-center p-4 inline-block" href={social.url}>
+          <Card themeColor={social.themeColor} className=" ">
+            <a class="text-center p-4 inline-block flex justify-center items-center h-full flex-col" href={social.url}>
               <img
                 width="40"
                 height="40"
-                class="mb-8 mx-auto filter dark:invert"
+                class="mb-4 mx-auto filter dark:invert"
                 src={social.imgUrl}
                 alt={`${social.name} + Logo`}
               />
