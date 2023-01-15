@@ -17,20 +17,22 @@ const first3Posts = posts.filter((post, index) => {
 
 <Base title={''} description={''}>
   <HeroBanner
-    title="咚！咚！咚！<br>把網頁開發知識一桿桿打進洞，用簡白易懂的方式來傳遞網頁開發與設計相關知識，征服攀越不同的領域～"
+    className="bg-fixed bg-no-repeat bg-center bg-cover"
+    style={`background-image: url('${import.meta.env.BASE_URL}/images/hero-banner/gradient.svg')`}
+    title="用<span class='text-accent dark:text-accent-light'>簡白親切</span>的方式來描述如何<span class='text-accent dark:text-accent-light'>設計與架構網頁</span>。<br class='hidden md:block'>撰寫教學文章，為你捕捉並提煉入口即化的好知識。"
   />
   <!-- Article Section -->
   <section class="px-4 md:pb-48 pb-24">
     <div class="grid lg:grid-cols-4 grid-cols-1 gap-y-4 md:gap-x-4 mt-8 md:mt-0">
       <!-- Intro Card -->
       <Card>
-        <div class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-primary-300">
+        <div class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-accent">
           <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_102_267)">
               <g clip-path="url(#clip1_102_267)">
                 <path
                   d="M29.4 36.6L24.8 32L29.4 27.4L28 26L22 32L28 38L29.4 36.6ZM34.6 36.6L39.2 32L34.6 27.4L36 26L42 32L36 38L34.6 36.6V36.6Z"
-                  fill="black"></path>
+                  fill="var(--primary-color-50)"></path>
               </g>
             </g>
             <defs>
@@ -46,8 +48,8 @@ const first3Posts = posts.filter((post, index) => {
 
         <div class="flex flex-col justify-between h-full pt-8">
           <h2 class="sr-only">近期文章</h2>
-          <p class="text-xl mb-16">
-            網咚撰寫設計思考、前端開發、現代程式設計……等議題的文章。歡迎提供建議或點擊以下連結聯絡我。
+          <p class="text-2xl md:leading-normal mb-16">
+            網東撰寫設計思考、前端開發、現代程式設計……等議題的文章。歡迎提供建議或點擊以下連結聯絡我。
           </p>
           <a
             href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
@@ -90,11 +92,9 @@ const first3Posts = posts.filter((post, index) => {
 
   <!-- Feedback Section -->
   <section class="px-4 md:pb-48 pb-24">
-    <h2
-      class="dark:text-white text-black leading-normal lg:leading-normal text-3xl lg:text-4xl font-medium mb-20 md:h-auto"
-    >
+    <h2 class="dark:text-white text-black leading-normal lg:leading-normal text-2xl font-medium mb-20 md:h-auto">
       由衷感謝各種形式的支持～<br />
-      反饋是我創作文章的動力之一🤗
+      反饋是我創作文章的動力之一
     </h2>
     <CardGallery>
       <div class="max-w-[600px]">
