@@ -26,9 +26,10 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
   <Card themeColor={themeColor}>
     <article class="pt-8 flex flex-col gap-8 justify-between h-full">
       <!-- Featured-Icon -->
+
       <div
         style={`background-color: ${themeColor}`}
-        class="absolute top-0 left-0 rounded-lg overflow-hidden transform-gpu -translate-y-1/2 ml-4"
+        class="absolute top-0 left-0 rounded-lg overflow-hidden transform-gpu -translate-y-1/2 ml-4 filter saturate-25 brightness-90"
       >
         <img src={featureIcon.url} width={featureIcon.width} height={featureIcon.height} alt={featureIcon.alt} />
       </div>
