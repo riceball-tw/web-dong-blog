@@ -16,7 +16,7 @@ export interface Props {
 }
 
 const { title, description, themeColor, thumbnail } = Astro.props;
-const themeColorTransparent = themeColor + 40;
+const themeColorTransparent = (themeColor || '#534af7') + 30;
 ---
 
 <!DOCTYPE html>
@@ -28,16 +28,7 @@ const themeColorTransparent = themeColor + 40;
   </head>
   <body
     class={`bg-primary-50 from-white text-primary-800 dark:bg-primary-800 dark:from-primary-800 dark:to-primary-900
-   dark:text-primary-50 bg-no-repeat bg-cover bg-center
-  ${
-    themeColor
-      ? ''
-      : "dark:bg-[url('/images/hero-banner/site-gradient-dark.svg')] bg-[url('/images/hero-banner/site-gradient-light.svg')]"
-  }
-  mt-0
-  md:mt-[var(--mainNav-height)]
-  body
-  `}
+   dark:text-primary-50 bg-no-repeat bg-cover bg-center body selection:bg-accent selection:text-primary-50  `}
   >
     <Navbar themeColor={themeColor} />
     <div class="min-h-screen">
@@ -56,6 +47,6 @@ const themeColorTransparent = themeColor + 40;
     z-index: -1;
     width: 100%;
     height: 100%;
-    background: linear-gradient(var(--themeColorTransparent), transparent 40%);
+    background: linear-gradient(var(--themeColorTransparent), transparent 100%);
   }
 </style>
