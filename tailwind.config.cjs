@@ -68,6 +68,11 @@ module.exports = {
         800: 'var(--primary-color-800)',
         900: 'var(--primary-color-900)',
       },
+      accent: {
+        light: 'var(--accent-color-light)',
+        DEFAULT: 'var(--accent-color)',
+        dark: 'var(--accent-color-dark)',
+      },
     },
     extend: {
       gridTemplateColumns: {

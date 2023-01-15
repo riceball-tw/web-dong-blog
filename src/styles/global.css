@@ -14,6 +14,9 @@
   --primary-color-800: #1e293b;
   --primary-color-900: #0f172a;
 
-  --color-primary: #7d7aff;
+  --accent-color-light: #b887f7;
+  --accent-color: #534af7;
+  --accent-color-dark: #2596be;
+
   --mainNav-height: 80px;
 }
