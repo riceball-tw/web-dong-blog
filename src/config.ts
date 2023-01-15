@@ -1,10 +1,9 @@
 export const brand = {
   name: 'WebDong',
-  nameTC: '網頁咚咚',
+  nameTC: '網頁東東',
   short: 'WD',
-  slogan: '把網頁開發知識打進洞口',
-  description:
-    '網頁咚咚是一個分享網頁開發與設計學習歷程的地方，專注於提升技能並實現項目需求。幫助你我都可以把知識一桿進洞 ⛳ ',
+  slogan: '把網頁開發知識一桿進洞',
+  description: '用簡白親切的方式來描述如何設計與架構網頁。撰寫教學文章，為你捕捉並提煉入口即化的好知識。',
   thumbnail: {
     width: 1200,
     height: 627,
@@ -34,20 +33,24 @@ export const socials = [
     name: 'CodePen',
     imgUrl: 'https://www.webdong.dev/images/social/codepen.svg',
     url: 'https://codepen.io/riecball',
+    themeColor: '#000000',
   },
   {
     name: 'YouTube',
     imgUrl: 'https://www.webdong.dev/images/social/youtube.svg',
     url: 'https://www.youtube.com/channel/',
+    themeColor: '#ff0000',
   },
   {
     name: 'Instagram',
     imgUrl: 'https://www.webdong.dev/images/social/instagram.svg',
     url: 'https://www.instagram.com/',
+    themeColor: '#c32aa3',
   },
   {
     name: 'GitHub',
     imgUrl: 'https://www.webdong.dev/images/social/github.svg',
     url: 'https://github.com/riceball-tw',
+    themeColor: '#424242',
   },
 ];
