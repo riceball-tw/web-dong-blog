@@ -2,30 +2,32 @@
 export interface Props {
   themeColor?: string;
   fillColor?: string;
+  className?: string;
 }
 
-const { themeColor, fillColor } = Astro.props;
-const cardBorderColor = themeColor ? themeColor + 40 : '';
-const cardShadowColor = themeColor ? themeColor + 20 : 'rgb(0 0 0 / 0.05)';
-const cardFillColor = fillColor || '';
-const cardHoverFillColor = themeColor ? themeColor + 40 : '';
+const { themeColor, fillColor, className } = Astro.props;
+const borderWidth = '1px';
+const cardBorderColor = themeColor ? themeColor + 40 : '#534af740';
+const cardShadowColor = themeColor ? themeColor + 20 : '#534af710';
+const cardFillColor = fillColor || themeColor + 10 || '#534af710';
+const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af720';
 ---
 
-<div
-  class="filter backdrop-blur-xl relative rounded-lg border border-primary-200 dark:border-primary-600 hover:bg-white hover:border-primary-300 dark:hover:bg-primary-700 dark:hover:border-primary-600 transition"
->
+<div class={`filter backdrop-blur-xl relative rounded-lg transition ${className}  hover:-translate-y-2`}>
   <div class="card rounded-lg p-6 transition-all">
     <slot />
   </div>
 </div>
 
-<style define:vars={{ cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
+<style define:vars={{ borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
   .card {
+    width: 100%;
+    height: 100%;
     background-color: var(--cardFillColor);
+    border: var(--borderWidth) solid var(--cardBorderColor);
   }
   .card:hover {
     background-color: var(--cardHoverFillColor);
-    background-color: var(--cardFillColor);
     border-color: var(--cardBorderColor);
     box-shadow: 0 0 30px 10px var(--cardShadowColor);
   }
