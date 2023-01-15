@@ -1,4 +1,5 @@
 import { z, defineCollection } from 'astro:content';
+import randomColor from 'randomcolor';
 
 function toReadableDate(time: string, seperator: string) {
   const formattedDate = new Date(time).toLocaleDateString('zh-TW', {
@@ -37,7 +38,12 @@ const post = defineCollection({
     excerpt: z.string(),
     category: z.string().default('unsorted'),
     tags: z.array(z.string()).default(['unsorted']),
-    themeColor: z.z.string().min(4).max(9).regex(/^#/).default('#fff'),
+    themeColor: z.z
+      .string()
+      .min(4)
+      .max(9)
+      .regex(/^#/)
+      .default(randomColor.bind(this, { hue: '', luminosity: 'light' })),
     publishDate: z.string().transform((str) => toReadableDate(str, '-')),
     permalink: z.string().optional(),
   },
