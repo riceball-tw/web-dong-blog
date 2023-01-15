@@ -1,5 +1,6 @@
 ---
 import { mainNav } from '@/config.ts';
+import Clickable from '@/components/app/Clickable.astro';
 
 interface NavbarItem {
   url: string;
@@ -10,7 +11,8 @@ export interface Props {
   themeColor: string;
 }
 
-const { themeColor } = Astro.props;
+const themeColor = Astro.props.themeColor || '#534af7';
+const themeColor2 = Astro.props.themeColor ? `${Astro.props.themeColor}20` : '#b887f7';
 ---
 
 <nav
@@ -21,50 +23,40 @@ const { themeColor } = Astro.props;
     <!-- Brand -->
     <div class="flex items-center md:mx-8 mx-4">
       <a href={new URL(import.meta.env.BASE_URL, Astro.url).href}>
-        <h2>
-          <svg width="140" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 40"
-            ><path
-              d="M51.7 15.9H55c1.4 0 2.6.3 3.5.8a5.03 5.03 0 0 1 2 2.1 6.71 6.71 0 0 1 .6 2.8c0 1.1-.3 2-.8 2.8s-1.2 1.4-2 1.9c-.8.4-1.8.7-2.8.7h-3.8V15.9zm3.4 9c1.1 0 2-.3 2.7-.9s1-1.4 1-2.5c0-.9-.2-1.6-.5-2.1-.4-.5-.8-.9-1.3-1.1s-.9-.3-1.4-.3h-1.8v6.9h1.3zm17.2-6.2c.5-.9 1.2-1.6 2.1-2.1s1.8-.8 2.8-.8 1.9.3 2.8.8 1.6 1.2 2.1 2.1.8 1.8.8 2.8-.3 2-.8 2.8c-.5.9-1.2 1.5-2.1 2s-1.8.8-2.8.8-2-.3-2.8-.8c-.9-.5-1.5-1.2-2-2-.5-.9-.8-1.8-.8-2.8s.2-2 .7-2.8zm2 4.5c.3.5.7 1 1.2 1.3s1.1.5 1.7.5 1.2-.2 1.7-.5a3.04 3.04 0 0 0 1.2-1.3c.3-.5.4-1.1.4-1.8s-.1-1.3-.5-1.8c-.3-.5-.7-1-1.2-1.3s-1.1-.5-1.7-.5-1.2.2-1.7.5a3.04 3.04 0 0 0-1.2 1.3c-.3.5-.4 1.1-.4 1.8s.2 1.3.5 1.8zm29.7-7.3v11.5h0l-7.7-7v6.5h-2.2V15.5h.1l7.7 7.1v-6.7h2.1zm20 10.5c-.4.2-.9.4-1.4.5s-1 .2-1.4.2c-1.2 0-2.2-.2-3.1-.7s-1.6-1.1-2-1.9c-.5-.8-.7-1.7-.7-2.8 0-1.3.3-2.4.8-3.3s1.2-1.6 2.1-2 1.8-.7 2.9-.7c.7 0 1.3.1 1.9.2s1.1.3 1.6.6l-.7 2c-.3-.2-.7-.3-1.2-.4s-.9-.2-1.3-.2c-1.2 0-2.1.3-2.8.9-.6.6-1 1.5-1 2.7 0 .7.2 1.3.5 1.8a3.04 3.04 0 0 0 1.3 1.2c.6.3 1.2.4 1.9.4s1.2-.1 1.5-.3v-1.3H121v-2.1h4.1v4.7l-1.1.5zm10.8 1.2c-.3-.2-.4-.5-.4-.9 0-.3.1-.6.4-.9.3-.2.6-.4 1-.4s.7.1 1 .4c.3.2.4.5.4.9s-.1.7-.4.9a1.69 1.69 0 0 1-1 .3c-.4 0-.8-.1-1-.3zm2.3-12.8l-.4 9.6h-2.1l-.4-9.6h2.9z"
-              fill="#666"></path><linearGradient
-              id="A"
-              gradientUnits="userSpaceOnUse"
-              x1="3.381"
-              y1="16.745"
-              x2="34.008"
-              y2="16.745"
-              ><stop offset="0" stop-color="" stop-opacity="0"></stop><stop offset="1" stop-color={`${themeColor}`}
-              ></stop></linearGradient
-            ><circle cx="18.7" cy="16.7" r="15.3" fill="url(#A)"></circle><path
-              d="M42.8 32.1c0 2.8-6.9 5-15.3 5-8.5 0-15.3-2.2-15.3-5 0-.4.2-.8.5-1.2 1.9.8 3.9 1.2 6 1.2 4.4 0 8.5-1.9 11.2-4.9 7.3.3 12.9 2.4 12.9 4.9z"
-              fill="#666"></path></svg
-          >
+        <Clickable className="flex gap-2 items-center dark:hover:bg-transparent hover:bg-transparent hover:opacity-80 ">
+          <!-- Logo -->
+          <svg width="60" height="60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+            <linearGradient id="A" gradientUnits="userSpaceOnUse" x1="30" y1="15.525" x2="30" y2="48.919">
+              <stop offset="0" stop-color={`${themeColor2}`} stop-opacity="0"></stop>
+              <stop offset="1" stop-color={`${themeColor}`}></stop>
+            </linearGradient>
+            <path
+              d="M30 48.9h0c-6.7 0-12.9-4-15.5-10.2L6.3 19.1c-.7-1.7.6-3.6 2.4-3.6h42.6c1.8 0 3.1 1.9 2.4 3.6l-8.2 19.5A16.93 16.93 0 0 1 30 48.9z"
+              fill="url(#A)"></path>
+          </svg>
 
-          <!-- <img
-            loading="lazy"
-            class="dark:hidden"
-            width="140"
-            height="40"
-            src="/images/brand/webdongLogo.svg"
-            alt={`${brand.name} Logo`}
-          />
-          <img
-            loading="lazy"
-            class="hidden dark:block"
-            width="140"
-            height="40"
-            src="/images/brand/webdongLogo-dark.svg"
-            alt={`${brand.name} Logo Dark Version`}
-          /> -->
-        </h2>
+          <!-- Logomark -->
+          <svg
+            width="80"
+            height="60"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 80 60"
+            fill="currentColor"
+            class="opacity-70 hidden md:block"
+          >
+            <path
+              d="M18.7 29.6l-2.8-7-3.3 7.1-4.8-12.4h2.7l2.3 6.9 1.8-4.5-.9-2.3H16l2.7 6.6 2-6.6h2.5l-4.5 12.2zm18.5-12.4v2.3h-5.8V22h5.1v2.3h-5.1v2.6h6V29h-8.3V17.2h8.1zm15 6.7c.3.5.5 1 .5 1.6 0 1.2-.4 2.1-1.2 2.7s-1.8.8-3 .8h-4V17.2H48c1.3 0 2.2.3 3 .8.7.5 1.1 1.2 1.1 2.2 0 .6-.1 1.1-.4 1.6-.2.4-.6.8-1 1.1a2.84 2.84 0 0 1 1.5 1zM47 22h1.4c.4 0 .8-.1 1-.4s.4-.6.4-1-.1-.7-.4-.9-.6-.3-1.1-.3H47V22zm2.8 4.5c.3-.2.5-.6.5-1 0-.8-.7-1.3-2-1.3H47v2.6h1.5c.5.1 1 0 1.3-.3zM9.5 34.6H13c1.5 0 2.8.3 3.7.9 1 .6 1.7 1.3 2.1 2.3.4.9.7 1.9.7 3s-.3 2.1-.8 3-1.3 1.5-2.2 2-1.9.7-3 .7h-4V34.6zm3.7 9.6c1.2 0 2.2-.3 2.9-.9s1.1-1.5 1.1-2.7c0-.9-.2-1.7-.6-2.3s-.8-.9-1.4-1.2c-.5-.2-1-.3-1.5-.3h-1.9v7.4h1.4zm13.6-6.7a5.81 5.81 0 0 1 2.2-2.2c.9-.6 1.9-.8 3-.8s2.1.3 3 .8a5.81 5.81 0 0 1 2.2 2.2c.5.9.8 1.9.8 3s-.3 2.1-.8 3c-.6.9-1.3 1.7-2.2 2.2s-1.9.8-3 .8-2.1-.3-3-.8a5.81 5.81 0 0 1-2.2-2.2c-.5-.9-.8-1.9-.8-3 0-1 .3-2 .8-3zm2.1 4.9c.3.6.8 1 1.3 1.4s1.2.5 1.9.5 1.3-.2 1.8-.5 1-.8 1.3-1.4.5-1.2.5-1.9-.2-1.4-.5-1.9c-.3-.6-.8-1-1.3-1.4-.6-.3-1.2-.5-1.8-.5-.7 0-1.3.2-1.8.5-.6.3-1 .8-1.3 1.4s-.5 1.2-.5 1.9c-.1.7.1 1.4.4 1.9zm26.4-7.8V47h-.1L47 39.4v7h-2.4V34.1h.1l8.3 7.6v-7.1h2.3zm16 11.3c-.5.2-1 .4-1.5.5l-1.5.2c-1.3 0-2.4-.2-3.3-.7a5.37 5.37 0 0 1-2.2-2c-.5-.9-.8-1.9-.8-3 0-1.4.3-2.6.8-3.5.5-1 1.3-1.7 2.2-2.2s1.9-.7 3.1-.7c.7 0 1.4.1 2 .2s1.2.4 1.7.6l-.8 2.2c-.3-.2-.7-.3-1.3-.5-.5-.1-1-.2-1.4-.2-1.3 0-2.3.3-3 1-.7.6-1 1.6-1 2.9 0 .7.2 1.4.5 1.9s.8 1 1.4 1.2 1.3.4 2 .4 1.3-.1 1.6-.3v-1.4h-2v-2.3h4.4v5c-.2.3-.5.5-.9.7z"
+            ></path>
+          </svg>
+        </Clickable>
       </a>
     </div>
 
     <!-- Navbar List -->
-
     <ul class="md:col-span-1 col-span-2 font-medium flex whitespace-nowrap">
       {
         mainNav.map((navbarLink: NavbarItem) => (
-          <li class="flex-1">
+          <li class="flex-1 hover:opacity-60 transition-opacity transition">
             <a
               href={import.meta.env.BASE_URL + navbarLink.url}
               class=" inline-block w-full h-full flex justify-center items-center "
@@ -74,6 +66,70 @@ const { themeColor } = Astro.props;
           </li>
         ))
       }
+
+      <li class="flex justify-center items-center">
+        <Clickable>
+          <button
+            data-theme-toggle
+            aria-label="網頁外觀樣式切換 Theme Toggle"
+            type="button"
+            class="aspect-square w-16 flex justify-center items-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm"
+          >
+            <!-- Dark Icon -->
+            <svg
+              width="16"
+              height="16"
+              class="hidden dark:block"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1005 1005"
+              xmlns="https://vecta.io/nano"
+              ><path
+                d="M502.5 0C225 0 0 225 0 502.5S225 1005 502.5 1005 1005 780 1005 502.5c0-25.7-2.2-51.4-5.6-75.9-54.7 76.5-144 126.2-245.7 126.2-166.4 0-301.5-135.1-301.5-301.5 0-101.1 49.7-191 126.2-245.7C553.9 2.2 528.2 0 502.5 0h0z"
+              ></path></svg
+            >
+
+            <!-- Light Icon -->
+            <svg
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="dark:hidden"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1005 1005"
+              xmlns="https://vecta.io/nano"
+              ><path
+                d="M502.5 274.1c-126.1 0-228.4 102.3-228.4 228.4s102.3 228.4 228.4 228.4 228.4-102.3 228.4-228.4-102.3-228.4-228.4-228.4h0zM45.7 548.2H137c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H45.7C20.6 456.8 0 477.4 0 502.5s20.6 45.7 45.7 45.7zm822.3 0h91.4c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H868c-25.1 0-45.7 20.6-45.7 45.7s20.5 45.7 45.7 45.7zM456.8 45.7V137c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V45.7c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.6-45.7 45.7zm0 822.3v91.4c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V868c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.5-45.7 45.7zM228 163.5c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.4-17.8 17.8-47.1 0-64.4L228 163.5zm565 565.1c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.8-17.8 17.8-47.1 0-64.4L793 728.6zM841.5 228c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L728.6 212c-17.8 17.8-17.8 47.1 0 64.4 17.8 17.4 47.1 17.8 64.4 0l48.5-48.4zM276.4 793c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L163.5 777c-17.8 17.8-17.8 47.1 0 64.4s47.1 17.8 64.4 0l48.5-48.4z"
+              ></path></svg
+            >
+          </button>
+        </Clickable>
+      </li>
     </ul>
   </div>
 </nav>
+
+<script is:inline>
+  // Theme Toggle
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  function themeUpdate() {
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+
+  themeToggle.addEventListener('click', () => {
+    if (localStorage.theme === 'light') {
+      localStorage.theme = 'dark';
+    } else {
+      localStorage.theme = 'light';
+    }
+    themeUpdate();
+  });
+  themeUpdate();
+</script>
