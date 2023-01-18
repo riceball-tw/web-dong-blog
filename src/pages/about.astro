@@ -21,15 +21,18 @@ interface Social {
   />
   <section class="mx-4 grid grid-cols-1 gap-y-4 md:gap-4 md:grid-cols-3 mb-36">
     <Card>
-      <div
-        style={`background-color: #b887f7`}
-        class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2"
-      >
-        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-accent dark:bg-accent-light">
+        <svg
+          class="text-primary-50 dark:text-primary-900"
+          width="64"
+          height="64"
+          viewBox="0 0 64 64"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <g clip-path="url(#clip0_201_2)">
             <path
               d="M24 41C23.45 41 22.9793 40.8043 22.588 40.413C22.196 40.021 22 39.55 22 39V28C22 27.45 22.196 26.9793 22.588 26.588C22.9793 26.196 23.45 26 24 26H28V24C28 23.45 28.196 22.979 28.588 22.587C28.9793 22.1957 29.45 22 30 22H34C34.55 22 35.021 22.1957 35.413 22.587C35.8043 22.979 36 23.45 36 24V26H40C40.55 26 41.021 26.196 41.413 26.588C41.8043 26.9793 42 27.45 42 28V39C42 39.55 41.8043 40.021 41.413 40.413C41.021 40.8043 40.55 41 40 41H24ZM24 39H40V28H24V39ZM30 26H34V24H30V26Z"
-              fill="black"></path>
+              fill="currentColor"></path>
           </g>
           <defs>
             <clipPath id="clip0_201_2">
@@ -45,7 +48,7 @@ interface Social {
         </h2>
         <a
           href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
-          class="-mx-6 -mb-6 px-6 py-6 border-t border-t-primary-200 dark:border-t-primary-600 border-primary-200 text-left rounded-br-lg rounded-bl-lg hover:bg-primary-200 dark:hover:bg-primary-600"
+          class="-mx-6 -mb-6 px-6 py-6 text-left rounded-br-lg rounded-bl-lg hover:bg-accent/10 dark:hover:bg-accent/20 transition"
         >
           聯絡我
           <svg
