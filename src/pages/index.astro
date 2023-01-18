@@ -5,14 +5,17 @@ import HeroBanner from '@/components/banner/Hero.astro';
 import Card from '@/components/card/Card.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
+import Infobox from '@/Components/app/Infobox.astro';
 
 const posts = await getCollection('post');
-const first3Posts = posts.filter((post, index) => {
-  if (post.data.isDraft === true) {
-    return false;
-  }
-  return index + 1 <= 3;
-});
+const first3Posts = posts
+  .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate))
+  .filter((post, index) => {
+    if (post.data.isDraft === true) {
+      return false;
+    }
+    return index + 1 <= 3;
+  });
 ---
 
 <Base title={''} description={''}>
@@ -26,13 +29,21 @@ const first3Posts = posts.filter((post, index) => {
     <div class="grid lg:grid-cols-4 grid-cols-1 gap-y-4 md:gap-x-4 mt-8 md:mt-0">
       <!-- Intro Card -->
       <Card>
-        <div class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-accent">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div
+          class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-accent dark:bg-accent-light"
+        >
+          <svg
+            class="text-primary-50 dark:text-primary-900"
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <g clip-path="url(#clip0_102_267)">
               <g clip-path="url(#clip1_102_267)">
                 <path
                   d="M29.4 36.6L24.8 32L29.4 27.4L28 26L22 32L28 38L29.4 36.6ZM34.6 36.6L39.2 32L34.6 27.4L36 26L42 32L36 38L34.6 36.6V36.6Z"
-                  fill="var(--primary-color-50)"></path>
+                  fill="currentColor"></path>
               </g>
             </g>
             <defs>
@@ -53,7 +64,7 @@ const first3Posts = posts.filter((post, index) => {
           </p>
           <a
             href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
-            class="-mx-6 -mb-6 px-6 py-6 border-t border-t-primary-200 dark:border-t-primary-600 border-primary-200 text-left rounded-br-lg rounded-bl-lg hover:bg-primary-200 dark:hover:bg-primary-600"
+            class="-mx-6 -mb-6 px-6 py-6 text-left rounded-br-lg rounded-bl-lg hover:bg-accent/10 dark:hover:bg-accent/20 transition"
           >
             提供意見
             <svg
