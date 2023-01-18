@@ -1,24 +1,53 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import HeroBanner from '@/components/banner/Hero.astro';
+import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 
 const posts = await getCollection('post');
-const filteredPosts = posts.filter((post) => {
-  if (post.data.isDraft === true) {
-    return false;
-  }
-  return true;
-});
+
+const filteredPosts = posts
+  .filter((post) => {
+    if (post.data.isDraft === true) {
+      return false;
+    }
+    return true;
+  })
+  .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate));
 
 const title = '所有文章';
 const description = '所有種類的文章';
 ---
 
 <Base title={title} description={description}>
-  <PageBanner title={title} />
+  <HeroBanner title={`${title}(${filteredPosts.length})`}>
+    <nav class="flex mt-16 gap-4">
+      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}/post/categories`}>
+        <Card>
+          <svg class="mx-auto mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+            <path
+              d="m13.05 21.7 11-17.7 11 17.7ZM35.3 44q-3.7 0-6.2-2.5t-2.5-6.2q0-3.7 2.5-6.2t6.2-2.5q3.7 0 6.2 2.5t2.5 6.2q0 3.7-2.5 6.2T35.3 44ZM6 42.75v-15.2h15.2v15.2ZM35.3 41q2.4 0 4.05-1.65T41 35.3q0-2.4-1.65-4.05T35.3 29.6q-2.4 0-4.05 1.65T29.6 35.3q0 2.4 1.65 4.05T35.3 41ZM9 39.75h9.2v-9.2H9Zm9.45-21.05h11.2l-5.6-9.05Zm5.6 0ZM18.2 30.55Zm17.1 4.75Z"
+            >
+            </path>
+          </svg>
+          分類
+        </Card>
+      </a>
+
+      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}/post/tags`}>
+        <Card>
+          <svg class="mx-auto mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" width="48"
+            ><path
+              d="m42 24-8.45 11.95q-.65.9-1.55 1.475-.9.575-2 .575H9q-1.25 0-2.125-.875T6 35V13q0-1.25.875-2.125T9 10h21q1.1 0 2 .575.9.575 1.55 1.475Zm-3.75 0-7.7-11H9v22h21.55ZM9 24v11-22Z"
+            ></path></svg
+          >
+          標籤
+        </Card>
+      </a>
+    </nav>
+  </HeroBanner>
   <section class="px-4">
     <CardGallery>
       {
