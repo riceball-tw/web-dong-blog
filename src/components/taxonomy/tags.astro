@@ -10,7 +10,7 @@ export interface Props {
   {
     tags.map((tag: string) => (
       <li>
-        <a class="opacity-40 hover:opacity-100" href={`${import.meta.env.BASE_URL}/post/tags/${tag}`}>
+        <a class="capitalize opacity-40 hover:opacity-100" href={`${import.meta.env.BASE_URL}/post/tags/${tag}`}>
           # {tag}
         </a>
       </li>
