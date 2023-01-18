@@ -1,0 +1,44 @@
+---
+export interface Props {
+  width?: 'number';
+  height?: 'number';
+  src: 'string';
+  alt: 'string';
+  title: 'string';
+  loading?: 'string';
+  href?: 'string';
+}
+
+const { width, height, src, alt, title, loading, href } = Astro.props;
+const figureTitle = title;
+---
+
+{
+  href ? (
+    <a target="_blank" download href={`${import.meta.env.BASE_URL}${href}`}>
+      <figure class="imgFigure">
+        <img
+          class="m-0 mx-auto"
+          width={width}
+          height={height}
+          src={`${import.meta.env.BASE_URL}${src}`}
+          alt={alt}
+          loading={loading}
+        />
+        {figureTitle ? <figcaption class="w-full">{figureTitle}</figcaption> : ''}
+      </figure>
+    </a>
+  ) : (
+    <figure class="imgFigure">
+      <img
+        class="m-0 mx-auto"
+        width={width}
+        height={height}
+        src={`${import.meta.env.BASE_URL}${src}`}
+        alt={alt}
+        loading={loading}
+      />
+      {figureTitle ? <figcaption class="w-full">{figureTitle}</figcaption> : ''}
+    </figure>
+  )
+}
