@@ -20,7 +20,7 @@ const { featureImage, featureIcon, title, titleTC, excerpt, themeColor, tags, ca
 const { Content } = await post.render();
 ---
 
-<Base title={title} description={excerpt} themeColor={themeColor}>
+<Base title={titleTC} description={excerpt} themeColor={themeColor}>
   <main>
     <article class="mt-40 prose-lg">
       <header class="mb-16 not-prose md:mx-auto mx-8">
@@ -55,7 +55,7 @@ const { Content } = await post.render();
                 style={`background-color: ${themeColor}`}
               >
                 <img
-                  src={featureIcon.url}
+                  src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
                   width={featureIcon.width}
                   height={featureIcon.height}
                   alt={featureIcon.alt}
@@ -90,6 +90,18 @@ const { Content } = await post.render();
   .wrapper p:has(img) {
     margin: 0 auto;
     width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .wrapper .imgFigure {
+    margin: 0 auto;
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .wrapper > video {
+    margin: 0 auto;
+
     grid-column: 1 / -1;
   }
 
