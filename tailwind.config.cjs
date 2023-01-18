@@ -69,9 +69,8 @@ module.exports = {
         900: 'var(--primary-color-900)',
       },
       accent: {
-        light: 'var(--accent-color-light)',
-        DEFAULT: 'var(--accent-color)',
-        dark: 'var(--accent-color-dark)',
+        light: 'rgba(var(--accent-color-light) / <alpha-value>)',
+        DEFAULT: 'rgba(var(--accent-color) / <alpha-value>)',
       },
     },
     extend: {
@@ -161,19 +160,19 @@ module.exports = {
               scrollbarWidth: 'thin',
               borderColor: theme('colors.primary[200]'),
             },
-            figcaption: {
-              borderWidth: theme('width.px'),
-              borderTop: 'none',
-              padding: theme('spacing.4'),
-              borderBottomRightRadius: theme('borderRadius.lg'),
-              borderBottomLeftRadius: theme('borderRadius.lg'),
-              marginTop: '0',
-              backgroundColor: theme('colors.primary[100]'),
-              borderColor: theme('colors.primary[200]'),
-              '&:hover': {
-                backgroundColor: theme('colors.primary[200]'),
-              },
-            },
+            // figcaption: {
+            //   borderWidth: theme('width.px'),
+            //   borderTop: 'none',
+            //   padding: theme('spacing.4'),
+            //   borderBottomRightRadius: theme('borderRadius.lg'),
+            //   borderBottomLeftRadius: theme('borderRadius.lg'),
+            //   marginTop: '0',
+            //   backgroundColor: theme('colors.primary[100]'),
+            //   borderColor: theme('colors.primary[200]'),
+            //   '&:hover': {
+            //     backgroundColor: theme('colors.primary[200]'),
+            //   },
+            // },
             tr: {
               '&:hover': {
                 borderRadius: theme('borderRadius.lg'),
