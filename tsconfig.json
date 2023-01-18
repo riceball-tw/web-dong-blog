@@ -1,10 +1,12 @@
 {
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
       "@public/*": ["public/*"]
-    }
+    },
+    "types": ["@astrojs/image/client"]
   }
 }
