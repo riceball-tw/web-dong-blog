@@ -54,6 +54,11 @@ const themeColor2 = Astro.props.themeColor ? `${Astro.props.themeColor}20` : '#b
 
     <!-- Navbar List -->
     <ul class="md:col-span-1 col-span-2 font-medium flex whitespace-nowrap">
+      <li class="flex-1 hover:opacity-60 transition-opacity transition">
+        <a href={`${import.meta.env.BASE_URL}`} class="inline-block w-full h-full flex justify-center items-center">
+          首頁
+        </a>
+      </li>
       {
         mainNav.map((navbarLink: NavbarItem) => (
           <li class="flex-1 hover:opacity-60 transition-opacity transition">
