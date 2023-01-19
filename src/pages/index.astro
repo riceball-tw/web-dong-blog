@@ -21,7 +21,7 @@ const first3Posts = posts
 <Base title={''} description={''}>
   <HeroBanner
     className="bg-fixed bg-no-repeat bg-center bg-cover"
-    style={`background-image: url('${import.meta.env.BASE_URL}/images/hero-banner/gradient.svg')`}
+    style={`background-image: url('${import.meta.env.BASE_URL}images/hero-banner/gradient.svg')`}
     title="用<span class='text-accent dark:text-accent-light'>簡白親切</span>的方式來描述如何<span class='text-accent dark:text-accent-light'>設計與架構網頁</span>。<br class='hidden md:block'>撰寫教學文章，為你捕捉並提煉入口即化的好知識。"
   />
   <!-- Article Section -->
@@ -80,24 +80,26 @@ const first3Posts = posts
           </a>
         </div>
       </Card>
-
-      {
-        first3Posts.map((post) => (
-          <PostCard
-            postData={{
-              slug: post.slug,
-              featureIcon: post.data.featureIcon,
-              titleTC: post.data.titleTC,
-              excerpt: post.data.excerpt,
-              publishDate: post.data.publishDate,
-              themeColor: post.data.themeColor,
-              tags: post.data.tags,
-              category: post.data.category,
-            }}
-          />
-        ))
-      }
-      <!-- {posts.map((post) => <PostCard data={post.data} />)} -->
+      <div class="col-span-3">
+        <CardGallery>
+          {
+            first3Posts.map((post) => (
+              <PostCard
+                postData={{
+                  slug: post.slug,
+                  featureIcon: post.data.featureIcon,
+                  titleTC: post.data.titleTC,
+                  excerpt: post.data.excerpt,
+                  publishDate: post.data.publishDate,
+                  themeColor: post.data.themeColor,
+                  tags: post.data.tags,
+                  category: post.data.category,
+                }}
+              />
+            ))
+          }
+        </CardGallery>
+      </div>
     </div>
   </section>
 
@@ -108,7 +110,7 @@ const first3Posts = posts
       反饋是我創作文章的動力之一
     </h2>
     <CardGallery>
-      <div class="max-w-[600px]">
+      <li class="max-w-[500px]">
         <Card>
           <div class="flex flex-col">
             <div class="md:text-2xl text-lg mb-16">
@@ -118,9 +120,7 @@ const first3Posts = posts
             <span class="opacity-60">由 六角 JS 直播同學 m_m 提供反饋</span>
           </div>
         </Card>
-
-        <!-- Newest Posts -->
-      </div>
+      </li>
     </CardGallery>
   </section>
 </Base>
