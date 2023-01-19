@@ -13,7 +13,7 @@ const cardFillColor = fillColor || themeColor + 10 || '#534af710';
 const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af720';
 ---
 
-<div class={`filter backdrop-blur-xl relative rounded-lg transition ${className} hover:-translate-y-2 active:scale-95`}>
+<div class={`filter backdrop-blur-xl relative rounded-lg transition hover:-translate-y-2 active:scale-95 ${className}`}>
   <div class="card rounded-lg p-6 transition-all">
     <slot />
   </div>
