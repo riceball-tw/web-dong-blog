@@ -24,7 +24,7 @@ const description = '所有種類的文章';
 <Base title={title} description={description}>
   <HeroBanner title={`${title}(${filteredPosts.length})`}>
     <nav class="flex mt-16 gap-4">
-      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}/post/categories`}>
+      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}post/categories`}>
         <Card>
           <svg class="mx-auto mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" width="48">
             <path
@@ -36,7 +36,7 @@ const description = '所有種類的文章';
         </Card>
       </a>
 
-      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}/post/tags`}>
+      <a class="flex-1 text-center max-w-none md:max-w-[200px]" href={`${import.meta.env.BASE_URL}post/tags`}>
         <Card>
           <svg class="mx-auto mb-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" width="48"
             ><path
