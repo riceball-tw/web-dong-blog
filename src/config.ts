@@ -7,7 +7,7 @@ export const brand = {
   thumbnail: {
     width: 1200,
     height: 627,
-    src: '/images/placeholder/webdongOg.jpg',
+    src: 'images/placeholder/brandOpenGraph.jpg',
     alt: '預設縮圖',
   },
 };
@@ -15,11 +15,11 @@ export const brand = {
 export const mainNav = [
   {
     name: '關於',
-    url: '/about',
+    url: 'about',
   },
   {
     name: '文章',
-    url: '/post',
+    url: 'post',
   },
 ];
 
