@@ -8,7 +8,10 @@ export interface Props {
 const { title, className, style } = Astro.props;
 ---
 
-<section style={`${style}`} class={`px-8 items-center justify-between pt-0 sm:pt-[var(--mainNav-height)] ${className}`}>
+<section
+  style={`${style}`}
+  class={`px-8 items-center justify-between pt-0 pb-20 -mb-10 sm:pt-[var(--mainNav-height)] ${className}`}
+>
   <div class="md:py-32 py-24">
     <h1 class="leading-normal lg:leading-normal text-3xl lg:text-6xl md:h-auto font-medium" set:html={title} />
     <slot />
