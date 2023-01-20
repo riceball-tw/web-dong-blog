@@ -10,10 +10,10 @@ export const get = async () => {
     description: brand.description,
     site: import.meta.env.SITE,
     items: posts.map((post) => ({
-      title: post.data.title,
+      title: post.data.titleTC,
       description: post.data.excerpt,
       pubDate: post.data.publishDate,
-      link: post.slug,
+      link: `post/${post.slug}`,
     })),
   });
 };
