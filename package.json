@@ -29,6 +29,7 @@
     "@tailwindcss/typography": "^0.5.8",
     "@types/randomcolor": "^0.5.7",
     "@typescript-eslint/parser": "^5.48.1",
+    "astro-og-canvas": "^0.1.6",
     "eslint": "8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.6.0",

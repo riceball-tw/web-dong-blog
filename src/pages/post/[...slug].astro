@@ -17,10 +17,11 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const { featureImage, featureIcon, title, titleTC, excerpt, themeColor, tags, category } = post.data;
+const { slug } = post;
 const { Content } = await post.render();
 ---
 
-<Base title={titleTC} description={excerpt} themeColor={themeColor}>
+<Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
   <main>
     <article class="mt-40 prose-lg">
       <header class="mb-16 not-prose md:mx-auto mx-8">

@@ -976,6 +976,14 @@ astro-eslint-parser@^0.9.0:
     eslint-visitor-keys "^3.0.0"
     espree "^9.0.0"
 
+astro-og-canvas@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/astro-og-canvas/-/astro-og-canvas-0.1.6.tgz#511b8e9131daa7df497fd445cdbb3f4d56efed41"
+  integrity sha512-yDmS2dtCeN+gr6X/Y7N8ieupUTXwfs4L72w6Mx1xLtzkhuzTDf4W29vPZKMtKFU6N+T6Cjx6aDXwIG2k5A2GVA==
+  dependencies:
+    canvaskit-wasm "^0.37.0"
+    entities "^4.4.0"
+
 astro@^1.9.2:
   version "1.9.2"
   resolved "https://registry.npmjs.org/astro/-/astro-1.9.2.tgz"
@@ -1206,6 +1214,11 @@ caniuse-lite@^1.0.30001400, caniuse-lite@^1.0.30001426:
   version "1.0.30001442"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001442.tgz"
   integrity sha512-239m03Pqy0hwxYPYR5JwOIxRJfLTWtle9FV8zosfV5pHg+/51uD4nxcUlM8+mWWGfwKtt8lJNHnD3cWw9VZ6ow==
+
+canvaskit-wasm@^0.37.0:
+  version "0.37.2"
+  resolved "https://registry.yarnpkg.com/canvaskit-wasm/-/canvaskit-wasm-0.37.2.tgz#add4321d720cae23f895644ed8f45757e03d6011"
+  integrity sha512-212imazRF98gLOTiU4JAXM7xDvaknI7jaPtAg4ETXGW5rLQs6pomgIvVPUSfoKnQVTdGgzj+B4e+/u0Da20aGg==
 
 ccount@^2.0.0:
   version "2.0.1"
@@ -1609,6 +1622,11 @@ enquirer@^2.3.5:
   integrity sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
   dependencies:
     ansi-colors "^4.1.1"
+
+entities@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.4.0.tgz#97bdaba170339446495e653cfd2db78962900174"
+  integrity sha512-oYp7156SP8LkeGD0GF85ad1X9Ai79WtRsZ2gxJqtBuzH+98YUV6jkHEKlZkMbcrjJjIVJNIDP/3WL9wQkoPbWA==
 
 es-abstract@^1.19.0, es-abstract@^1.20.4:
   version "1.21.0"

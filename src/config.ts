@@ -6,9 +6,9 @@ export const brand = {
   description: '用簡白親切的方式來描述如何設計與架構網頁。撰寫教學文章，為你捕捉並提煉入口即化的好知識。',
   thumbnail: {
     width: 1200,
-    height: 627,
-    src: 'images/placeholder/brandOpenGraph.jpg',
-    alt: '預設縮圖',
+    height: 630,
+    src: '/images/brand/default-og.jpg',
+    alt: '網頁東東橫幅',
   },
 };
 
