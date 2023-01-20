@@ -16,8 +16,15 @@ export interface Props {
 const { title, description, thumbnail } = Astro.props;
 const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
 const seoDescription = description || brand.description;
-const seoImage = thumbnail || brand.thumbnail;
-seoImage.src = new URL(seoImage.src, Astro.url).href;
+
+const seoImage = {
+  src: thumbnail?.src
+    ? new URL(`/open-graph/src/content/post/${thumbnail.src}.png`, Astro.url)
+    : new URL(brand.thumbnail.src, Astro.url),
+  width: thumbnail?.width ?? brand.thumbnail.width,
+  height: thumbnail?.width ?? brand.thumbnail.height,
+  alt: thumbnail?.alt ?? brand.thumbnail.alt,
+};
 ---
 
 <!-- Global -->
