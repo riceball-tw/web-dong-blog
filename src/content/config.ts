@@ -15,7 +15,7 @@ const post = defineCollection({
     return data.permalink || defaultSlug;
   },
 
-  schema: {
+  schema: z.object({
     isDraft: z.boolean().default(true),
     featureIcon: z
       .object({
@@ -41,7 +41,7 @@ const post = defineCollection({
     themeColor: z.z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
     publishDate: z.string().transform((str) => toReadableDate(str, '-')),
     permalink: z.string().optional(),
-  },
+  }),
 });
 
 function getDefaultColor() {

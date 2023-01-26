@@ -22,7 +22,7 @@ pnpm-debug.log*
 public/
 
 # generated type
-src/content/types.generated.d.ts
+.astro
 
 # markdown files
 src/content/post
