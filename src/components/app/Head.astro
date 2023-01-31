@@ -76,3 +76,15 @@ const seoImage = {
 <meta property="twitter:title" content={seoTitle} />
 <meta property="twitter:description" content={seoDescription} />
 <meta property="og:image" content={seoImage.src} />
+
+<!-- Analytics -->
+<script async src=`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLEANALYTIC_ID}`></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', import.meta.env.PUBLIC_GOOGLEANALYTIC_ID);
+</script>
