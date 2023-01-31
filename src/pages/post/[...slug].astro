@@ -3,6 +3,7 @@ import Base from '@/layouts/Base.astro';
 import { getCollection, CollectionEntry } from 'astro:content';
 import Tags from '@/components/taxonomy/tags.astro';
 import Category from '@/components/taxonomy/category.astro';
+import Utteranc from '@/components/app/Utteranc.astro';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
   }));
 }
 const { post } = Astro.props;
-const { featureImage, featureIcon, title, titleTC, excerpt, themeColor, tags, category } = post.data;
+const { featureImage, featureIcon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
 const { Content } = await post.render();
 ---
@@ -45,10 +46,17 @@ const { Content } = await post.render();
             <div class="mb-2">{title}</div>
             <div class="text-4xl mb-4 font-bold">{titleTC}</div>
           </h1>
-          <!-- Categories -->
-          <Category category={category} />
-          <!-- Tags -->
-          <Tags tags={tags} />
+          <div class="flex justify-between">
+            <div class="flex md:block">
+              <Category category={category} />
+              <Tags tags={tags} />
+            </div>
+            <!-- Publish Date -->
+            <time class="opacity-40 hover:opacity-100">
+              {publishDate}
+            </time>
+          </div>
+
           {
             featureIcon ? (
               <div
@@ -70,6 +78,7 @@ const { Content } = await post.render();
       </header>
       <div class="mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark singlePost wrapper">
         <Content />
+        <Utteranc />
       </div>
     </article>
   </main>
