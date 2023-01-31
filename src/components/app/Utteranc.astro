@@ -1,0 +1,25 @@
+<div class="comments">
+  <script>
+    function generateUtterance() {
+      // load utteranc comment
+      let getTheme = localStorage.theme;
+      getTheme = getTheme == null ? 'light' : getTheme;
+
+      const theme = getTheme === 'dark' ? 'github-dark' : 'github-light';
+      const s = document.createElement('script');
+      s.src = 'https://utteranc.es/client.js';
+      s.setAttribute('repo', 'riceball-tw/Blog-comment');
+      s.setAttribute('issue-term', 'title');
+      s.setAttribute('theme', theme);
+      s.setAttribute('crossorigin', 'anonymous');
+      s.setAttribute('async', '');
+      document.querySelector('div.comments').innerHTML = '';
+      document.querySelector('div.comments').appendChild(s);
+    }
+
+    window.addEventListener('updateTheme', () => {
+      generateUtterance();
+    });
+    generateUtterance();
+  </script>
+</div>

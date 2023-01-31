@@ -166,6 +166,9 @@ const themeColor2 = Astro.props.themeColor ? `${Astro.props.themeColor}20` : '#b
     } else {
       localStorage.theme = 'light';
     }
+
+    window.dispatchEvent(new Event('updateTheme'));
+
     themeUpdate();
   });
   themeUpdate();
