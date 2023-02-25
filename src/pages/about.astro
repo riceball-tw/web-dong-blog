@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import HeroBanner from '@/components/banner/Hero.astro';
 import Card from '@/components/card/Card.astro';
-import { socials, brand } from '@/config.ts';
+import { socials, brand } from '@/config';
 
 const title = '關於';
 interface Social {
@@ -92,7 +92,7 @@ interface Social {
       {
         socials.map((social: Social) => (
           <Card themeColor={social.themeColor} className=" ">
-            <a class="text-center p-4 inline-block flex justify-center items-center h-full flex-col" href={social.url}>
+            <a class="text-center p-4 flex justify-center items-center h-full flex-col" href={social.url}>
               <img
                 width="40"
                 height="40"
