@@ -29,8 +29,16 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
-        // override/add rules settings here, such as:
-        // "astro/no-set-html-directive": "error"
+        'import/extensions': [
+          'error',
+          'ignorePackages',
+          {
+            js: 'never',
+            jsx: 'never',
+            ts: 'never',
+            tsx: 'never',
+          },
+        ],
       },
     },
 
