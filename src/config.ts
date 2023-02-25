@@ -31,26 +31,32 @@ export const copyright = {
 export const socials = [
   {
     name: 'CodePen',
-    imgUrl: 'https://www.webdong.dev/images/social/codepen.svg',
+    imgUrl: '/images/social/codepen.svg',
     url: 'https://codepen.io/riecball',
     themeColor: '#000000',
   },
   {
     name: 'YouTube',
-    imgUrl: 'https://www.webdong.dev/images/social/youtube.svg',
-    url: 'https://www.youtube.com/channel/',
+    imgUrl: '/images/social/youtube.svg',
+    url: 'https://www.youtube.com/@w3dong',
     themeColor: '#ff0000',
   },
   {
     name: 'Instagram',
-    imgUrl: 'https://www.webdong.dev/images/social/instagram.svg',
-    url: 'https://www.instagram.com/',
+    imgUrl: '/images/social/instagram.svg',
+    url: 'https://www.instagram.com/webdong.dev',
     themeColor: '#c32aa3',
   },
   {
     name: 'GitHub',
-    imgUrl: 'https://www.webdong.dev/images/social/github.svg',
+    imgUrl: '/images/social/github.svg',
     url: 'https://github.com/riceball-tw',
     themeColor: '#424242',
+  },
+  {
+    name: 'Medium',
+    imgUrl: '/images/social/medium.svg',
+    url: 'https://medium.com/@webdong',
+    themeColor: '#000000',
   },
 ];
