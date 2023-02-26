@@ -7,7 +7,6 @@
       "@/*": ["src/*"],
       "@public/*": ["public/*"]
     },
-    "types": ["@astrojs/image/client"],
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   }
