@@ -5,7 +5,6 @@ import HeroBanner from '@/components/banner/Hero.astro';
 import Card from '@/components/card/Card.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
-import Infobox from '@/Components/app/Infobox.astro';
 
 const posts = await getCollection('post');
 const first3Posts = posts
@@ -85,9 +84,9 @@ const first3Posts = posts
           {
             first3Posts.map((post) => (
               <PostCard
-                postData={{
-                  slug: post.slug,
+                post={{
                   featureIcon: post.data.featureIcon,
+                  slug: post.slug,
                   titleTC: post.data.titleTC,
                   excerpt: post.data.excerpt,
                   publishDate: post.data.publishDate,
