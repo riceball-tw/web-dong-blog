@@ -140,7 +140,6 @@ const { Content } = await post.render();
   }
 
   .wrapper .imgFigure {
-    margin: 0 auto;
     width: 100%;
     grid-column: 1 / -1;
   }
@@ -154,6 +153,10 @@ const { Content } = await post.render();
   .wrapper > img {
     margin: 0 auto;
     grid-column: 1 / -1;
+  }
+
+  astro-island {
+    display: inline-block;
   }
 
   .raw-html-embed {
