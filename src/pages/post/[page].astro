@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import PostCard from '@/components/card/PostCard.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
+import HeroBanner from '@/components/banner/Hero.astro';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection('post');
+
+  const filteredPosts = posts
+    .filter((post) => {
+      if (post.data.isDraft) {
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate));
+
+  return paginate(filteredPosts, { pageSize: 12 });
+}
+
+const { page } = Astro.props;
+const title = `文章第 ${page.currentPage} 頁`;
+const description = '文章頁籤';
+---
+
+<Base title={title} description={description}>
+  <!--Display the current page number. Astro.params.page can also be used!-->
+
+  <HeroBanner title={title} />
+  <section class="px-4">
+    <CardGallery>
+      {
+        page.data.map((post) => (
+          <PostCard
+            post={{
+              slug: post.slug,
+              featureIcon: post.data.featureIcon,
+              titleTC: post.data.titleTC,
+              excerpt: post.data.excerpt,
+              publishDate: post.data.publishDate,
+              themeColor: post.data.themeColor,
+              tags: post.data.tags,
+              category: post.data.category,
+            }}
+          />
+        ))
+      }
+    </CardGallery>
+  </section>
+</Base>
