@@ -5,12 +5,11 @@ export interface Props {
   src: 'string';
   alt: 'string';
   title: 'string';
-  loading?: 'string';
+  loading?: 'eager' | 'lazy' | null | undefined;
   href?: 'string';
 }
 
 const { width, height, src, alt, title, loading, href } = Astro.props;
-const figureTitle = title;
 ---
 
 {
@@ -25,7 +24,7 @@ const figureTitle = title;
           alt={alt}
           loading={loading}
         />
-        {figureTitle ? <figcaption class="w-full">{figureTitle}</figcaption> : ''}
+        {title ? <figcaption class="w-full ">{title}</figcaption> : ''}
       </figure>
     </a>
   ) : (
@@ -38,7 +37,7 @@ const figureTitle = title;
         alt={alt}
         loading={loading}
       />
-      {figureTitle ? <figcaption class="w-full">{figureTitle}</figcaption> : ''}
+      {title ? <figcaption class=" w-full ">{title}</figcaption> : ''}
     </figure>
   )
 }
