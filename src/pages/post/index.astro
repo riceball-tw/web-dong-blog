@@ -49,6 +49,7 @@ const description = '所有種類的文章';
     </nav>
   </HeroBanner>
   <section class="px-4">
+    <h2 class="sr-only">{`${title}一共${filteredPosts.length}篇`}</h2>
     <CardGallery>
       {
         filteredPosts.map((post) => (
