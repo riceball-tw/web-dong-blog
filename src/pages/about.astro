@@ -91,18 +91,20 @@ interface Social {
     <ul class="grid grid-cols-3 gap-4 col-span-2">
       {
         socials.map((social: Social) => (
-          <Card themeColor={social.themeColor} className=" ">
-            <a class="text-center p-4 flex justify-center items-center h-full flex-col" href={social.url}>
-              <img
-                width="40"
-                height="40"
-                class="mb-4 mx-auto filter dark:invert"
-                src={social.imgUrl}
-                alt={`${social.name} + Logo`}
-              />
-              {social.name}
-            </a>
-          </Card>
+          <li>
+            <Card themeColor={social.themeColor} className=" ">
+              <a class="text-center p-4 flex justify-center items-center h-full flex-col" href={social.url}>
+                <img
+                  width="40"
+                  height="40"
+                  class="mb-4 mx-auto filter dark:invert"
+                  src={social.imgUrl}
+                  alt={`${social.name} + Logo`}
+                />
+                {social.name}
+              </a>
+            </Card>
+          </li>
         ))
       }
     </ul>
