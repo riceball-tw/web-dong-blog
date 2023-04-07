@@ -24,7 +24,7 @@ const { width, height, src, alt, title, loading, href } = Astro.props;
           alt={alt}
           loading={loading}
         />
-        {title ? <figcaption class="w-full ">{title}</figcaption> : ''}
+        {title ? <figcaption class="text-center bg-transparent">{title}</figcaption> : ''}
       </figure>
     </a>
   ) : (
@@ -37,7 +37,7 @@ const { width, height, src, alt, title, loading, href } = Astro.props;
         alt={alt}
         loading={loading}
       />
-      {title ? <figcaption class=" w-full ">{title}</figcaption> : ''}
+      {title ? <figcaption class="text-center bg-transparent">{title}</figcaption> : ''}
     </figure>
   )
 }
