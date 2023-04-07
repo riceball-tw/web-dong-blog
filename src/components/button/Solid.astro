@@ -1,14 +1,16 @@
 ---
 export interface Props {
   href: string;
+  className?: string;
 }
-const { href } = Astro.props;
+const { href, className } = Astro.props;
 ---
 
 <a
   href={href}
-  type="button"
-  class="text-white bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+  class={`text-center px-8 py-4 rounded-full text-white bg-gradient-to-br from-accent to-transparent dark:from-accent-light ring-2 ring-accent/20 dark:ring-accent-light/20 whitespace-nowrap ${
+    className || ''
+  }`}
 >
   <slot />
 </a>
