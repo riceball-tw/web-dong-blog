@@ -6,6 +6,9 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<section class="grid py-32 grid-cols-1 md:grid-cols-2 items-center justify-between px-8">
-  <h1 class="leading-normal md:leading-normal text-2xl md:text-3xl" set:html={title} />
+<section class="pt-0 sm:pt-[var(--mainNav-height)] mx-auto pb-16">
+  <h1
+    class="font-bold text-4xl md:text-7xl mx-auto my-8 text-left leading-tight md:leading-tight md:text-center"
+    set:html={title}
+  />
 </section>
