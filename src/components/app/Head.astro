@@ -78,8 +78,11 @@ const seoImage = {
 <meta property="og:image" content={seoImage.src} />
 
 <!-- Analytics -->
-<script async src=`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLEANALYTIC_ID}`></script>
-<script>
+<script
+  type="text/partytown"
+  src=`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLEANALYTIC_ID}`
+></script>
+<script type="text/partytown">
   window.dataLayer = window.dataLayer || [];
   function gtag() {
     dataLayer.push(arguments);
