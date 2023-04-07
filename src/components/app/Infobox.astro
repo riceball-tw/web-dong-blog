@@ -37,7 +37,7 @@ const { icon } = infoType[type];
 <aside class="infobox">
   <Card themeColor={themeColor}>
     <div class="flex items-center justify-center gap-4 md:flex-nowrap flex-wrap">
-      <div style={`${themeColor}`} set:html={icon} />
+      <div set:html={icon} />
       <slot />
     </div>
   </Card>
