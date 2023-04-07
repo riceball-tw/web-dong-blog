@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
-import HeroBanner from '@/components/banner/Hero.astro';
+import PageBanner from '@/components/banner/Page.astro';
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getCollection('post');
@@ -28,7 +28,7 @@ const description = '文章頁籤';
 <Base title={title} description={description}>
   <!--Display the current page number. Astro.params.page can also be used!-->
 
-  <HeroBanner title={title} />
+  <PageBanner title={title} />
   <section class="px-4">
     <CardGallery>
       {
