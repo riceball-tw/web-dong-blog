@@ -1,61 +1,22 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
-  // important: true,
   theme: {
     fontFamily: {
-      mono: [
-        'Fira Code',
-        'JetBrains Mono',
-        'ui-monospace',
-        'SFMono-Regular',
-        'Menlo',
-        'Monaco',
-        'Consolas',
-        'Liberation Mono',
-        'Courier New',
-        'monospace',
-      ],
-
-      serif: [
-        'ui-serif',
-        'Noto Serif TC',
-        'Noto Serif CJK TC',
-        'serif',
-        'Apple Color Emoji',
-        'Segoe UI Emoji',
-        'Segoe UI Symbol',
-        'Noto Color Emoji',
-      ],
-      sans: [
-        'ui-sans-serif',
-        'system-ui',
-        '-apple-system',
-        'BlinkMacSystemFont',
-        'Segoe UI',
-        'Roboto',
-        'Helvetica Neue',
-        'Arial',
-        'Noto Sans TC',
-        'Noto Sans CJK TC',
-        'sans-serif',
-        'Apple Color Emoji',
-        'Segoe UI Emoji',
-        'Segoe UI Symbol',
-        'Noto Color Emoji',
-      ],
+      mono: ['JetBrains Mono', 'Fira Code', ...defaultTheme.fontFamily.mono],
+      serif: [...defaultTheme.fontFamily.serif],
+      sans: ['Noto Sans CJK TC', 'Noto Sans TC', ...defaultTheme.fontFamily.sans],
     },
     colors: {
-      // Basic Setup
       inherit: 'inherit',
       current: 'currentColor',
       transparent: 'transparent',
       black: '#000',
       white: '#fff',
       debug: 'red',
-
-      // Utility Setup
       primary: {
         50: 'var(--primary-color-50)',
         100: 'var(--primary-color-100)',
@@ -67,6 +28,7 @@ module.exports = {
         700: 'var(--primary-color-700)',
         800: 'var(--primary-color-800)',
         900: 'var(--primary-color-900)',
+        1000: 'var(--primary-color-1000)',
       },
       accent: {
         light: 'rgba(var(--accent-color-light) / <alpha-value>)',
@@ -160,6 +122,7 @@ module.exports = {
               scrollbarWidth: 'thin',
               borderColor: theme('colors.primary[200]'),
             },
+
             // figcaption: {
             //   borderWidth: theme('width.px'),
             //   borderTop: 'none',
@@ -211,11 +174,7 @@ module.exports = {
               },
             },
             figcaption: {
-              backgroundColor: theme('colors.primary[800]'),
               borderColor: theme('colors.primary[600]'),
-              '&:hover': {
-                backgroundColor: theme('colors.primary[700]'),
-              },
             },
             tr: {
               '&:hover': {
