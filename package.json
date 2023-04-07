@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^0.14.0",
+    "@astrojs/partytown": "^1.1.1",
     "@astrojs/react": "^2.0.2",
     "@astrojs/rss": "^2.0.0",
     "@astrojs/sitemap": "^1.0.0",
@@ -26,6 +27,7 @@
     "randomcolor": "^0.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-hook-form": "^7.43.3",
     "rehype-slug": "^5.1.0",
     "rehype-toc": "^3.0.2",
     "sharp": "^0.31.3",
