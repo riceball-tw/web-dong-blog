@@ -26,7 +26,7 @@ const { Content } = await post.render();
   <main>
     <article class="mt-40 prose-lg">
       <header class="mb-16 not-prose md:mx-auto mx-8">
-        <!-- FeatureImageImage -->
+        <!-- Feature Image -->
         {
           featureImage ? (
             <img
@@ -42,10 +42,10 @@ const { Content } = await post.render();
         }
         <div class="relative mx-auto max-w-prose">
           <!-- Heading -->
-          <h1>
+          <div class="text-primary-900 dark:text-primary-50">
             <div class="mb-2">{title}</div>
-            <div class="text-4xl mb-4 font-bold">{titleTC}</div>
-          </h1>
+            <h1 class="text-4xl mb-4 font-bold">{titleTC}</h1>
+          </div>
           <div class="flex justify-between">
             <div class="flex md:block">
               <Category category={category} />
@@ -76,7 +76,7 @@ const { Content } = await post.render();
           }
         </div>
       </header>
-      <div class="mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark singlePost wrapper">
+      <div class="wrapper mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark">
         <Content />
         <Utteranc />
       </div>
@@ -88,9 +88,6 @@ const { Content } = await post.render();
   .toc {
     padding: 1rem;
     position: relative;
-    border: 1px solid currentColor;
-    border-radius: 1rem;
-    overflow: hidden;
     z-index: 1;
   }
 
@@ -103,7 +100,9 @@ const { Content } = await post.render();
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: currentColor;
+    border: 2px solid currentColor;
+    background-image: linear-gradient(to right, currentColor, transparent);
+    border-radius: 1rem;
     opacity: 0.05;
   }
 
@@ -116,7 +115,6 @@ const { Content } = await post.render();
     top: 0;
     left: -2rem;
   }
-
   .toc .toc-item::marker {
     font-size: 0px;
   }
@@ -175,25 +173,18 @@ const { Content } = await post.render();
     margin: 0 auto;
   }
 
+  table {
+    width: auto;
+  }
+
   .table {
     overflow: 'auto';
     display: block;
+
   }
-
-  /* table {
-  width: auto;
-
-}
-
-.table {
-  margin: 0 auto;
-  padding: 0 1rem;
-  width: 100%;
-  overflow-x: scroll;
-  grid-column: 1 / -1;
-} */
 
   p img {
     margin: 0 auto;
   }
+
 </style>
