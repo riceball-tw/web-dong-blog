@@ -24,8 +24,8 @@ const { Content } = await post.render();
 
 <Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
   <main>
-    <article class="mt-40 prose-lg">
-      <header class="mb-16 not-prose md:mx-auto mx-8">
+    <article class="prose-lg mt-40">
+      <header class="not-prose mx-8 mb-16 md:mx-auto">
         <!-- Feature Image -->
         {
           featureImage ? (
@@ -44,7 +44,7 @@ const { Content } = await post.render();
           <!-- Heading -->
           <div class="text-primary-900 dark:text-primary-50">
             <div class="mb-2">{title}</div>
-            <h1 class="text-4xl mb-4 font-bold">{titleTC}</h1>
+            <h1 class="mb-4 text-4xl font-bold">{titleTC}</h1>
           </div>
           <div class="flex justify-between">
             <div class="flex md:block">
@@ -60,7 +60,7 @@ const { Content } = await post.render();
           {
             featureIcon ? (
               <div
-                class="mx-auto absolute top-0 left-0 rounded-lg transform-gpu -translate-y-full -mt-8 overflow-hidden"
+                class="absolute top-0 left-0 mx-auto -mt-8 -translate-y-full transform-gpu overflow-hidden rounded-lg"
                 style={`background-color: ${themeColor}`}
               >
                 <img
@@ -76,7 +76,7 @@ const { Content } = await post.render();
           }
         </div>
       </header>
-      <div class="wrapper mx-8 md:mx-auto prose md:prose-lg max-w-none dark:prose-invert dark:prose-dark">
+      <div class="wrapper prose mx-8 max-w-none dark:prose-invert dark:prose-dark md:mx-auto md:prose-lg">
         <Content />
         <Utteranc />
       </div>
@@ -180,11 +180,9 @@ const { Content } = await post.render();
   .table {
     overflow: 'auto';
     display: block;
-
   }
 
   p img {
     margin: 0 auto;
   }
-
 </style>

@@ -9,20 +9,20 @@ interface Social {
 }
 ---
 
-<footer class="flex items-center mt-16 justify-between sm:mb-0 mb-[var(--mainNav-height)] flex-wrap">
+<footer class="mt-16 mb-[var(--mainNav-height)] flex flex-wrap items-center justify-between sm:mb-0">
   <!-- Copyrihgt -->
-  <div class="flex p-4 md:text-base opacity-60 md:opacity-100">
+  <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
     <a class="hover:underline" href={copyright.url}>
       {copyright.title}
     </a>
   </div>
-  <div class="flex items-center mr-4 md:mr-0">
+  <div class="mr-4 flex items-center md:mr-0">
     <ul class="flex items-center">
       {
         socials.map((social: Social) => (
           <li class="flex-1">
             <Clickable>
-              <a class="p-4 inline-block" href={social.url}>
+              <a class="inline-block p-4" href={social.url}>
                 <img
                   loading="lazy"
                   width="16"

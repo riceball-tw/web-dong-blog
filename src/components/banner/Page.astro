@@ -6,9 +6,9 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<section class="pt-0 sm:pt-[var(--mainNav-height)] mx-auto pb-16">
+<section class="mx-auto pt-0 pb-16 sm:pt-[var(--mainNav-height)]">
   <h1
-    class="font-bold text-4xl md:text-7xl mx-auto my-8 text-left leading-tight md:leading-tight md:text-center"
+    class="mx-auto my-8 text-left text-4xl font-bold leading-tight md:text-center md:text-7xl md:leading-tight"
     set:html={title}
   />
 </section>
