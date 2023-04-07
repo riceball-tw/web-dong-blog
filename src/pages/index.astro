@@ -1,125 +1,63 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
-import HeroBanner from '@/components/banner/Hero.astro';
-import Card from '@/components/card/Card.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
+import Outlined from '@/components/button/Outlined.astro';
+
+import Clickable from '@/components/app/Clickable.astro';
 
 const posts = await getCollection('post');
-const first3Posts = posts
+const first6Posts = posts
   .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate))
-  .filter((post, index) => {
-    if (post.data.isDraft === true) {
-      return false;
-    }
-    return index + 1 <= 3;
-  });
+  .filter((post, index) => !post.data.isDraft && index + 1 <= 6);
 ---
 
 <Base title={''} description={''}>
-  <HeroBanner
-    className="bg-fixed bg-no-repeat bg-center bg-cover"
-    style={`background-image: url('${import.meta.env.BASE_URL}images/hero-banner/gradient.svg')`}
-    title="用<span class='text-accent dark:text-accent-light'>簡白親切</span>的方式來描述如何<span class='text-accent dark:text-accent-light'>設計與架構網頁</span>。<br class='hidden md:block'>撰寫教學文章，為你捕捉並提煉入口即化的好知識。"
-  />
-  <!-- Article Section -->
-  <section class="px-4 md:pb-48 pb-24">
-    <div class="grid lg:grid-cols-4 grid-cols-1 gap-y-4 md:gap-x-4 mt-8 md:mt-0">
-      <!-- Intro Card -->
-      <Card>
-        <div
-          class="rounded-lg absolute top-0 left-0 transform-gpu ml-6 -translate-y-1/2 bg-accent dark:bg-accent-light"
+  <div class={`pt-0 sm:pt-[var(--mainNav-height)] p-8`}>
+    <section class="mb-32 max-w-[960px] mx-auto">
+      <div class="mb-8">
+        <h1
+          class="font-black text-7xl md:text-8xl mx-auto my-8 text-left leading-tight md:leading-tight md:text-center"
         >
-          <svg
-            class="text-primary-50 dark:text-primary-900"
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g clip-path="url(#clip0_102_267)">
-              <g clip-path="url(#clip1_102_267)">
-                <path
-                  d="M29.4 36.6L24.8 32L29.4 27.4L28 26L22 32L28 38L29.4 36.6ZM34.6 36.6L39.2 32L34.6 27.4L36 26L42 32L36 38L34.6 36.6V36.6Z"
-                  fill="currentColor"></path>
-              </g>
-            </g>
-            <defs>
-              <clipPath id="clip0_102_267">
-                <rect width="64" height="64" fill="white"></rect>
-              </clipPath>
-              <clipPath id="clip1_102_267">
-                <rect width="24" height="24" fill="white" transform="translate(20 20)"></rect>
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-
-        <div class="flex flex-col justify-between h-full pt-8">
-          <h2 class="sr-only">近期文章</h2>
-          <p class="text-2xl md:leading-normal mb-16">
-            網東撰寫設計思考、前端開發、現代程式設計……等議題的文章。歡迎提供建議或點擊以下連結聯絡我。
-          </p>
-          <a
-            href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
-            class="-mx-6 -mb-6 px-6 py-6 text-left rounded-br-lg rounded-bl-lg hover:bg-accent/10 dark:hover:bg-accent/20 transition"
-          >
-            提供意見
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6 inline-block"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
-            </svg>
-          </a>
-        </div>
-      </Card>
-      <div class="col-span-3">
-        <CardGallery>
-          {
-            first3Posts.map((post) => (
-              <PostCard
-                post={{
-                  featureIcon: post.data.featureIcon,
-                  slug: post.slug,
-                  titleTC: post.data.titleTC,
-                  excerpt: post.data.excerpt,
-                  publishDate: post.data.publishDate,
-                  themeColor: post.data.themeColor,
-                  tags: post.data.tags,
-                  category: post.data.category,
-                }}
-              />
-            ))
-          }
-        </CardGallery>
+          創造可被<span class="text-accent dark:text-accent-light">有效</span>與<span
+            class="text-accent dark:text-accent-light">有趣</span
+          >使用的網頁！
+        </h1>
+        <p class="prose dark:prose-invert mx-auto text-left md:text-center">
+          網頁東東撰寫前端開發與設計相關議題的文章，透過簡單易懂的文字，深入了解如何設計並建構具有吸引力和功能性的網頁。
+        </p>
       </div>
-    </div>
-  </section>
+      <div class="flex gap-4">
+        <Clickable className="w-full">
+          <Outlined className=" w-full inline-block" href="/post">所有文章</Outlined>
+        </Clickable>
+        <Clickable>
+          <Outlined className="inline-block" href="https://6lq5056dq0f.typeform.com/to/lxR072rZ">聯絡我</Outlined>
+        </Clickable>
+      </div>
+    </section>
 
-  <!-- Feedback Section -->
-  <section class="px-4 md:pb-48 pb-24">
-    <h2 class="dark:text-white text-black leading-normal lg:leading-normal text-2xl font-medium mb-20 md:h-auto">
-      由衷感謝各種形式的支持～<br />
-      反饋是我創作文章的動力之一
-    </h2>
-    <CardGallery>
-      <li class="max-w-[500px]">
-        <Card>
-          <div class="flex flex-col">
-            <div class="md:text-2xl text-lg mb-16">
-              覺得部落格好可愛，配色跟排版都很舒服，而且資料也整理得清楚，很棒內～
-            </div>
-
-            <span class="opacity-60">由 六角 JS 直播同學 m_m 提供反饋</span>
-          </div>
-        </Card>
-      </li>
-    </CardGallery>
-  </section>
+    <section class="h-full rounded-3xl relative mx-auto">
+      <h2 class="sr-only">最新文章</h2>
+      <CardGallery>
+        {
+          first6Posts.map((post) => (
+            <PostCard
+              post={{
+                featureIcon: post.data.featureIcon,
+                slug: post.slug,
+                titleTC: post.data.titleTC,
+                excerpt: post.data.excerpt,
+                publishDate: post.data.publishDate,
+                themeColor: post.data.themeColor,
+                tags: post.data.tags,
+                category: post.data.category,
+              }}
+            />
+          ))
+        }
+      </CardGallery>
+    </section>
+  </div>
 </Base>
