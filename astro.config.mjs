@@ -2,8 +2,6 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import rehypeSlug from 'rehype-slug';
-import rehypeToc from 'rehype-toc';
 import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
 
@@ -13,15 +11,6 @@ export default defineConfig({
     shikiConfig: {
       theme: 'monokai',
     },
-    rehypePlugins: [
-      [rehypeSlug, {}],
-      [
-        rehypeToc,
-        {
-          headings: ['h2', 'h3'],
-        },
-      ],
-    ],
   },
   integrations: [
     tailwind({
