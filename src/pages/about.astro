@@ -1,10 +1,10 @@
 ---
-import siteConfig from 'astro.config';
+import globalConfig from '@/globalConfig';
 import Base from '@/layouts/Base.astro';
 import PageBanner from '@/components/banner/Page.astro';
 import Card from '@/components/card/Card.astro';
 
-const { brand } = siteConfig;
+const { brand } = globalConfig;
 
 const title = '關於';
 interface Social {

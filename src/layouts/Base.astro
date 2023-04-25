@@ -1,6 +1,6 @@
 ---
 import '@/styles/global.css';
-import siteConfig from 'astro.config';
+import globalConfig from '@/globalConfig';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
 
@@ -16,7 +16,7 @@ export interface Props {
   };
 }
 
-const { brand } = siteConfig;
+const { brand } = globalConfig;
 
 const { title, description, themeColor, thumbnail } = Astro.props;
 const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
