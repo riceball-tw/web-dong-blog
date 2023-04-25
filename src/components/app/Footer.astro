@@ -1,5 +1,5 @@
 ---
-import { copyright, socials } from '@/config';
+import siteConfig from 'astro.config';
 import Clickable from '@/components/app/Clickable.astro';
 
 interface Social {
@@ -7,6 +7,7 @@ interface Social {
   imgUrl: string;
   name: string;
 }
+const { copyright, socials } = siteConfig.brand;
 ---
 
 <footer class="mt-16 mb-[var(--mainNav-height)] flex flex-wrap items-center justify-between sm:mb-0">

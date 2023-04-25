@@ -1,7 +1,8 @@
 ---
+import siteConfig from 'astro.config';
 import '@/styles/global.css';
-import { brand } from '@/config';
 
+const { brand } = siteConfig;
 export interface Props {
   title: string;
   description: string;

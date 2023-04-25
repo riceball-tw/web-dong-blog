@@ -1,5 +1,4 @@
 ---
-import { mainNav } from '@/config';
 import Clickable from '@/components/app/Clickable.astro';
 
 interface NavbarItem {
@@ -10,6 +9,21 @@ interface NavbarItem {
 export interface Props {
   themeColor: string;
 }
+
+const mainNav = [
+  {
+    name: '首頁',
+    url: '/',
+  },
+  {
+    name: '關於',
+    url: '/about',
+  },
+  {
+    name: '文章',
+    url: '/post',
+  },
+];
 
 const themeColor = Astro.props.themeColor || '#534af7';
 const themeColor2 = Astro.props.themeColor ? `${Astro.props.themeColor}20` : '#b887f7';
@@ -70,16 +84,10 @@ const themeColor2 = Astro.props.themeColor ? `${Astro.props.themeColor}20` : '#b
 
     <!-- Navbar List -->
     <ul class="col-span-2 flex whitespace-nowrap font-medium md:col-span-1">
-      <li class="flex-1 transition-opacity hover:opacity-60">
-        <a href={import.meta.env.BASE_URL} class="flex h-full w-full items-center justify-center"> 首頁</a>
-      </li>
       {
         mainNav.map((navbarLink: NavbarItem) => (
           <li class="flex-1 transition-opacity hover:opacity-60">
-            <a
-              href={import.meta.env.BASE_URL + navbarLink.url}
-              class="  flex h-full w-full items-center justify-center "
-            >
+            <a href={navbarLink.url} class="flex h-full w-full items-center justify-center ">
               {navbarLink.name}
             </a>
           </li>
