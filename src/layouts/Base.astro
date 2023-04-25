@@ -1,12 +1,13 @@
 ---
-import Head from '@/components/app/Head.astro';
+import '@/styles/global.css';
+import siteConfig from 'astro.config';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
 
 export interface Props {
   title: string;
   description: string;
-  themeColor?: string;
+  themeColor: string;
   thumbnail?: {
     width?: number;
     height?: number;
@@ -15,20 +16,70 @@ export interface Props {
   };
 }
 
+const { brand } = siteConfig;
+
 const { title, description, themeColor, thumbnail } = Astro.props;
+const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
+const seoDescription = description || brand.description;
+
+const seoImage = {
+  src: thumbnail?.src
+    ? new URL(`/open-graph/src/content/post/${thumbnail.src}.png`, Astro.url)
+    : new URL(brand.thumbnail.src, Astro.url),
+  width: thumbnail?.width ?? brand.thumbnail.width,
+  height: thumbnail?.width ?? brand.thumbnail.height,
+  alt: thumbnail?.alt ?? brand.thumbnail.alt,
+};
+
 const themeColorTransparent = (themeColor || '#534af7') + 30;
 ---
 
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
   <head>
-    <slot name="head">
-      <Head title={title} description={description} thumbnail={thumbnail} />
-    </slot>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{seoTitle}</title>
+    <meta name="title" content={seoTitle} />
+    <meta name="description" content={seoDescription} />
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/images/brand/logo-favicon.svg" type="image/svg+xml" />
+    <!-- Open Graph -->
+    <meta property="og:url" content={Astro.url.origin} />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={seoTitle} />
+    <meta property="og:description" content={seoDescription} />
+    <meta property="og:image" content={seoImage.src} />
+    <meta property="og:image:alt" content={seoImage.alt} />
+    <meta property="og:image:width" content={seoImage.width} />
+    <meta property="og:image:height" content={seoImage.height} />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content={Astro.url.origin} />
+    <meta property="twitter:title" content={seoTitle} />
+    <meta property="twitter:description" content={seoDescription} />
+    <meta property="og:image" content={seoImage.src} />
+    <!-- Analytics -->
+    <script
+      type="text/partytown"
+      src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLEANALYTIC_ID}`}
+    ></script>
+    <script type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', import.meta.env.PUBLIC_GOOGLEANALYTIC_ID);
+    </script>
   </head>
   <body
-    class={`bg-primary-50 text-primary-800 from-white dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900
-   dark:text-primary-50 bg-no-repeat bg-cover bg-center body selection:bg-accent selection:text-primary-50  `}
+    class="body bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-accent selection:text-primary-50 after:absolute after:top-0 after:left-0 after:-z-10 after:block after:h-full after:w-full after:content-[''] dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
   >
     <Navbar themeColor={themeColor} />
     <div class="min-h-screen">
@@ -37,16 +88,9 @@ const themeColorTransparent = (themeColor || '#534af7') + 30;
     <Footer />
   </body>
 </html>
+
 <style define:vars={{ themeColorTransparent }}>
-  .body::before {
-    content: '';
-    display: block;
-    top: 0;
-    left: 0;
-    position: absolute;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
+  .body::after {
     background: linear-gradient(var(--themeColorTransparent), transparent 100%);
   }
 </style>
