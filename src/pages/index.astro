@@ -4,7 +4,6 @@ import Base from '@/layouts/Base.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import Outlined from '@/components/button/Outlined.astro';
-
 import Clickable from '@/components/app/Clickable.astro';
 
 const posts = await getCollection('post');
@@ -13,51 +12,47 @@ const first6Posts = posts
   .filter((post, index) => !post.data.isDraft && index + 1 <= 6);
 ---
 
-<Base title={''} description={''}>
-  <div class={`pt-0 sm:pt-[var(--mainNav-height)] p-8`}>
-    <section class="mx-auto mb-32 max-w-[960px]">
-      <div class="mb-8">
+<Base>
+  <div class="p-4 sm:mt-[var(--mainNav-height)]">
+    <section class="rounded-xl py-24">
+      <div class="mx-auto mb-8 max-w-[1200px]">
         <h1
-          class="mx-auto my-8 text-left text-7xl font-black leading-tight md:text-center md:text-8xl md:leading-tight"
+          style="background-clip: text;
+          -webkit-background-clip: text;"
+          class="mx-auto mb-8 bg-gradient-to-b from-primary-800 to-primary-700 bg-clip-text p-6 text-left text-5xl font-black leading-tight text-transparent dark:from-primary-50 dark:to-primary-300 md:text-center md:text-8xl md:leading-tight"
         >
-          創造可被<span class="text-accent dark:text-accent-light">有效</span>與<span
-            class="text-accent dark:text-accent-light">有趣</span
-          >使用的網頁！
+          我用最<span class="text-accent dark:text-accent-light">簡單親切</span>的方式描述如何設計與架構網頁
         </h1>
-        <p class="prose mx-auto text-left dark:prose-invert md:text-center">
-          網頁東東撰寫前端開發與設計相關議題的文章，透過簡單易懂的文字，深入了解如何設計並建構具有吸引力和功能性的網頁。
-        </p>
+        <div class="flex gap-4">
+          <Clickable className="w-full">
+            <Outlined className=" w-full inline-block" href="/post">所有文章</Outlined>
+          </Clickable>
+          <Clickable>
+            <Outlined className="inline-block" href="https://6lq5056dq0f.typeform.com/to/lxR072rZ">聯絡我</Outlined>
+          </Clickable>
+        </div>
       </div>
-      <div class="flex gap-4">
-        <Clickable className="w-full">
-          <Outlined className=" w-full inline-block" href="/post">所有文章</Outlined>
-        </Clickable>
-        <Clickable>
-          <Outlined className="inline-block" href="https://6lq5056dq0f.typeform.com/to/lxR072rZ">聯絡我</Outlined>
-        </Clickable>
-      </div>
-    </section>
-
-    <section class="relative mx-auto h-full rounded-3xl">
-      <h2 class="sr-only">最新文章</h2>
-      <CardGallery>
-        {
-          first6Posts.map((post) => (
-            <PostCard
-              post={{
-                featureIcon: post.data.featureIcon,
-                slug: post.slug,
-                titleTC: post.data.titleTC,
-                excerpt: post.data.excerpt,
-                publishDate: post.data.publishDate,
-                themeColor: post.data.themeColor,
-                tags: post.data.tags,
-                category: post.data.category,
-              }}
-            />
-          ))
-        }
-      </CardGallery>
     </section>
   </div>
+  <section class="relative mx-auto h-full rounded-3xl px-4">
+    <h2 class="sr-only">最新文章</h2>
+    <CardGallery>
+      {
+        first6Posts.map((post) => (
+          <PostCard
+            post={{
+              featureIcon: post.data.featureIcon,
+              slug: post.slug,
+              titleTC: post.data.titleTC,
+              excerpt: post.data.excerpt,
+              publishDate: post.data.publishDate,
+              themeColor: post.data.themeColor,
+              tags: post.data.tags,
+              category: post.data.category,
+            }}
+          />
+        ))
+      }
+    </CardGallery>
+  </section>
 </Base>
