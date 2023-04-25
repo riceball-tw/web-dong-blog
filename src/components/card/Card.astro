@@ -8,27 +8,52 @@ export interface Props {
 const { themeColor, fillColor, className } = Astro.props;
 const borderWidth = '1px';
 const cardBorderColor = themeColor ? themeColor + 40 : '#534af740';
-const cardShadowColor = themeColor ? themeColor + 20 : '#534af710';
-const cardFillColor = fillColor || themeColor + 10 || '#534af710';
-const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af720';
+const cardFillColor = fillColor || '#534af710';
+const cardShadowColor = themeColor ? themeColor + 20 : '#534af720';
+const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af780';
 ---
 
-<div class={`filter backdrop-blur-xl relative rounded-lg transition hover:-translate-y-2 active:scale-95 ${className}`}>
-  <div class="card rounded-lg p-6 transition-all">
-    <slot />
-  </div>
+<div
+  class={`filter card p-6 rounded-lg transition-all backdrop-blur-xl relative hover:-translate-y-4 active:scale-95 origin-bottom ${className}`}
+>
+  <slot />
 </div>
 
 <style define:vars={{ borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
   .card {
-    width: 100%;
-    height: 100%;
     background-color: var(--cardFillColor);
     border: var(--borderWidth) solid var(--cardBorderColor);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 0.3rem;
+    transform: translate(0, 100%);
+    background-color: var(--cardFillColor);
+    border: var(--borderWidth) solid var(--cardBorderColor);
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    opacity: 0.5;
+    transition: 0.3s;
   }
   .card:hover {
     background-color: var(--cardHoverFillColor);
     border-color: var(--cardBorderColor);
     box-shadow: 0 0 30px 10px var(--cardShadowColor);
+  }
+
+  .card:hover:after {
+    height: 0.6rem;
+    background: linear-gradient(0deg, transparent, var(--cardHoverFillColor));
+    opacity: 0.45;
+  }
+
+  .card:active:after {
+    height: 0.3rem;
+    opacity: 1;
   }
 </style>
