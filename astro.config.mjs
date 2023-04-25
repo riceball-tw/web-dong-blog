@@ -10,6 +10,9 @@ import partytown from '@astrojs/partytown';
 export default defineConfig({
   site: 'https://www.webdong.dev',
   markdown: {
+    shikiConfig: {
+      theme: 'monokai',
+    },
     rehypePlugins: [
       [rehypeSlug, {}],
       [
