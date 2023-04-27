@@ -19,12 +19,12 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { featureImage, featureIcon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
-const { Content } = await post.render();
+const { Content, headings } = await post.render();
 ---
 
 <Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
-  <main>
-    <article class="prose-lg mt-40">
+  <main style="margin-top: var(--mainNav-height)" class="prose-lg pt-20">
+    <article>
       <header class="not-prose mx-8 mb-16 md:mx-auto">
         <!-- Feature Image -->
         {
@@ -60,7 +60,7 @@ const { Content } = await post.render();
           {
             featureIcon ? (
               <div
-                class="absolute top-0 left-0 mx-auto -mt-8 -translate-y-full transform-gpu overflow-hidden rounded-lg"
+                class="absolute left-0 top-0 mx-auto -mt-8 -translate-y-full transform-gpu overflow-hidden rounded-lg"
                 style={`background-color: ${themeColor}`}
               >
                 <img
@@ -76,8 +76,32 @@ const { Content } = await post.render();
           }
         </div>
       </header>
-      <div class="wrapper prose mx-8 max-w-none dark:prose-invert dark:prose-dark md:mx-auto md:prose-lg">
-        <Content />
+
+      <div class="wrapper relative mx-8 max-w-none md:mx-auto">
+        <div style="top: var(--mainNav-height)" class="toc sticky left-1/2 mx-3 h-fit w-fit transform-gpu">
+          {
+            Boolean(headings.length) && (
+              <aside class="toc hidden px-8 xl:block">
+                <ul class="mt-4">
+                  {headings.map(({ depth, slug: headingSlug, text }) => (
+                    <li class="toc-item hover:text-accent dark:hover:text-accent-light line-clamp-2 opacity-60 hover:opacity-100">
+                      <a
+                        class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                        href={`#${headingSlug}`}
+                        aria-label={`Scroll to section: ${text}`}
+                      >
+                        <span /> {text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </aside>
+            )
+          }
+        </div>
+        <div class="article-content prose dark:prose-invert dark:prose-dark md:prose-lg">
+          <Content />
+        </div>
         <Utteranc />
       </div>
     </article>
@@ -85,36 +109,15 @@ const { Content } = await post.render();
 </Base>
 
 <style is:inline>
-  .toc {
-    padding: 1rem;
-    position: relative;
-    z-index: 1;
+  .wrapper > .toc {
+    grid-column: 3;
+    grid-row: 1;
   }
 
-  .toc::after {
-    z-index: -1;
-    position: absolute;
-    content: '';
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid currentColor;
-    background-image: linear-gradient(to right, currentColor, transparent);
-    border-radius: 1rem;
-    opacity: 0.05;
+  .article-content h2:first-of-type {
+    margin-top: 0;
   }
 
-  .toc::before {
-    content: 'TOC';
-    font-size: 4.5rem;
-    position: absolute;
-    writing-mode: vertical-lr;
-    opacity: 0.05;
-    top: 0;
-    left: -2rem;
-  }
   .toc .toc-item::marker {
     font-size: 0px;
   }
