@@ -4,32 +4,40 @@
 
 @layer base {
   :root {
-    --primary-color-50: #f8fafb;
-    --primary-color-100: #ebeffb;
-    --primary-color-200: #d6d6f7;
-    --primary-color-300: #b4b2ec;
-    --primary-color-400: #9789de;
-    --primary-color-500: #7e65d2;
-    --primary-color-600: #6749be;
-    --primary-color-700: #4e369b;
-    --primary-color-800: #36266e;
-    --primary-color-1000: #0d0a28;
-
-    --accent-color-light: 184 135 247;
-    --accent-color: 83 74 247;
-    --accent-color-hex: #534af7;
-
-    /* --accent-color-light: #b887f7; */
-
+    --primary-color-50: 248 250 251;
+    --primary-color-100: 235 239 251;
+    --primary-color-200: 214 214 247;
+    --primary-color-300: 180 178 236;
+    --primary-color-400: 151 137 222;
+    --primary-color-500: 126 101 210;
+    --primary-color-600: 103 73 190;
+    --primary-color-700: 78 54 155;
+    --primary-color-800: 54 38 110;
+    --primary-color-900: 34 24 75;
+    --primary-color-1000: 13 10 40;
+    --secondary-color-light: 184 135 247;
+    --secondary-color: 83 74 247;
+    --accent-color-light: 240 147 89;
+    --accent-color: 210 143 101;
     --success-color: #4af7c9;
     --error-color: #b52f74;
-
     --mainNav-height: 80px;
   }
 }
 
 @layer components {
   *:is(h1, h2, h3, h4, h5, h6) {
-    scroll-margin-top: calc(var(--mainNav-height) + 1rem);
+    scroll-margin-top: var(--mainNav-height);
+    position: relative;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion) {
+  html {
+    scroll-behavior: none;
   }
 }
