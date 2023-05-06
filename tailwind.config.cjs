@@ -18,21 +18,25 @@ module.exports = {
       white: '#fff',
       debug: 'red',
       primary: {
-        50: 'var(--primary-color-50)',
-        100: 'var(--primary-color-100)',
-        200: 'var(--primary-color-200)',
-        300: 'var(--primary-color-300)',
-        400: 'var(--primary-color-400)',
-        500: 'var(--primary-color-500)',
-        600: 'var(--primary-color-600)',
-        700: 'var(--primary-color-700)',
-        800: 'var(--primary-color-800)',
-        900: 'var(--primary-color-900)',
-        1000: 'var(--primary-color-1000)',
+        50: 'rgb(var(--primary-color-50) / <alpha-value>)',
+        100: 'rgb(var(--primary-color-100) / <alpha-value>)',
+        200: 'rgb(var(--primary-color-200) / <alpha-value>)',
+        300: 'rgb(var(--primary-color-300) / <alpha-value>)',
+        400: 'rgb(var(--primary-color-400) / <alpha-value>)',
+        500: 'rgb(var(--primary-color-500) / <alpha-value>)',
+        600: 'rgb(var(--primary-color-600) / <alpha-value>)',
+        700: 'rgb(var(--primary-color-700) / <alpha-value>)',
+        800: 'rgb(var(--primary-color-800) / <alpha-value>)',
+        900: 'rgb(var(--primary-color-900) / <alpha-value>)',
+        1000: 'rgb(var(--primary-color-1000) / <alpha-value>)',
+      },
+      secondary: {
+        light: 'rgb(var(--secondary-color-light) / <alpha-value>)',
+        DEFAULT: 'rgb(var(--secondary-color) / <alpha-value>)',
       },
       accent: {
-        light: 'rgba(var(--accent-color-light) / <alpha-value>)',
-        DEFAULT: 'rgba(var(--accent-color) / <alpha-value>)',
+        light: 'rgb(var(--accent-color-light) / <alpha-value>)',
+        DEFAULT: 'rgb(var(--accent-color) / <alpha-value>)',
       },
     },
     extend: {
@@ -60,7 +64,6 @@ module.exports = {
             '--tw-prose-pre-bg': theme('colors.primary[900]'),
             '--tw-prose-th-borders': theme('colors.primary[300]'),
             '--tw-prose-td-borders': theme('colors.primary[300]'),
-
             '--tw-prose-invert-body': theme('colors.primary[200]'),
             '--tw-prose-invert-headings': theme('colors.white'),
             '--tw-prose-invert-lead': theme('colors.primary[300]'),
@@ -77,25 +80,16 @@ module.exports = {
             '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
             '--tw-prose-invert-th-borders': theme('colors.primary[600]'),
             '--tw-prose-invert-td-borders': theme('colors.primary[600]'),
-
+            'blockquote p:first-of-type::before': true,
+            'blockquote p:last-of-type::after': true,
+            'code::before': false,
+            'code::after': false,
             img: {
               borderRadius: theme('borderRadius.lg'),
             },
             video: {
               borderRadius: theme('borderRadius.lg'),
             },
-            blockquote: {
-              padding: '0',
-            },
-            // Remove code's before and after backtick
-            'blockquote p:first-of-type::before': true,
-            'blockquote p:last-of-type::after': true,
-            'code::before': false,
-            'code::after': false,
-          },
-        },
-        lg: {
-          css: {
             blockquote: {
               textAlign: 'center',
               paddingLeft: 'none',
@@ -122,20 +116,6 @@ module.exports = {
               scrollbarWidth: 'thin',
               borderColor: theme('colors.primary[200]'),
             },
-
-            // figcaption: {
-            //   borderWidth: theme('width.px'),
-            //   borderTop: 'none',
-            //   padding: theme('spacing.4'),
-            //   borderBottomRightRadius: theme('borderRadius.lg'),
-            //   borderBottomLeftRadius: theme('borderRadius.lg'),
-            //   marginTop: '0',
-            //   backgroundColor: theme('colors.primary[100]'),
-            //   borderColor: theme('colors.primary[200]'),
-            //   '&:hover': {
-            //     backgroundColor: theme('colors.primary[200]'),
-            //   },
-            // },
             tr: {
               '&:hover': {
                 borderRadius: theme('borderRadius.lg'),
