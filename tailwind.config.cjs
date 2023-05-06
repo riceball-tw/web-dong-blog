@@ -107,6 +107,7 @@ module.exports = {
               },
             },
             table: {
+              '@apply border-primary-200': {},
               display: 'block',
               padding: theme('spacing.8'),
               overflow: 'auto',
@@ -114,12 +115,11 @@ module.exports = {
               borderRadius: theme('borderRadius.lg'),
               borderWidth: theme('width.px'),
               scrollbarWidth: 'thin',
-              borderColor: theme('colors.primary[200]'),
             },
             tr: {
               '&:hover': {
+                '@apply bg-primary-200': {},
                 borderRadius: theme('borderRadius.lg'),
-                backgroundColor: theme('colors.primary[200]'),
               },
             },
             td: {
@@ -147,23 +147,22 @@ module.exports = {
         dark: {
           css: {
             table: {
-              backgroundColor: theme('colors.primary[800]'),
-              borderColor: theme('colors.primary[700]'),
+              '@apply bg-primary-900 border-primary-800': {},
               '&:hover': {
-                borderColor: theme('colors.primary[600]'),
+                '@apply border-primary-700': {},
               },
             },
             figcaption: {
-              borderColor: theme('colors.primary[600]'),
+              '@apply border-primary-600': {},
             },
             tr: {
               '&:hover': {
                 borderRadius: theme('borderRadius.lg'),
-                backgroundColor: theme('colors.primary[700]'),
+                '@apply border-primary-700': {},
               },
             },
             ':not(pre) > code': {
-              backgroundColor: theme('colors.primary[800]'),
+              '@apply bg-primary-800': {},
             },
           },
         },
