@@ -23,12 +23,14 @@ const { Content, headings } = await post.render();
 ---
 
 <Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
-  <main style="margin-top: var(--mainNav-height)" class="prose-lg pt-20">
-    <article>
-      <header class="not-prose mx-8 mb-16 md:mx-auto">
+  <main style="margin-top: var(--mainNav-height)" class="pt-20">
+    <article
+      class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert dark:prose-dark md:prose-xl lg:grid"
+    >
+      <header class="not-prose col-start-2 mb-20">
         <!-- Feature Image -->
         {
-          featureImage ? (
+          featureImage && (
             <img
               class="mx-auto mb-16"
               src={import.meta.env.URL_PREFIX + featureImage.url}
@@ -36,15 +38,13 @@ const { Content, headings } = await post.render();
               height={featureImage.height}
               alt={featureImage.alt}
             />
-          ) : (
-            ''
           )
         }
-        <div class="relative mx-auto max-w-prose">
+        <div class="relative mx-auto">
           <!-- Heading -->
           <div class="text-primary-900 dark:text-primary-50">
             <div class="mb-2">{title}</div>
-            <h1 class="mb-4 text-4xl font-bold">{titleTC}</h1>
+            <h1 class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
           </div>
           <div class="flex justify-between">
             <div class="flex md:block">
@@ -58,7 +58,7 @@ const { Content, headings } = await post.render();
           </div>
 
           {
-            featureIcon ? (
+            featureIcon && (
               <div
                 class="absolute left-0 top-0 mx-auto -mt-8 -translate-y-full transform-gpu overflow-hidden rounded-lg"
                 style={`background-color: ${themeColor}`}
@@ -70,38 +70,41 @@ const { Content, headings } = await post.render();
                   alt={featureIcon.alt}
                 />
               </div>
-            ) : (
-              ''
             )
           }
         </div>
       </header>
 
-      <div class="wrapper relative mx-8 max-w-none md:mx-auto">
-        <div style="top: var(--mainNav-height)" class="toc sticky left-1/2 mx-3 h-fit w-fit transform-gpu">
-          {
-            Boolean(headings.length) && (
-              <aside class="toc hidden px-8 xl:block">
-                <ul class="mt-4">
-                  {headings.map(({ depth, slug: headingSlug, text }) => (
-                    <li class="toc-item hover:text-accent dark:hover:text-accent-light line-clamp-2 opacity-60 hover:opacity-100">
-                      <a
-                        class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
-                        href={`#${headingSlug}`}
-                        aria-label={`Scroll to section: ${text}`}
-                      >
-                        <span /> {text}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            )
-          }
-        </div>
-        <div class="article-content prose dark:prose-invert dark:prose-dark md:prose-lg">
-          <Content />
-        </div>
+      <div
+        style="top: var(--mainNav-height)"
+        class="sticky left-1/2 z-20 col-start-3 row-start-2 mx-3 h-fit w-fit transform-gpu"
+      >
+        {
+          Boolean(headings.length) && (
+            <aside class="toc hidden px-8 xl:block">
+              <ul class="mt-4">
+                {headings.map(({ depth, slug: headingSlug, text }) => (
+                  <li class="toc-item hover:text-accent dark:hover:text-accent-light line-clamp-2 list-none opacity-60 hover:opacity-100">
+                    <a
+                      class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                      href={`#${headingSlug}`}
+                      aria-label={`Scroll to section: ${text}`}
+                    >
+                      <span /> {headingSlug}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          )
+        }
+      </div>
+
+      <div class="article-grid article-content relative z-10 col-span-full row-start-2 md:prose-lg lg:grid">
+        <Content />
+      </div>
+
+      <div class="col-start-2">
         <Utteranc />
       </div>
     </article>
@@ -109,49 +112,56 @@ const { Content, headings } = await post.render();
 </Base>
 
 <style is:inline>
-  .wrapper > .toc {
-    grid-column: 3;
-    grid-row: 1;
+  /* Article Layout */
+  .article-grid {
+    grid-template-columns: 1fr min(65ch, 100%) 1fr;
   }
 
-  .article-content h2:first-of-type {
-    margin-top: 0;
-  }
-
-  .toc .toc-item::marker {
-    font-size: 0px;
-  }
-
-  .wrapper {
-    display: grid;
-    grid-template-columns:
-      1fr
-      min(65ch, 100%)
-      1fr;
-  }
-  .wrapper > * {
+  .article-content > * {
     grid-column: 2;
   }
-  /* .wrapper p:has(> img) { */
 
-  .wrapper p:has(img) {
-    margin: 0 auto;
+  /* Heading Link */
+  .heading-link {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: -1rem;
+    opacity: 0.4;
+    transform: translate(-100%, -50%);
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+  .heading-link:hover {
+    opacity: 1;
+  }
+  :is(h1, h2, h3, h4, h5, h6):hover .heading-link {
+    opacity: 1;
+  }
+
+  /* External Link */
+  .external-link-icon {
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+
+  /* Inside article-content */
+  .article-content a:hover .external-link-icon {
+    opacity: 1;
+  }
+
+  .article-content > .imgFigure {
     width: 100%;
     grid-column: 1 / -1;
+    transition: 0.3s;
   }
 
-  .wrapper .imgFigure {
-    width: 100%;
-    grid-column: 1 / -1;
-  }
-
-  .wrapper > video {
+  .article-content > video {
     margin: 0 auto;
-
     grid-column: 1 / -1;
   }
 
-  .wrapper > img {
+  .article-content > img {
     margin: 0 auto;
     grid-column: 1 / -1;
   }
@@ -160,32 +170,8 @@ const { Content, headings } = await post.render();
     display: inline-block;
   }
 
-  .raw-html-embed {
-    margin: 0 auto;
-    width: 100%;
-    grid-column: 1 / -1;
-    text-align: center;
-  }
-
-  .raw-html-embed > video {
-    margin: 0 auto;
-  }
-
   iframe {
     max-width: 800px;
-    margin: 0 auto;
-  }
-
-  table {
-    width: auto;
-  }
-
-  .table {
-    overflow: 'auto';
-    display: block;
-  }
-
-  p img {
     margin: 0 auto;
   }
 </style>
