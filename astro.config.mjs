@@ -23,7 +23,7 @@ export default defineConfig({
           content: [
             h('span.sr-only', '標題連結'),
             s(
-              'svg.autolink-svg',
+              'svg.heading-link',
               {
                 xmlns: 'http://www.w3.org/2000/svg',
                 width: 24,
