@@ -18,12 +18,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# large binary files (Images)
-public/
-
 # generated type
 .astro
-
-# markdown files
-src/content/post
-src/content/draft
