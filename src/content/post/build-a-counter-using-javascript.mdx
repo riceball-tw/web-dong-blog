@@ -1,0 +1,140 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/counter.svg', alt: '+1 標誌' }
+title: 'Build a couter using JavaScript'
+titleTC: 'JavaScript 五個步驟製作計數器'
+excerpt: '計數器是入門各大框架基本會見到的習題，可以說是任何 App 最低限度的功能展示。這次使用原生的 JavaScript 來重現該題目，並且一步一步的思考並改善結果。'
+category: '解題'
+tags: ['JS', '簡單題']
+publishDate: '2023-02-04'
+---
+
+## 前言
+
+<Info type="info">本篇文章將會練習製作一個具備加、減、重製功能的 Javascript 計數器</Info>
+
+## 解題
+
+### 第一步：製作介面
+
+先定義一個 `counter` 區塊，裡面有顯示目前數字與裝載三個按鈕的容器`buttonGroup`，其內容包涵「減、歸零、加」等按鈕。
+
+```html
+<div class="counter">
+  <div id="counterDisplay" class="counter__display"></div>
+  <div id="buttonGroup" class="buttonGroup">
+    <button class="button" id="minus">-</button>
+    <button class="button" id="reset">Reset</button>
+    <button class="button" id="add">+</button>
+  </div>
+</div>
+```
+
+### 第二步：選取畫面元素
+
+使用前面定義好的 `id` 屬性來選取各個 DOM 元素(使用 [getElementById](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById) 方法)，並且儲存於變數中。
+
+```javascript
+// 選取畫面元素
+const counterDisplay = document.getElementById('counterDisplay');
+const counterMinusButton = document.getElementById('minus');
+const counterResetButton = document.getElementById('reset');
+const counterAddButton = document.getElementById('add');
+const counterButtons = document.getElementById('buttonGroup');
+```
+
+### 第三步：將資料打印到畫面上
+
+目前畫面中 `counterDisplay` 內是沒有任何內容的，所以可以先定義好一筆資料再把該資料渲染到畫面中；由於「渲染資料到畫面中」是重複性極高的動作，可以將其獨立為一個函式之後有需要時再呼叫。
+
+```javascript
+const counter = 0;
+
+function renderCounter() {
+  counterDisplay.textContent = counter;
+}
+
+renderCounter(counter);
+```
+
+### 第四步：監聽事件
+
+目前資料已經可以正確的顯示在畫面上，但是按鈕還沒有任何功能，所以接下來要做的就是監聽按鈕的點擊事件，並且在點擊時執行對應的函式；使用 [eventListener](https://developer.mozilla.org/zh-TW/docs/Web/API/EventTarget/addEventListener) 監聽「點擊」事件。
+
+```javascript
+// 當點擊 + 按鈕，執行 addCounter() 函式
+counterAddButton.addEventListener('click', (e) => {
+  addCounter();
+});
+
+// 當點擊 Reset 按鈕，執行 resetCounter() 函式
+counterResetButton.addEventListener('click', (e) => {
+  resetCounter();
+});
+
+// 當點擊 - 按鈕，執行 subtractCounter() 函式
+counterMinusButton.addEventListener('click', (e) => {
+  subtractCounter();
+});
+```
+
+換句話說，也可以用一個 `eventListener` 達成 3 個 `eventListener` 所做的事，只要檢查其容器點擊時，被點擊的事件的對象的 id (e.target.id) 名稱是什麼並比對做出對應的行為即可。
+
+```javascript
+counterButtons.addEventListener('click', (e) => {
+  if (e.target.id === 'add') {
+    addCounter();
+  } else if (e.target.id === 'reset') {
+    resetCounter();
+  } else if (e.target.id === 'minus') {
+    subtractCounter();
+  }
+});
+```
+
+### 第五步：操縱資料
+
+接下來就是要實作各個按鈕的功能，這邊先定義好三個函式，分別是「加、減、重製」。
+
+```javascript
+// 增加 counter 的值並重新渲染畫面
+function addCounter() {
+  counter++;
+  renderCounter(counter);
+}
+
+// 重製 counter 的值並重新渲染畫面
+function resetCounter() {
+  counter = 0;
+  renderCounter(counter);
+}
+
+// 減少 counter 的值並重新渲染畫面
+function subtractCounter() {
+  counter--;
+  renderCounter(counter);
+}
+```
+
+## 結語
+
+從這個簡單的練習中，我們分離了資料與邏輯，這樣的切割方式可以更容易的維護程式碼，也可以讓其他開發者更容易閱讀與改動。
+
+這是一個簡單的範例，但背後可以思考與改善的事情仍然很多，像是：如何讓程式「可以被重複利用？」、「如何讓程式可被預測與測試？」……等，這些問題都是值得思考的。
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="XWBxORG"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/XWBxORG">Counter</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>

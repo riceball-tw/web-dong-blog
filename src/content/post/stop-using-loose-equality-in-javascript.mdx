@@ -1,0 +1,66 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/balance.svg', alt: '平衡符號' }
+title: 'Stop using loose equality in JavaScript'
+titleTC: '不要再使用 == 了，改使用 === 吧！'
+excerpt: '絕大多數時候你不會想要使用「鬆散比對」，嘗試使用「嚴謹的比對」將程式撰寫得嚴謹精確一些。'
+category: '教學'
+tags: ['JS', '代碼品質']
+publishDate: '2023-02-15'
+---
+
+## 發現問題
+
+在 JavaScript 中常見可以使用兩種方法來比較值：
+
+- [一般相等 ==](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)
+- [嚴格相等 ===](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Strict_equality)
+
+兩者的差別在於，一般相等會進行型別轉換，而嚴格相等則不會，舉例來說 `1 == '1'` 會轉換字串為數字再進行比較，因此會回傳 `true`，而 `1 === '1'` 則會嚴格的比較兩者的型別所以會回傳 `false`。
+
+那這一個小差別有潛在的問題呢？
+
+使用鬆散的比較會讓程式比對條件上模稜兩可，像是以下的程式中很明顯 `0` 與 `''` 是不相等的，由於使用的是鬆散的比較，這樣的程式撰寫會讓程式碼變得不夠嚴謹，因此建議使用嚴格比對。
+
+```javascript
+0 == ''; // true
+0 == '0'; // true
+0 == false; // true
+```
+
+## 總結
+
+凡事能用 `===` 就不使用 `==` ，一開始就撰寫更嚴謹的判斷會更好。由於 `==` 並不檢查型別，因此常常會被 Javasciprt 自動轉換型別鬧出 Bug ，舉例來說：
+
+```jsx
+const a = 1;
+const b = '1';
+
+typeof a; // Number
+typeof b; // String
+
+a == b; // true
+a === b; // false
+
+// 型別上 a、b 是不同內容，但 Javascript 比較時會轉換，因此使用 === 更嚴謹的去要求比較「型別要一樣」。
+```
+
+在絕大多數的情況下，你不會想要使用鬆散比對，但是在某些情況下，可能會使用它會更為便利，例如當想要比較 `null` 與 `undefined` 時，因為它們的值是相等的但型別是不同的，在這個場合下使用 `==` 會比較方便，使用鬆散比對可以一次對 `null` 與 `undefined` 的結果做比對：
+
+```javascript
+// 撰寫判斷：當 a 為 null 或 undefined 時，都會進入 if 判斷式。
+
+// 使用鬆散比對
+if (a == null) {
+}
+// 使用嚴謹比對
+if (a === null || a === undefined) {
+}
+```
+
+詳細兩者比較上的差異比較圖表可以參考 MDN 的文件：[理解相等比較模型](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness#%E7%90%86%E8%A7%A3%E7%9B%B8%E7%AD%89%E6%AF%94%E8%BC%83%E6%A8%A1%E5%9E%8B) 非常齊全。
+
+## 參考資料
+
+- [相等比較 - MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+- [Stop Using Double Equals In JavaScript - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-08/==-vs-===/)

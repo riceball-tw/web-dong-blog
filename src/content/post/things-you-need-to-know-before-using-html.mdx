@@ -1,0 +1,99 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/thumb-up.svg', alt: 'CodePen 符號' }
+title: 'Ways to help you write better HTML'
+titleTC: '助教統整 n 個方法幫助你寫出更好的 HTML'
+excerpt: '總結作為六角學院助教一直以來審核作業上最容易碰上的問題，以及可以怎麼應對。了解整篇文章將可以迴避掉很多同學最常踩的坑！'
+category: '教學'
+tags: ['HTML', '代碼品質']
+publishDate: '2023-03-20'
+---
+
+## 建議一：在撰寫網頁內容前的檢查
+
+正確的描述屬性可以為瀏覽器提供許多有用的資料，並提升用戶或爬蟲對該頁面的了解，進一步完善 SEO。
+
+### `lang` 屬性
+
+```html
+<html lang="zh-Hant-TW">
+  <!--...-->
+</html>
+```
+
+網頁應當明確的描述 `lang` 屬性，好辨別這個網站主要的地區語系，像是台灣繁體中文就是 `zh-Hant-TW`。
+
+### `meta` 屬性
+
+`meta` 屬性就像是附加給網頁的小資訊，常見的有編碼、網頁描述、[Open Graph](https://ogp.me/) 等……雖然這些資訊大多都不是必要的，但添加上去有助於讓搜尋引擎更進一步了解你的網頁內容，更吸引觀眾進入網站，
+
+```html
+<!-- 編碼方式 -->
+<meta charset="UTF-8" />
+<!-- 網頁描述 -->
+<meta name="description" content="這是一個網頁的描述" />
+<!-- RWD 設定 -->
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Open Graph 標題 -->
+<meta property="og:title" content="這是一個網頁的標題" />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<!--...-->
+```
+
+### 檢查程式代碼的品質
+
+推薦這份指南文件：[程式碼編寫指南：一致、有彈性且能長期維護的 HTML、CSS 開發標準](https://codeguide.intersection.tw/)，內容很多可能一半會看不完，可以先求不要有一些低級的語法錯誤(像是缺少標籤結尾)，再來追求品質。
+
+## 建議二：使用語意化的標籤來描述網頁內容
+
+在之前可能只會用到 `<div>` 或者是 `<span>` 來裝載網頁內容，如今 HTML5 加入了許多語意化的標籤，這些標籤可以更有效率的架構並描述網頁內容，推薦到： [Fooish 程式技術](https://www.fooish.com/html/what-is-html5.html) 了解不同的 HTML5 標籤與其使用時機。
+
+## 建議三：標題的使用
+
+在 HTML 中如果想要強調內容可以使用 `<h1>` ~ `<h6>` 來標示，它們是最常見的標籤之一，也是與 SEO 有關的重要標籤。
+
+### `<h1>` 標題只會出現一次
+
+在一個網頁中，`<h1>` 標籤只能出現一次，用於標註當前頁面**最重要**的資訊，不要在一個網頁中出現一個以上的 `<h1>` 標籤，這是不和規的語法。
+
+### 避免跳過標題
+
+所以如果在 `<h1>` 標籤下面加一個 `<h3>` 標籤是不合理的，應該要**依序的使用**不同等級的標題標籤，不要跳躍的使用不同等級的標題。
+
+## 建議四：圖片與影片的使用
+
+大型檔案通常是網頁效能的殺手，必須額外謹慎看待，因為這些資源是優化上可以付出極小的代價獲得巨大效益的地方。
+
+### 善用行內 SVG
+
+如果你的 SVG 圖片是簡單的圖形且不會重複出現，那麼建議將它內嵌在 HTML 中，這樣就避免了多發送一個非必要的 HTTP 請求，並且能夠更容易的控制 SVG 的樣式，舉例來說以下案例為行內 svg 的 `fill` 屬性添加 `currentColor` 它現在可以自由地適應外部文字顏色來變換其填色了：
+
+```html
+<svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48">
+  <path d="M450 856V606H200v-60h250V296h60v250h250v60H510v250h-60Z" />
+</svg>
+```
+
+### 使用合適的格式
+
+如果沒有特別要支援舊瀏覽器的需求，強烈建議將點陣圖片轉換為 `webp` 格式，這是一種支援良好的新型圖片格式，可以非常有效的減少圖片的大小，並且支援透明度。影片的話則是強烈建議使用 `webm` 格式。
+
+### 使用合適的大小
+
+視情況調整圖片尺寸，不要加載一個非常大張的圖片或影片但實際上顯示出來很小，需要多少大小就加載多大即可，基本上單張圖片 300k 以上就不太能接受了，再上去可以考慮使用懶加載之類的方式提升使用體驗。
+
+### 撰寫詳細的 `alt` 屬性
+
+強烈建議添加 `alt` 屬性，並明確的描述其圖片內容。為什麼圖片的 `alt` 屬性這麼重要？ 是因為當圖片無法正常顯示，或是爬蟲在爬取網頁時，`alt` 屬性的內容可以幫助爬蟲了解圖片的內容，這對於 SEO 來說是非常重要的，這裡強烈建議閱讀：[Google 圖片搜尋引擎最佳化 (SEO) 的最佳做法](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw)。
+
+### 撰寫 `width` 與 `height` 屬性
+
+強烈建議添加 width 與 height 屬性，避免[布局偏移](https://web.dev/i18n/zh/optimize-cls/)。
+
+有同學提問說：如果把圖片的 CSS 設計為 RWD 適應，這樣可以改善布局偏移嗎？
+答案是不行的，可以試想一個情境：「網頁才剛開起，連 CSS 都還沒有載入的時候」瀏覽器在繪製每個元素，但只有圖片不知道實際載入進來會是多大？因此還是會造成布局偏移的問題。應該在創建圖片的時候就清晰的描述該圖片寬與高是多少，不管 CSS 如何。
+
+## 參考資料
+
+- [Front End Center — Why Inline SVG is Best SVG](https://www.youtube.com/watch?v=af4ZQJ14yu8)

@@ -1,0 +1,309 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/async-js.svg', alt: '非同步符號' }
+title: 'Episode 2 - Easy writing async javascript'
+titleTC: '從動圖輕鬆學會撰寫非同步 JavaScript（第二章）'
+excerpt: '上一章節從動圖理解了非同步的概念，這一章節將會介紹如何撰寫非同步程式。從簡單的回呼函式到 Promise 再到使用 Async/Await 語法。'
+category: '教學'
+tags: ['JS', '非同步']
+publishDate: '2023-02-01'
+---
+
+import EventDemoButton from '@/components/post/async-javascript-visualized-with-ease-episode-2/EventDemoButton.astro';
+
+<Info type="info">
+  上一章節提到觀念在本文是至關重要的，請先閱讀完：
+  <a href="/post/async-javascript-visualized-with-ease">從動圖輕鬆入門非同步 JavaScript</a>
+  再往下觀看學習效果會更好！
+</Info>
+
+## 回顧上一章節
+
+目前知道非同步的程式實際上是透過執行環境(瀏覽器、Node.js) 所提供的 API 來達成同時間處理多件事情的，結論非常簡單：**JavaSciprt 引擎只能也只會一次執行一件事情，但執行環境提供方法讓 JavaScript 可以被非同步的執行**。以下是個簡單的題目來考驗看看上次文章的吸收程度：
+
+```javascript
+// 貓咪喵喵叫
+function cat() {
+  console.log('🐱');
+}
+
+// 狗狗旺旺叫(0 毫秒後)
+function dog() {
+  setTimeout(() => {
+    console.log('🐶');
+  }, 0);
+}
+
+// 人類說你好
+function human() {
+  console.log('✋🏻');
+}
+
+// 求結果順序？
+cat();
+dog();
+human();
+```
+
+執行順序是：貓 > 狗 > 人，從字面上順序和意義來看，結果也應該打印出： 🐱 > 🐶 > ✋🏻，
+但實際上答案是： 🐱 > ✋🏻 > 🐶 ；這是由於 `dog` 函式中的 `setTimeout` 是非同步程式，會被推入 Callback Queue 中等待目前 Call Stack 上的事項都執行完之後才會被執行，在此之前就會先繼續完成目前主執行緒上的事項，先是 ✋🏻 後才是 🐶 。如果你完全理解這個概念，恭喜可以更深入了解如何撰寫非同步程式～
+
+<Video
+  width={1200}
+  height={720}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/async-javascript-visualized-with-ease-episode-2/exam.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/async-javascript-visualized-with-ease-episode-2/exam.mp4',
+    },
+  ]}
+></Video>
+
+## 實際撰寫非同步程式
+
+前面的例子非常的簡單，大不了就是指定一段程式在特定時間後返回處理，但實際會遇到的情況往往會複雜得多，實際案例來說像是：
+
+- 索取不確定因素的資料 (AJAX)
+- 處理耗時費力的工作，阻塞其他程式執行 (Thread Blocking)
+
+遇到這些情況就必須考慮到錯誤情境的處理、程式的執行順序的問題，這時候就需要一個好的非同步程式撰寫方式，讓程式碼更容易閱讀、維護，也能更有效率的處理非同步的程式。接著會由淺入深講解：
+
+- 回呼函式
+- Promise 與其方法
+- Async / Await
+
+實際撰寫範例並提出每種方法的特點以及要注意的地方 😊。接著會共用以下這個非常簡單的例子作為範例，並嘗試不同的寫法。
+
+```javascript
+// 說明：這是一個同步的函式，作用是計算正方形面積 (邊長 x 邊長)
+// 後面都會以這個簡單的例子作為範本，改寫為非同步程式
+// 需求：計算正方形面積，但是要等 1 秒後才能回傳結果
+
+function getSquareArea(side) {
+  return side * side;
+}
+
+getSquareArea(2); // 4
+```
+
+### 回呼函式
+
+<Info type="info">
+  「[回呼函式](https://developer.mozilla.org/zh-TW/docs/Glossary/Callback_function)」是一個函式，將其作為參數傳入另外一個函式的時候就可以被稱作是回呼函式。
+</Info>
+
+為什麼要用回呼函式呢？<br/>
+為什麼學非同步和回呼函式有關？
+
+想想看經常使用的`addEventListener`或`setTimeout`方法，都是把非同步事件要執行的事項包裝為函式作為參數傳入：
+
+```html
+<button>點擊我觸發事件👆🏻</button>
+
+<script>
+  const button = document.querySelector(button);
+  button.addEventListener('click', function (event) {
+    console.log(event);
+    alert(`你點擊了按鈕！請打開瀏覽器 console 查看結果。`);
+  });
+</script>
+```
+
+<EventDemoButton />
+
+藉由回呼函式，可以把非同步的程式碼包裝為函式，並在非同步事件發生後執行該函式。拿前面計算正方形面積的程式來改寫，當成功或錯誤就會回傳對應的結果到回呼函式內：
+
+```javascript
+function getRectangleArea(side, callback) {
+  // 定義錯誤情境 - 非數字
+  if (typeof side !== 'number') {
+    callback(new TypeError('請輸入數字'));
+    return;
+  }
+  // 定義錯誤情境 - 非正數
+  if (side <= 0) {
+    callback(new Error('請輸入正數'));
+    return;
+  }
+  // 執行非同步行為，並且在非同步事件發生後執行 callback
+  setTimeout(() => callback(null, side ** 2), 1000);
+}
+
+getRectangleArea(2, (error, result) => {
+  // 如果有錯誤，就會在這裡被捕捉到
+  if (error !== null) {
+    console.error(error);
+    return;
+  }
+  console.log(result);
+});
+```
+
+這就是回呼函式的基本概念，讓我們來總結一下回呼函式的特點：
+
+- 優 - 並沒有抽象的包裝，概念上就是單純的函式很好理解。
+- 優 - 結構和同步程式碼相似。
+- 劣 - 執行順序不直觀，容易產生一堆回呼函式互相嵌套([回呼地獄](http://callbackhell.com/))問題。
+- 劣 - 產生控制反轉 (Inversion of Control) 問題。
+- 劣 - 撰寫方式自由，並沒有一定的格式。
+
+### Promise
+
+<Info type="info">
+  「[Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise)」是一個代表了未來的數值的物件。
+</Info>
+
+由於前面的寫法具有不可忽略的缺點，像是自由得過於混亂、難閱讀與撰寫……等問題，因此 JavaScript 才會在 ES6 版本推出 Promise 這個語法，把「非同步的程式碼包裝為物件」，並且提供了一個「標準化」的方法來處理非同步的程式碼，這個物件具備兩個屬性：`state(狀態)` 與 `result(結果)`。
+
+- **狀態：一個 Promise 物件只可能會有三種狀態的其中一種：**
+  - `Pending` - 初始狀態，非同步操作沒有執行
+  - `Fulfilled` - 非同步的程式碼執行成功
+  - `Rejected` - 非同步的程式碼執行失敗
+- **結果：一個 Promise 物件只可能會有兩種結果的其中一種：**
+  - `resolve` - 成功
+  - `reject` - 失敗
+
+先撰寫一個全新的 Promise 來了解看看：
+
+```javascript
+// resolve 與 reject 可自由命名
+const promise = new Promise((resolve, reject) => {
+  // 一些非同步的程式碼
+  if (/* 判斷結果 */){
+    resolve(value);
+  } else {
+    reject(error);
+  }
+});
+```
+
+可以看見傳入 Promise 的回呼函式需要兩個參數：成功時與失敗時該執行的函式名稱。我們可以輕易的在這個 Promise 物件中定義成功與失敗的條件，像以下案例中只需要在成功時返回 `resolve`，失敗時返回 `reject` 就可以了：
+
+```javascript
+// 承諾會在 1 秒後返回結果，如果出錯就返回失敗，如果成功就返回結果
+function getRectangleArea(side) {
+  return new Promise((resolve, reject) => {
+    if (typeof side !== 'number') {
+      reject(new TypeError('請輸入數字'));
+      return;
+    }
+
+    if (side <= 0) {
+      reject(new Error('請輸入正數'));
+      return;
+    }
+    setTimeout(() => {
+      resolve(side ** 2);
+    }, 1000);
+  });
+}
+```
+
+現在成功的把回呼函式改為使用 Promise 物件了，但拿到了 Promise 之後該如何使用呢？直接同步的去使用 Promise 物件嗎？答案是不行的，因為當非同步行為執行時的當下 Promise 的狀態會是 `Pending`，直接存取 Promise 是沒辦法將未來的值給取出來的。
+
+```javascript
+// 在同步程式中直接取得 Promise 物件並沒有用
+console.log(getRectangleArea(2));
+```
+
+#### 如何取得 Promise 的內容？
+
+可以使用 `Promise.then` 方法去應對該 Promise 執行完後成功與失敗的情境：
+
+{/* prettier-ignore */}
+```javascript
+Promise.then(success, error);
+```
+
+更常見還是會使用 `.catch` 來捕捉錯誤的情境，它們之間細節上有一些不同，不過使用 `.catch` 的方法會比較全面且直觀，建議絕大多時候這樣寫即可：
+
+{/* prettier-ignore */}
+```javascript
+Promise.then(success).catch(error);
+```
+
+換上前面設定好的題目就可以用這樣的方式處理 `getRectangleArea` 這個函式回傳的 Promise 物件：
+
+```javascript
+getRectangleArea(2)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+這就是 Promise 的基本概念，讓我們來總結一下 Promise 的特點：
+
+- 優 - 更好的閱讀性。
+- 優 - 一致化的格式。
+- 優 - 更好的錯誤處理與提供許多額外處理非同步的操作上的方法(例如：[Promise.all](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise/all))。
+- 劣 - 一次僅能回傳一個值。
+- 劣 - 老舊瀏覽器不支援 Promise。
+
+### Async / Await
+
+<Info type="info">
+  「[Async /
+  Await](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)」是一個語法讓撰寫非同步程式可以享有類似於撰寫同步程式一般的體驗。
+</Info>
+
+Async Await 是在 ES2017 中加入到 JavaScript 語言中的語法，在 Promise 的基礎之上，它提供了一個更簡潔的語法來處理非同步的行為，讓我們可以像撰寫同步程式一樣的撰寫非同步程式。
+
+### Async
+
+`async` 關鍵字可以讓 JavaScript 引擎了解目前正在撰寫一個非同步的函式，並且讓整個函式回傳一個 Promise 物件。
+
+### Await
+
+`await` 關鍵字僅能在 `async` 函式內部使用，將其放置在 Promise 之前，它可以幫助我們等待 Promise 的解決，並取得其值。
+
+```javascript
+async function asyncFunction() {
+  const value = await getRectangleArea(2);
+}
+```
+
+還可以加上 [try...catch 語法](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/try...catch) 去捕捉錯誤，撰寫起來已經非常像同步程式了：
+
+```javascript
+async function calcRectangleArea(side) {
+  const rectangleArea = await new Promise((resolve, reject) => {
+    if (typeof side !== 'number') {
+      reject(new TypeError('請輸入數字'));
+      return;
+    }
+    if (side <= 0) {
+      reject(new Error('請輸入正數'));
+      return;
+    }
+    setTimeout(() => resolve(side ** 2), 5000);
+  });
+  console.log(rectangleArea);
+}
+
+calcRectangleArea(4);
+```
+
+## 該使用哪種方式處理非同步？
+
+端看團隊與個人偏好，並沒有一定對錯的答案。對我來說，如果沒有包袱 (版本問題、維護遺留代碼) 就用 **Promise + Async / Await** 即可，保持語法簡潔且使用上也更為直觀與一致，前提是最好理解了非同步的概念再使用會更好。
+
+### 可以混用回呼函式、 Promise.then() 、Async / Await 嗎？
+
+可以，但最好不要。應當統一方法避免造成不必要的混亂。
+
+## 總結
+
+本篇文章從回呼函式 > Promise 與其方法 > Async / Await 這三個步驟了解了非同步 JavaScript 的處理方式。下一篇文章看教學上的需求再延伸多寫 🙂 。
+
+## 參考資料
+
+- [非同步的 JavaScript 介紹](https://developer.mozilla.org/zh-TW/docs/Learn/JavaScript/Asynchronous/Introducing)
+- [Why Do We Need Javascript Promises? Inversion of Control | Asynchronous Javascript | Project Twine](https://www.youtube.com/watch?v=bAlczbDUXx8)
+- [JavaScript Promises：简介](https://web.dev/i18n/zh/promises)

@@ -1,0 +1,78 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/if.svg', alt: 'if 符號' }
+title: 'Why you should use guard clauses to improve code readability'
+titleTC: '使用 Guard Clauses 迴避嵌套的流程判斷來增進閱讀性'
+excerpt: '這篇文章將詳細的介紹現有問題以及使用 Guard Clauses 技巧撰寫更好閱讀的代碼。'
+category: '教學'
+tags: ['代碼品質']
+publishDate: '2023-02-12'
+---
+
+<Info type="warning">這是一個技巧而非絕對的規則，依照當下情境參考即可。</Info>
+
+## 遇見問題
+
+什麼是嵌套的流程判斷？嵌套又會帶來什麼問題？舉例一個實際的例子來說：「驗證用戶輸入的訊息」。
+要達成這個目的就必須要對輸入檢查，例如：檢查訊息是否為空、檢查訊息是否和規、檢查任何可能的錯誤情境……等。
+
+```javascript
+function signupUser(username, password, passwordConfirmation) {
+  if (username === '') {
+    return '用戶名稱是必填的';
+  } else {
+    if (password === '') {
+      return '密碼是必填的';
+    } else {
+      if (password !== passwordConfirmation) {
+        return '密碼確認不符';
+      } else {
+        return '執行註冊';
+      }
+    }
+  }
+}
+```
+
+目前問題在於，它的嵌套層級太深了，這樣的程式碼會讓人很難閱讀，而且也很難維護與更動！
+讓我們試試看使用 Guard Clauses (守衛判斷)來改寫這段程式：
+
+```javascript
+function signupUser(username, password, passwordConfirmation) {
+  if (username === '') {
+    return '用戶名稱是必填的';
+  }
+
+  if (password === '') {
+    return '密碼是必填的';
+  }
+
+  if (password !== passwordConfirmation) {
+    return '密碼確認不符';
+  }
+
+  return '執行註冊';
+}
+```
+
+只要改動思考判斷的模式(盡早回傳，終止整個函式)，就可以達到更好的閱讀性，也可以減少嵌套的層級。
+
+## 總結
+
+> 如果你需要大於 3 層的嵌套，代表你已經搞砸了，應當考慮重構程式碼。
+
+會出現這麼多嵌套的原因是因為我們的思考模式是「先檢查錯誤，再執行正常的流程」，但這樣會讓程式碼變得很難閱讀，因此我們可以改變思考模式，先返回掉反面的條件，這就是 Guard Clauses 的概念。最後總結兩種終結嵌套的方式：
+
+### 反轉
+
+提早返回異常的狀態可以讓我們更加專心在 [Happy Path](https://en.wikipedia.org/wiki/Happy_path) (無異常流程)上，並且能隨著需求的增加輕易的改動與理解邏輯。
+
+### 封裝
+
+如果程式真的太複雜，應當考慮抽離片段出來獨立成一個單一功能的函式，這樣可以讓程式碼更加清晰且專一。
+
+## 參考資料
+
+- [Why You Shouldn't Nest Your Code - Code Aesthetic](https://www.youtube.com/watch?v=CFRhGnuXG-4)
+- [Replace Nested Conditional with Guard Clauses - REFACTORING GURU](https://refactoringguru.cn/replace-nested-conditional-with-guard-clauses)
+- [Why I Don't Use Else When Programming - Web Dev Simplified](https://www.youtube.com/watch?v=EumXak7TyQ0)

@@ -1,0 +1,110 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/function.svg', alt: '函式符號' }
+title: 'Why Pure Function?'
+titleTC: '為什麼你需要純粹函式 (Pure Function)？'
+excerpt: '純粹函式是個好東西，你應該了解它的定義以及如何使用，為了更進一步撰寫撰寫乾淨的代碼。'
+category: '教學'
+tags: ['JS', 'FP', '代碼品質']
+publishDate: '2023-03-14'
+---
+
+## 為何要了解純粹函式？
+
+寫程式久了會發現撰寫乾淨可被維護的程式是一件相當困難的事情，其中一個造成難維護的原因是因為「**函式除了運算並回傳結果之外過程中產生變化影響到其餘的程式**」，換句話說問題就是「**不必要的副作用，讓程式變得捉摸不定難以理解**」。本篇文章將會介紹純粹函式 (Pure Function) 的定義以及如何使用，為了更進一步撰寫撰寫乾淨的代碼，讓我們來了解怎麼撰寫乾淨且純粹的函式。
+
+## 什麼是副作用？
+
+一個函式除了運算並回傳結果之外，過程中產生變化影響到其餘的程式，就可以說這是一個有「副作用」的函式，副作用只是一個形容，並沒有負面的意思，但不必要的副作用確實會讓程式變得捉摸不定難以理解。
+
+## 怎麼迴避副作用？
+
+藉由迴避副作用就能達成撰寫乾淨且純粹的函式，可以留意以下常見的副作用來改善代碼的品質。
+
+### 避免使用函式以外的變數
+
+舉以下判斷是否年滿 18 的函式為例，只要使用到函式以外的變數，就會導致該函式不純粹，依賴於外部的變數因此輸入不是固定的！。使用函式區域內的變數能夠讓函示成為一個真正獨立的單元，不依靠外部的狀態來運算。
+
+```javascript
+// ❌ Impure Function
+const myAge = 18;
+
+function isAdult() {
+  return myAge >= 18;
+}
+isAdult();
+
+// ✅ Pure Function
+function isAdult(age) {
+  return age >= 18;
+}
+isAdult(myAge);
+```
+
+### 視函式的參數為不可變(immutable)的
+
+舉例來說 `Jack` 目前有 `10` 塊錢，它選擇 `work` 並且又獲得了 `10` 塊錢，程式是可以正確運作的，但藉由使用 [`...` 展開運算子](/post/spead-operator-rest-operator-the-three-dots-in-javascript/)多複製一份資料並回傳來避免更動到原始的資料。
+
+```javascript
+const jack = {
+  wallet: 10,
+};
+
+// ❌ Impure Function
+function work(person) {
+  person.wallet += 10;
+}
+
+work(jack);
+console.log(jack); // { wallet: 20 }
+
+// ✅ Pure Function
+function work(person) {
+  return {
+    ...person,
+    wallet: person.wallet + 10,
+  };
+}
+
+console.log(jack); // { wallet: 10 }
+console.log(work(jack)); // { wallet: 20 }
+```
+
+有許多的原生函式都是不純粹的，例如 `Array.forEach()`、`Array.sort()`、` Array.push()`……等，都是直接對資料進行操縱，而非回傳一個新的結果回來，如果你想盡可能遵從撰寫純粹函式的原則的話，最好盡量避免並改而使用純粹的原生函式，例如 `Array.map()`、`Array.filter()`、`Array.reduce()` 等。
+
+```javascript
+const ageList = [1, 5, 19, 30];
+
+// ❌ Impure Function
+let ageIsAdult = [];
+ageList.forEach((age) => {
+  if (age >= 18) {
+    ageIsAdult.push(age);
+  }
+});
+
+// ✅ Pure Function
+function ageIsAdultPure(age) {
+  return age.filter((age) => age >= 18);
+}
+
+console.log(ageIsAdult); // [19, 30]
+console.log(ageIsAdultPure(ageList)); // [19, 30]
+```
+
+## 總結
+
+> 當一個函式給入相同的參數會得到相同的結果，且沒有副作用就是純粹函式
+
+道理很簡單，只要函式的輸入是固定的，那麼輸出也是固定的，這樣就不會影響到其餘的程式，也就能夠讓程式更容易維護。
+所以我們應該把所有函式都改寫成純粹函式嗎？當然是不可能的！但是應當盡可能的把函式改寫成純粹函式，因為純粹函式的好處是：
+
+- **可快取性**：固定的輸入與輸出，讓函式可以將結果快取起來，下次再輸入相同的參數時就可以直接使用快取的結果，而不用再次執行複雜的運算。
+- **可測試性**：固定的輸入與輸出，讓函式易於測試。
+- **可移植性 / 本身即文件**：單純的輸入輸出，可以讓函式更容易移植到其他的程式中，並且不需要額外的文件去描述。
+
+非純粹函式與純粹函式之間並沒有優劣好壞之分，僅僅是解決問題方法上的差異，但很明顯的，只要對撰寫函式的方式作一些約束就能很大程度的提升代碼的維護性，值得一試！
+
+## 參考資料
+
+- [JavaScript Functional Programming 指南](https://jigsawye.gitbooks.io/mostly-adequate-guide/content/ch3.html)

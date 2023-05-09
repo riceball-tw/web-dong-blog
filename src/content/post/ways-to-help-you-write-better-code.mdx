@@ -1,0 +1,195 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/thumb-up.svg', alt: '大拇指符號' }
+title: 'Ways to help you write better code'
+titleTC: '助教統整 n 個方法幫助你寫出更好的代碼'
+excerpt: '我相信撰寫程式並沒有絕對的準則，但絕對有些常見可以權衡留意的地方。這篇文章記錄著作為助教在檢閱不同人寫的代碼的時候，留意到的一些潛在的問題……'
+category: '教學'
+tags: ['JS', '代碼品質']
+publishDate: '2023-02-21'
+---
+
+<Info type="warning">
+  撰寫程式並沒有絕對的準則，留意文章可權衡的地方自行判斷即可。本篇文章記錄我撰寫程式以來的經驗與原則以及當六角學院助教審核同學時**最常發現的問題**。本篇文章適合
+  JavaScript 初學者閱讀。
+</Info>
+
+## 前言
+
+本篇文章主要是經驗的濃縮，如果要詳細的撰寫建議可以參考看看：[無瑕的程式碼 JavaScript](http://127.0.0.1:3000/post/ways-to-help-you-write-better-code#%E6%96%B9%E6%B3%95%E4%BA%8C%E9%81%BF%E5%85%8D%E8%A8%BB%E8%A7%A3)，裡面有更全面的說明與案例。
+
+## 方法一：良好的命名
+
+剛學習程式的時候太常會一頭栽入邏輯、語法或框架中，而忽略最簡單且重要的事情：「良好的命名」。在批改了無數種類的作業之後發現這是最常發生也是最 <del>容易</del> (困難) 被解決的問題。
+**良好的命名可以真正的幫助提升任何種類代碼的品質，幫助你自己與他人更好的了解程式的脈絡**，它甚至與寫程式無關！所以任何人應當都能夠理解這個概念。
+
+那麼「良好的命名」普遍具備那些條件？
+
+### 明確且簡單
+
+命名應當明確且簡白描述該命名事物的內容，舉例來說宣告一個用戶名稱的變數，內容是什麼就描述清楚，**不要含糊也不要贅述**：
+
+```js
+// a 是什麼意思？ (無意義)
+const a = 'Joe';
+
+// 暫時的資料？ (攏統)
+const usernameTemp = 'Joe';
+
+// 它當然是一筆資料 (贅述)
+const TheUsername = 'Joe';
+const usernameData = 'Joe';
+const usernameValue = 'Joe';
+const usernameInfo = 'Joe';
+const usernameContent = 'Joe';
+
+// 什麼都沒描述清楚 (攏統+贅述)
+const apiUrl = 'www.example.com/api';
+const dataStore = 'Joe';
+const str = 'Joe';
+
+// 更 OK 的命名方式
+const username = 'Joe'; // 用戶名稱，清楚
+const attractionUrl = 'www.example.com/api'; // 景點網址，清楚
+```
+
+```js
+// 取得……什麼資料？
+function getData() {
+  // ...
+}
+
+// 取得用戶資料，OK
+function getUser() {
+  // ...
+}
+
+// 取得遠端用戶資料，OK
+function fetchUser() {
+  // ...
+}
+```
+
+```javascript
+const locations = ['Austin', 'New York', 'San Francisco'];
+
+// l 是什麼意思？
+locations.forEach((l) => {
+  dispatch(l);
+});
+
+// 其中的地點，OK
+locations.forEach((location) => {
+  dispatch(location);
+});
+```
+
+簡單來說，如果命名只是一些填充用的字，並沒有什麼實際的意涵，就應該在命名中避免！雖然上面的例子看起來理所當然，但說不定在壓力與時間的擠壓或無意識中真的會寫出這樣的命名。寫小程式還好，但規模只要一擴大就會變成一場災難，**千萬不能有「只是在練習，先寫再改的僥倖心態」，那麼這個詛咒將會一直困擾你與閱讀你代碼的人 👻**。
+
+### 避免縮寫
+
+使用縮寫會讓程式變得更加難以理解，雖然當下看起來簡潔好懂但也應當極力避免。舉例來說你正在製作一個遊戲的血量機制：`Health Point` (HP)，這樣命名很常見也很合理，但不常打遊戲的人可能會清楚這是什麼意思，或者之後出現了 `Hit Point`？ `High Point`？ `Highest Point`？ 命名上就出現了衝突。因此除了常見的專有名詞像是：`HTML`、`XML` 或 `API` 還能接受外，能不用縮寫就不要使用縮寫。
+
+### 避免神奇數字
+
+神奇數字是指在程式中讓人無法理解其用途的數字，舉例來說：
+
+```js
+function isPasswordValid(password) {
+  if (password.length < 5) {
+    return false;
+  }
+
+  if (password.length > 16) {
+    return false;
+  }
+
+  return true;
+}
+```
+
+為了讓程式更好被理解、查詢與修改，不應該散落「神奇數字」在程式之中，把它們宣告為一個變數並且取個好名字通常來說會是更好的做法：
+
+```js
+function isPasswordValid(password) {
+  const passworMinLength = 5;
+  const passwordMaxLength = 16;
+
+  if (password.length < passworMinLength) {
+    return false;
+  }
+
+  if (password.length > passwordMaxLength) {
+    return false;
+  }
+
+  return true;
+}
+```
+
+如果有「未來可能改動」或是「單看數字很難理解用途」的情況，就應該把它們宣告為一個變數並且給它一個好名稱。
+
+### 避免使用 `var`
+
+`var` 是一個早期變數宣告方式，簡單來說它會讓你的變數變成全域變數，這樣會讓程式變得難以維護，因此應當避免使用 `var`。事實是：**你只會越來越少見 `var`，請視情況使用 `const` 或 `let`**。
+
+### 使用命名慣例
+
+不同的程式語言社群有不同的[命名慣例](<https://en.wikipedia.org/wiki/Naming_convention_(programming)>)，常見你會看到：
+
+- CamelCase (大駝峰)
+- camelCase (小駝峰)
+- kebab-case (烤肉串)
+- snake_case (蛇型)
+
+等等很多其他類型的縮寫……這些命名慣例都是為了讓程式更一致而存在的規範，舉例來說：JavaScript 通常會使用 `camelCase`，而 CSS 或 HTML 通常會使用 `kebab-case`。
+就算沒有參與多人開發的環境，也遲早要閱讀他人的 Code ，所以盡早養成該語言普遍在用的命名慣例是越早越好。
+
+除了會用之外還要一致，**如果一個程式裡面包含了多種撰寫規範會導致難以維護，是應當極力避免的**。
+
+## 方法二：避免註解
+
+如果依循嚴格的命名與規範，程式碼通常就足夠清楚到不需要註解了，**過多的註解絕對會影響到程式的可讀性！**
+對我來說註解適合用於描述更高層級的概念，例如：為什麼要這樣架構程式？而不是程式實作上的細節描述。甚至註解是不需要的，因為更高層級的概念可以被在文檔當中描述。
+
+這個部分比較傾向偏好了，我相信好的程式碼就是最好的註解，如果你也覺得這樣比較好，那麼就盡量避免使用註解吧！
+
+## 方法三：不要重複造輪子
+
+每當在寫程式時，我們無時無刻都可以站在他人的肩膀上，只要你懂得怎麼運用，**使用現有的解決方案是最節省時間精力的事，也可以讓代碼更簡潔易於維護**。常見的問題通常早就已經有他人深思熟慮過的最優解，像是操縱資料強烈建議可以補齊 [操縱陣列的方法](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array) 。
+(這裡預計會再寫一篇專門的文章講解 😉)
+
+除了把重點真正放在如何解決問題而不是如何實作之外，也可以讓你的程式碼更容易被其他人理解。
+
+## 方法三：使用最合適的資料型態
+
+在 JavaScript 中，有很多資料型態可以使用，像是 `string`、`number`、`boolean`、`array`、`object`、`null`、`undefined` 等等，每個資料型態都有自己的特性，使用最合適的資料型態可以讓程式碼更簡潔易讀，也可以避免一些不必要的錯誤。
+
+舉例來說使用 `string` 來儲存一個數字，可能會導致一些不必要的錯誤，例如：`'1' + '1'` 會變成 `'11'` 而不是 `2`，這樣的錯誤很難被發現；或是使用 `string` 來儲存一個開關的狀態，這樣的程式碼會讓人很難理解，因為 `string` 通常會讓人聯想到儲存字串而不是是或否的結果。
+
+挑選正確的資料型態可以讓程式碼更簡潔易讀，也可以避免一些不必要的錯誤。
+
+## 方法四：去除冗贅的邏輯
+
+舉一個計算是否輸入的值為奇數的程式，與其判斷結果並回傳 `true` 或 `false`，直接回傳結果就好了：
+
+```javascript
+// ❌ 冗贅的邏輯
+function isOdd(number) {
+  if (number % 2 === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// ✅ OK
+const isOdd = (num) => {
+  return num % 2 === 1;
+};
+```
+
+## 參考資料
+
+- [Don't Write Comments - CodeAesthetic](https://www.youtube.com/watch?v=Bf7vDBBOBUA)
+- [無瑕的程式碼 JavaScript](https://github.com/AllJointTW/clean-code-javascript)

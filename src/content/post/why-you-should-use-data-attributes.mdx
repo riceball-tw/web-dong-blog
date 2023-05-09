@@ -1,0 +1,116 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/label.svg', alt: '標籤符號' }
+title: 'Why You Should Use Data Attributes'
+titleTC: '為什麼你應該要使用資料屬性 data-*'
+excerpt: 'data 屬性是普遍存儲資料於 HTML 中最常用的方式之一，讓我們學會如何使用它。'
+category: '教學'
+tags: [JS, 語法]
+publishDate: '2022-11-07'
+---
+
+## HTML 元件屬性介紹
+
+HTML 元件可以擁有自己的屬性，用於表達各種類的資訊，像是從外觀樣式到無障礙資訊到各式各樣的預設屬性，如下：
+
+```html
+<div class="names" role="region" aria-label="Names"></div>
+```
+
+但當要給一些元件新增客製化的資料時，能不能將事件的狀態與資料記錄在 HTML 中呢？具體來說：視窗的顯示狀態、按鈕的功能種類？
+答案是可以的，但作法並非直觀的直接將屬性寫在標籤上，如下：
+
+```html
+ <!-- `highlight` 並不是和規的屬性 -->
+<div highlight="true"></div>
+
+<!-- `large` 並不是一個和規的屬性 -->
+<div width="large"></div>
+```
+
+以上的做法雖然能達成在 HTML 中新增自訂資料的目的，但會出現幾個問題，強烈不建議：
+
+- 是不合規的 HTML 語法，會報錯 (屬性或值不存在、無法被允許)
+- 未來可能會造成衝突 (HTML 是持續演進的語言，現今這個自訂的屬性預設對 HTML 沒有意義，不代表未來也不會有)
+
+好消息是，只要新增 [data-\*](https://developer.mozilla.org/zh-TW/docs/Web/HTML/Global_attributes/data-*) 前綴，HTML 就知道這是一種「自訂的屬性」，解決了以上兩個問題。
+
+{/* prettier-ignore */}
+```html 
+<!--想怎麼定義資料，就怎麼定義-->
+<div
+  data-name-item
+  data-first-name="Joe"
+  data-last-name="Doe"
+  data-active
+></div>
+```
+
+相較於將資料的狀態記載在 id 或 class 上，除了受既定用途的影響與局限性外，建議選取元件、紀錄資料都使用 data 屬性會是更為妥當的做法。
+
+## 讀取 Data 屬性
+
+延續前面在 `<div>` 中自訂的三筆資料，可以先藉由 `querySelector` 選取具有該自訂屬性的節點：
+
+```javascript
+const foobar = document.querySelector('[data-name-item]');
+```
+
+再使用 dataset 這個屬性來獲取其所有自訂的 data 屬性(回傳物件)：
+
+```javascript
+// 輸入
+console.log(foobar.dataset)
+// 輸出
+{
+  "nameItem": "",
+  "firstName": "Joe",
+  "lastName": "Doe",
+  "active": ""
+}
+```
+
+我們可以使用點記法(Dot Notation)或括弧記法(Bracket Notation) 來讀取這個物件。
+
+```javascript
+console.log(foobar.dataset.firstName); // Joe
+console.log(foobar.dataset[lastName]); // Doe
+```
+
+有趣的是，原先是烤肉串 (Kebab Case) 的資料值被轉換成了小駝峰式 (Lower Camel Case) 的顯示方式，再來沒有值的 data 屬性會被自動指派一個空的字串為內容，完全不存在的屬性將會回傳 undefined，需特別留意。
+
+## 更新 Data 屬性
+
+更動 data 屬性就和修改一般物件一樣容易，一樣可以用以上兩種方法去更改。
+
+```javascript
+foobar.dataset['firstName'] = 'new';
+foobar.dataset.firstName = 'new';
+```
+
+## 刪除 Data 屬性
+
+刪除 data 屬性就和刪除一般物件一樣容易，可以使用 [delete](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/delete) 方法。
+
+```javascript
+delete foobar.dataset;
+```
+
+## 總結
+
+data 屬性是一個正式存儲資料於 HTML 的作法，讓 Javascript 與 CSS 都能讀取得到元件的資料，不用再打出 Ajax 請求，直接把資料置於客戶端的元件中。
+
+- data 屬性可以自由的鑲嵌自訂屬性到 HTML 元件中
+- data 屬性其屬性名稱必須是小寫，並且至少一個字以上
+- data 屬性可以被添加於任何 HTML 元素上
+
+<Info type="warning">
+  在使用 data 屬性之前也必須注意有沒有現成的屬性 (ARIA
+  屬性)或元件可以更貼切原生的描述其資料用途，自訂屬性應被視為最終手段。
+</Info>
+
+## 參考
+
+- [A better alternative to data-target attributes - medium](https://heyoka.medium.com/a-better-alternative-to-data-target-attributes-a499dcd55d6e)
+- [A Complete Guide to Data Attributes - css-tricks](https://css-tricks.com/a-complete-guide-to-data-attributes/)
+- [Data Attributes In JavaScript - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-10/javascript-data-attributes/)

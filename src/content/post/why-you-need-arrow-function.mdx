@@ -1,0 +1,182 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/arrow-function.svg', alt: '箭頭函式' }
+title: 'Why you need arrow function'
+titleTC: '為什麼你需要箭頭函式？'
+excerpt: 'JavaScript 箭頭函式是 ES6 版本中新增的語法，能夠簡潔明瞭地定義函式。在此篇文章中，我們將會學習如何使用箭頭函式來簡化程式碼。'
+category: '教學'
+tags: ['JS', '語法']
+publishDate: '2023-02-27'
+---
+
+## 前言
+
+箭頭函式是 ES6 版本中新增的語法，如今已經非常廣泛的被使用，讀完這篇文章可以幫助你認識箭頭函式，並且了解這個語法的特性以及要注意的地方。
+
+<Video
+  width={1108}
+  height={720}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-arrow-function/example.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-arrow-function/example.mp4',
+    },
+  ]}
+></Video>
+
+## 語法
+
+要使用箭頭函式，如字面上的意思就是會使用長得像箭頭的符號 `=>` 來定義函式。以下是箭頭函式的語法範例：
+
+{/* prettier-ignore */}
+```js
+// 一般函數
+function functionName(parameter) {
+  // ...
+}
+
+// 無參數
+const functionName = () => {
+  // ...
+};
+
+// 一個參數(可省略小括弧)
+const functionOne = parameter => {
+  // ...
+};
+
+// 有多個參數(需添加括弧)
+const functionTwo = (parameter, parameterTwo) => {
+  // ...
+};
+
+// 解構參數(需添加括弧)
+const functionTwo = ({parameter}) => {
+  // ...
+};
+
+// 有預設參數(需添加括弧)
+const functionTwo = (parameter = {}) => {
+  // ...
+};
+```
+
+`functionName` 為函式的名稱，`parameter` 為函式的參數，可以有多個參數，如果沒有參數，則使用空括號 `()` 代替。
+
+## 特性
+
+箭頭函式具備一些有趣的特性，可以留意一下。
+
+### 隱晦回傳 (Implicit Return)
+
+一般函式都會需要回傳值，使用 `return` 關鍵字，如果沒有回傳值，則會回傳 `undefined`。箭頭函式有一個特性，就是可以使用隱晦的方式來回傳值，顧名思義，就是不需要使用 `return` 關鍵字來回傳值，可參考以下範例：
+
+{/* prettier-ignore */}
+```javascript
+// 單行
+const implicit = (value) => value;
+
+// 多行(使用小括弧框起來)
+const implicit = (value) => (
+  value
+);
+
+// 錯誤寫法(物件必須用小括號包起來，避免被誤解為函式的開頭)
+const implicit = () => {
+  value: 'Hello';
+};
+implicit(); // undefined
+
+// 回傳物件正確寫法
+const implicit = () => ({ value: 'Hello' });
+implicit(); // { value: "Hello" }
+```
+
+### 不存在 `arguments`
+
+箭頭函式沒有 `arguments` 參數是因其繼承了其父作用域的 `arguments` 物件。這意味著當在箭頭函式中引用 `arguments` 時，實際上是引用其父作用域中的 `arguments`。我們可以使用以下的方式來獲得所有傳入匿名函數的參數。
+
+```javascript
+const myFunction = (...args) => {
+  console.log(args);
+};
+
+myFunction(1, 2, 3); // 輸出 [1, 2, 3]
+```
+
+### 不存在自身的 `this`
+
+箭頭函式並沒有 `this` 因此如果訪問 `this`，則會從外層作用域中繼承 `this`。
+
+```javascript
+const bar = '全域蘋果';
+const foo = {
+  bar: '區域橘子',
+  normalFunction: function () {
+    // 傳統函式，以此為基準產生一個作用域
+    console.log('1', this.bar); // 1 全域蘋果
+    setTimeout(() => {
+      console.log('2', this.name); // 2 區域橘子
+      console.log('3', this); // 3 foo
+    }, 1000);
+  },
+  arrowFunction: () => {
+    // 如果使用箭頭函式，this 指向外層的作用域
+    console.log('4', this.name); // 4 全域蘋果
+    setTimeout(() => {
+      console.log('5', this.name); // 5 全域蘋果
+      console.log('6', this); // 6 window
+    }, 1000);
+  },
+};
+
+foo.normalFunction();
+foo.arrowFunction();
+```
+
+## 實際用途
+
+### 場合一：簡化程式碼
+
+最常見的使用箭頭函式的方式就是可以讓程式碼更為精簡，但需要注意**精簡的程式碼並不總是代表更好的閱讀性**。在適當的情況下，使用箭頭函式來簡化程式碼是可行的，並沒有一個硬性的規則，端看偏好習慣。
+
+```js
+// 一般函式的例子：
+function add(a, b) {
+  return a + b;
+}
+
+// 使用箭頭函式來簡化程式碼：
+const add = (a, b) => a + b;
+```
+
+```js
+// 一般函式的例子：
+document.getElementById('increment').addEventListener('click', function () {
+  count++;
+});
+
+// 使用箭頭函式來簡化程式碼：
+document.getElementById('increment').addEventListener('click', () => {
+  count++;
+});
+```
+
+```jsx
+// 將一個陣列中的每個元素轉換成 li 標籤
+// 結果：[ "<li>John</li>", "<li>Mary</li>", "<li>Peter</li>" ]
+const persons = ['John', 'Mary', 'Peter'];
+persons.map((person) => `<li>${person}</li>`);
+```
+
+### 場合二： 讓 `this` 指向外層作用域
+
+就像前面全域蘋果和區域橘子的範例一樣，適當的使用箭頭函式可以讓 `this` 指向外層作用域，達成特定的目的。
+
+## 總結
+
+活用箭頭函式除了可以讓程式碼變得更加精簡外，本身也具備一些獨特的屬性值得探索！

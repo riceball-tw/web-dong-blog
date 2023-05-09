@@ -1,0 +1,83 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/chaining-operator.svg', alt: '一個點和問號(可選串聯)符號' }
+title: 'Javascript Optional Chaining Operator'
+titleTC: '使用可選串聯存取不確定是否存在的資料'
+excerpt: '學習可選串聯語法可以讓我們安全的存取某個嵌套的物件屬性，就算其屬性並不存在也不會導致錯誤。 '
+category: '教學'
+tags: ['JS', '語法']
+publishDate: '2022-10-21'
+---
+
+## 前言
+
+學習可選串聯語法可以讓我們安全的存取嵌套物件的屬性，就算其屬性並不存在也不會導致錯誤。
+
+## 「不存在的屬性」問題點
+
+存取物件屬性對開發者來說是一件非常直覺且每天都在做的事，但當資料的來源不穩定，像是使用第三方來源的資料或用戶輸入，應該如何迴避因使用不存在的值而出現的錯誤呢？
+
+```javascript
+const person = {
+  name: 'Doe',
+  age: 28,
+};
+
+console.log(person.child.age); // Uncaught TypeError: person.child is undefined
+```
+
+可以使用 [條件運算子](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) 或 [邏輯運算子](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND) 來達成目的：
+
+```javascript
+// 如果 person.name 存在，使用 person.name ，否則等於 undefined。
+console.log(person.name ? person.name : undefined);
+
+// 如果 person 存在，取 person.name，否則等於 undefined
+console.log(person && person.name);
+```
+
+雖然可行，但並不是非常優雅的解決方案，並且當嵌套的程度越大，整段程式就顯得更加壟餘。
+
+```javascript
+const person = {};
+
+console.log(person.address ? (user.address.street ? user.address.street.name : null) : null);
+```
+
+## 使用可選串聯 .?
+
+要解決以上的答案很簡單，使用 [可選串聯](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Optional_chaining) 。簡單來說如果輸入的值不存在或 `null`，選取的值就會被視為 `undefined` ，讓程式不至於崩潰。用法有以下兩種：
+
+1. 避免存取不存在的值導致程式崩潰 (如值不存在，得 `undefined` 值)
+2. 設立預設值 (搭配 `??` 運算子)
+
+```javascript
+const person = {};
+
+// 得 undefined 值
+console.log(person?.name);
+
+// 得預設值 "未命名用戶"
+console.log(person?.name ?? '未命名用戶');
+```
+
+通常在接遠端資料或存取 DOM 時運用，如果非常確定獲取的資料一定會存在的話，是可以不用寫的，有寫算是加一層例外保護。
+
+此外「串聯」可選串聯也是可行的，如下：
+
+```javascript
+let user = {};
+
+// 得 undefined 值
+console.log(user?.address?.street);
+```
+
+## 注意事項
+
+不應該過度的使用 `?.` 可選串聯，只在非必要的資料選取上使用即可。舉例來說：當 `user` 物件中的 `address` 是非必要的，就可以使用 `user.address?.street` 來選擇，而非 `user?.address?.street`。
+
+過度的使用可選串聯將會導致不恰當的時機警告被壓制，使變數被填充成 `undefined` 值，導致更難除錯。
+
+## 參考資料
+
+- [Javascript Info - Optional chaining ‘?.’](https://javascript.info/optional-chaining)

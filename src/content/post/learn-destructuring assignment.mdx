@@ -1,0 +1,97 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/destructuring.svg', alt: '解構符號' }
+title: 'Learn destructuring assignment'
+titleTC: '從動圖與實例學會解構語法糖'
+excerpt: '藉由解構語法可以快速取出目前陣列或物件的資料，來學會這個好用常見的語法糖吧！'
+category: '教學'
+tags: ['JS', '語法']
+publishDate: '2023-04-04'
+---
+
+## 什麼是解構？
+
+<Video
+  width={1200}
+  height={600}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.mp4',
+    },
+  ]}
+></Video>
+
+解構是一個創造新變數的語法糖，可以快速取出目前陣列或物件的資料，並且可以將取出的資料重新命名，讓程式碼更簡潔。實際上非常簡單，舉幾個實際例子就會發現它的用處很多且很好懂。
+
+## 實際案例
+
+### 來野餐吧
+
+舉例來說你現在有一個陣列名叫 `basket`，裡面有三種食物，分別是 `🍎`、`🥪`、`🧃`，想要取出裡面的蘋果和三明治就可以這樣寫：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, sandwich] = basket;
+
+console.log(apple, sandwich);
+// 🍎 🥪
+```
+
+這裡 `apple` 與 `sandwich` 的名稱是可以自行決定的，代表在這個新變數中，會取出 `basket` 陣列中的第一個與第二個內容。
+
+### 跳過資料
+
+那假如我們想要取出 `apple` 和 `juice` 這兩個食物，除開 `sandwich`，則可以這樣寫：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, , juice] = basket;
+
+console.log(apple, juice);
+// 🍎 🧃
+```
+
+### 實戰練習
+
+#### 觀察一：解構參數
+
+舉例來說目前有一個 `說生日快樂` 函式，它會接收一個人物物件，並且在函式內部會用到這個人物的 `name` 與 `age` 兩個屬性，這時候可以這樣寫：
+
+```js
+function sayHappyBirthday({ name, age }) {
+  return `生日快樂 ${name}！ 你現在是 ${age} 歲了!`;
+}
+```
+
+#### 觀察二： 解構回傳值
+
+我發現最常會用到解構的地方是在 React 與許多類似的框架中，像 `useState` 它會回傳一個陣列，第一個元素是目前的狀態，第二個元素是可以改變狀態的函式，所以很常會這樣寫，看起來很像魔法但就只是把函式回傳的陣列解構命名而已：
+
+```js
+const [count, setCount] = useState(0);
+```
+
+```js
+function useState(initialState) {
+  // ...
+  return [state, setState];
+}
+```
+
+## 總結
+
+在傳統的寫法中，我們通常會這樣寫：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const apple = basket[0];
+const sandwich = basket[1];
+const juice = basket[2];
+```
+
+但現在你明白解構語法糖的威力了，快去嘗試吧！

@@ -1,0 +1,115 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/save.svg', alt: '儲存符號' }
+title: 'JavaScript Closure'
+titleTC: '從頭了解為什麼你需要 JavaScript 閉包'
+excerpt: '閉包是一個聽起來非常難懂而且枯燥的題材，實際上概念很簡單，在了解閉包之前你必須熟悉作用域與事件佇列的概念。'
+category: '教學'
+tags: ['JS', '概念']
+publishDate: '2023-04-09'
+---
+
+## 從頭說起
+
+> 閉包可以讓你在函式內獲得函式外作用域的變數
+
+但這麼說很難理解，什麼是作用域？為了更好的了解閉包，讓我們從頭說起。通常在函式內會使用兩種方法來使用變數：
+
+- **方法 A**：將變數作為參數傳入函式內
+- **方法 B**：定義一個變數在函式內
+
+```js
+// 方法 A
+function add(a, b) {
+  return a + b;
+}
+
+// 方法 B
+function sayHello() {
+  const greeting = 'Hello';
+  return greeting;
+}
+```
+
+但如果函式外想要存取函式內的變數是不行的，這是因為函式會創造一個新的作用域，讓變數只能在函式內使用。
+
+```js
+function sayHello() {
+  const greeting = 'Hello';
+  return greeting;
+}
+
+console.log(greeting); // ReferenceError: greeting is not defined
+```
+
+但如果直接使用函式以外的變數會發生什麼事？是可行的！這是因為前面提到的：「閉包可以讓你在函式內獲得函式外作用域的變數」，閉包只是一種形容這樣特性的詞彙，實際牽扯到 JavaScript 的作用域與底層的運作方式，才造就閉包這種特性。
+
+```js
+const greeting = 'Hello';
+function sayHello() {
+  return greeting;
+}
+
+console.log(sayHello()); // 仍舊可以打印出 Hello
+```
+
+<Figure
+  width="1200"
+  height="308"
+  src="images/posts/javascript-closure/scope.webp"
+  alt="使用 console.dir 打印函式觀察結果"
+/>
+
+具體來說可以用 `console.dir()` 來觀察該函式，會發現 `sayHello` 函式具備該函式作用域以外的資料，這筆資料就算是在 `sayHello` 函式執行完成後，仍然可以存取到。
+
+## 什麼時候該使用閉包？
+
+> 函式以外的作用域會持續存在，就算函式已經執行完畢
+
+閉包要求更多的記憶體空間與運算，因此最好在真正需要的時候才使用這一特性，大多時候會用於以下幾個情況：
+
+### 形成私有變數
+
+閉包可以讓函式內的變數不會被外部函式所存取，因此可以用來形成私有變數。
+
+```js
+function makeCounter() {
+  let count = 0; // 外部無法存取到該變數
+
+  return function () {
+    return (count += 1);
+  };
+}
+
+const counter = makeCounter();
+
+console.log(counter()); // 1
+```
+
+### 模組化
+
+閉包可以用來搭配工廠模式，模組化程式碼，保存狀態。
+
+```js
+function makeCounter() {
+  let count = 0;
+
+  return function () {
+    return (count += 1);
+  };
+}
+
+const counterA = makeCounter();
+const counterB = makeCounter();
+
+console.log(counterA()); // 1
+console.log(counterA()); // 2
+
+console.log(counterB()); // 1
+console.log(counterB()); // 2
+```
+
+## 參考資料
+
+- [閉包 - MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Closures)
+- [JavaScript Closures Tutorial - ColorCode](https://www.youtube.com/watch?v=aHrvi2zTlaU)

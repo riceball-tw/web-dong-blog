@@ -1,0 +1,75 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/currying.svg', alt: '兩個函式參數的符號' }
+title: 'Currying Function'
+titleTC: '為什麼需要柯里化函式'
+excerpt: '用不同的思考方式來撰寫函式，藉由將一個大函式分解成很多僅使用一個參數的函式，打造可被重複利用與輕鬆除厝的函式。'
+category: '教學'
+tags: ['JS', 'FP', '概念']
+publishDate: '2023-04-10'
+---
+
+## 什麼是柯里化
+
+> 將使用多個參數的函式轉換成一系列使用一個參數的函式
+
+舉例來說目前有個建造三明治的函式，透過傳入三個參數來建構個三明治：
+
+```js
+function makeSandwich(bread, meat, vegetable) {
+  return `三明治：${bread}、${meat}、${vegetable}`;
+}
+
+makeSandwich('黑麥麵包', '牛肉', '洋蔥'); // 三明治：黑麥麵包、牛肉、洋蔥
+```
+
+而將函式柯里化的意思就是將這個函式拆成三個函式，每個函式只接受單一參數：
+
+```js
+function makeSandwich(bread) {
+  return function (meat) {
+    return function (vegetable) {
+      return `三明治：${bread}、${meat}、${vegetable}`;
+    };
+  };
+}
+
+makeSandwich('黑麥麵包')('牛肉')('洋蔥'); // 三明治：黑麥麵包、牛肉、洋蔥
+```
+
+這麼寫仍些難閱讀，因此可以進一步使用箭頭函式來簡化：
+
+```js
+const makeSandwich = (bread) => (meat) => (vegetable) => `三明治：${bread}、${meat}、${vegetable}`;
+```
+
+這就是函式柯里化，現在明白有這樣的酷方法，與其傳遞參數，改為傳遞一個個的函式有什麼好處呢？
+
+## 柯里化的好處
+
+### 更高的複用性
+
+還是舉三明治的例子，如果沒有完整的傳遞所有參數，假設只傳遞了 `breead` 與 `meat` 參數，那麼就會回傳一個函式，指示須輸入 `vegetable` 參數：
+
+```js
+const ryeBeefSandwich = makeSandwich('黑麥麵包')('牛肉');
+ryeBeefSandwich(); // vegetable => `三明治：${bread}、${meat}、${vegetable}`
+ryeBeefSandwich('洋蔥'); // '三明治：黑麥麵包、牛肉、洋蔥'
+```
+
+這樣就創造了一個局部應用(Partially applied)的函式，可以用來建構不同的三明治，而不用每次都傳遞所有參數。聰明的你已經發現這個超讚的特性可以馬上應用在實際的開發中，例如開一家三明治店生產不同種類的三明治：
+
+```js
+const whiteBreadBeefSandwich = makeSandwich('白麵包')('牛肉');
+const ryeChickenSandwich = makeSandwich('黑麥麵包')('雞肉');
+// ... 各式各樣的三明治模板
+
+whiteBreadBeefSandwich('萵苣'); // '三明治：白麵包、牛肉、萵苣'
+ryeChickenSandwich('洋蔥'); // '三明治：黑麥麵包、雞肉、洋蔥'
+```
+
+<Info type="info">柯里化是達成局部應用的方法，但更侷限在一次只能傳遞一個參數。</Info>
+
+## 參考資料
+
+- [Currying in JavaScript Explained with Examples](https://builtin.com/software-engineering-perspectives/currying-javascript)
