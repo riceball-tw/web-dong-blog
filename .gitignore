@@ -27,6 +27,3 @@ public/
 # markdown files
 src/content/post
 src/content/draft
-
-# post components
-src/components/post/**
