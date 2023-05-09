@@ -7,6 +7,7 @@ import partytown from '@astrojs/partytown';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import AutoImport from 'astro-auto-import';
 
 import { h, s } from 'hastscript';
 
@@ -61,6 +62,9 @@ export default defineConfig({
       config: {
         applyBaseStyles: false,
       },
+    }),
+    AutoImport({
+      imports: ['@/components/post/Info.astro', '@/components/post/Figure.astro', '@/components/post/Video.astro'],
     }),
     mdx({
       drafts: false,
