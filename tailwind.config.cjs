@@ -4,6 +4,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: 'class',
+  important: true,
   theme: {
     fontFamily: {
       mono: ['JetBrains Mono', 'Fira Code', ...defaultTheme.fontFamily.mono],
