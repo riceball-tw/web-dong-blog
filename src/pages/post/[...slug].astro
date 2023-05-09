@@ -75,16 +75,13 @@ const { Content, headings } = await post.render();
         </div>
       </header>
 
-      <div
-        style="top: var(--mainNav-height)"
-        class="sticky left-1/2 z-20 col-start-3 row-start-2 mx-3 h-fit w-fit transform-gpu"
-      >
+      <aside style="top: var(--mainNav-height)" class="sticky col-start-3 row-start-2 ml-4 hidden xl:block">
         {
           Boolean(headings.length) && (
-            <aside class="toc hidden px-8 xl:block">
-              <ul class="mt-4">
+            <div class="absolute top-0">
+              <ul class="m-0 p-0">
                 {headings.map(({ depth, slug: headingSlug, text }) => (
-                  <li class="toc-item hover:text-accent dark:hover:text-accent-light line-clamp-2 list-none opacity-60 hover:opacity-100">
+                  <li class="hover:text-accent dark:hover:text-accent-light line-clamp-2 list-none opacity-60 hover:opacity-100">
                     <a
                       class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
                       href={`#${headingSlug}`}
@@ -95,18 +92,13 @@ const { Content, headings } = await post.render();
                   </li>
                 ))}
               </ul>
-            </aside>
+            </div>
           )
         }
-      </div>
+      </aside>
 
-      <div class="article-grid article-content relative z-10 col-span-full row-start-2 md:prose-lg lg:grid">
-        <Content />
-      </div>
-
-      <div class="col-start-2">
-        <Utteranc />
-      </div>
+      <Content />
+      <Utteranc />
     </article>
   </main>
 </Base>
@@ -117,8 +109,12 @@ const { Content, headings } = await post.render();
     grid-template-columns: 1fr min(65ch, 100%) 1fr;
   }
 
-  .article-content > * {
+  .article-grid > * {
     grid-column: 2;
+  }
+
+  .article-grid > h2:first-of-type {
+    margin-top: 0;
   }
 
   /* Heading Link */
@@ -146,22 +142,24 @@ const { Content, headings } = await post.render();
   }
 
   /* Inside article-content */
-  .article-content a:hover .external-link-icon {
+  .article-grid a:hover .external-link-icon {
     opacity: 1;
   }
 
-  .article-content > .imgFigure {
+  .article-grid > .imgFigure {
     width: 100%;
     grid-column: 1 / -1;
     transition: 0.3s;
+    z-index: 1;
   }
 
-  .article-content > video {
+  .article-grid > video {
     margin: 0 auto;
     grid-column: 1 / -1;
+    z-index: 1;
   }
 
-  .article-content > img {
+  .article-grid > img {
     margin: 0 auto;
     grid-column: 1 / -1;
   }
