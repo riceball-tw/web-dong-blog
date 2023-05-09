@@ -1,0 +1,15 @@
+---
+import Clickable from '@/components/app/Clickable.astro';
+---
+
+<Clickable>
+  <button class="w-full rounded p-4" style="border: 1px solid currentColor" data-demo-button>點擊我觸發事件👆🏻</button>
+</Clickable>
+
+<script is:inline>
+  const button = document.querySelector('[data-demo-button]');
+  button.addEventListener('click', (event) => {
+    console.log(event);
+    alert(`你點擊了按鈕！請打開瀏覽器 console 查看結果。`);
+  });
+</script>
