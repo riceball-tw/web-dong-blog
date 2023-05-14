@@ -38,7 +38,9 @@ const { icon } = infoType[type];
   <Card themeColor={themeColor}>
     <div class="flex flex-wrap items-center justify-center gap-4 md:flex-nowrap">
       <div set:html={icon} />
-      <slot />
+      <div>
+        <slot />
+      </div>
     </div>
   </Card>
 </aside>
