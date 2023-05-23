@@ -1,0 +1,242 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/async-js.svg', alt: '非同步符號' }
+title: 'All You Need To Know About Optimal Images'
+titleTC: '所有最佳化網頁圖片的技巧都寫在這了！'
+excerpt: '圖片是豐富網頁內容避不可少的元素之一，大家都會在網頁中添加圖片，但實際上有許多圖片相關的災難可能正在發生中。'
+category: '教學'
+tags: ['最佳化', '圖片']
+publishDate: '2023-05-19'
+---
+
+## 前言
+
+> 大多數網站中圖片與影片是傳輸資料中最繁重的存在，了解如何改善它們是最划算的選擇
+
+如果網站效能或加載速度出現問題，第一步絕對可以從圖片或影片開始改善。讓我們先從簡單的例子一步一步點出潛在的問題以及如何解決，了解圖片實際上有很多有趣的細節可以調整。
+
+## 良好圖片的通則
+
+一些為網站提供好圖片的通則，偏向大方向理念而非語法撰寫上的建議：
+
+### 提供合適的圖片尺寸
+
+如果在小畫面上呈現一張超大的圖片，再怎麼精細的影像也沒辦法呈現清楚圖片的細節，因此不同的「裝置尺寸」與「像素密度」下合適的圖片大小也會有所不同，加載大圖片通常需要極大的成本代價，視裝置給予用戶合適的圖片尺寸是極為重要的事情。
+
+設計師不一定會留意這一點，身為前端工程師需要與設計者溝通，讓對方提供合適的圖片供網頁使用。
+
+現在許多 UI 設計工具如 Figma 或 Adobe XD 也都有輸出不同尺寸圖片的選項，如果還是沒辦法可以上網找壓縮與裁切工具編輯圖片。
+
+### 提供合適的圖片格式
+
+向量還是點陣？影片還是圖片？衡量「檔案格式的特性」與「網站需要到達支援程度」，將圖片用最合適的方式呈現可以大幅增進網頁的效能。如果不確定格式的支援程度可以到 [Can I use](https://caniuse.com/) 網站上輸入格式名稱，了解網站客群有沒有在範圍之內。
+
+以下是懶人包，可參考我對不同格式的濃縮建議，除此之外的格式基本不太會需要考慮使用：
+
+* `.jpg`：老牌點陣圖片格式，中規中矩。
+* `.png`：老牌點陣圖片格式，如果需要透明背景或高品質無損圖片時使用。
+* `.gif`：老牌點陣動圖格式，大小、效能以及品質差得嚇人。
+* `.webp`：集 `.jpg` 與 `.png` 與 `.gif` 功能於一身，優越的壓縮比。
+* `.svg`：老牌向量格式，可行內置入於 HTML 中。
+* `.mp4`：老牌影片格式，中規中矩。
+* `.webm`：專為網頁而生的影片格式，優越的壓縮比。
+
+<Info type="info">
+**對圖片的建議**：如果沒有特別的要求會建議簡單線條與色塊的圖片使用 `.svg` 向量呈現，複雜一點使用 `.webp` 格式，再來才是 `.jpg`。
+</Info>
+
+<Info type="warning">
+**對影片的建議**：推薦使用 `.webm` 再來才是 `.mp4`。如果有 [過長的動圖建議使用影片來呈現](https://web.dev/replace-gifs-with-videos/)，為了效能與大小上的考量。
+</Info>
+
+### 提供壓縮過的圖片
+
+SVG 可以使用 [SVGOMG](https://jakearchibald.github.io/svgomg/) 來壓縮，要剪輯圖片或影片可以使用 [EZGIF](https://ezgif.com/)。一般來說在輸出圖片時我會選擇 80% 的品質用於網頁。
+
+### 節省外部請求
+
+每當索取一張圖片就是多一次對外部的請求，如果「圖片很小」可以使用行內 SVG 或 [Data URI](https://en.wikipedia.org/wiki/Data_URI_scheme) 的方式來將圖片嵌入到 HTML 中。
+
+```html
+<!-- 外連圖片 -->
+<img src="orange-cat.svg" alt="一隻橘色的貓">
+
+<!-- 行內 SVG -->
+<svg>
+  <title>一隻橘色的貓</title>
+  <!-- ... -->
+</svg>
+
+<!-- Data URI -->
+<img src="data:image/png;base64,iVBORw0KGgoAAA
+ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
+//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
+5ErkJggg==" alt="Red dot" />
+
+```
+
+
+
+還有一種技巧是使用[精靈圖](https://zh.wikipedia.org/zh-tw/%E7%B2%BE%E7%81%B5%E5%9B%BE)（Image Sprites） 把多張圖片組為單一張圖已節省外部請求，這種做法有好有壞，又是額外需要說明的篇幅了，現在比較少看到這樣的做法。
+
+## 留意 `background-image` 的使用
+
+> 該屬性只適合用於載入「非重要裝飾性質的背景圖片」！
+
+使用這項屬性並沒有錯，只是它應對的是一個特定的使用情境，誤用濫用將帶來以下麻煩問題：
+
+### 重點一：差勁的 SEO
+
+`background-image` 作為背景裝飾性圖片，天生就不會被 Google 搜尋引擎給收錄。如果圖片希望被搜尋引擎偵測到，就應當使用 `<img>` 並撰寫良好的 `alt` 說明。
+
+### 重點二：差勁的無障礙體驗
+
+除了搜尋引擎的問題，[螢幕閱讀器](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8)也會完全忽略 `background-image`，如果圖片具備純粹裝飾以外的意涵也不應該設置為背景圖片。
+
+### 重點三：潛在差勁的效能
+
+通常背景圖片很少做到能夠依照裝置大小以及裝置像素密度來替換圖片，雖然可以使用 [`Media Queries`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries/Using_media_queries) 與 [`image-set`](https://developer.mozilla.org/en-US/docs/Web/CSS/image/image-set)：
+
+```css
+// 768px 時替換合適的圖片
+.hero { background-image: url('/image.png'); }
+@media only screen and (min-width: 768px) {
+  .hero { background-image: url('/image-768.png'); }
+}
+
+// 1268px 時替換合適的圖片
+@media only screen and (min-width: 1268px) {
+  .hero { background-image: url('/image-1268.png'); }
+}
+
+.hero {
+  background-image: image-set(url("/image-1x.png") 1x, url("/image-2x.png") 2x);
+}
+```
+但除了十分攏長之外仍有許多需求無法達成，像是：為現代瀏覽器提供更為現代的圖片格式、懶加載、加載順序……等。
+
+在外連樣式的情況下，也會導致需要等待 CSS 下載完畢開始解析的時候才能開始加載圖片，相比於使用 `<img>` 引入圖片的方式就會讓圖片加載速度受到影響，你需要使用行內樣式、[預加載](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered)圖片、[預連接](https://developer.chrome.com/zh/docs/lighthouse/performance/uses-rel-preconnect/)等方式來避免該問題。
+
+## 留意 `<img>` 的使用
+
+> 最常見添加圖片至網頁的方式，該元素合適用絕大多數時機，但仍需留意細節屬性的設置
+
+### 重點一：撰寫替代描述 `alt` 屬性
+如果你重視 SEO，就應該為每張圖片添加描述良好的 `alt`，並盡可能養成描述清楚圖片的習慣！
+
+底下有一張很明眼的橘色貓咪圖，但如果是使用[螢幕閱讀器](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8)，或是搜尋引擎、網頁爬蟲想要了解網站圖片內容就會出現無法解讀的問題，為了解決該狀況，就**務必**要為每一個 `<img>` 添加 `alt` 屬性。
+
+沒有為圖片撰寫良好的替代描述，將會導致搜尋引擎、部分網站用戶無法正確的了解圖片內容。撰寫圖片的描述可以參考「 [Google 提供的建議](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw#descriptive-alt-text)」，更好的的描述網頁圖片。
+
+
+```html
+<!-- 壞 -->
+<img src="cat.jpg">
+
+<!-- 好 -->
+<img src="cat.jpg" alt="一隻橘貓在人行道上曬太陽">
+
+```
+
+### 重點二：適當的懶加載
+如今瀏覽器已經支援原生的懶加載，只需要添加 `loading=lazy` 的屬性即可。善用懶加載可以讓圖片在真正需要用到的時候才開始載入。
+
+<Info type="warning">
+注意不要在頁面開頭（頁面加載後的可視範圍內）使用這項屬性到圖片上，確保圖片可以盡早被加載完成。
+</Info>
+
+### 重點三：使用 `src-set` 加載合適的圖片尺寸
+
+在對的裝置尺寸使用正確尺寸的圖片很重要，可以為網頁中的點陣圖片使用 `src-set` 達成該目標。
+
+```html
+<img 
+  srcset="
+    /image.png?width=100 100w,
+    /image.png?width=200 200w,
+    /image.png?width=400 400w,
+    /image.png?width=800 800w
+  "
+>
+```
+
+這樣一來瀏覽器就會聰明的基於「裝置尺寸」與「像素密度」來使用最合適的圖片。
+
+此外須留意瀏覽器會預設所有設置 `srcset` 的圖片會佔據整個窗口範圍也就是 `100vw`，瀏覽器必須要知道該張圖片在該頁面被顯示的大小才能知道哪張圖片最為合適於此場景，這個指示該圖片在某個狀態下會是多少大小的資訊可以使用 `sizes` 屬性來註明。
+
+`sizes` 由一個媒體條件和大小值所組成，並用逗號分隔，
+
+```html
+<img 
+  srcset=""
+  sizes="(max-width: 400px) 200px, (max-width: 800px) 100vw, 50vw"
+>
+```
+
+舉以上的例子來說目前的裝置有 `900px` 寬，
+
+### 重點四：使用 `<picture>` 來提供圖片替代方案
+舉例來說你想使用 `.webp` 格式來取代目前的 `.png`，但並不是每個用戶的瀏覽器都會支援，因此這時候就可以使用 `<picture>` 來達成提供替代的圖片格式：
+
+```html
+<picture>
+  <source 
+    type="image/webp"
+    srcset="
+      /image.webp?width=100 100w,
+      /image.webp?width=200 200w,
+      /image.webp?width=400 400w,
+      /image.webp?width=800 800w
+    " />
+  <img ... />
+</picture>
+```
+
+以上的意思是如果有支援該格式就使用該 `<source>` 的內容，如果沒有就退而使用 `<img>` 來顯示。
+
+### 重點五：提供明確的圖片比例
+
+為了避免[布局偏移](https://web.dev/i18n/zh/cls/)，在提供圖片的同時最好同時附上圖片的寬高讓瀏覽器提前知道需要預留多少空間給該張圖片：
+
+```html
+<img width="600" height="400">
+```
+
+或是使用 CSS 屬性 `aspect-ratio` 來標註圖片的比例關係：
+
+```html
+<img style="aspect-ratio: 4 / 6"; width="100%">
+```
+
+
+### 重點六：非同步圖片解碼
+
+此外還有 `decoding="async"` 屬性，能夠讓瀏覽器將解析圖片的工作移到主執行序之外，建議[在畫面之外的圖片使用](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding#usage_notes)。
+
+```html
+<img decoding="async">
+```
+
+### 重點七：安排圖片的資源優先程度
+
+此外也可以手動調整圖片獲取上的重要程度，讓瀏覽器在第一時間加載真正重要的圖片，例如 [LCP 圖片](https://web.dev/i18n/zh/optimize-lcp/)。
+
+```html
+<img fetchpriority="high">
+```
+
+或是降低獲取重要程度，舉例來說畫面首頁輪播的後幾頁：
+
+```html
+<div class="carousel">
+  <img fetchpriority="high">
+  <img fetchpriority="low">
+  <img fetchpriority="low">
+</div>
+```
+
+## 總結完美案例
+
+## 參考資料
+* [The CSS background-image property as an anti-pattern](https://nystudio107.com/blog/the-css-background-image-property-as-an-anti-pattern)
+* [Optimal Images in HTML - Builder.io](https://www.builder.io/blog/fast-images)
