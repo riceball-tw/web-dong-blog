@@ -38,8 +38,8 @@ const post = defineCollection({
     excerpt: z.string(),
     category: z.string().default('unsorted'),
     tags: z.array(z.string()).default(['unsorted']),
-    themeColor: z.z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
-    publishDate: z.string().transform((str) => toReadableDate(str, '-')),
+    themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
+    publishDate: z.date(),
     permalink: z.string().optional(),
   }),
 });
