@@ -55,7 +55,11 @@ const { Content, headings } = await post.render();
             </div>
             <!-- Publish Date -->
             <time class="opacity-40 hover:opacity-100">
-              {publishDate}
+              {
+                publishDate
+                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                  .replace(/\//g, '-')
+              }
             </time>
           </div>
 
