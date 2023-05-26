@@ -7,25 +7,20 @@ import PostCard from '@/components/card/PostCard.astro';
 
 const posts = await getCollection('post');
 
-const filteredPosts = posts
-  .filter((post) => {
-    if (post.data.isDraft === true) {
-      return false;
-    }
-    return true;
-  })
-  .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate));
+const dateSortedPublishedPosts = posts
+  .filter((post) => !post.data.isDraft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
 const title = '所有文章';
 const description = '所有種類的文章';
 ---
 
 <Base title={title} description={description}>
-  <PageBanner title={`${title} (${filteredPosts.length})`} />
+  <PageBanner title={`${title} (${dateSortedPublishedPosts.length})`} />
   <section class="px-4">
     <CardGallery>
       {
-        filteredPosts.map((post) => (
+        dateSortedPublishedPosts.map((post) => (
           <PostCard
             post={{
               slug: post.slug,

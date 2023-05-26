@@ -8,24 +8,20 @@ import PostCard from '@/components/card/PostCard.astro';
 
 export interface Props {
   posts: CollectionEntry<'post'>;
+  avaliablePosts: CollectionEntry<'post'>[];
 }
 
 export async function getStaticPaths() {
   const posts = await getCollection('post');
-  const category = [...new Set(posts.map((post) => post.data.category).flat())];
-  return category.map((tag) => [{ params: { slug: tag }, props: { posts } }]);
+  const avaliablePosts = posts.filter((post) => !post.data.isDraft);
+  const categories = [...new Set(avaliablePosts.map((post) => post.data.category).flat())];
+  return categories.map((category) => [{ params: { slug: category }, props: { avaliablePosts } }]);
 }
 const { slug } = Astro.params;
-const { posts } = Astro.props;
-
-const targetCategoryPosts = posts.filter((post) => {
-  if (post.data.isDraft === true) {
-    return false;
-  }
-  return post.data.category.includes(slug);
-});
+const { avaliablePosts } = Astro.props;
 const title = `搜尋文章分類：${slug}`;
 const description = `搜尋文章分類`;
+const avaliableCurrentCategoryPosts = avaliablePosts.filter((post) => post.data.category.includes(slug as string));
 ---
 
 <Base title={title} description={description}>
@@ -33,7 +29,7 @@ const description = `搜尋文章分類`;
   <section class="px-4">
     <CardGallery>
       {
-        targetCategoryPosts.map((post) => (
+        avaliableCurrentCategoryPosts.map((post) => (
           <PostCard
             post={{
               slug: post.slug,
