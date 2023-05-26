@@ -16,7 +16,7 @@ export interface Props {
     slug: string;
     titleTC: string;
     excerpt: string;
-    publishDate: string;
+    publishDate: Date;
     themeColor: string;
     tags: string[];
     category: string;
@@ -34,7 +34,7 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
         featureIcon ? (
           <div
             style={`background-color: ${themeColor}`}
-            class="saturate-25 absolute top-0 left-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg brightness-90 filter"
+            class="saturate-25 absolute left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg brightness-90 filter"
           >
             <img
               src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
@@ -58,7 +58,11 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       <div class="flex flex-wrap items-center justify-between">
         <!-- Time -->
         <time class="inline-block text-sm opacity-60 hover:opacity-100">
-          {publishDate}
+          {
+            publishDate
+              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+              .replace(/\//g, '-')
+          }
         </time>
         <div class="flex flex-wrap">
           <!-- Category -->
