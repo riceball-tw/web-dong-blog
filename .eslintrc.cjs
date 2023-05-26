@@ -29,6 +29,8 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
+        // Ignore the import/extensions rule for `.astro` files.
+        'import/prefer-default-export': 'off',
         'import/extensions': [
           'error',
           'ignorePackages',
