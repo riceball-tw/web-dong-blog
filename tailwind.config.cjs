@@ -133,15 +133,10 @@ module.exports = {
               borderRadius: theme('borderRadius.lg'),
               scrollbarWidth: 'thin',
             },
-            pre: {
-              paddingTop: 'none',
-              paddingRight: 'none',
-              paddingBottom: 'none',
-              paddingLeft: 'none',
-            },
+
             ':not(pre) > code': {
               padding: theme('spacing.1'),
-              backgroundColor: theme('colors.primary[200]'),
+              '@apply bg-primary-200 bg-opacity-60 border border-primary-300': {},
             },
           },
         },
@@ -163,7 +158,7 @@ module.exports = {
               },
             },
             ':not(pre) > code': {
-              '@apply bg-primary-800': {},
+              '@apply bg-primary-800 bg-opacity-60 border border-primary-700': {},
             },
           },
         },
