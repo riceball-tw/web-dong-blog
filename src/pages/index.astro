@@ -7,8 +7,8 @@ import Outlined from '@/components/button/Outlined.astro';
 import Clickable from '@/components/app/Clickable.astro';
 
 const posts = await getCollection('post');
-const first6Posts = posts
-  .sort((a, b) => Date.parse(b.data.publishDate) - Date.parse(a.data.publishDate))
+const firstSixAvaliablePosts = posts
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
   .filter((post, index) => !post.data.isDraft && index + 1 <= 6);
 ---
 
@@ -41,7 +41,7 @@ const first6Posts = posts
     <h2 class="sr-only">最新文章</h2>
     <CardGallery>
       {
-        first6Posts.map((post) => (
+        firstSixAvaliablePosts.map((post) => (
           <PostCard
             post={{
               featureIcon: post.data.featureIcon,
