@@ -54,7 +54,7 @@ export default defineConfig({
       ],
     ],
     shikiConfig: {
-      theme: 'monokai',
+      theme: 'github-dark',
     },
   },
   integrations: [
