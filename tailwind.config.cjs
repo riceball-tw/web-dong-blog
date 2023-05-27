@@ -110,7 +110,8 @@ module.exports = {
             table: {
               '@apply border-primary-200': {},
               display: 'block',
-              padding: theme('spacing.8'),
+              paddingTop: theme('spacing.8'),
+              paddingBottom: theme('spacing.8'),
               overflow: 'auto',
               whiteSpace: 'nowrap',
               borderRadius: theme('borderRadius.lg'),
@@ -118,9 +119,9 @@ module.exports = {
               scrollbarWidth: 'thin',
             },
             tr: {
+              '@apply border-primary-200 block px-4 mx-8': {},
               '&:hover': {
-                '@apply bg-primary-200': {},
-                borderRadius: theme('borderRadius.lg'),
+                '@apply bg-primary-100': {},
               },
             },
             td: {
@@ -152,9 +153,9 @@ module.exports = {
               '@apply border-primary-600': {},
             },
             tr: {
+              '@apply border-primary-700': {},
               '&:hover': {
-                borderRadius: theme('borderRadius.lg'),
-                '@apply border-primary-700': {},
+                '@apply bg-primary-800': {},
               },
             },
             ':not(pre) > code': {
