@@ -89,9 +89,9 @@ const { Content, headings } = await post.render();
                     <a
                       class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
                       href={`#${headingSlug}`}
-                      aria-label={`Scroll to section: ${text}`}
+                      aria-label={`移動到 ${text} 標題區塊`}
                     >
-                      <span /> {headingSlug}
+                      {text}
                     </a>
                   </li>
                 ))}
