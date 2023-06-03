@@ -1,28 +1,28 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/ajax.svg', alt: 'AJAX符號' }
-title: 'Why you need AJAX and why not call it AJAJ?'
-titleTC: '什麼是 AJAX 以及為什麼不是 AJAJ？'
-excerpt: '如標題，這個問題一直在腦海中停留許久，有人和我一樣思考 AJAJ 之類的稱呼的可能性嗎？'
+featureIcon: { url: 'images/posts/feature-icon/Ajax.svg', alt: 'Ajax符號' }
+title: 'Why you need Ajax and why not call it Ajaj?'
+titleTC: '什麼是 Ajax 以及為什麼不是 Ajaj？'
+excerpt: '如標題，這個問題一直在腦海中停留許久，有人和我一樣思考 Ajaj 之類的稱呼的可能性嗎？'
 category: '教學'
-tags: ['AJAX']
+tags: ['Ajax']
 publishDate: 2023-05-13
 ---
 
-## 什麼是 AJAX
+## 什麼是 Ajax
 
-<abbr title="Asynchronous JavaScript And XML">AJAX</abbr> 是指一種網頁開發技巧的稱互，也就是「非同步 JavaScript 與 XML」，主要解決傳統網頁需要更新頁面內容的時候只能重新向伺服器索取一個全新的頁面的窘境。
+<abbr title="Asynchronous JavaScript And XML">Ajax</abbr> 是指一種網頁開發技巧的稱互，也就是「非同步 JavaScript 與 XML」，主要解決傳統網頁需要更新頁面內容的時候只能重新向伺服器索取一個全新的頁面的窘境。
 
-透過 AJAX 非同步的使用 JavaScript 對伺服器發出請求，並獲取純文字、HTML、XML、JSON 之類的格式資料用於更新網頁，達成高效率的更新資料、即時的交互性與流暢體驗。
+透過 Ajax 非同步的使用 JavaScript 對伺服器發出請求，並獲取純文字、HTML、XML、JSON 之類的格式資料用於更新網頁，達成高效率的更新資料、即時的交互性與流暢體驗。
 
-## 現在的 AJAX
+## 現在的 Ajax
 
 <Figure
   loading="lazy"
   width="1200"
   height="600"
   src="images/posts/why-you-need-ajax-and-why-not-call-it-ajaj/ajax.webp"
-  alt="AJAX 技術流程圖"
+  alt="Ajax 技術流程圖"
 />
 
 <Figure
@@ -33,17 +33,17 @@ publishDate: 2023-05-13
   alt="傳統網頁更新頁面內容的技術流程圖"
 />
 
-在早期會使用像是：`XMLHTTP`、`XMLHttpRequest`等方法來達成該目的，因此命名為 AJAX 很合理，如今就算很少使用 XML 仍會這樣來稱呼：「非同步使用 JavaScript 來索取資料」這項技巧。
+在早期會使用像是：`XMLHTTP`、`XMLHttpRequest`等方法來達成該目的，因此命名為 Ajax 很合理，如今就算很少使用 XML 仍會這樣來稱呼：「非同步使用 JavaScript 來索取資料」這項技巧。
 
-就算現代更常使用 JSON 格式來傳輸資料，會沿用 AJAX 這個名稱總結大致有幾個要點：
+就算現代更常使用 JSON 格式來傳輸資料，會沿用 Ajax 這個名稱總結大致有幾個要點：
 
 - 更改名稱容易導致混亂
 - 更好發音
 - 就算更改名稱也不能很好的代表其意涵(像是 <abbr title="Asynchronous JavaScript And JSON">AJAJ</abbr> ……) 更明確的命名應該會是 <abbr title="Asynchronous JavaScript Http Request">JAHR</abbr>？！
 
-因此如今我們仍然可以稱呼 AJAX ，不過如今的 X 可以被視為任何資料種類，總歸還是習慣的問題，東西沒壞就不需要修正。
+因此如今我們仍然可以稱呼 Ajax ，不過如今的 X 可以被視為任何資料種類，總歸還是習慣的問題，東西沒壞就不需要修正。
 
-## 如何撰寫 AJAX
+## 如何撰寫 Ajax
 
 絕對會先需要理解非同步 JavaScript 開發的基礎再去了解語法如何撰寫會更好，可以參考我的另外一篇文章：[從動圖輕鬆入門非同步 JavaScript（第一章）](./post/async-javascript.visualized-with-ease)。
 
@@ -51,7 +51,7 @@ publishDate: 2023-05-13
 
 ```js
 let xhr = new XMLHttpRequest();
-xhr.open('GET', 'send-ajax-data.php');
+xhr.open('GET', 'send-Ajax-data.php');
 
 xhr.onreadystatechange = function () {
   const DONE = 4;
@@ -69,15 +69,15 @@ xhr.send(null);
 ```
 
 ```js
-fetch('send-ajax-data.php')
+fetch('send-Ajax-data.php')
   .then((data) => console.log(data))
   .catch((error) => console.log('Error:' + error));
 ```
 
 ```js
-async function doAjax1() {
+async function doAjax() {
   try {
-    const res = await fetch('send-ajax-data.php');
+    const res = await fetch('send-Ajax-data.php');
     const data = await res.text();
     console.log(data);
   } catch (error) {
@@ -85,10 +85,10 @@ async function doAjax1() {
   }
 }
 
-doAjax1();
+doAjax();
 ```
 
 ## 參考資料
 
-- [Why isn't AJAX called AJAJ?](https://www.quora.com/Why-isnt-AJAX-called-AJAJ)
+- [Why isn't Ajax called AJAJ?](https://www.quora.com/Why-isnt-Ajax-called-AJAJ)
 - [Ajax(programming)](<https://en.wikipedia.org/wiki/Ajax_(programming)>)
