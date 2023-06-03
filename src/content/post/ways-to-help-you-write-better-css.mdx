@@ -13,11 +13,11 @@ publishDate: 2023-03-19
   撰寫程式並沒有絕對的準則，留意文章可權衡的地方自行判斷即可。本篇文章記錄我撰寫程式以來的經驗與原則以及當六角學院助教審核同學時**最常發現的問題**。
 </Info>
 
-## 問題一：不關心權重比例與效能
+## 方法一：關心選取器權重比例與效能
 
-過度深層的選取會使得 CSS 的權重比例變得很高，導致後續的維護上會變得很麻煩，你可能會需要覆蓋掉某些樣式，但是因為權重比例太高，就開始用 `!important` 來覆蓋掉原本的樣式。
+過度深層的選取會使得 CSS 的權重比例變得很高，導致後續維護變得非常麻煩會需要覆蓋掉某些樣式，最後因為權重比例太高，就開始用 `!important` 來覆蓋掉原本的樣式。
 
-如果一個 `class` 選擇器就可以選擇到你想要的元素，那何必要寫這麼多層增加閱讀難度與權重比例呢？在某些情況，過度的選取還會影響到效能，因為瀏覽器會需要花費更多的時間去解析該選取器。
+如果一個 `class` 選擇器就可以選擇到你想要的元素，那何必要寫這麼多層增加閱讀難度與權重比例呢？在某些案例，過度的選取還會影響到效能，因為瀏覽器會需要花費更多的時間去解析該選取器。
 
 ```css
 /* ❌ Nope */
@@ -31,19 +31,36 @@ publishDate: 2023-03-19
 
 明確的選取元素會讓人感覺比較安心，較不會發生命名上的衝突，但在實際開發中，讀一長串且具體的選取器，不會比想一個良好的 `class` 名稱來得更快，如果對於命名上的衝突有擔憂，推薦可以參考 [BEM 命名法](/post/write-cleaner-css-with-bem)。總結把握以下原則最好：
 
-1. 盡可能壓低選取器的權重比例。
-2. `!important` 僅在測試除錯時使用，用於正式環境是絕對不能被接受的。
+1. 盡可能壓低選取器的權重比例
+2. 測試除錯時可以使用 [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/important)，但用於正式環境是絕對不能被接受的
+3. 不要使用 [`#` 選取器](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors)，因為相同名稱的 `ID`是不合規的語法，意味著 ID 選取器只可能使用一次，而且權重比例非常高不利於維護
 
-## 問題二：追求太多花俏的選取方式
+## 方法二：避免追求過於花俏的選取方式
 
-並不是要說酷炫的選取器沒有學習的必要，而是在絕大多數時候一個簡單的 `class` 選取器可以滿足當下的需求，是最直白且最好維護的選擇。玩弄花俏的選取方式的同時，記得**達成目的的方式是越簡單且愚蠢是最好的**： [KISS 原則](https://en.wikipedia.org/wiki/KISS_principle)。
+原因與方法一相同，盡可能的使用簡單、低權級的選取器來達成目的，並不是要說酷炫的選取器沒有學習的必要，而是在絕大多數時候一個簡單的 `class` 選取器可以滿足當下的需求，是最直白且最好維護的選擇，玩弄花俏的選取方式的同時，記得**解決問題的方式要注重簡潔**： [KISS 原則](https://zh.wikipedia.org/zh-tw/KISS%E5%8E%9F%E5%88%99)。
 
-## 問題三：撰寫方式不統一
-
-越來越多人擁抱撰寫 Utility 形式的 CSS 的習慣，但卻沒有統一的撰寫方式，我自己習慣是如果要選擇這樣的撰寫模式，那就挑選相關的樣式庫用到底，像是：[Tailwind](https://tailwindcss.com/) 。如果隨心所欲的混用 Utility 樣式沒有規劃，有很大機率會讓 CSS 變得很難維護。
+## 方法三：統一撰寫方式
 
 ```css
-/* ❌ Nope */
+/* Utility */
+.flex {
+  display: flex;
+}
+```
+
+越來越多人擁抱撰寫 Utility 形式的 CSS 的習慣，但如果隨心所欲的混用 Utility 樣式沒有規劃，有很大機率會讓 CSS 變得很難維護。新手特別容易寫 Utility，因為可以像行內樣式一樣，不用考慮命名，直接用就生效，但這樣的習慣會隨著專案的規模變大而變得難以維護。
+
+<Info type="info">
+Q：大型的樣式庫像是 Bootstrap，就算不是 Utility-First 不也有 [Utility](https://getbootstrap.com/docs/5.3/utilities/api/#api-explained) 的 CSS 不是嗎？
+
+A：對的，但人家有完整的文件、規劃及設計系統，如果擅自添加 Utility 只會導致極度的混亂。
+
+</Info>
+
+特別是對初學者，我還是提倡 [良好的命名網頁](/post/ways-to-help-you-write-better-code#%E6%96%B9%E6%B3%95%E4%B8%80%E8%89%AF%E5%A5%BD%E7%9A%84%E5%91%BD%E5%90%8D) 的重要性，如果你對 Utility 真的有興趣，可以參考看看我的另一個文章：[不需要學 Tailwind 也可以用 Tailwind](/post/use-tailwind-without-learning-it)。
+
+```css
+/* ❌ 混用 */
 .p-1 {
   padding: 1rem;
 }
@@ -53,14 +70,14 @@ publishDate: 2023-03-19
   background-color: white;
 }
 
-/* ✅ Yes, Component */
+/* ✅ 語意化 */
 .panel {
   padding: 1rem;
   border: 1px solid black;
   background-color: white;
 }
 
-/* ✅ Yes, Utility */
+/* ✅ 通用類別 */
 .p-1 {
   padding: 1rem;
 }
@@ -74,23 +91,36 @@ publishDate: 2023-03-19
 }
 ```
 
-## 問題四：重複造輪子
+Utility-First 不也使用 Utility 嗎？
 
-現今 [CSS 變數](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 已經在各大瀏覽器中得到廣泛的支援，抽離出一些常用的樣式變數，並且在需要的時候引用，可以讓 CSS 的維護變得更加容易。此外也可以積極的嘗試現成的樣式庫，省時又一致。
+## 方法四：不要再寫神奇數字了
 
-## 問題五：使用不恰當的單位
+[神奇數字](/post/ways-to-help-you-write-better-code#%E9%81%BF%E5%85%8D%E7%A5%9E%E5%A5%87%E6%95%B8%E5%AD%97) 是指在程式中讓人無法理解其用途的數字，在早期 CSS 還沒有支援變數語法的情況下會改寫 [Sass](https://sass-lang.com/) 來使用變數，但現今 [CSS 變數](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 已經在各大瀏覽器中得到廣泛的支援，抽離出一些常用的樣式變數，並且在需要的時候引用，可以讓 CSS 的維護變得更加容易，隨著專案的規模愈龐大越應該避免散亂的變數出現在程式中。
 
-網頁設計常用的大小單位不外乎就是：`px`、`rem`、`em`、`%`、`vw`、`vh` 但要正確地使用這些單位需要一定的經驗以及和設計師充足的溝通。簡單來說：
+可以參考看看以下我寫的時間軸範例，就使用了原生 CSS 與 Sass 的變數語法來管理各方面的變數，讓 CSS 變得更加容易維護：
 
-- `px`：固定的像素大小，不會隨著瀏覽器的縮放而改變。(精確用途)
-- `rem`：相對於根元素的字體大小，隨著瀏覽器的縮放而改變。(大多通用)
-- `em`：相對於父元素的字體大小，隨著瀏覽器的縮放而改變。(很少有用 😅)
-- `%`：相對於父元素的寬度，不會隨著瀏覽器的縮放而改變。(布局常用)
-- `vw`：相對於視窗的寬度，隨著瀏覽器的縮放而改變。(布局常用)
-- `vh`：相對於視窗的高度，隨著瀏覽器的縮放而改變。(很少有用 😅)
+<iframe
+  height="400"
+  style="width: 100%;"
+  scrolling="no"
+  title="Responsive Timeline"
+  src="https://codepen.io/riecball/embed/preview/ExoEMvq?default-tab=result&editable=true"
+  frameborder="no"
+  loading="lazy"
+  allowtransparency="true"
+  allowfullscreen="true"
+>
+  See the Pen <a href="https://codepen.io/riecball/pen/ExoEMvq">Responsive Timeline</a> by Riceball (
+  <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+</iframe>
 
-在大多時候 `rem` 都會是尺寸的好選擇，因為相比於 `px` ，它是尊重用戶對瀏覽器尺寸的設定的。但在要求精準細小的尺寸時，`px` 仍是很好的選擇。
+## 方法四：使用恰當的單位
 
-## 問題六：使用老方法編排版面
+網頁設計常用的大小單位不外乎就是：`px`、`rem`、`em`、`%`、`vw`、`vh` 但要正確使用這些單位需要一定的經驗以及與網頁設計者有充足的溝通。簡單來說最常看到以下幾種錯誤：
+
+- 寫定元素的尺寸：當撰寫響應式網頁的時候最好不要寫死元素的尺寸或是手動算 `%` 數，現在都可以使用 `max-width`、`flex`、`grid` 來自由的讓版面在小尺寸下也能合理的呈現
+- 都使用 `px` 不使用 `rem`：`rem` 會是大多距離單位的好選擇，因為相比於 `px` ，它尊重用戶對瀏覽器尺寸的設定。但在要求精準細小的尺寸時，`px` 仍是很好的選擇
+
+## 方法五：捨棄舊時代的網頁排版方法
 
 如果沒有要維護老網站的需求，那麼就不要再用舊時代的方法來編排網站了吧！ 所謂的老方法像是：[`table`](https://developer.mozilla.org/zh-TW/docs/Web/HTML/Element/table)、[`float`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/float)、手動計算 `%` 數…… 改成擁抱 [Flexbox](https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox) 與 [Grid](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/CSS_layout/Grids)，讓你的網站變得更加靈活，更方便維護調整。
