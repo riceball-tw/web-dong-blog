@@ -10,8 +10,7 @@ publishDate: 2023-02-21
 ---
 
 <Info type="warning">
-  撰寫程式並沒有絕對的準則，留意文章可權衡的地方自行判斷即可。本篇文章記錄我撰寫程式以來的經驗與原則以及當六角學院助教審核同學時**最常發現的問題**。本篇文章適合
-  JavaScript 初學者閱讀。
+  撰寫程式並沒有絕對的準則，留意文章可權衡的地方自行判斷即可。本篇文章記錄我撰寫程式以來的經驗與原則以及當六角學院助教審核同學時**最常發現的問題**。
 </Info>
 
 ## 前言
@@ -188,6 +187,53 @@ const isOdd = (num) => {
   return num % 2 === 1;
 };
 ```
+
+有的冗贅邏輯則是因為創造「自己才明白的抽象」才導致的，可以參考看看以下範例，其中將「被選取」的項目用「自訂狀態碼」來呈現，這樣的抽象做只會單純的損害程式碼的閱讀性，並沒有任何實質的幫助 😅：
+
+```js
+// ❌ 冗贅的邏輯
+const selected = 0;
+
+if (selected === 0) {
+  showVegetable();
+} else if (selected === 1) {
+  showFruit();
+} else if (selected === 2) {
+  showFlower();
+}
+
+// ✅ OK
+const selected = 'flower';
+
+if (selected === 'vegetable') {
+  showVegetable();
+} else if (selected === 'fruit') {
+  showFruit();
+} else if (selected === 'flower') {
+  showFlower();
+}
+```
+
+甚至與其去判斷，不如把物件作為一個查找表，這樣的寫法會更簡潔容易更改，易讀的話就看人了：
+
+```js
+// 😎 OK
+const productTable = {
+  vegtable: showVegetable,
+  fruit: showFruit,
+  flower: showFlower,
+};
+
+if (isSelected) {
+  selectedTable[selected]();
+}
+
+function showVegetable() {}
+function showFruit() {}
+function showFlower() {}
+```
+
+或是你也可以把三個 `show某某` 的函式用一個 `show` 函式來取代並傳入參數，不過還是要看程式碼前後脈絡，這裡就不深入討論了。
 
 ## 參考資料
 
