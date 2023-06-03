@@ -9,9 +9,7 @@ tags: ['HTML', '代碼品質']
 publishDate: 2023-03-20
 ---
 
-## 建議一：在撰寫網頁內容前的檢查
-
-正確的描述屬性可以為瀏覽器提供許多有用的資料，並提升用戶或爬蟲對該頁面的了解，進一步完善 SEO。
+## 建議一：清晰的描述頁面中的內容
 
 ### `lang` 屬性
 
@@ -21,19 +19,30 @@ publishDate: 2023-03-20
 </html>
 ```
 
-網頁應當明確的描述 `lang` 屬性，好辨別這個網站主要的地區語系，像是台灣繁體中文就是 `zh-Hant-TW`。
+網頁的 `<html>` 元素應當明確的描述 `lang` 屬性，好辨別這個網站主要的地區語系，像是台灣繁體中文就是 `zh-Hant-TW`。
 
-### `meta` 屬性
+### `<head>` 元素
 
-`meta` 屬性就像是附加給網頁的小資訊，常見的有編碼、網頁描述、[Open Graph](https://ogp.me/) 等……雖然這些資訊大多都不是必要的，但添加上去有助於讓搜尋引擎更進一步了解你的網頁內容，更吸引觀眾進入網站，
+可以用於放置一些描述該頁面內容的資料，這些資料不會直接顯示在網頁上，但可以提供給瀏覽器或爬蟲使用。像是撰寫`<meta>` 元素，可以更進一步讓機器人與瀏覽器了解你的網站，使它們更熟悉網頁內容能夠更好的引導用戶進入網站。
+
+一些社交平台像是 Twitter 與 Facebook 也會推出自家設立的標準，可以完成這些資料的描述，在這些平台上分享網站就會有比較齊全的介紹，像是：
+
+- [Open Graph](https://ogp.me/)
+- [Twitter Card](https://developer.twitter.com/en/docs/twitter-for-websites/cards/guides/getting-started)
 
 ```html
 <!-- 編碼方式 -->
 <meta charset="UTF-8" />
-<!-- 網頁描述 -->
-<meta name="description" content="這是一個網頁的描述" />
-<!-- RWD 設定 -->
+<!-- 頁面縮放設定 -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- 頁面標題 -->
+<title>助教統整 n 個方法幫助你寫出更好的 HTML - 網頁東東</title>
+<!-- 頁面簡短描述 -->
+<meta name="description" content="頁面的簡短描述" />
+<!-- 頁面小圖示 -->
+<link rel="icon" type="image/png" href="http://example.com/image.png" />
+<!-- 頁面描述 -->
+<meta name="description" content="這是一個網頁的描述" />
 <!-- Open Graph 標題 -->
 <meta property="og:title" content="這是一個網頁的標題" />
 <!-- Twitter Card -->
@@ -41,29 +50,90 @@ publishDate: 2023-03-20
 <!--...-->
 ```
 
-### 檢查程式代碼的品質
+## 建議二：檢查程式代碼的有無語法錯誤
 
-推薦這份指南文件：[程式碼編寫指南：一致、有彈性且能長期維護的 HTML、CSS 開發標準](https://codeguide.intersection.tw/)，內容很多可能一半會看不完，可以先求不要有一些低級的語法錯誤(像是缺少標籤結尾)，再來追求品質。
+可以到 [W3C 的語法檢測網站](https://validator.w3.org/) 檢測網站頁面是否有語法錯誤。常見的問題像是：
 
-## 建議二：使用語意化的標籤來描述網頁內容
+- 標籤沒有正確的閉合
+- 屬性沒有正確的使用
+- 不正確的使用標籤
 
-在之前可能只會用到 `<div>` 或者是 `<span>` 來裝載網頁內容，如今 HTML5 加入了許多語意化的標籤，這些標籤可以更有效率的架構並描述網頁內容，推薦到： [Fooish 程式技術](https://www.fooish.com/html/what-is-html5.html) 了解不同的 HTML5 標籤與其使用時機。
+## 建議三：使用語意化的標籤來描述網頁內容
 
-## 建議三：標題的使用
+在之前可能只會用到 `<div>` 或者是 `<span>` 來裝載網頁內容，比較少重視語意化的描述網頁，如今 HTML5 加入了許多語意化的標籤，這些標籤可以更有效率的架構並描述網頁內容，推薦到： [Fooish 程式技術](https://www.fooish.com/html/what-is-html5.html) 了解不同的 HTML5 標籤與其使用時機。在底下提供一些同學常誤用的標籤，並解釋其正確的使用時機：
 
-在 HTML 中如果想要強調內容可以使用 `<h1>` ~ `<h6>` 來標示，它們是最常見的標籤之一，也是與 SEO 有關的重要標籤。
+### 一個頁面只會有一個 `<h1>` 標籤
 
-### `<h1>` 標題只會出現一次
+在一個網頁中，`<h1>` 標籤[只能出現一次](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements#avoid_using_multiple_h1_elements_on_one_page)，用於標註當前頁面**最重要**的資訊標題，不要在一個頁面中出現一個以上的 `<h1>` 標籤，這是不和規的語法。反向的，也建議不要完全不使用 `<h1>` 標籤，良好的 `<h1>` 標籤可以很好的錨定整個頁面的重點。
 
-在一個網頁中，`<h1>` 標籤只能出現一次，用於標註當前頁面**最重要**的資訊，不要在一個網頁中出現一個以上的 `<h1>` 標籤，這是不和規的語法。
+### 避免跳過標題標籤
 
-### 避免跳過標題
+舉例來說，在 `<h1>` 標籤接著使用 `<h3>`、依此類推，這麼做雖然是和規的語法，但卻可能[對使用螢幕閱讀器的使用者造成混淆](https://stackoverflow.com/questions/55186750/is-it-okay-to-skip-heading-levels-when-creating-html-pages)，以下是兩者比較的範例代碼：
 
-所以如果在 `<h1>` 標籤下面加一個 `<h3>` 標籤是不合理的，應該要**依序的使用**不同等級的標題標籤，不要跳躍的使用不同等級的標題。
+```html
+<!-- ❌ 跳過標題標籤 -->
+<h1>網頁東東，用最簡單親切的方式描述如何設計與架構網頁</h1>
+<h2>我們的優勢</h2>
+<h4>圖片輔助</h4>
+<p>一些說明</p>
+<h4>初學者友善</h4>
+<p>一些說明</p>
+<h4>免費資源</h4>
+<p>一些說明</p>
+
+<!-- ✅ 無跳過標題標籤 -->
+<h1>網頁東東，用最簡單親切的方式描述如何設計與架構網頁</h1>
+<h2>我們的優勢</h2>
+<h3>圖片輔助</h3>
+<p>一些說明</p>
+<h3>初學者友善</h3>
+<p>一些說明</p>
+<h3>免費資源</h3>
+<p>一些說明</p>
+```
+
+要**依序的使用**不同等級的標題架構網頁，不要跳躍的使用不同等級的標題。
+
+### `<ul>` 內必須是 `<li>` 標籤
+
+[`<li>` 只能存在於 `<ul>`、`<ol>`或`<menu>`標籤之內](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li)，否則是不合龜的語法。
+
+```html
+<!-- ❌ 不合規 -->
+<ul>
+  <div></div>
+  <p></p>
+</ul>
+
+<!-- ✅ 合規 -->
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+
+<!-- ✅ 合規 -->
+<ul>
+  <li><div></div></li>
+  <li><div></div></li>
+  <li><div></div></li>
+</ul>
+```
+
+### `<section>` 建議要搭配標題
+
+只要有明顯含意的區塊就可以使用 `<section>` 並且**建議搭配標題標籤**，只有極度少數的情況才不需要（舉例來說[第二層的導覽列](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section#using_a_section_without_a_heading)）否則建議都搭配標題。
+
+```html
+<section>
+  <h2>標題</h2>
+  <p>內容</p>
+</section>
+```
 
 ## 建議四：圖片與影片的使用
 
-大型檔案通常是網頁效能的殺手，必須額外謹慎看待，因為這些資源是優化上可以付出極小的代價獲得巨大效益的地方。
+大型檔案通常是網頁效能的殺手，必須額外謹慎看待，因為這些資源是優化上可以付出極小的代價獲得巨大效益的地方。為了這個主題額外寫了一篇專門說明網頁圖片的文章：[所有最佳化網頁圖片的技巧都寫在這了！](/post/all-you-need-to-know-about-optimal-images)可以參考看看。
 
 ### 善用行內 SVG
 
