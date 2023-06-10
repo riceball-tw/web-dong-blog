@@ -66,8 +66,6 @@ interface Social {
         </a>
       </div>
     </Card>
-
-    <!-- Paragraph -->
     <Card className="prose dark:prose-invert max-w-none prose-p:m-0 col-span-2">
       <div class="py-8">
         <h2 class="m-0 mb-4 font-medium">關於近期</h2>
@@ -86,29 +84,5 @@ interface Social {
         </div>
       </div>
     </Card>
-  </section>
-  <section class="mx-8 mb-36 grid grid-cols-1 gap-8 md:grid-cols-3">
-    <!-- Intro -->
-    <h2 class="mb-8 text-2xl md:text-3xl">其他社群與聯絡管道</h2>
-    <ul class="col-span-2 grid grid-cols-3 gap-4">
-      {
-        brand.socials.map((social: Social) => (
-          <li>
-            <Card themeColor={social.themeColor} className=" ">
-              <a class="flex h-full flex-col items-center justify-center p-4 text-center" href={social.url}>
-                <img
-                  width="40"
-                  height="40"
-                  class="mx-auto mb-4 filter dark:invert"
-                  src={social.imgUrl}
-                  alt={`${social.name} + Logo`}
-                />
-                {social.name}
-              </a>
-            </Card>
-          </li>
-        ))
-      }
-    </ul>
   </section>
 </Base>
