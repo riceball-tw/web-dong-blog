@@ -144,7 +144,7 @@ export const developerExperiences = [
 - **使用伺服器動態的生成並回應每一頁面請求**：[伺服器渲染 SSR](#伺服器渲染-server-side-rendering)
 - **在客戶端動態加載內容**：[靜態渲染加上客戶端獲取資料](#靜態渲染加上客戶端獲取資料-static-with-client-side-fetch)
 
-### 🙋🏻‍♂️ 問題二：頁面很多生成網頁時間過久該怎麼辦？
+### 🙋🏻‍♂️ 問題二：生成時間過久該怎麼辦？
 
 渲染大量的頁面容易花費極大的時間成本，特別是在大量頁面的情況下，由於靜態網站的頁面都是預先生成好的，因此每次更新網站內容時都需要重新生成「整個網站的所有頁面」，這時候可以考慮幾種應對模式：
 
@@ -183,7 +183,9 @@ export const developerExperiences = [
 <Figure width="1300" height="600" src="images/posts/rendering-pattern/server-rendering.webp" alt="動態網站" />
 
 <ul style="list-style-image: url(/images/posts/feature-icon/release-alert.svg);">
-  <li><a href="#ttfb">TTFB</a>：由於每請求一個頁面就會需要伺服器重新生成，引此勢必會更久</li>
+  <li>
+    <a href="#ttfb">TTFB</a>：由於每請求一個頁面就會需要伺服器重新生成，引此勢必會更久
+  </li>
   <li>
     <a href="#fcp">FCP</a>、<a href="#lcp">LCP</a>、<a href="#tti">TTI</a>、<a href="#fid">FID</a>
     ：由於等待伺服器重新生成，勢必會比預先渲染好頁面的靜態網站慢，這些達成這些指標的時間也可能會更久
@@ -200,7 +202,10 @@ export const developerExperiences = [
 <Figure width="1300" height="600" src="images/posts/rendering-pattern/client-side-rendering.webp" alt="動態網站" />
 
 <ul style="list-style-image: url(/images/posts/feature-icon/release-alert.svg);">
-  <li>留意 <a href="#fcp">FCP</a>、<a href="#lcp">LCP</a>、<a href="#tti">TTI</a>、<a href="#fid">FID</a>：由於需要等待 JavaScript 加載，因此首次內容繪製的時間會更久</li>
+  <li>
+    留意 <a href="#fcp">FCP</a>、<a href="#lcp">LCP</a>、<a href="#tti">TTI</a>、<a href="#fid">FID</a>：由於需要等待
+    JavaScript 加載，因此首次內容繪製的時間會更久
+  </li>
 </ul>
 
 ## 增量靜態生產 Incremental Static Regeneration
