@@ -22,7 +22,6 @@ export default defineConfig({
           behavior: 'prepend',
           properties: { class: 'autolink-header', ariaHidden: true, tabIndex: -1 },
           content: [
-            h('span.sr-only', '標題連結'),
             s(
               'svg.heading-link',
               {
