@@ -1,25 +1,36 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'div'> {}
 export interface Props {
   themeColor?: string;
   fillColor?: string;
-  className?: string;
 }
 
-const { themeColor, fillColor, className } = Astro.props;
+function hexToRgba(hexColor: String, alpha = 1.0) {
+  hexColor = hexColor.replace('#', '');
+  const r = parseInt(hexColor.substring(0, 2), 16);
+  const g = parseInt(hexColor.substring(2, 4), 16);
+  const b = parseInt(hexColor.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+const { themeColor, fillColor, ...attrs } = Astro.props;
 const borderWidth = '1px';
-const cardBorderColor = themeColor ? themeColor + 40 : '#534af740';
-const cardFillColor = fillColor || '#534af710';
-const cardShadowColor = themeColor ? themeColor + 20 : '#534af720';
-const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af780';
+const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.3) : 'rgba(var(--secondary-color) / 0.3)';
+const cardFillColor = fillColor || 'rgba(var(--secondary-color) / 0.03)';
+const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.05) : 'rgba(var(--secondary-color) / 0.05)';
+const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondary-color) / 0.2)';
 ---
 
-<div
-  class={`filter card p-6 rounded-lg transition-all backdrop-blur-xl relative hover:-translate-y-4 active:scale-95 origin-bottom ${className}`}
->
-  <slot />
+<div {...attrs}>
+  <div class="card transform active:-translate-y-1 relative rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2">
+    <slot />
+    <div class="card__light"></div>
+  </div>
 </div>
 
-<style define:vars={{ borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
+<style define:vars={{ themeColor, borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
   .card {
     background-color: var(--cardFillColor);
     border: var(--borderWidth) solid var(--cardBorderColor);
@@ -40,6 +51,28 @@ const cardHoverFillColor = themeColor ? themeColor + 80 : '#534af780';
     opacity: 0.5;
     transition: 0.3s;
   }
+
+  .card__light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .card__light::before {
+    content: '';
+    width: 100px;
+    height: 100px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: var(--themeColor);
+    opacity: 0.1;
+    filter: blur(30px);
+  }
+
   .card:hover {
     background-color: var(--cardHoverFillColor);
     border-color: var(--cardBorderColor);
