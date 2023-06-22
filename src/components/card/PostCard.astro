@@ -26,51 +26,41 @@ export interface Props {
 const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, slug } = Astro.props.post;
 ---
 
-<li class="flex-1 list-none self-stretch">
-  <Card themeColor={themeColor}>
-    <article class="flex h-full flex-col justify-between gap-8 pt-8">
-      <!-- Featured-Icon -->
-      {
-        featureIcon ? (
-          <div
-            style={`background-color: ${themeColor}`}
-            class="saturate-25 absolute left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg brightness-90 filter"
-          >
-            <img
-              src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
-              width={featureIcon.width}
-              height={featureIcon.height}
-              alt={featureIcon.alt}
-            />
-          </div>
-        ) : (
-          ''
-        )
-      }
-      <div>
-        <a href={`${import.meta.env.BASE_URL}post/${slug}`}>
-          <h3 class="mb-4 text-2xl">{titleTC}</h3>
-        </a>
-        <!-- Paragraph -->
-        <p>{excerpt}</p>
-      </div>
-      <!-- Footer -->
-      <div class="flex flex-wrap items-center justify-between">
-        <!-- Time -->
-        <time class="inline-block text-sm opacity-60 hover:opacity-100">
-          {
-            publishDate
-              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-              .replace(/\//g, '-')
-          }
-        </time>
-        <div class="flex flex-wrap">
-          <!-- Category -->
-          <Category category={category} />
-          <!-- Tags -->
-          <Tags tags={tags} />
+<Card themeColor={themeColor}>
+  <article class="flex h-full flex-col justify-between gap-8 pt-8">
+    {
+      featureIcon && (
+        <div
+          style={`background-color: ${themeColor}`}
+          class="saturate-90 absolute left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg brightness-90 filter dark:brightness-100 dark:saturate-100"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
+            width={featureIcon.width}
+            height={featureIcon.height}
+            alt={featureIcon.alt}
+          />
         </div>
+      )
+    }
+    <div>
+      <h3 class="mb-4 text-lg">
+        <a href={`${import.meta.env.BASE_URL}post/${slug}`}>{titleTC}</a>
+      </h3>
+      <p>{excerpt}</p>
+    </div>
+    <div class="flex flex-wrap items-center justify-between">
+      <time class="opacity-60 transition-opacity text-sm hover:opacity-100">
+        {
+          publishDate
+            .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+            .replace(/\//g, '-')
+        }
+      </time>
+      <div class="flex flex-wrap">
+        <Category category={category} />
+        <Tags tags={tags} />
       </div>
-    </article>
-  </Card>
-</li>
+    </div>
+  </article>
+</Card>
