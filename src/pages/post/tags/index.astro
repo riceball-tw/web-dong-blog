@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import PageBanner from '@/components/app/Hero.astro';
 import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import { getCollection } from 'astro:content';
@@ -8,12 +8,10 @@ import { getCollection } from 'astro:content';
 const posts = await getCollection('post');
 const avaliablePosts = posts.filter((post) => !post.data.isDraft);
 const tags = [...new Set(avaliablePosts.map((post) => post.data.tags).flat())];
-const title = '文章標籤分類';
-const description = '所有文章的標籤分類';
 ---
 
-<Base title={title} description={description}>
-  <PageBanner title={title} />
+<Base title={`文章標籤分類`} description={`所有標籤共${tags.length}項`}>
+  <PageBanner title={`所有標籤共 ${tags.length} 項`} />
   <div class="mx-4">
     <CardGallery>
       {

@@ -1,23 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import PageBanner from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 
-const posts = await getCollection('post');
-
-const dateSortedPublishedPosts = posts
-  .filter((post) => !post.data.isDraft)
+const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
+const dateSortedPublishedPosts = publishedPosts
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
-
-const title = '所有文章';
-const description = '所有種類的文章';
 ---
 
-<Base title={title} description={description}>
-  <PageBanner title={`${title} (${dateSortedPublishedPosts.length})`} />
+<Base title={'所有文章'} description={`所有文章共 ${dateSortedPublishedPosts.length} 篇`}>
+  <PageBanner title={`所有文章共 ${dateSortedPublishedPosts.length} 篇`} />
   <section class="px-4">
+    <h2 class="sr-only">所有文章列表</h2>
     <CardGallery>
       {
         dateSortedPublishedPosts.map((post) => (

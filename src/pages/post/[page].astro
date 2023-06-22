@@ -1,29 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
+import globalConfig from '@/globalConfig';
 import Base from '@/layouts/Base.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import PageBanner from '@/components/app/Hero.astro';
+import Pagination from '@/components/app/Pagination.astro'
+
 
 export async function getStaticPaths({ paginate }) {
-  const posts = await getCollection('post');
+const { paginationSize } = globalConfig.setting
+const posts = await getCollection('post');
+const dateSortedPublishedPosts = posts
+  .filter((post) => !post.data.isDraft)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
-  const dateSortedPublishedPosts = posts
-    .filter((post) => !post.data.isDraft)
-    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
-
-  return paginate(dateSortedPublishedPosts, { pageSize: 12 });
+  return paginate(dateSortedPublishedPosts, { pageSize: paginationSize });
 }
-
 const { page } = Astro.props;
-const title = `文章第 ${page.currentPage} 頁`;
-const description = '文章頁籤';
+const pathname = new URL(Astro.request.url).pathname.split('/');
+const firstPath = pathname[1];
 ---
 
-<Base title={title} description={description}>
-  <!--Display the current page number. Astro.params.page can also be used!-->
-
-  <PageBanner title={title} />
+<Base title={`文章第 ${page.currentPage} 頁`} description={'文章頁籤'}>
+  <PageBanner title={`第 ${page.currentPage} 頁`} />
   <section class="px-4">
     <CardGallery>
       {
@@ -44,4 +44,12 @@ const description = '文章頁籤';
       }
     </CardGallery>
   </section>
+  <Pagination 
+  firstPage={`/${firstPath}/1`}
+  previousPage={page.url.prev}
+  nextPage={page.url.next}
+  lastPage={`/${firstPath}/${page.lastPage}`}
+  currentPage={page.currentPage}
+  totalPages={page.lastPage}
+  >
 </Base>

@@ -10,9 +10,8 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection('post');
-  const avaliablePosts = posts.filter((post) => !post.data.isDraft);
-  return avaliablePosts.map((post) => ({
+  const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
+  return publishedPosts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
@@ -30,7 +29,6 @@ const { Content, headings } = await post.render();
       class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert dark:prose-dark md:prose-xl lg:grid"
     >
       <header class="not-prose col-start-2 mb-16">
-        <!-- Feature Image -->
         {
           featureImage && (
             <img
@@ -42,7 +40,6 @@ const { Content, headings } = await post.render();
             />
           )
         }
-
         {
           featureIcon && (
             <div class="mb-8 max-w-fit overflow-hidden rounded-lg" style={`background-color: ${themeColor}`}>
@@ -55,19 +52,16 @@ const { Content, headings } = await post.render();
             </div>
           )
         }
-
         <div class="relative mx-auto">
-          <!-- Heading -->
           <div class="text-primary-900 dark:text-primary-50">
             <div class="mb-2">{title}</div>
-            <h1 class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
+            <h1 class="mb-4 font-black text-4xl md:text-6xl">{titleTC}</h1>
           </div>
           <div class="flex justify-between">
             <div class="flex md:block">
               <Category category={category} />
               <Tags tags={tags} />
             </div>
-            <!-- Publish Date -->
             <time class="opacity-40 hover:opacity-100">
               {
                 publishDate
@@ -85,7 +79,7 @@ const { Content, headings } = await post.render();
             <div class="absolute top-0">
               <ul class="m-0 p-0">
                 {headings.map(({ depth, slug: headingSlug, text }) => (
-                  <li class="hover:text-accent dark:hover:text-accent-light line-clamp-2 list-none opacity-60 hover:opacity-100">
+                  <li class="line-clamp-2 list-none opacity-60 hover:text-accent hover:opacity-100 dark:hover:text-accent-light">
                     <a
                       class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
                       href={`#${headingSlug}`}

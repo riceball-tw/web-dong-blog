@@ -2,30 +2,28 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import PageBanner from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 
 export interface Props {
   posts: CollectionEntry<'post'>;
-  avaliablePosts: CollectionEntry<'post'>[];
+  publishedPosts: CollectionEntry<'post'>[];
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection('post');
-  const avaliablePosts = posts.filter((post) => !post.data.isDraft);
-  const categories = [...new Set(avaliablePosts.map((post) => post.data.category).flat())];
-  return categories.map((category) => [{ params: { slug: category }, props: { avaliablePosts } }]);
+  const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
+  const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())];
+  return categories.map((category) => [{ params: { slug: category }, props: { publishedPosts } }]);
 }
+
 const { slug } = Astro.params;
-const { avaliablePosts } = Astro.props;
-const title = `搜尋文章分類：${slug}`;
-const description = `搜尋文章分類`;
-const avaliableCurrentCategoryPosts = avaliablePosts.filter((post) => post.data.category.includes(slug as string));
+const { publishedPosts } = Astro.props;
+const avaliableCurrentCategoryPosts = publishedPosts.filter((post) => post.data.category.includes(slug as string));
 ---
 
-<Base title={title} description={description}>
-  <PageBanner title={title} />
+<Base title={`搜尋文章分類：${slug}`} description={`搜尋文章分類`}>
+  <PageBanner title={`搜尋文章分類：${slug}`} />
   <section class="px-4">
     <CardGallery>
       {
