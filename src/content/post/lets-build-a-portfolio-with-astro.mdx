@@ -4,7 +4,7 @@ featureIcon: { url: 'images/posts/feature-icon/wrench-circle.svg', alt: '一個�
 title: "Let's building a Portfolio using Astro.js"
 titleTC: '製作個人前端作品集 - 實作篇'
 excerpt: 'Astro 作為一個靜態內容為主的生產器非常適合用於打造靜態網頁，這次我將用自己的作品集為案例教你打造一個實際的靜態網站。'
-category: '教學'
+category: '實作'
 tags: ['Astro']
 publishDate: 2023-06-09
 ---
@@ -16,7 +16,8 @@ publishDate: 2023-06-09
 本篇文章將會以自己的作品集網站為範例，使用 [Astro.js](/post/why-you-should-try-astro) 作為靜態生產器，有效率的管理與生成網站中的所有頁面，借助這個機會來展示這個框架好用與強大的地方。開始之前你可以先閱讀上一篇文章：[製作個人前端作品集 - 準備篇](/post/lets-build-a-portfolio) 提前為整個作品集規劃，或是設置一個合適的開發環境：[為 Astro 設置 ESLint 與 Prettier](/post/setting-up-eslint-and-prettier-in-astro)。
 
 <Info type="warning">
-  本篇專案範例使用 Tailwind 作為撰寫 CSS 的方式，可以參考之前的文章：[不需要學 Tailwind 也可以用 Tailwind](/post/use-tailwind-without-learning-it)，選擇合適自己的方式即可。
+  本篇專案範例使用 Tailwind 作為撰寫 CSS 的方式，可以參考之前的文章：[不需要學 Tailwind 也可以用
+  Tailwind](/post/use-tailwind-without-learning-it)，選擇合適自己的方式即可。
 </Info>
 
 <Info type="warning">
@@ -75,6 +76,7 @@ Initialize a new git repository? (optional)
 在撰寫網站之前使用 Astro 還是有一些知識點需要補齊，並不會太複雜，這裡我會簡單的介紹一下：
 
 ### [專案架構](https://docs.astro.build/zh-tw/core-concepts/project-structure/)
+
 <Figure
   width="600"
   height="300"
@@ -90,11 +92,9 @@ Initialize a new git repository? (optional)
 - `astro.config.mjs`：Astro 設定檔
 - `tsconfig.json`：TypeScript 設定檔
 
-
-
 ### [路由](https://docs.astro.build/zh-tw/core-concepts/astro-pages/)
 
-在Astro.js 中創建頁面非常的簡單，它是基於檔案的路由，可以直接撰寫 `.astro`、`.html` 、 `.mdx` 或 `.md` 檔案放置到資料夾中，生成時就會依照檔案的名稱與位置產生出對應的靜態頁面，舉例來說：
+在 Astro.js 中創建頁面非常的簡單，它是基於檔案的路由，可以直接撰寫 `.astro`、`.html` 、 `.mdx` 或 `.md` 檔案放置到資料夾中，生成時就會依照檔案的名稱與位置產生出對應的靜態頁面，舉例來說：
 
 - 創建一個新檔案：`src/pages/foobar.astro`，等於創建一個新頁面在 `/foobar` 底下。
 - 創建一個新檔案到 hello 資料夾中： `src/pages/hello/world.astro`，等於創建一個新頁面在 `/hello/world` 底下
@@ -107,7 +107,6 @@ Initialize a new git repository? (optional)
 ---
 
 <!-- 元件模板 Component Template (HTML + JS Expressions) -->
-
 ```
 
 `.astro` 檔案的開頭都會有三槓柵欄，稱為「元件腳本 Component Script」，當該 Astro 元件創建時就會執行柵欄裡面的內容，例如可以在裡面：
@@ -126,11 +125,10 @@ const items = ['小華', '小明', '小美'];
 ---
 
 <ul>
-  {items.map((item) => (
-    <li>{item}</li>
-  ))}
+  {items.map((item) => <li>{item}</li>)}
 </ul>
 ```
+
 教學到這裡相信你會發現要做的就是撰寫基本的 HTML 與 JavaScript，你已經掌握 `.astro` 檔案的威力了！
 
 ## 製作頁面
@@ -144,9 +142,9 @@ import Banner from '@/components/Banner.astro';
 ---
 
 <Base title="首頁">
-  <main class="md:min-h-screen min-h-auto">
+  <main class="min-h-auto md:min-h-screen">
     <Banner>
-      <h1 class="text-3xl md:text-6xl font-semibold px-4">
+      <h1 class="px-4 font-semibold text-3xl md:text-6xl">
         哈囉，我是黃宗瑋，<br />
         我撰寫超過 50 篇<a class="highlight" href="https://www.webdong.dev/post/">技術文章</a>紀錄與傳達知識，幫助 800
         位以上的同學消除他們的疑惑。可以觀賞<a class="highlight" href="/work">作品集</a>了解我是如何解決真實世界問題的。
@@ -155,8 +153,8 @@ import Banner from '@/components/Banner.astro';
 
     <section class="mb-16">
       <h2 class="sr-only">最新作品</h2>
-      <div style="background-color: black;" class="aspect-video flex justify-center mx-4 rounded-lg">
-        <video class="w-full h-full" width="720" height="540" autoplay loop muted playsinline poster="">
+      <div style="background-color: black;" class="mx-4 flex aspect-video justify-center rounded-lg">
+        <video class="h-full w-full" width="720" height="540" autoplay loop muted playsinline poster="">
           <source src="/assets/global/hero.webm" type="video/webm" />
           <source src="/assets/global/hero.mp4" type="video/mp4" />
         </video>
@@ -164,7 +162,6 @@ import Banner from '@/components/Banner.astro';
     </section>
   </main>
 </Base>
-
 ```
 
 這樣一個首頁就製作出來了，是不是開發環境很簡潔乾淨呢？接著你可以運用相同的技巧去製作[關於](https://github.com/riceball-tw/wei-wei-web/commit/f82c2c6ee438f76f7844400cbbc0c0c6fba2118a)與[作品](https://github.com/riceball-tw/wei-wei-web/commit/3731d120194367106edf0e255e903a1041e2b81a)甚至是 [404 頁面](https://github.com/riceball-tw/wei-wei-web/commit/cae2d37c9657c0debc34cfb8eefb680bed57e0fe)，道理是一模一樣的！
