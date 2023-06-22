@@ -1,4 +1,7 @@
 export default {
+  setting: {
+    paginationSize: 15
+  },
   brand: {
     name: 'WebDong',
     nameTC: '網頁東東',
