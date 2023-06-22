@@ -1,88 +1,62 @@
 ---
-import globalConfig from '@/globalConfig';
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/banner/Page.astro';
+import Hero from '@/components/app/Hero.astro';
 import Card from '@/components/card/Card.astro';
 
-const { brand } = globalConfig;
-
-const title = '關於';
-interface Social {
-  name: string;
-  url: string;
-  imgUrl: string;
-  themeColor: string;
-}
+const events = [
+  {
+    time: '2023-07 ~ 2023-09',
+    title: '兵役',
+    description: '期間大機率不會有更新 🫡 🪖',
+  },
+  {
+    time: '2022-07 ~ 2023-07',
+    title: '六角學院線上助教',
+    description: `於 <a class="underline" href="https://www.hexschool.com/">六角學院</a> 擔任助教，期間負責近所有前端課程的問題回覆與作業批改工作，其中包含： <ul style="list-style-type: '-  '" class="list-inside marker:text-primary-600"><li><a href="https://www.hexschool.com/courses/html_css.html">HTML 與 CSS 開發網站課程</a></li><li><a href="https://www.hexschool.com/courses/bootstrap5.html">Bootstrap 5 網頁切版整合術課程</a></li><li><a href="https://www.hexschool.com/courses/jquery_ani.html">jQuery 打造互動性網頁效果課程</a></li><li><a href="https://www.hexschool.com/courses/javascript.html">JS 基礎課程</a></li><li><a href="https://www.hexschool.com/courses/js-training.html">JS 工程師養成直播班 2022 秋季</a></li><li><a href="https://www.hexschool.com/vue/">Vue 3 實戰影音課程</a></li><li><a href="https://www.hexschool.com/courses/react.html#recommend">React 實戰影音課程</a></li><li><a href="https://www.hexschool.com/2022/06/27/2022-06-27-react-study-circle/">React 讀書會</a></li></ul>`,
+  },
+];
 ---
 
-<Base title={title} description={'test'}>
-  <PageBanner
-    title={`著重於<span class='text-secondary dark:text-secondary-light'>圖像化</span>以及<span class='text-secondary dark:text-secondary-light font-bold'>實例操作</span><br class="hidden md:block">累積教學上的經驗降低每次學習新事物的成本`}
+<Base title={'關於'}>
+  <Hero
+    title={`著重於<span class='text-secondary dark:text-secondary-light'>圖像化</span>以及<span class='text-secondary dark:text-secondary-light font-bold'>實例操作</span>，<br class="hidden md:block">累積教學上的經驗降低每次學習新事物的成本`}
   />
-  <section class="mx-4 mb-36 grid grid-cols-1 gap-y-4 md:grid-cols-3 md:gap-4">
-    <Card>
-      <div
-        class="absolute top-0 left-0 ml-6 -translate-y-1/2 transform-gpu rounded-lg bg-secondary dark:bg-secondary-light"
-      >
-        <svg
-          class="text-primary-50 dark:text-primary-900"
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clip-path="url(#clip0_201_2)">
-            <path
-              d="M24 41C23.45 41 22.9793 40.8043 22.588 40.413C22.196 40.021 22 39.55 22 39V28C22 27.45 22.196 26.9793 22.588 26.588C22.9793 26.196 23.45 26 24 26H28V24C28 23.45 28.196 22.979 28.588 22.587C28.9793 22.1957 29.45 22 30 22H34C34.55 22 35.021 22.1957 35.413 22.587C35.8043 22.979 36 23.45 36 24V26H40C40.55 26 41.021 26.196 41.413 26.588C41.8043 26.9793 42 27.45 42 28V39C42 39.55 41.8043 40.021 41.413 40.413C41.021 40.8043 40.55 41 40 41H24ZM24 39H40V28H24V39ZM30 26H34V24H30V26Z"
-              fill="currentColor"></path>
-          </g>
-          <defs>
-            <clipPath id="clip0_201_2">
-              <rect width="64" height="64" fill="white"></rect>
-            </clipPath>
-          </defs>
-        </svg>
-      </div>
 
-      <div class="flex h-full flex-col justify-between pt-8">
-        <h2 class="mb-16 text-2xl md:leading-normal">
-          目前在 <a class="underline" href="https://www.hexschool.com/"> 六角學院</a> 擔任助教並提供前端開發方面的技術協助……並在空閒期間自由接案與承攬教學相關業務。
-        </h2>
-        <a
-          href="https://6lq5056dq0f.typeform.com/to/lxR072rZ"
-          class="-mx-6 -mb-6 rounded-br-lg rounded-bl-lg px-6 py-6 text-left transition hover:bg-secondary/10 dark:hover:bg-secondary/20"
-        >
-          聯絡我
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="inline-block h-6 w-6"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"></path>
-          </svg>
-        </a>
-      </div>
+  <section class="mx-4 mb-36 grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-4">
+    <h2 class="sr-only">關於本網站</h2>
+    <Card>
+      <h3 class="sr-only">網站描述</h3>
+      <img
+        style="max-width: 120px;"
+        class="mb-8 -mt-8"
+        width="300"
+        height="263"
+        src="/images/brand/logo.svg"
+        alt="WEB DONG LOGO"
+      />
+      <p class="text-lg">
+        哈囉，我是<a class="underline" href="https://weweweb.pages.dev/">宗瑋</a><br />
+        藉由用淺顯易懂的方式記錄網頁事物，並且藉由搭配動畫和圖片加深學習印象。目前台灣的開發中文資源有限，因此想把各種知識消化與搬運到中文環境讓入門工程師能夠省略大量時間與金錢踩坑學習。
+        <br />
+        <br />
+        有興趣可以到 <a class="underline" href="https://github.com/riceball-tw/astro-blog">GitHub Repo</a> 上瞭解本專案或聯絡我。
+      </p>
     </Card>
-    <Card className="prose dark:prose-invert max-w-none prose-p:m-0 col-span-2">
-      <div class="py-8">
-        <h2 class="m-0 mb-4 font-medium">關於近期</h2>
-        <div class="columns-1 gap-8 md:columns-2">
-          <p>
-            自 2022 年 7 月開始在六角學院擔任助教，期間協助 <a
-              href="https://www.hexschool.com/2022/06/27/2022-06-27-react-study-circle/">React 讀書會</a
-            >、<a href="https://www.hexschool.com/courses/react.html#recommend">React 實戰影音</a>、<a
-              href="https://www.hexschool.com/vue/">Vue 3 實戰影音</a
-            >、<a href="https://www.hexschool.com/courses/javascript.html">JS 基礎課程</a>、<a
-              href="https://www.hexschool.com/courses/js-training.html">JS 工程師養成直播班</a
-            >、<a href="https://www.hexschool.com/courses/web-layout-training-1st.html">切版課程</a> 課程素材修訂與解惑同學疑問，提供意見反饋與討論，和六角學院的同學們一同學習與進步！
-            目前是國立臺中科技大學四年級學生，主修商業設計，藉由自學橫跨設計與開發領域，在諸多領域都有學習熱誠，在此與你/妳分享我的學習歷程。m(_
-            _)m
-          </p>
-        </div>
-      </div>
+
+    <Card>
+      <h3 class="sr-only">網站事件</h3>
+      <ol class="relative border-l border-primary-200 text-lg dark:border-primary-700">
+        {
+          events.map((event) => (
+            <li class="mb-10 ml-4">
+              <div class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-primary-300 bg-primary-300 dark:border-primary-900 dark:bg-primary-700" />
+              <time class="font-normal leading-none text-primary-400 text-sm dark:text-primary-500">{event.time}</time>
+              <h3 class="my-2 font-semibold text-primary-900 text-xl dark:text-white">{event.title}</h3>
+              <p set:html={event.description} class="mb-4" />
+            </li>
+          ))
+        }
+      </ol>
     </Card>
   </section>
 </Base>
