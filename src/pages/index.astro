@@ -11,7 +11,9 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
 );
 const categoriesLists = categories.map((category) => ({
   type: category,
-  posts: publishedPosts.filter((post) => post.data.category === category),
+  posts: publishedPosts.filter((post) => post.data.category === category)
+  .sort((a, b) => b.data.publishDate
+  .getTime() - a.data.publishDate.getTime()),
 }));
 ---
 
@@ -42,7 +44,7 @@ const categoriesLists = categories.map((category) => ({
                   (post, index) =>
                     index + 1 < 4 && (
                       <li class="group/list flex gap-8">
-                        <time class="opacity-80 group-hover/list:opacity-100">
+                        <time class="opacity-80 group-hover/list:opacity-100 whitespace-nowrap">
                           {post.data.publishDate
                             .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
                             .replace(/\//g, '-')}
