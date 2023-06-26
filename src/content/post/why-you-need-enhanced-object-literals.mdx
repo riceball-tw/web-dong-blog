@@ -1,0 +1,106 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/add-circle.svg', alt: '兩個加號圈圈符號' }
+title: 'Why you need JavaScript Enhanced Object Literals?'
+titleTC: '為什麼你需要 JavaScript 加強版物件實字？'
+excerpt: '在 JavaScript 中活用 ES6 帶來的加強版物件實字可以精簡程式片段，甚至還可以動態的計算創造物件內的項目！'
+category: 'JavaScript'
+tags: ['語法', 'ES6']
+publishDate: 2023-06-22
+---
+
+在 ES6 推出的進階物件實字讓撰寫物件時不再繁瑣，實字(Literal) 指的是代表它自己的數值，舉例來說數字 `25` 或 `你好世界` 而進階物件實字就是在物件中使用的值。
+
+## 鍵縮寫
+
+```js
+const name = 'Joe'
+const age = 21
+
+const person = {
+  name: name,
+  age: age
+}
+```
+
+在以上傳統範例中，可以看到物件的鍵與變數名稱相同，這時候就可以使用鍵縮寫來簡化寫法：
+
+```js
+const name = 'Joe'
+const age = 21
+
+const person = {
+  name,
+  age
+}
+```
+
+它們的結果是一樣的，但鍵縮寫後更簡潔可以避免重複，就是一個便利的縮寫語法。
+
+## 函式縮寫
+
+既然同名的鍵與屬性可以使用縮寫，那麼函式也有對應的縮寫語法嗎？有的！
+
+```js
+const person = {
+  greeting: function () {
+    console.log('Hi!')
+  }
+}
+```
+
+以上就是傳統在物件中定義函式的寫法，現在可以使用函式縮寫來簡化：
+
+```js
+const person = {
+  greeting () {
+    console.log('Hi!')
+  }
+}
+```
+
+它們的結果是一模一樣的，但函式縮寫後更簡潔可以避免重複，就是一個便利的縮寫語法。要額外注意如果想在物件中創建箭頭函式就不能使用上述寫法，而要這樣寫：
+
+```js
+const person = {
+  greeting: () => {
+    console.log('Hi!')
+  }
+}
+```
+
+關於一般函式與箭頭函式仍有些許根本上的不同，詳細可以參考我的另外一篇文章：[為什麼你需要箭頭函式？](/post/why-you-need-arrow-function/)
+
+## 計算屬性
+
+試想如果想要動態的創建物件的鍵……你沒辦法！在計算屬性出現之前只能先宣告變數再改動物鍵：
+
+```js
+const person = {}
+person['name'] = 'Joe'
+```
+
+但是現在可以使用計算屬性來簡化：
+
+```js
+const key = 'name'
+const value = 'Joe'
+
+const person = {
+  [key]: value
+}
+```
+
+```js
+{
+  "name": "Joe"
+}
+```
+
+這樣就可以動態的創建物件的鍵，如果宣告的物件需要動態的依靠變數來創建就是使用計算屬性的好時機。
+
+## 參考資料
+
+* [Literal MDN](https://developer.mozilla.org/en-US/docs/Glossary/Literal)
+* [Enhanced Object Literals - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-04/use-effect/)
+* [Confusion between constants and literals? - stack overflow](https://stackoverflow.com/questions/44767354/confusion-between-constants-and-literals)
