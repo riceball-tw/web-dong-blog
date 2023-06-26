@@ -49,6 +49,12 @@ export default {
         url: 'https://medium.com/@webdong',
         themeColor: '#000000',
       },
+      {
+        name: 'RSS',
+        imgUrl: '/images/social/rss.svg',
+        url: '/rss',
+        themeColor: '#000000'
+      }
     ],
   },
 };
