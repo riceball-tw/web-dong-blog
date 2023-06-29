@@ -7,7 +7,7 @@ export default {
     nameTC: '網頁東東',
     short: 'WD',
     slogan: '把網頁開發知識一桿進洞',
-    description: '用簡白親切的方式來描述如何設計與架構網頁。撰寫教學文章，為你捕捉並提煉入口即化的好知識。',
+    description: '網頁東東用最親切簡單的方式描述如何設計與架構網頁，著重於圖像化以及實例操作，累積教學上的經驗降低每次學習新事物的成本',
     thumbnail: {
       width: 1200,
       height: 630,
