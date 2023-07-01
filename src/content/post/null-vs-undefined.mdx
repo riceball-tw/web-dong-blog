@@ -1,0 +1,34 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/cross-circle.svg', alt: '一個叉叉在圓形中的符號' }
+title: 'Null vs Undefined'
+titleTC: 'Null vs Undefined 差在哪？'
+excerpt: 'null 與 undefined 兩者的意涵非常相近，意思都是「沒有東西」，但在根本上它們是截然不同的東西。'
+category: 'JavaScript'
+tags: ['概念']
+publishDate: 2023-06-30
+---
+
+## 前言
+
+`null` 與 `undefined` 兩者都代表著存取的值不存在，甚至使用[鬆散比較](/post/stop-using-loose-equality-in-javascript) `==` 時，兩者也會被視為相等。但是在根本上兩者是截然不同的東西，藉由這篇文章我來釐清解釋他們兩者之間的關係。
+
+```js
+console.log(null == undefined); // true
+console.log(null === undefined); // false
+```
+
+## Null
+
+`null` 意味著「存在但沒有東西」，只能透過明確的賦予 `null` 來得到它。所以當拿到這個值時代表著開發者有意識的賦予了這個值，而不是因為某些原因而產生的。比如說一個搜尋功能，如果沒有搜尋到任何結果，那麼就可以賦予 `null` 來代表結果沒有任何東西。
+
+## Undefined
+`undefined` 意味著「不存在沒東西」，預設情況下所有的變數都是 `undefined`，除非你明確的賦予了其他的值之前它都會是 `undefined`。所以當拿到這個值大多時候代表該數值真的意義上不存在。
+
+
+## 總結
+兩者之間的差異只在於開發者的「意圖」，雖然都代表「沒東西」，但一個是「存在」一個是「不存在」，大多時候會希望定義 `null`，但奇怪的是實際上 `undefined` 可以被定義出來，定義定義上不存在的東西，是一件很奇怪但可行的事情，盡量不要這麼做😅。
+
+## 參考資料
+
+- [null Vs undefined - Web Dev Simplify](https://blog.webdevsimplified.com/2021-01/null-vs-undefined/)
