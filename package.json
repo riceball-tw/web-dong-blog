@@ -24,6 +24,7 @@
     "@types/react-dom": "^18.0.6",
     "astro": "^2.0.1",
     "astro-auto-import": "^0.3.0",
+    "astro-seo": "^0.7.4",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.43.3",

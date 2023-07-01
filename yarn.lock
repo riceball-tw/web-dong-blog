@@ -1261,6 +1261,11 @@ astro-og-canvas@^0.1.6:
     canvaskit-wasm "^0.37.0"
     entities "^4.4.0"
 
+astro-seo@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/astro-seo/-/astro-seo-0.7.4.tgz#0c2788b97ec3944390be2dd39a8ad9a6aec294b0"
+  integrity sha512-E+wJmxOnvBRjgzVctdGk/VdwoEqeQ6Q/KgVW2wRBXZWJVDgOweB32Da/UiH0/FpGncPzo2daOrc08DNn5wTanw==
+
 astro@^2.0.1:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/astro/-/astro-2.5.5.tgz#84ee3cf73fea4c3131f9e6112d154d2ccd882335"
