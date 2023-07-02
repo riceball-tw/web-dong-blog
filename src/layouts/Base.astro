@@ -1,8 +1,10 @@
 ---
 import '@/styles/global.css';
+import { SEO } from "astro-seo"
 import globalConfig from '@/globalConfig';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
+import {hexToRgba} from '@/helper/hexToRgba'
 
 export interface Props {
   title?: string;
@@ -17,52 +19,57 @@ export interface Props {
 }
 
 const { brand } = globalConfig;
-
 const { title, description, themeColor, thumbnail } = Astro.props;
 const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
 const seoDescription = description || brand.description;
-
 const seoImage = {
   src: thumbnail?.src
     ? new URL(`/open-graph/src/content/post/${thumbnail.src}.png`, Astro.url)
     : new URL(brand.thumbnail.src, Astro.url),
   width: thumbnail?.width ?? brand.thumbnail.width,
-  height: thumbnail?.width ?? brand.thumbnail.height,
+  height: thumbnail?.height ?? brand.thumbnail.height,
   alt: thumbnail?.alt ?? brand.thumbnail.alt,
 };
-
-const themeColorTransparent = (themeColor || '#534af7') + 30;
+const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.3): 'rgba(var(--secondary-color) / 0.2)';
 ---
 
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
   <head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{seoTitle}</title>
-    <meta name="title" content={seoTitle} />
-    <meta name="description" content={seoDescription} />
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" href="/images/brand/logo.svg" type="image/svg+xml" />
-    <!-- Open Graph -->
-    <meta property="og:url" content={Astro.url.origin} />
-    <meta property="og:locale" content="zh_TW" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={seoTitle} />
-    <meta property="og:description" content={seoDescription} />
-    <meta property="og:image" content={seoImage.src} />
-    <meta property="og:image:alt" content={seoImage.alt} />
-    <meta property="og:image:width" content={seoImage.width} />
-    <meta property="og:image:height" content={seoImage.height} />
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content={Astro.url.origin} />
-    <meta property="twitter:title" content={seoTitle} />
-    <meta property="twitter:description" content={seoDescription} />
-    <meta property="og:image" content={seoImage.src} />
+    <SEO
+      charset="UTF-8"
+      title={seoTitle}
+      description={seoDescription}
+      openGraph={{
+        basic: {
+          title: `${seoTitle}`,
+          type: 'website',
+          image: `${seoImage.src}`,
+        },
+        image: {
+          type: 'image/jpeg',
+          alt: `${seoImage.alt}`,
+          width: seoImage.width,
+          height: seoImage.height,
+        },
+      }}
+      twitter={{
+        title: `${seoTitle}`,
+        description: `${seoDescription}`,
+        image: `${seoImage.src}`,
+        imageAlt: `${seoImage.alt}`,
+      }}
+      extend={{
+        link: [{rel: "icon", href: "/images/brand/logo.svg", type:"image/svg+xml"}],
+        meta: [
+          {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1',
+          },
+        ],
+      }}
+    />
+
     <!-- Analytics -->
     <script
       type="text/partytown"
@@ -89,8 +96,8 @@ const themeColorTransparent = (themeColor || '#534af7') + 30;
   </body>
 </html>
 
-<style define:vars={{ themeColorTransparent }}>
+<style define:vars={{ bgGradientColor }}>
   .body::after {
-    background: linear-gradient(var(--themeColorTransparent), transparent 100%);
+    background: linear-gradient(var(--bgGradientColor), transparent 100%);
   }
 </style>
