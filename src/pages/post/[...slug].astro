@@ -26,6 +26,7 @@ const { Content, headings } = await post.render();
 <Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
   <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
     <article
+      data-article
       class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert dark:prose-dark md:prose-xl lg:grid"
     >
       <header class="not-prose col-start-2 mb-16">
@@ -77,31 +78,60 @@ const { Content, headings } = await post.render();
         {
           Boolean(headings.length) && (
             <div class="absolute top-0">
-              <ul class="m-0 p-0">
-                {headings.map(({ depth, slug: headingSlug, text }) => (
-                  <li class="line-clamp-2 list-none opacity-60 hover:text-accent hover:opacity-100 dark:hover:text-accent-light">
-                    <a
-                      class={`block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
-                      href={`#${headingSlug}`}
-                      aria-label={`移動到 ${text} 標題區塊`}
-                    >
-                      {text}
-                    </a>
-                  </li>
-                ))}
+              <ul data-toc class="m-0 p-0 toc list-none">
+                {headings.map(({ depth, slug: headingSlug, text }) => <li><a
+                        class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                        href={`#${headingSlug}`}
+                        aria-label={`移動到 ${text} 標題區塊`}
+                      >
+                        {text}
+                      </a></li>)}
               </ul>
             </div>
           )
         }
       </aside>
-
       <Content />
       <Utteranc />
     </article>
   </main>
 </Base>
 
+<script is:inline>
+  const headings = document.querySelectorAll('[data-article] h2, h3')
+  const tocHeadings = document.querySelectorAll('[data-toc] a')
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+      tocHeadings.forEach(heading => {
+        heading.classList.remove('toc-link--active')
+        if (entry.target.textContent === heading.textContent.trim()) {
+          heading.classList.toggle('toc-link--active')
+        }
+      })
+      }
+    })
+  })
+
+  headings.forEach(heading => {
+    observer.observe(heading)
+  })
+</script>
+
 <style is:inline>
+  /* TOC */
+  .toc-link {
+    opacity: .6
+  }
+
+  .toc-link--active {
+    opacity: 1
+  }
+
+  .toc-link--active a {
+    opacity: 1
+  }
+
   /* Article Layout */
   .article-grid {
     grid-template-columns: 1fr min(65ch, 100%) 1fr;
