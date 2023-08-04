@@ -1,0 +1,153 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/document.svg', alt: '文件符號' }
+title: 'Try to catch errors'
+titleTC: '使用 JavaScript try...catch 來控制程式中的錯誤'
+excerpt: '程式中出現錯誤是必不可少的，有千萬個原因可能造成程式出現錯誤無法運行，這時候就可以使用 tray...catch 語法來處理錯誤情境。'
+category: 'JavaScript'
+tags: ['語法']
+publishDate: 2023-07-01
+---
+
+通常程式出現錯誤時會馬上停止執行並且顯示錯誤訊息，但有時候會希望程式出現錯誤時不要馬上停止執行，而是採取一些行動時就可以使用 `try...catch` 語法：
+
+```js
+try {
+  // 嘗試執行的程式片段
+} catch (錯誤參數) {
+  // 發生錯誤時執行的程式片段
+} finally {
+  // 在兩者情境都執行完後執行的程式片段
+}
+```
+
+以上語法的執行流程如下：
+
+1. 執行 `try` 中的程式片段
+2. 如果 `try` 中的程式片段出現錯誤，則執行 `catch` 中的程式片段，其中可選擇性的使用「錯誤參數」來取得錯誤種類與訊息
+3. 當離開 `try` 或 `catch` 前，執行 `finally` 中的程式片段（可選要不要加入）
+
+## 錯誤物件
+
+當錯誤發生時 JavaScript 會自動生成一個錯誤物件，內容包含錯誤的細節並且會被傳入 `catch` 中，預設的錯誤物件主要有幾種屬性：`name`、`message`：
+
+* `name`：錯誤類型的的名稱
+* `message`：錯誤的描述訊息
+
+舉例來說當以下的 `json` 變數被解析時，會出現錯誤並且會被傳入 `catch` 中：
+
+```js
+try {
+  const user = JSON.parse("{ 錯誤的 JSON 格式 }"); // 當錯誤發生時就會產生錯誤物件並帶入 catch 中
+} catch (err) {
+  console.error(err); // 打印錯誤物件參數
+}
+```
+
+## 自訂錯誤物件
+
+假設希望在程式中出現錯誤時，可以客製化的拋出錯誤與錯誤資訊，使用 `throw` 語法來拋出一個自訂的錯誤物件：
+
+```js
+throw <error object>
+```
+
+理論上錯誤物件可以是任何種類的資料，但為了與預設錯誤物件格式保持一致，可以使用 JavaScript 預設的建構函式（`Error`、`SyntaxError`、`ReferenceError`、`TypeError`）來建立新的錯誤物件：
+
+```js
+const error = new Error(message);
+const syntaxError = new SyntaxError(message);
+const referenceError = new ReferenceError(message);
+const typeError = new TypeError(message);
+```
+
+舉前面解析 JSON 的例子來說，如果期望解析的 JSON 資料中一定要有 `name` 屬性，可以 `if` 判斷有無，並使用 `throw` 語法來拋出相關錯誤跳至錯誤情境：
+
+```js
+try {
+  const user = JSON.parse({ "age": 30 });
+  if (!user.name) {
+    throw new SyntaxError("未滿足資料: 無 name 屬性");
+  }
+} catch (err) {
+  console.error( "JSON Error:" + err.message ); // JSON Error: 未滿足資料: 無 name 屬性
+}
+```
+
+## 重複拋出 (Rethrowing)
+
+```js
+try {
+  user = JSON.parse({ "age": 30 }); // 忘記宣告 user 變數
+} catch (err) {
+  console.error("JSON Error: " + err); // JSON Error: ReferenceError: user is not defined
+  // (實際上並不是預想的 JSON Error)
+}
+```
+
+實際上前面的例子所設置的攔截錯誤情境是有缺陷的，因為它會把所有錯誤都視為 JSON Error 並打印出來，但實際上有可能是其他的錯誤，因此最好的做法是在 `catch` 中只處理自己預期內的錯誤，而其他的錯誤則拋出去交由另一個 `catch` 來處理，或是完全不處理讓程式停止運作：
+
+
+```js
+try {
+  user = JSON.parse({ "age": 30 }); // 忘記宣告 user 變數
+} catch (err) {
+  if (err instanceof SyntaxError) {
+    console.error("JSON Error: " + err.message);
+  } else {
+    throw err; // 再次拋出錯誤
+  }
+}
+```
+
+## finally
+
+雖然 `finally` 的概念很簡單，就是不管 `try...catch` 結果如何都會被執行，那麼直接把 `finally` 抽取出來放在 `try...catch` 底下不就好了嗎？是的，但在某些情況下仍然還是需要 `finally`，因為 `finally` 會在 `try...catch` 離開前執行，所以如果 `try...catch` 中有 `return` 語法，則 `finally` 會在 `return` 語法執行前被執行，可以確保 `finally` 中的程式片段一定會被執行到，不會因為 `return` 而被中斷。
+
+## 實際範例
+
+要說最常出現例外錯誤的情境就屬取得第三方資料莫屬了，所以可以使用 `try...catch` 語法來處理：
+
+```js
+try {
+  const response = await fetch('https://...');
+} catch(error) {
+  console.error(error); // TypeError: NetworkError when attempting to fetch resource.
+}
+```
+
+像是以上的範例，只要 `fetch` 出現錯誤，就會進入 `catch` 中的程式片段，並且可以使用傳入 catch 中的參數來顯示錯誤訊息。
+
+
+
+
+<Info type="warning">
+`try...catch` 只對 runtime 錯誤（程式被執行時的錯誤）有用。為了要讓 `try...catch` 運作，程式必須要是可被執行的，意思是說程式碼不能有語法錯誤，否則程式引擎將會無法理解代碼並且無法執行。
+
+```js
+try {
+  {{{
+} catch (err) {
+  alert("The engine can't understand this code, it's invalid");
+}
+```
+</Info>
+
+<Info type="warning">
+
+`try...catch` 內只能執行同步的程式，如果 `try {...}` 中的程式片段是非同步的，則 `catch {...}` 中的程式片段不會被執行，這是因為當非同步程式出現錯誤時 `try...catch` 已經被執行完畢了，所以 `catch {...}` 中的程式片段不會被執行。如果希望在非同步程式出現錯誤時進入錯誤情境，可以考慮將其撰寫在非同步程式的回呼函式中。
+
+```js
+setTimeout(function() {
+  try {
+    noSuchVariable; // try...catch handles the error!
+  } catch {
+    alert( "error is caught here!" );
+  }
+}, 1000);
+```
+</Info>
+
+## 參考資料
+- [try...catch - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
+- [Error handling, "try...catch" - JavaScript Info](https://javascript.info/try-catch)
