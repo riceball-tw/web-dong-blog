@@ -18,9 +18,13 @@ const events = [
 ---
 
 <Base title={'關於'}>
-  <Hero
-    title={`著重於<span class='text-secondary dark:text-secondary-light'>圖像化</span>以及<span class='text-secondary dark:text-secondary-light font-bold'>實例操作</span>，<br class="hidden md:block">累積教學上的經驗降低每次學習新事物的成本`}
-  />
+  <Hero>
+    <span slot="headline" style="max-width: 1300px;" class="inline-block"
+      >著重於<span class="text-secondary dark:text-secondary-light">圖像化</span>以及<span
+        class="font-bold text-secondary dark:text-secondary-light">實例操作</span
+      >降低每次學習新事物的成本</span
+    >
+  </Hero>
 
   <section class="mx-4 mb-36 grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-4">
     <h2 class="sr-only">關於本網站</h2>
@@ -49,9 +53,9 @@ const events = [
         {
           events.map((event) => (
             <li class="mb-10 ml-4">
-              <div class="absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border border-primary-300 bg-primary-300 dark:border-primary-900 dark:bg-primary-700" />
-              <time class="font-normal leading-none text-primary-400 text-sm dark:text-primary-500">{event.time}</time>
-              <h3 class="my-2 font-semibold text-primary-900 text-xl dark:text-white">{event.title}</h3>
+              <div class="border-primary-300 bg-primary-300 dark:border-primary-900 dark:bg-primary-700 absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border" />
+              <time class="text-primary-400 dark:text-primary-500 text-sm font-normal leading-none">{event.time}</time>
+              <h3 class="text-primary-900 my-2 text-xl font-semibold dark:text-white">{event.title}</h3>
               <p set:html={event.description} class="mb-4" />
             </li>
           ))

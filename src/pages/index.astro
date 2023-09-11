@@ -11,18 +11,28 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
 );
 const categoriesLists = categories.map((category) => ({
   type: category,
-  posts: publishedPosts.filter((post) => post.data.category === category)
-  .sort((a, b) => b.data.publishDate
-  .getTime() - a.data.publishDate.getTime()),
+  posts: publishedPosts
+    .filter((post) => post.data.category === category)
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
 }));
+
+const currentTime = new Date()
+  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  .replace(/\//g, '-');
+const heroBadge = {
+  href: 'https://github.com/riceball-tw/astro-blog/commits/main',
+  text: `最近更新時間：${currentTime}`,
+};
 ---
 
 <Base>
-  <Hero
-    title={`網頁東東用最<span class="text-secondary dark:text-secondary-light">親切簡單</span>的方式描述<br class="hidden lg:block">如何<span
-    class="text-secondary dark:text-secondary-light">設計與架構網頁</span
-  >`}
-  />
+  <Hero badge={heroBadge}>
+    <span slot="headline" style="max-width: 1400px;" class="inline-block">
+      網頁東東用最<span class="text-secondary dark:text-secondary-light">親切簡單</span>的方式描述如何<span
+        class="text-secondary dark:text-secondary-light">設計與架構網頁</span
+      >
+    </span>
+  </Hero>
   <section>
     <h2 class="sr-only">文章種類</h2>
     <div class="flex flex-wrap gap-4">
@@ -31,7 +41,7 @@ const categoriesLists = categories.map((category) => ({
           categoriesLists.map((categoriesList) => (
             <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
               <div class="mb-8 flex items-center justify-between">
-                <h2 class="font-bold opacity-90 text-3xl group-hover:opacity-100 ">
+                <h2 class="text-3xl font-bold opacity-90 group-hover:opacity-100 ">
                   <a href={`/post/categories/${categoriesList.type}`}>{categoriesList.type}</a>
                 </h2>
                 <span class="opacity-60 transition-opacity group-hover:opacity-100">
@@ -44,13 +54,13 @@ const categoriesLists = categories.map((category) => ({
                   (post, index) =>
                     index + 1 < 4 && (
                       <li class="group/list flex gap-8">
-                        <time class="opacity-80 group-hover/list:opacity-100 whitespace-nowrap">
+                        <time class="whitespace-nowrap opacity-80 group-hover/list:opacity-100">
                           {post.data.publishDate
                             .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
                             .replace(/\//g, '-')}
                         </time>
                         <a
-                          class="inline-block opacity-80 transition-opacity text-lg group-hover/list:opacity-100"
+                          class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
                           href={`post/${post.slug}`}
                         >
                           {post.data.titleTC}

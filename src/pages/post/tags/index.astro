@@ -1,6 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/app/Hero.astro';
+import Hero from '@/components/app/Hero.astro';
 import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import { getCollection } from 'astro:content';
@@ -11,7 +11,9 @@ const tags = [...new Set(avaliablePosts.map((post) => post.data.tags).flat())];
 ---
 
 <Base title={`文章標籤分類`} description={`所有標籤共${tags.length}項`}>
-  <PageBanner title={`所有標籤共 ${tags.length} 項`} />
+  <Hero>
+    <Fragment slot="headline">所有標籤共 {tags.length} 項</Fragment>
+  </Hero>
   <div class="mx-4">
     <CardGallery>
       {

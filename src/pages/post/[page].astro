@@ -4,26 +4,24 @@ import globalConfig from '@/globalConfig';
 import Base from '@/layouts/Base.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
-import PageBanner from '@/components/app/Hero.astro';
-import Pagination from '@/components/app/Pagination.astro'
-
+import Hero from '@/components/app/Hero.astro';
 
 export async function getStaticPaths({ paginate }) {
-const { paginationSize } = globalConfig.setting
-const posts = await getCollection('post');
-const dateSortedPublishedPosts = posts
-  .filter((post) => !post.data.isDraft)
-  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+  const { paginationSize } = globalConfig.setting;
+  const posts = await getCollection('post');
+  const dateSortedPublishedPosts = posts
+    .filter((post) => !post.data.isDraft)
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
   return paginate(dateSortedPublishedPosts, { pageSize: paginationSize });
 }
 const { page } = Astro.props;
-const pathname = new URL(Astro.request.url).pathname.split('/');
-const firstPath = pathname[1];
 ---
 
 <Base title={`文章第 ${page.currentPage} 頁`} description={'文章頁籤'}>
-  <PageBanner title={`第 ${page.currentPage} 頁`} />
+  <Hero>
+    <Fragment slot="headline">第 {page.currentPage} 頁</Fragment>
+  </Hero>
   <section class="px-4">
     <CardGallery>
       {
@@ -44,5 +42,4 @@ const firstPath = pathname[1];
       }
     </CardGallery>
   </section>
-
 </Base>

@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '@/layouts/Base.astro';
-import PageBanner from '@/components/app/Hero.astro';
+import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 
@@ -19,13 +19,14 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { publishedPosts } = Astro.props;
 const avaliableCurrentTagPosts = publishedPosts
-.filter((post) => post.data.tags.includes(slug as string))
-.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
-;
+  .filter((post) => post.data.tags.includes(slug as string))
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
 <Base title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
-  <PageBanner title={`搜尋文章標籤：${slug}`} />
+  <Hero>
+    <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
+  </Hero>
   <section class="px-4">
     <CardGallery>
       {
