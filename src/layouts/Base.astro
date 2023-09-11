@@ -1,10 +1,10 @@
 ---
 import '@/styles/global.css';
-import { SEO } from "astro-seo"
+import { SEO } from 'astro-seo';
 import globalConfig from '@/globalConfig';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
-import {hexToRgba} from '@/helper/hexToRgba'
+import { hexToRgba } from '@/helper/hexToRgba';
 
 export interface Props {
   title?: string;
@@ -30,11 +30,12 @@ const seoImage = {
   height: thumbnail?.height ?? brand.thumbnail.height,
   alt: thumbnail?.alt ?? brand.thumbnail.alt,
 };
-const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.3): 'rgba(var(--secondary-color) / 0.2)';
+const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
+const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 ---
 
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html class="html" lang="zh-Hant-TW">
   <head>
     <SEO
       charset="UTF-8"
@@ -60,7 +61,7 @@ const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.3): 'rgba(var(--sec
         imageAlt: `${seoImage.alt}`,
       }}
       extend={{
-        link: [{rel: "icon", href: "/images/brand/logo.svg", type:"image/svg+xml"}],
+        link: [{ rel: 'icon', href: '/images/brand/logo.svg', type: 'image/svg+xml' }],
         meta: [
           {
             name: 'viewport',
@@ -86,18 +87,46 @@ const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.3): 'rgba(var(--sec
     </script>
   </head>
   <body
-    class="body bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-secondary selection:text-primary-50 after:absolute after:top-0 after:left-0 after:-z-10 after:block after:h-full after:w-full after:content-[''] dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
+    class="bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-secondary selection:text-primary-50 dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
   >
     <Navbar />
     <div class="min-h-screen">
       <slot />
     </div>
     <Footer />
+    <style define:vars={{ bgGradientColor, bgGradientColorDark }}>
+      .html::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -10;
+        height: 100%;
+        width: 100%;
+        background-repeat: repeat;
+        background-size: auto;
+      }
+
+      .html::after {
+        background-image: linear-gradient(0deg, rgb(var(--primary-color-50)), transparent 15%),
+          linear-gradient(
+            220deg,
+            rgb(var(--primary-color-300)) 5%,
+            var(--bgGradientColor) 40%,
+            rgb(var(--primary-color-50)) 90%
+          );
+      }
+
+      .dark.html::after {
+        background-image: linear-gradient(0deg, rgb(var(--primary-color-1000)) 1%, transparent 40%),
+          linear-gradient(
+            60deg,
+            var(--bgGradientColorDark),
+            rgb(var(--primary-color-700)) 30%,
+            var(--bgGradientColorDark) 40%,
+            rgb(var(--primary-color-1000)) 60%
+          );
+      }
+    </style>
   </body>
 </html>
-
-<style define:vars={{ bgGradientColor }}>
-  .body::after {
-    background: linear-gradient(var(--bgGradientColor), transparent 100%);
-  }
-</style>
