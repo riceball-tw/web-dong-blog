@@ -1,14 +1,31 @@
 ---
-export interface Props {
-  title: string;
+interface Props {
+  badge?: {
+    href?: string;
+    text: string;
+  };
 }
-
-const { title } = Astro.props;
+const { badge } = Astro.props;
 ---
 
-<section class="bg-cover bg-center bg-no-repeat px-4 sm:pt-[var(--mainNav-height)]">
-  <div class="flex flex-col gap-8 py-32">
-    <h1 class="text-center font-black text-4xl md:text-7xl" set:html={title} />
+<section class="bg-cover bg-center bg-no-repeat px-8 sm:pt-[var(--mainNav-height)]">
+  <div class="flex flex-col gap-8 py-48">
+    {
+      badge && (
+        <a
+          href={badge.href}
+          class="border-primary-900/40 bg-primary-900/10 dark:border-primary-50/40 dark:bg-primary-900/20 flex w-fit items-center gap-2 rounded-full border px-2 py-2 text-xs tracking-wide"
+        >
+          <span class="ml-2">{badge.text}</span>
+          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+            <path d="m536.461-460-70.615 70.615q-5.615 5.616-5.231 13.385.385 7.769 6 13.385Q472.231-357 480.513-357t13.641-5.615l94.769-94.77q9.693-9.692 9.693-22.615 0-12.923-9.693-22.615l-95.538-95.539q-5.616-5.615-13.385-5.615t-13.385 5.615Q461-592.539 461-584.256q0 8.282 5.615 13.641L536.461-500H360q-8.5 0-14.25 5.758-5.75 5.757-5.75 14.269t5.75 14.242Q351.5-460 360-460h176.461Zm-56.327 340q-74.673 0-140.41-28.339-65.737-28.34-114.365-76.922-48.627-48.582-76.993-114.257Q120-405.194 120-479.866q0-74.673 28.339-140.41 28.34-65.737 76.922-114.365 48.582-48.627 114.257-76.993Q405.194-840 479.866-840q74.673 0 140.41 28.339 65.737 28.34 114.365 76.922 48.627 48.582 76.993 114.257Q840-554.806 840-480.134q0 74.673-28.339 140.41-28.34 65.737-76.922 114.365-48.582 48.627-114.257 76.993Q554.806-120 480.134-120ZM480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+          </svg>
+        </a>
+      )
+    }
+    <h1 class="font-black text-4xl md:text-7xl xl:text-8xl">
+      <slot name="headline" />
+    </h1>
     <slot />
   </div>
 </section>
