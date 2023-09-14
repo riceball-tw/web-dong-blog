@@ -14,7 +14,7 @@ export interface Props {
 export async function getStaticPaths() {
   const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
   const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())];
-  return categories.map((category) => [{ params: { slug: category }, props: { publishedPosts } }]);
+  return categories.flatMap((category) => [{ params: { slug: category }, props: { publishedPosts } }]);
 }
 
 const { slug } = Astro.params;
