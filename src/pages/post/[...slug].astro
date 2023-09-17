@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
+  const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
   return publishedPosts.map((post) => ({
     params: { slug: post.slug },
     props: { post },

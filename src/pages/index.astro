@@ -5,7 +5,8 @@ import Card from '@/components/card/Card.astro';
 import Hero from '@/components/app/Hero.astro';
 import uniqolor from 'uniqolor';
 
-const publishedPosts = await getCollection('post', (data) => !data.data.isDraft);
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+
 const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())].sort((a, b) =>
   a.localeCompare(b, 'en', { sensitivity: 'base' }),
 );

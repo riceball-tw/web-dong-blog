@@ -5,9 +5,10 @@ import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import { getCollection } from 'astro:content';
 
-const posts = await getCollection('post');
-const avaliablePosts = posts.filter((post) => !post.data.isDraft);
-const tags = [...new Set(avaliablePosts.map((post) => post.data.tags).flat())];
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].sort((a, b) =>
+  a.localeCompare(b, 'en', { sensitivity: 'base' }),
+);
 ---
 
 <Base title={`文章標籤分類`} description={`所有標籤共${tags.length}項`}>
