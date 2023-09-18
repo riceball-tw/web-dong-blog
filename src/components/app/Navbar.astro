@@ -1,5 +1,6 @@
 ---
 import Clickable from '@/components/app/Clickable.astro';
+import Search from '@/components/preact/Search.jsx';
 
 const mainNav = [
   {
@@ -30,7 +31,7 @@ const { pathname } = new URL(Astro.request.url);
     class="border-b-none flex h-full items-center justify-between border-t border-primary-900/40 dark:border-primary-50/40 md:border-b md:border-t-0"
   >
     <div class="flex w-full items-center gap-2 md:gap-4">
-      <a href="/" class="inline-flex whitespace-nowrap px-4 font-bold tracking-widest text-lg">
+      <a title="網頁東東首頁" href="/" class="inline-flex whitespace-nowrap px-4 text-lg font-bold tracking-widest">
         <!-- Logo -->
         <svg
           width="40"
@@ -72,47 +73,44 @@ const { pathname } = new URL(Astro.request.url);
       </ul>
     </div>
 
-    <ul class="flex gap-4">
-      <li class="flex items-center justify-center">
-        <Clickable>
-          <button
-            data-theme-toggle
-            aria-label="網頁外觀樣式切換 Theme Toggle"
-            type="button"
-            class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex aspect-square w-16 items-center justify-center rounded-lg text-sm"
-          >
-            <!-- Dark Icon -->
-            <svg
-              width="16"
-              height="16"
-              class="hidden dark:block"
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1005 1005"
-              ><path
-                d="M502.5 0C225 0 0 225 0 502.5S225 1005 502.5 1005 1005 780 1005 502.5c0-25.7-2.2-51.4-5.6-75.9-54.7 76.5-144 126.2-245.7 126.2-166.4 0-301.5-135.1-301.5-301.5 0-101.1 49.7-191 126.2-245.7C553.9 2.2 528.2 0 502.5 0h0z"
-              ></path></svg
-            >
+    <Search client:media="(min-width: 1024px)" />
 
-            <!-- Light Icon -->
-            <svg
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="dark:hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1005 1005"
-              ><path
-                d="M502.5 274.1c-126.1 0-228.4 102.3-228.4 228.4s102.3 228.4 228.4 228.4 228.4-102.3 228.4-228.4-102.3-228.4-228.4-228.4h0zM45.7 548.2H137c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H45.7C20.6 456.8 0 477.4 0 502.5s20.6 45.7 45.7 45.7zm822.3 0h91.4c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H868c-25.1 0-45.7 20.6-45.7 45.7s20.5 45.7 45.7 45.7zM456.8 45.7V137c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V45.7c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.6-45.7 45.7zm0 822.3v91.4c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V868c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.5-45.7 45.7zM228 163.5c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.4-17.8 17.8-47.1 0-64.4L228 163.5zm565 565.1c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.8-17.8 17.8-47.1 0-64.4L793 728.6zM841.5 228c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L728.6 212c-17.8 17.8-17.8 47.1 0 64.4 17.8 17.4 47.1 17.8 64.4 0l48.5-48.4zM276.4 793c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L163.5 777c-17.8 17.8-17.8 47.1 0 64.4s47.1 17.8 64.4 0l48.5-48.4z"
-              ></path></svg
-            >
-          </button>
-        </Clickable>
-      </li>
-    </ul>
+    <Clickable>
+      <button
+        data-theme-toggle
+        aria-label="網頁外觀樣式切換 Theme Toggle"
+        type="button"
+        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex aspect-square w-16 items-center justify-center rounded-lg text-sm"
+      >
+        <!-- Dark Icon -->
+        <svg
+          width="16"
+          height="16"
+          class="hidden dark:block"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1005 1005"
+          ><path
+            d="M502.5 0C225 0 0 225 0 502.5S225 1005 502.5 1005 1005 780 1005 502.5c0-25.7-2.2-51.4-5.6-75.9-54.7 76.5-144 126.2-245.7 126.2-166.4 0-301.5-135.1-301.5-301.5 0-101.1 49.7-191 126.2-245.7C553.9 2.2 528.2 0 502.5 0h0z"
+          ></path></svg
+        >
+
+        <!-- Light Icon -->
+        <svg
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="dark:hidden"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1005 1005"
+          ><path
+            d="M502.5 274.1c-126.1 0-228.4 102.3-228.4 228.4s102.3 228.4 228.4 228.4 228.4-102.3 228.4-228.4-102.3-228.4-228.4-228.4h0zM45.7 548.2H137c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H45.7C20.6 456.8 0 477.4 0 502.5s20.6 45.7 45.7 45.7zm822.3 0h91.4c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H868c-25.1 0-45.7 20.6-45.7 45.7s20.5 45.7 45.7 45.7zM456.8 45.7V137c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V45.7c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.6-45.7 45.7zm0 822.3v91.4c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V868c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.5-45.7 45.7zM228 163.5c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.4-17.8 17.8-47.1 0-64.4L228 163.5zm565 565.1c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.8-17.8 17.8-47.1 0-64.4L793 728.6zM841.5 228c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L728.6 212c-17.8 17.8-17.8 47.1 0 64.4 17.8 17.4 47.1 17.8 64.4 0l48.5-48.4zM276.4 793c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L163.5 777c-17.8 17.8-17.8 47.1 0 64.4s47.1 17.8 64.4 0l48.5-48.4z"
+          ></path></svg
+        >
+      </button>
+    </Clickable>
   </div>
 </nav>
-
 <script is:inline>
   const themeToggle = document.querySelector('[data-theme-toggle]');
   function themeUpdate() {

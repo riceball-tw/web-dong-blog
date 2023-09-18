@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import Fuse from 'fuse.js';
 
 let fuseInstance;
@@ -63,7 +63,7 @@ export default function Search() {
   return (
     <div className="relative hidden lg:block">
       <form
-        onBlur={handleInputBlur}
+        onfocusout={handleInputBlur}
         onSubmit={(e) => e.preventDefault()}
         className={`flex items-center gap-3 rounded-3xl border border-primary-900/40 px-4 transition-all dark:border-primary-50/40 ${
           isSearching ? 'rounded-xl rounded-b-none border-b-transparent' : ''
@@ -84,7 +84,7 @@ export default function Search() {
         </label>
         <input
           onFocus={handleInputFocus}
-          onChange={handleInputChange}
+          onInput={handleInputChange}
           required
           name="search"
           id="search"
