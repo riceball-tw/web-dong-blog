@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/mdx": "^1.0.3",
     "@astrojs/partytown": "^1.1.1",
+    "@astrojs/preact": "^3.0.0",
     "@astrojs/react": "^3.0.2",
     "@astrojs/rss": "^2.0.0",
     "@astrojs/sitemap": "^1.0.0",
@@ -26,6 +27,7 @@
     "astro-auto-import": "^0.3.0",
     "astro-seo": "^0.7.4",
     "fuse.js": "^6.6.2",
+    "preact": "^10.17.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.43.3",

@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import preact from '@astrojs/preact';
 import partytown from '@astrojs/partytown';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
@@ -69,7 +70,12 @@ export default defineConfig({
       drafts: false,
     }),
     sitemap(),
-    react(),
+    react({
+      include: ['**/react/*'],
+    }),
+    preact({
+      include: ['**/preact/*'],
+    }),
     partytown({
       // Adds dataLayer.push as a forwarding-event.
       config: {
