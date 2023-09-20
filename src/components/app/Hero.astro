@@ -14,7 +14,7 @@ const { badge } = Astro.props;
       badge && (
         <a
           href={badge.href}
-          class="border-primary-900/40 bg-primary-900/10 dark:border-primary-50/40 dark:bg-primary-900/20 flex w-fit items-center gap-2 rounded-full border px-2 py-2 text-xs tracking-wide"
+          class="border-secondary/60 bg-secondary/10 dark:border-secondary-light/60 dark:bg-secondary-light/10 flex w-fit items-center gap-2 rounded-full border px-2 py-2 text-xs tracking-wide opacity-80 transition-opacity hover:opacity-100"
         >
           <span class="ml-2">{badge.text}</span>
           <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
