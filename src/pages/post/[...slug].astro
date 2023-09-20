@@ -56,7 +56,9 @@ const { Content, headings } = await post.render();
         <div class="relative mx-auto">
           <div class="text-primary-900 dark:text-primary-50">
             <div class="mb-2">{title}</div>
-            <h1 class="mb-4 font-black text-4xl md:text-6xl">{titleTC}</h1>
+            <h1 transition:name={`title-${slug}`} class="mb-4 text-4xl font-black md:text-6xl">
+              {titleTC}
+            </h1>
           </div>
           <div class="flex justify-between">
             <div class="flex md:block">
@@ -78,14 +80,18 @@ const { Content, headings } = await post.render();
         {
           Boolean(headings.length) && (
             <div class="absolute top-0">
-              <ul data-toc class="m-0 p-0 toc list-none">
-                {headings.map(({ depth, slug: headingSlug, text }) => <li><a
-                        class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
-                        href={`#${headingSlug}`}
-                        aria-label={`移動到 ${text} 標題區塊`}
-                      >
-                        {text}
-                      </a></li>)}
+              <ul data-toc class="toc m-0 list-none p-0">
+                {headings.map(({ depth, slug: headingSlug, text }) => (
+                  <li>
+                    <a
+                      class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                      href={`#${headingSlug}`}
+                      aria-label={`移動到 ${text} 標題區塊`}
+                    >
+                      {text}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           )
@@ -98,38 +104,42 @@ const { Content, headings } = await post.render();
 </Base>
 
 <script is:inline>
-  const headings = document.querySelectorAll('[data-article] h2, h3')
-  const tocHeadings = document.querySelectorAll('[data-toc] a')
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-      tocHeadings.forEach(heading => {
-        heading.classList.remove('toc-link--active')
-        if (entry.target.textContent === heading.textContent.trim()) {
-          heading.classList.toggle('toc-link--active')
+  function generateTOC() {
+    const headings = document.querySelectorAll('[data-article] h2, h3');
+    const tocHeadings = document.querySelectorAll('[data-toc] a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tocHeadings.forEach((heading) => {
+            heading.classList.remove('toc-link--active');
+            if (entry.target.textContent === heading.textContent.trim()) {
+              heading.classList.toggle('toc-link--active');
+            }
+          });
         }
-      })
-      }
-    })
-  })
+      });
+    });
 
-  headings.forEach(heading => {
-    observer.observe(heading)
-  })
+    return { headings, observer };
+  }
+
+  generateTOC().headings.forEach((heading) => {
+    generateTOC().observer.observe(heading);
+  });
 </script>
 
 <style is:inline>
   /* TOC */
   .toc-link {
-    opacity: .6
+    opacity: 0.6;
   }
 
   .toc-link--active {
-    opacity: 1
+    opacity: 1;
   }
 
   .toc-link--active a {
-    opacity: 1
+    opacity: 1;
   }
 
   /* Article Layout */

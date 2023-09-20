@@ -10,7 +10,7 @@ interface Social {
 const { copyright, socials } = globalConfig.brand;
 ---
 
-<footer class="mt-16 mb-[var(--mainNav-height)] flex flex-wrap items-center justify-between sm:mb-0">
+<footer class="mb-[var(--mainNav-height)] mt-16 flex flex-wrap items-center justify-between sm:mb-0">
   <!-- Copyrihgt -->
   <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
     <a class="hover:underline" href={copyright.url}>
@@ -54,9 +54,7 @@ const { copyright, socials } = globalConfig.brand;
 </footer>
 
 <script is:inline>
-  // Share
-  const dataShareBtn = document.querySelector('[data-share-btn]');
-  dataShareBtn.addEventListener('click', () => {
+  document.querySelector('[data-share-btn]').addEventListener('click', () => {
     const { title } = document;
     const url = document.querySelector('link[rel=canonical]')
       ? document.querySelector('link[rel=canonical]').href
@@ -68,10 +66,10 @@ const { copyright, socials } = globalConfig.brand;
           url,
         })
         .then(() => {
-          // console.log('Thanks for sharing!');
+          console.log('Thanks for sharing!');
         })
         .catch(() => {
-          // console.error(err);
+          console.error(err);
         });
     } else {
       alert('沒有支援分享功能，有空補上這個功能 -_-');

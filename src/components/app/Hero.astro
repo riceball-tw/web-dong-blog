@@ -23,7 +23,7 @@ const { badge } = Astro.props;
         </a>
       )
     }
-    <h1 class="font-black text-4xl md:text-7xl xl:text-8xl">
+    <h1 transition:name="title-hero" class="text-4xl font-black md:text-7xl xl:text-8xl">
       <slot name="headline" />
     </h1>
     <slot />

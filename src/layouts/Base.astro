@@ -5,6 +5,7 @@ import globalConfig from '@/globalConfig';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
 import { hexToRgba } from '@/helper/hexToRgba';
+import { ViewTransitions } from 'astro:transitions';
 
 export interface Props {
   title?: string;
@@ -70,6 +71,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
         ],
       }}
     />
+    <ViewTransitions fallback="none" />
 
     <!-- Analytics -->
     <script

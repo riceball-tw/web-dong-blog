@@ -77,6 +77,7 @@ const { pathname } = new URL(Astro.request.url);
 
     <Clickable>
       <button
+        transition:persist
         data-theme-toggle
         aria-label="網頁外觀樣式切換 Theme Toggle"
         type="button"
@@ -111,29 +112,43 @@ const { pathname } = new URL(Astro.request.url);
     </Clickable>
   </div>
 </nav>
-<script is:inline>
-  const themeToggle = document.querySelector('[data-theme-toggle]');
-  function themeUpdate() {
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
+
+<script>
+  function isDark() {
+    const isSystemPerferDark = !('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isLocalStorageDark = localStorage.theme === 'dark';
+    return isLocalStorageDark || isSystemPerferDark;
+  }
+
+  function setTheme() {
+    if (isDark()) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   }
 
-  themeToggle.addEventListener('click', () => {
-    if (localStorage.theme === 'light') {
-      localStorage.theme = 'dark';
-    } else {
+  function toggleTheme() {
+    if (isDark()) {
       localStorage.theme = 'light';
+    } else {
+      localStorage.theme = 'dark';
     }
+  }
 
-    window.dispatchEvent(new Event('updateTheme'));
+  function setupThemeToggler() {
+    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+      toggleTheme();
+      setTheme();
+      window.dispatchEvent(new Event('updateTheme'));
+    });
+  }
 
-    themeUpdate();
+  document.addEventListener('astro:after-swap', () => {
+    setupThemeToggler();
+    setTheme();
   });
-  themeUpdate();
+
+  setTheme();
+  setupThemeToggler();
 </script>

@@ -1,4 +1,5 @@
 ---
+import { characterToUnicode } from '@/helper/characterToUnicode';
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import Card from '@/components/card/Card.astro';
@@ -34,6 +35,7 @@ const heroBadge = {
       >
     </span>
   </Hero>
+
   <section>
     <h2 class="sr-only">文章種類</h2>
     <div class="flex flex-wrap gap-4">
@@ -42,7 +44,10 @@ const heroBadge = {
           categoriesLists.map((categoriesList) => (
             <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
               <div class="mb-8 flex items-center justify-between">
-                <h2 class="text-3xl font-bold opacity-90 group-hover:opacity-100 ">
+                <h2
+                  transition:name={`category-${characterToUnicode(categoriesList.type)}`}
+                  class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
+                >
                   <a href={`/post/categories/${categoriesList.type}`}>{categoriesList.type}</a>
                 </h2>
                 <span class="opacity-60 transition-opacity group-hover:opacity-100">
@@ -61,6 +66,7 @@ const heroBadge = {
                             .replace(/\//g, '-')}
                         </time>
                         <a
+                          transition:name={`title-${post.slug}`}
                           class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
                           href={`post/${post.slug}`}
                         >

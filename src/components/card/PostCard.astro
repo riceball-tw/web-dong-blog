@@ -44,13 +44,13 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       )
     }
     <div>
-      <h3 class="mb-4 text-lg">
+      <h3 transition:name={`title-${slug}`} class="mb-4 text-lg">
         <a href={`${import.meta.env.BASE_URL}post/${slug}`}>{titleTC}</a>
       </h3>
       <p>{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
-      <time class="opacity-60 transition-opacity text-sm hover:opacity-100">
+      <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
         {
           publishDate
             .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
