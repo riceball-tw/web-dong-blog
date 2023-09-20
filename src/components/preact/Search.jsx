@@ -61,11 +61,11 @@ export default function Search() {
   }
 
   return (
-    <div className="relative hidden lg:block">
+    <div style={{ minWidth: '400px' }} className="relative hidden lg:block">
       <form
         onfocusout={handleInputBlur}
         onSubmit={(e) => e.preventDefault()}
-        className={`flex items-center gap-3 rounded-3xl border border-primary-900/40 px-4 transition-all dark:border-primary-50/40 ${
+        className={`flex items-center gap-3 rounded-3xl border border-secondary/40 px-4 transition-all dark:border-secondary-light/40  ${
           isSearching ? 'rounded-xl rounded-b-none border-b-transparent' : ''
         }`}
       >
@@ -96,13 +96,17 @@ export default function Search() {
         />
 
         {isSearching && (
-          <div className="absolute bottom-0 left-0 w-full translate-y-full transform-gpu rounded-b-xl border border-t-0 border-primary-900/40 backdrop-blur-xl transition-opacity dark:border-primary-50/40">
+          <div className="absolute bottom-0 left-0 w-full translate-y-full transform-gpu rounded-b-xl border border-t-0  border-secondary/40 backdrop-blur-xl transition-opacity dark:border-secondary-light/40">
             {results.length > 0 ? (
-              <ul tabIndex={0} style={{ maxHeight: '300px' }} className="overflow-y-auto">
+              <ul
+                tabIndex="-1"
+                style={{ maxHeight: '300px' }}
+                className="overflow-y-auto border-b border-secondary/40 dark:border-secondary-light/40"
+              >
                 {results.map(({ item }) => (
                   <li>
                     <a
-                      className="inline-flex w-full gap-4 px-8 py-4 outline-none  hover:bg-black/10 focus:bg-black/10 dark:hover:bg-white/10 dark:focus:bg-white/10"
+                      className="inline-flex w-full gap-4 px-8 py-4 outline-none  hover:bg-secondary/10 focus:bg-secondary/10 dark:hover:bg-secondary-light/10 dark:focus:bg-secondary-light/10"
                       href={`/post/${item.slug}`}
                     >
                       <div
@@ -110,7 +114,7 @@ export default function Search() {
                         className="saturate-90 w-1 rounded-full brightness-90"
                       ></div>
                       <div>
-                        <div>{item.titleTC}</div>
+                        <div className="font-medium">{item.titleTC}</div>
                         <div className="opacity-60">{item.title}</div>
                       </div>
                     </a>
@@ -123,7 +127,7 @@ export default function Search() {
             <div className="flex flex-col gap-4 px-8 py-4">
               <div className="flex text-center">
                 <a
-                  className="flex-1 rounded-lg p-8 outline-none hover:bg-white/10 focus:bg-white/10"
+                  className="flex-1 rounded-lg p-8 outline-none hover:bg-secondary/10 focus:bg-secondary/10 dark:hover:bg-secondary-light/10 dark:focus:bg-secondary-light/10"
                   href="/post/categories"
                 >
                   <svg
@@ -138,7 +142,10 @@ export default function Search() {
                   </svg>
                   分類
                 </a>
-                <a className="flex-1 rounded-lg p-8 outline-none hover:bg-white/10 focus:bg-white/10" href="/post/tags">
+                <a
+                  className="flex-1 rounded-lg p-8 outline-none hover:bg-secondary/10 focus:bg-secondary/10 dark:hover:bg-secondary-light/10 dark:focus:bg-secondary-light/10"
+                  href="/post/tags"
+                >
                   <svg
                     className="mx-auto mb-4"
                     fill="currentColor"
