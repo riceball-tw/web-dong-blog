@@ -1,7 +1,6 @@
 ---
 import Base from '@/layouts/Base.astro';
-import SolidButton from '@/components/button/Solid.astro';
-import OutlinedButton from '@/components/button/Outlined.astro';
+import Button from '@/components/app/Button.astro';
 import Clickable from '@/components/app/Clickable.astro';
 
 const title = '404 頁面';
@@ -16,10 +15,10 @@ const description = '這個網頁並不存在';
     <p class="text-lg">您所搜尋的頁面並不存在</p>
     <div class="my-8 mt-12 flex gap-4">
       <Clickable>
-        <SolidButton href="/">回首頁</SolidButton>
+        <Button size="lg" theme="outline" href="/">回首頁</Button>
       </Clickable>
       <Clickable>
-        <OutlinedButton href="/post">找所有文章</OutlinedButton>
+        <Button size="lg" href="/post">所有文章</Button>
       </Clickable>
     </div>
   </section>
