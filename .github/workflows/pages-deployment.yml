@@ -13,6 +13,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Install Git LFS
+        run: git lfs install
+      - name: Fetch Git LFS files
+        run: git lfs fetch
+      - name: Apply Git LFS files to content
+        run: git lfs checkout
       - name: install packages and build
         run: |
           npm install
