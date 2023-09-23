@@ -1,7 +1,7 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: '文件符號' }
-title: 'Day3 - Astro Series: Hello Astro World'
+featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+title: 'Day4 - Astro Series: Hello Astro World'
 titleTC: 'Astro 系列文第四日：基礎指令與設定'
 excerpt: '藉由本系列文章將持續 30 日不間斷的更新帶領你上手它！今日介紹 Astro 的 CLI 指令與設置 `astro.config` 檔案。'
 category: 'Astro'
@@ -10,8 +10,8 @@ publishDate: 2023-09-19
 ---
 
 <Figure
-  width="1300"
-  height="1368"
+  width="1200"
+  height="600"
   src="images/posts/ithome-astro/thumbnail/day4-command-and-config.webp"
   alt="一個漂亮的漸層背景上面有一句標題：「基礎指令與設定」"
 />
@@ -93,12 +93,12 @@ Astro 完整支援 Markdown 並且預設整合了不同的套件，像是代碼�
 
 Astro 提供插件來客製化擴充更多框架、函示庫或功能，在 `integrations` 屬性中引入要整合的插件。未來章節將會有獨立章節介紹如何撰寫不同 UI 框架到 Astro 當中。
 
-```json
+```javascript
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 {
   // 範例: 添加 React + Tailwind 支援
-  integrations: [react(), tailwind()]
+  integrations: [react(), tailwind()];
 }
 ```
 

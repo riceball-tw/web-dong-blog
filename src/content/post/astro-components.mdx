@@ -1,0 +1,255 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+title: 'Day5 - Astro Series: Components'
+titleTC: 'Astro 系列文第五日：基礎元件'
+excerpt: '藉由本系列文章將持續 30 日不間斷的更新帶領你上手它！今日介紹構成 Astro 最核心的概念 —— 元件'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-20
+---
+
+<Figure
+  width="1200"
+  height="600"
+  src="images/posts/ithome-astro/thumbnail/day5-components.webp"
+  alt="一個漂亮的漸層背景上面有一句標題：「基礎元件」"
+/>
+## 前言
+
+前面除了創建新專案之外也了解了 Astro CLI 與設定檔的大致樣貌，本章節會從創建基本 Astro 元件開始，元件可以被放置在先前提到的 `src` 資料夾當中，建議創建一個 `components` 資料夾存放在內以方便管理。
+
+## 創建元件
+
+可以藉由創建一個副檔名為 `.astro` 的檔案來撰寫 Astro 元件，元件中分為腳本與模板兩個區塊，這兩個區塊由柵欄（`---`）所區隔。
+
+```astro
+---
+// 元件腳本
+---
+<!-- 元件模板 -->
+```
+
+元件腳本代表該元件在伺服端中會被如何執行，像是你可以在這裡撰寫 JavaScript 或 TypeScript 用於：
+
+1. 引入其他 Astro 元件
+2. 引入不同框架的元件
+3. 引入與索取資料
+4. 接收元件接收到的資料（props）
+5. 創建變數並在元件模板中存取
+
+```astro
+---
+// 1. 導入 Astro 元件
+import SomeAstroComponent from './components/SomeAstroComponent.astro';
+
+// 2. 引入不同框架的元件
+import SomeReactComponent from './components/SomeReactComponent.jsx';
+
+// 3. 引入資料
+import pokemons from '../data/pokemon.json';
+
+// 3. 引入資料
+const user = await fetch('SOME_SECRET_API_URL/users').then(r => r.json());
+
+// 4. 透過解構獲得該元件所接收到的 props
+const { title } = Astro.props;
+const message = 'Astro is Awesome!'
+---
+
+<!-- 5. 創建變數並在元件模板中存取 -->
+I think: { message }
+{ title }
+```
+
+關於第 5 點，可以在伺服端 JavaScript 中創建變數使用 `{}` 單括弧插入到模板中，不管是屬性還是作為 Props 傳入：
+
+```astro
+---
+import Modal from './components/Modal.astro'
+const message = 'Hello Astro'
+---
+<Modal class={message} message={`${message} Here Is My Props`} />
+```
+
+或者是撰寫 JavaScript 表達式來產生 HTML，就像是 JSX 一樣：
+
+{/* prettier-ignore */}
+```astro
+---
+const fruits = ['Apple', 'Banana', 'Cherry']
+---
+
+<ul>
+      {fruits.map(fruit => <li>{fruit}<li>)}
+</ul>
+```
+
+或是選擇性的顯示模板內容：
+
+{/* prettier-ignore */}
+```astro
+---
+const isOnSale = true
+---
+
+{isOnSale && <p>正在打折中！</p>}
+{isOnSale ? <p>正在打折中！</p> : <p>尚無打折</p>}
+```
+
+或是動態的決定標籤種類（須留意動態標籤不支援 Hydration、並且標籤命名必須大寫，才能分辨出是原生標籤還是客製化元件）：
+
+```astro
+---
+import MyComponent from "./MyComponent.astro";
+const Element = 'div'
+const Component = MyComponent;
+---
+
+<Element>Hello!</Element> <!-- 渲染出 <div>Hello!</div> -->
+<Component /> <!-- 渲染出 <MyComponent /> -->
+```
+
+## 元件屬性 Props
+
+可以設定讓元件接受外部傳入的屬性，只需要在元件內的伺服端腳本中從 `Astro.props` 中來獲得，像以下的例子 `greeting` 與 `name` 兩個變數被使用解構的方式創建出來：
+
+```astro
+---
+// 元件外: <GreetingHeadline greeting="Hi" name="Joe" />
+const { greeting, name } = Astro.props;
+---
+<h2>{greeting}, {name}!</h2>
+```
+
+甚至可以為 Props 添加型別，讓文字編輯器可以知道「該元件應該要傳入什麼類型的東西」：
+
+```astro
+interface Props {
+  greeting: string;
+	name: string;
+}
+```
+
+## 元件插槽 Slot
+
+除了元件屬性也可以透過插槽的方式將外部的 HTML 內容傳入到元件之中，舉例來說：由於目前網站大多數頁面都包含了導覽列與頁腳元件，於是你可以創建一個名為 `Base` 的元件作為網頁的通用元件。
+
+```astro
+---
+import Navbar from '../components/Navbar.astro'
+import Hero from '../components/Hero.astro'
+import Footer from '../components/Footer.astro'
+---
+<Navbar />
+	<Hero />
+	<slot />
+<Footer />
+```
+
+並且在每個頁面中引入該元件，不但可以統一管理所有頁面的架構，也不用在每一頁反覆的引入基本需要的元件。
+
+```astro
+---
+import Base from '../layouts/Base.astro
+---
+<Base>
+	<!-- 此區間的模板將注入 slot 中 -->
+</Base>
+```
+
+### 具名插槽
+
+可以擁有一個以上的插槽，這時候使用具名插槽來指定「要注入內容的插槽」。舉例來說根據先前的範例：
+
+```astro
+<Navbar />
+  <slot name="before-hero" />
+	<Hero />
+	<slot />
+<Footer />
+```
+
+就可以使用 `slot` 屬性來指定想注入的插槽名稱。
+
+```astro
+<Base>
+  <!-- 以下圖片將會注入到 before-hero 插槽中 -->
+  <img src ="example.jpg" slot="before-hero">
+  <!-- 以下沒有特別註明 slot 將注入到預設 slot 中 -->
+  <h1>你好世界</h1> 
+</Base>
+```
+
+### 插槽後備方案
+
+當在定義插槽的位址時，可以為其添加內容，這些內容就會成為當沒有任何模板傳遞進來時所採用的預設內容。
+
+```astro
+<slot>
+  <p>這是預設後備方案，當沒有模板傳遞到 slot 時就會被採用</p>
+</slot>
+```
+
+### 插槽轉移
+
+插槽可以被轉移到其他的元件之中，舉例來說有個元件： `BaseLayout.astro`
+
+```astro
+---
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head"/>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+```
+
+而它被 `HomeLayout.astro` 所引用：
+
+```astro
+---
+import BaseLayout from "./BaseLayout.astro";
+---
+
+<BaseLayout>
+  <slot name="head" slot="head"/>
+  <slot />
+</BaseLayout>
+```
+
+這時候再對 `HomeLayout.astro` 傳入 `head` 插槽將會轉移到 `BaseLayout` 的 `head` 插槽之中。
+
+```astro
+---
+import HomeLayout from "../layouts/HomeLayout.astro";
+---
+<HomeLayout>
+  <title slot="head">Astro</title>
+  <h1>Astro</h1>
+</HomeLayout>
+```
+
+## 總結
+
+如果你先前有接觸過其他框架或 JSX 就會發現這些「元件」間的觀念都很雷同好上手，並且由於 `.astro` 設計主要用於伺服器渲染，因此不用擔心狀態反應性的問題，極大的刪減了複雜度！
+
+**最後會建議實際動手練習，如果過程中有問題可以參考看看[我的範例](https://github.com/riceball-tw/wei-wei-web/blob/main/src/layouts/Base.astro)：**
+
+1. 在 `components` 資料夾內撰寫像是 `Navbar`、 `Footer` 之類常見的元件。
+2. 在 `pages` 資料夾內的頁面中導入並顯示你新製作好的元件。
+3. 在 `layouts` 資料夾內創建一個名為 `Base` 的元件，並且透過 `<slot />` 讓整個網站的頁面都使用該元件，甚至更進一步接受 Props 讓該元件提供更多彈性可被修改的空間（像是接受修改 `<head>` 中的 `meta` 標籤們）。
+4. 適當的撰寫 TypeScript 進行型別定義。
+
+## 延伸閱讀
+
+- [Components](https://docs.astro.build/en/core-concepts/astro-components/) - Astro DOCS
+- [Component Props](https://docs.astro.build/en/guides/typescript/#component-props) - Astro DOCS
+- [Day5 - 基礎元件](https://ithelp.ithome.com.tw/articles/10322507) - 相同文章同步發布於 iThome 鐵人賽中
