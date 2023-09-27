@@ -3,7 +3,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      PUBLIC_GOOGLEANALYTIC_ID: ${{ env.PUBLIC_GOOGLEANALYTIC_ID }}
+      PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
     permissions:
       contents: read
       deployments: write
