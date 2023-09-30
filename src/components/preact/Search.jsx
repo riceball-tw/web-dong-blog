@@ -41,22 +41,23 @@ export default function Search() {
   }
 
   function handleInputChange(e) {
-    fuseInstance = new Fuse(posts, {
-      includeScore: true,
-      shouldSort: true,
-      threshold: 0.5,
-      keys: [
-        {
-          name: 'titleTC',
-          weight: 1,
-        },
-        {
-          name: 'title',
-          weight: 1,
-        },
-      ],
-    });
-
+    if (!fuseInstance) {
+      fuseInstance = new Fuse(posts, {
+        includeScore: true,
+        shouldSort: true,
+        threshold: 0.5,
+        keys: [
+          {
+            name: 'titleTC',
+            weight: 1,
+          },
+          {
+            name: 'title',
+            weight: 1,
+          },
+        ],
+      });
+    }
     setResults(fuseInstance.search(e.target.value));
   }
 
