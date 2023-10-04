@@ -1,0 +1,105 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+title: 'Day19 - Astro Series: RSS Endpoint'
+titleTC: 'Astro 系列文第十九日：實作集合分類功能'
+excerpt: '前面學習了內容集合與頁籤的製作，今天的主題練習透過整理集合抓取到的資料更進一步製作分類功能頁面。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-10-04
+---
+
+<Figure
+  width="1200"
+  height="600"
+  src="images/posts/ithome-astro/thumbnail/day19-rss-endpoint.webp"
+  alt="一個漂亮的漸層背景上面有一句標題：「RSS 端點」"
+/>
+
+## 前言
+
+前面章節我們學會了如何使用 Markdown 或 MDX 、在內容集合中定義資料格式與索取資料。本章節將解釋如何在 Astro 中創造端點提供不同種類的資料，並實作生成一個 RSS 檔案作為練習。
+
+## 端點
+
+什麼是端點（EndPoint）？在靜態模式的網站上，端點就是一份會產生各種類檔案的 `.ts` 或 `.js`檔案，而在 SSR 模式下端點會成為實時的伺服器 API。
+
+## 什麼是 RSS
+
+RSS 是一種標準化的方式，一種特定格式的 XML 檔案，設計來推播最新資訊給網站用戶，用戶要知道網站有沒有更新會需要手動的造訪網站十分麻煩，因此使用 RSS 選擇性推播網站新聞給用戶是一件方便的功能。
+
+簡單來說你會需要在網站根部有一個 RSS 的 XML 檔案，裡面存放著想發送的資料，用戶便可以透過這個檔案追蹤網站的最新動態。正好可以透過創造端點與 RSS 插件來達成這個目的。
+
+## 靜態檔案端點（生成一個 JSON 檔案）
+
+### 第一步：開設端點
+
+添加 `.js` 或 `.ts` 文件到 `/pages` 目錄，副檔名將會在建構過程中被刪除，因此還要前綴要創建的靜態檔案的副檔名。例如：`src/pages/data.json.ts` 會生成 `src/pages/data.json`。
+
+### 第二步：導出 `GET` 函數
+
+這樣在 `/foobar.json` 路徑就會生成一個內容為：`{"message":"Hello World"}` 的 JSON 檔案了，用端點創造檔案就是這麼的簡單。
+
+```tsx
+// foobar.json.ts
+export async function GET() {
+  return new Response(
+    JSON.stringify({
+      message: 'Hello World',
+    })
+  )
+}
+```
+
+## 製作 RSS
+
+### 第一步：安裝與設定 RSS 整合
+
+Astro 提供了自動化生成 RSS 文件的整合服務，首先我們必須安裝：`@astrojs/rss`並且在 `astro.config` 檔案中註明 [Site](https://docs.astro.build/en/reference/configuration-reference/#site) 的參數（Astro RSS 用這個參數來生成其內容）
+
+```bash
+npm install @astrojs/rss
+```
+
+### 第二步：開設端點
+
+與前面的範例相同，添加 `.js` 或 `.ts` 文件到 `/pages` 目錄。，但這次我們希望端點的檔案是 XML 格式，因此檔案名稱為： `rss.xml.ts`。在該檔案中透過 `@astrojs/rss` 整合的幫助，再加上從內容集合撈取出來的資料，快速自動的產出整個網站的 RSS XML 檔案：
+
+```tsx
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
+
+export const GET = async (context) => {
+  const posts = await getCollection('post');
+  const avaliablePosts = posts.filter((post) => !post.data.isDraft);
+
+  const rssContent = await rss({
+    title: '自定義標題',
+    description: '自定義說明',
+    site: context.site,
+    items: avaliablePosts.map((post) => ({
+      title: post.data.titleTC,
+      description: post.data.excerpt,
+      pubDate: post.data.publishDate,
+      link: `post/${post.slug}`,
+    })),
+  });
+
+  return new Response(rssContent.body);
+};
+```
+
+## 總結
+
+如果你的網站較少更新或用戶不怎麼用 RSS 那麼就沒有製作 RSS 的必要，不過仍是一個很好的練習可以嘗試看看，下一章節我們會透過開設端點創造更多實際的功能，敬請期待！
+
+**最後會建議實際動手練習，如果過程中有問題可以參考看看[我的範例](https://github.com/riceball-tw/astro-blog/blob/main/src/pages/rss.xml.ts)：**
+
+- 嘗試創造一個靜態端點
+- 嘗試建構自己網站的 RSS Feed
+
+## 延伸閱讀
+
+- [EndPoints](https://docs.astro.build/en/core-concepts/endpoints/) - Astro DOCS
+- [Add an RSS feed](https://docs.astro.build/en/guides/rss/) - Astro DOCS
+- [Day19 - RSS 端點](https://ithelp.ithome.com.tw/articles/10334280) - 相同文章同步發布於 iThome 鐵人賽中
