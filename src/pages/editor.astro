@@ -1,0 +1,29 @@
+---
+import Base from '@/layouts/Base.astro';
+import MonacoEditor from '@/components/react/editor/WebEditor.jsx';
+import counter from '@/editor/counter';
+---
+
+<Base title="DongEditor">
+  <div class="mx-4 sm:pt-[var(--mainNav-height)]">
+    <MonacoEditor defaultHTML={counter.html} defaultCSS={counter.css} defaultJS={counter.js} client:only="react" />
+  </div>
+</Base>
+
+<style is:inline>
+  .split {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .gutter {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+
+  .gutter.gutter-horizontal {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+    cursor: col-resize;
+  }
+</style>
