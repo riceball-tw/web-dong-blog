@@ -6,15 +6,19 @@ const mainNav = [
   {
     name: '首頁',
     url: '/',
+    isShownOnMobile: false,
   },
   {
     name: '關於',
     url: '/about',
+    isShownOnMobile: true,
   },
   {
     name: '文章',
     url: '/post',
+    isShownOnMobile: true,
   },
+
   {
     name: '分類',
     url: '/post/categories',
@@ -62,7 +66,7 @@ const mainNav = [
       <ul class="flex w-full justify-around font-medium md:justify-start">
         {
           mainNav.map((navbarLink) => (
-            <li>
+            <li class={`${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'}`}>
               <a href={navbarLink.url} class="p-2 md:p-4 ">
                 {navbarLink.name}
               </a>
