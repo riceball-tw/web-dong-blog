@@ -76,11 +76,13 @@ export default defineConfig({
     preact({
       include: ['**/preact/*'],
     }),
-    partytown({
-      // Adds dataLayer.push as a forwarding-event.
-      config: {
-        forward: ['dataLayer.push'],
-      },
-    }),
+    import.meta.env.DEV
+      ? ''
+      : partytown({
+          // Adds dataLayer.push as a forwarding-event.
+          config: {
+            forward: ['dataLayer.push'],
+          },
+        }),
   ],
 });
