@@ -1,5 +1,9 @@
 module.exports = {
   // ...
+  globals: {
+    localStorage: true,
+    window: true,
+  },
   extends: [
     // ...
     'airbnb-base',
