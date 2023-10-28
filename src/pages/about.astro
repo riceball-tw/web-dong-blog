@@ -1,5 +1,5 @@
 ---
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import Card from '@/components/card/Card.astro';
 
@@ -23,7 +23,7 @@ const events = [
 ];
 ---
 
-<Base title={'關於'}>
+<BlogBase title={'關於'}>
   <Hero>
     <span slot="headline" style="max-width: 1300px;" class="inline-block"
       >著重於<span class="text-secondary dark:text-secondary-light">圖像化</span>以及<span
@@ -69,4 +69,4 @@ const events = [
       </ol>
     </Card>
   </section>
-</Base>
+</BlogBase>

@@ -1,14 +1,14 @@
 ---
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import MonacoEditor from '@/components/react/editor/WebEditor.jsx';
 import counter from '@/editor/counter';
 ---
 
-<Base title="DongEditor">
+<BlogBase title="DongEditor">
   <div class="mx-4 sm:pt-[var(--mainNav-height)]">
     <MonacoEditor defaultHTML={counter.html} defaultCSS={counter.css} defaultJS={counter.js} client:only="react" />
   </div>
-</Base>
+</BlogBase>
 
 <style is:inline>
   .split {

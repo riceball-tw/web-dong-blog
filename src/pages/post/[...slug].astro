@@ -1,5 +1,5 @@
 ---
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import { getCollection, CollectionEntry } from 'astro:content';
 import Tags from '@/components/taxonomy/tags.astro';
 import Category from '@/components/taxonomy/category.astro';
@@ -23,7 +23,7 @@ const { slug } = post;
 const { Content, headings } = await post.render();
 ---
 
-<Base title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
+<BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
   <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
     <article
       data-article
@@ -101,7 +101,7 @@ const { Content, headings } = await post.render();
       <Utteranc />
     </article>
   </main>
-</Base>
+</BlogBase>
 
 <script is:inline>
   function generateTOC() {

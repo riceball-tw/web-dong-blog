@@ -2,7 +2,7 @@
 import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
@@ -25,7 +25,7 @@ const avaliableCurrentCategoryPosts = publishedPosts
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
-<Base title={`搜尋文章分類：${slug}`} description={`搜尋文章分類`}>
+<BlogBase title={`搜尋文章分類：${slug}`} description={`搜尋文章分類`}>
   <Hero>
     <Fragment slot="headline">
       搜尋文章分類：<span transition:name={`category-${characterToUnicode(slug)}`}>{slug}</span>
@@ -51,4 +51,4 @@ const avaliableCurrentCategoryPosts = publishedPosts
       }
     </CardGallery>
   </section>
-</Base>
+</BlogBase>

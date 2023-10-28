@@ -1,7 +1,7 @@
 ---
 import { characterToUnicode } from '@/helper/characterToUnicode';
 import { getCollection } from 'astro:content';
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Card from '@/components/card/Card.astro';
 import Hero from '@/components/app/Hero.astro';
 import uniqolor from 'uniqolor';
@@ -27,7 +27,7 @@ const heroBadge = {
 };
 ---
 
-<Base>
+<BlogBase>
   <Hero badge={heroBadge}>
     <span slot="headline" style="max-width: 1400px;" class="inline-block">
       網頁東東用最<span class="text-secondary dark:text-secondary-light">親切簡單</span>的方式描述如何<span
@@ -82,4 +82,4 @@ const heroBadge = {
       </div>
     </div>
   </section>
-</Base>
+</BlogBase>

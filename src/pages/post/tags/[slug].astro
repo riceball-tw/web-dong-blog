@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
@@ -23,7 +23,7 @@ const avaliableCurrentTagPosts = publishedPosts
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
-<Base title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
+<BlogBase title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
   <Hero>
     <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
   </Hero>
@@ -47,4 +47,4 @@ const avaliableCurrentTagPosts = publishedPosts
       }
     </CardGallery>
   </section>
-</Base>
+</BlogBase>

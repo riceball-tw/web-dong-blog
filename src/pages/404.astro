@@ -1,5 +1,5 @@
 ---
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Button from '@/components/app/Button.astro';
 import Clickable from '@/components/app/Clickable.astro';
 
@@ -7,7 +7,7 @@ const title = '404 頁面';
 const description = '這個網頁並不存在';
 ---
 
-<Base title={title} description={description}>
+<BlogBase title={title} description={description}>
   <section class="flex min-h-[inherit] flex-col items-center justify-center text-center">
     <h1 class="text-3xl">
       <div class="mb-8 text-8xl font-semibold">404</div>
@@ -22,4 +22,4 @@ const description = '這個網頁並不存在';
       </Clickable>
     </div>
   </section>
-</Base>
+</BlogBase>

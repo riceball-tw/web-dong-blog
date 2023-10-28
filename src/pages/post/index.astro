@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
@@ -11,7 +11,7 @@ const dateSortedPublishedPosts = publishedPosts.sort(
 );
 ---
 
-<Base title={'所有文章'} description={`所有文章共 ${dateSortedPublishedPosts.length} 篇`}>
+<BlogBase title={'所有文章'} description={`所有文章共 ${dateSortedPublishedPosts.length} 篇`}>
   <Hero>
     <Fragment slot="headline">
       所有文章共 {dateSortedPublishedPosts.length} 篇
@@ -38,4 +38,4 @@ const dateSortedPublishedPosts = publishedPosts.sort(
       }
     </CardGallery>
   </section>
-</Base>
+</BlogBase>

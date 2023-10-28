@@ -1,5 +1,5 @@
 ---
-import Base from '@/layouts/Base.astro';
+import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
@@ -12,7 +12,7 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
 );
 ---
 
-<Base title={`所有類別`} description={`所有文章的類別`}>
+<BlogBase title={`所有類別`} description={`所有文章的類別`}>
   <Hero>
     <Fragment slot="headline">所有類別共 {categories.length} 項</Fragment>
   </Hero>
@@ -32,4 +32,4 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
       }
     </CardGallery>
   </div>
-</Base>
+</BlogBase>
