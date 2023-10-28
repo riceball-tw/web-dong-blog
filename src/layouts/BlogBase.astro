@@ -1,0 +1,15 @@
+---
+import { type BaseLayout } from '@/types.ts';
+import Navbar from '@/components/app/Navbar.astro';
+import Footer from '@/components/app/Footer.astro';
+import Base from '@/layouts/Base.astro';
+export interface Props extends BaseLayout {}
+---
+
+<Base {...Astro.props}>
+  <Navbar />
+  <div class="min-h-screen">
+    <slot />
+  </div>
+  <Footer />
+</Base>

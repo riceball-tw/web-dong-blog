@@ -1,23 +1,11 @@
 ---
+import { type BaseLayout } from '@/types.ts';
 import '@/styles/global.css';
 import { SEO } from 'astro-seo';
 import globalConfig from '@/globalConfig';
-import Navbar from '@/components/app/Navbar.astro';
-import Footer from '@/components/app/Footer.astro';
 import { hexToRgba } from '@/helper/hexToRgba';
 import { ViewTransitions } from 'astro:transitions';
-
-export interface Props {
-  title?: string;
-  description?: string;
-  themeColor?: string;
-  thumbnail?: {
-    width?: number;
-    height?: number;
-    src: string;
-    alt: string;
-  };
-}
+export interface Props extends BaseLayout {}
 
 const { brand } = globalConfig;
 const { title, description, themeColor, thumbnail } = Astro.props;
@@ -91,11 +79,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
   <body
     class="bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-secondary selection:text-primary-50 dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
   >
-    <Navbar />
-    <div class="min-h-screen">
-      <slot />
-    </div>
-    <Footer />
+    <slot />
     <style define:vars={{ bgGradientColor, bgGradientColorDark }}>
       .html::after {
         content: '';
