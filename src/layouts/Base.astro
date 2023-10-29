@@ -23,7 +23,11 @@ const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
 const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 ---
 
-<!DOCTYPE html>
+<script>
+  import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme';
+  setGlobalTheme(getCurrentGlobalTheme());
+</script>
+
 <html class="html" lang="zh-Hant-TW">
   <head>
     <SEO

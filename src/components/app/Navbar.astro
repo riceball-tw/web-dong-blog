@@ -166,41 +166,16 @@ const mainNav = [
 </nav>
 
 <script>
-  function isDark() {
-    const isSystemPerferDark = !('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isLocalStorageDark = localStorage.theme === 'dark';
-    return isLocalStorageDark || isSystemPerferDark;
-  }
+  import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/helper/globalTheme';
 
-  function setTheme() {
-    if (isDark()) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
+  const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
 
-  function toggleTheme() {
-    if (isDark()) {
-      localStorage.theme = 'light';
-    } else {
-      localStorage.theme = 'dark';
-    }
-  }
+  setupThemeToggler(themeToggleButton);
 
-  function setupThemeToggler() {
-    document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-      toggleTheme();
-      setTheme();
+  function setupThemeToggler(targetElement: HTMLElement) {
+    targetElement.addEventListener('click', () => {
+      toggleGlobalTheme(getCurrentGlobalTheme());
       window.dispatchEvent(new Event('updateTheme'));
     });
   }
-
-  document.addEventListener('astro:after-swap', () => {
-    setupThemeToggler();
-    setTheme();
-  });
-
-  setTheme();
-  setupThemeToggler();
 </script>
