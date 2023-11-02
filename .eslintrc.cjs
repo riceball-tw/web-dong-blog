@@ -20,6 +20,7 @@ module.exports = {
       },
     },
   },
+  parser: '@typescript-eslint/parser',
   overrides: [
     {
       // Define the configuration for `.astro` file.
