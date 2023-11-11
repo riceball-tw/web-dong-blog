@@ -1,19 +1,37 @@
 import { z, defineCollection } from 'astro:content';
 import uniqolor from 'uniqolor';
 
-function toReadableDate(time: string, seperator: string) {
-  const formattedDate = new Date(time).toLocaleDateString('zh-TW', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-  return seperator ? formattedDate.replace(/\//g, seperator) : formattedDate;
-}
+const toolbox = defineCollection({
+  type: 'data',
+  schema: z.object({
+    featureIcon: z
+      .object({
+        width: z.number().default(64),
+        height: z.number().default(64),
+        alt: z.string(),
+        url: z.string(),
+      })
+      .optional(),
+    titleTC: z.string(),
+    url: z.string(),
+    excerpt: z.string(),
+    category: z.string().default('unsorted'),
+    tags: z.array(z.string()).default(['unsorted']),
+    themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
+  }),
+});
+
+const snippet = defineCollection({
+  type: 'data',
+  schema: z.object({
+    html: z.string(),
+    css: z.string(),
+    js: z.string(),
+  }),
+});
 
 const post = defineCollection({
-  slug: ({ data, defaultSlug }) => {
-    return data.permalink || defaultSlug;
-  },
+  slug: ({ data, defaultSlug }) => data.permalink || defaultSlug,
 
   schema: z.object({
     isDraft: z.boolean().default(true),
@@ -49,5 +67,7 @@ function getDefaultColor() {
 }
 
 export const collections = {
-  post: post,
+  post,
+  snippet,
+  toolbox,
 };
