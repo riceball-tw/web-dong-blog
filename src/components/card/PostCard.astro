@@ -28,7 +28,7 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
 ---
 
 <Card themeColor={themeColor}>
-  <article class="flex h-full flex-col justify-between gap-8 pt-8">
+  <article class={`flex h-full flex-col justify-between gap-8  ${featureIcon ? 'pt-8' : ''}`}>
     {
       featureIcon && (
         <div
