@@ -1,0 +1,138 @@
+---
+import Base from '@/layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import PostCard from '@/components/card/PostCard.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
+import Footer from '@/components/app/Footer.astro';
+import Navbar from '@/components/app/Navbar.astro';
+
+const toolboxSites = await getCollection('toolbox');
+const categorizedSites = toolboxSites.reduce((categorizedData, site) => {
+  const { data } = site;
+  const { category } = data;
+  return {
+    ...categorizedData,
+    [category]: [...(categorizedData[category as keyof typeof categorizedData] || []), data],
+  };
+}, {});
+const categories = Object.keys(categorizedSites);
+
+const categoriesWithQunatity = categories.map((category) => {
+  return { [category]: categorizedSites[category as keyof typeof categorizedSites].length };
+});
+---
+
+<script>
+  const nav = document.querySelector('[data-nav]');
+
+  document.querySelector('[data-nav-close]')?.addEventListener('click', () => {
+    nav?.classList.add('hidden');
+  });
+
+  document.querySelector('[data-nav-toggle]')?.addEventListener('click', () => {
+    nav?.classList.toggle('md:hidden');
+    nav?.classList.toggle('hidden');
+  });
+
+  window.addEventListener('hashchange', () => {
+    refreshCategory();
+  });
+
+  refreshCategory();
+
+  function refreshCategory() {
+    const categoryItems = document.querySelectorAll('[data-category-item]');
+    categoryItems.forEach((categoryItem) => {
+      const categoryItemLink = categoryItem.querySelector('a');
+      categoryItemLink?.classList.remove('before:content-[">"]');
+      if (window.location.hash === '') return;
+      if (categoryItemLink?.href.includes(window.location.hash)) {
+        categoryItemLink?.classList.add('before:content-[">"]');
+      }
+    });
+  }
+</script>
+
+<Base title="網頁工具箱" description="網路上有許多新奇有趣的網站，網頁工具箱將協助您輕鬆探索各種多元資源 👀">
+  <Navbar>
+    <button data-nav-toggle
+      ><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
+        ><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path></svg
+      ></button
+    >
+  </Navbar>
+  <div class="flex">
+    <aside
+      style="min-width: 300px;"
+      data-nav
+      class="fixed left-0 top-0 z-40 hidden h-full flex-col justify-between backdrop-blur-xl md:sticky md:top-[var(--mainNav-height)] md:block"
+    >
+      <ul class="group ml-0 divide-y divide-secondary/40 dark:divide-secondary-light/40 md:ml-4">
+        {
+          categoriesWithQunatity.map((category) => {
+            const categoryKey = Object.keys(category)[0];
+            const categoryValue = Object.values(category)[0];
+
+            return (
+              <li data-category-item>
+                <a
+                  class="inline-block w-full p-4 font-medium tracking-wider  transition-opacity before:mr-2 group-hover:opacity-60 group-hover:hover:opacity-100"
+                  href={`#${categoryKey}`}
+                >
+                  <span>{categoryKey}</span>
+                  <sup class="p-2">{categoryValue}</sup>
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </aside>
+    <main class="flex w-full flex-col gap-4">
+      <div class="mt-0 md:mt-[var(--mainNav-height)]">
+        <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
+          <h1 class="mx-auto text-center text-3xl font-bold md:text-5xl">
+            網路上有許多<span class="text-secondary dark:text-secondary-light">新奇有趣的網站</span>，<span
+              class="text-secondary dark:text-secondary-light">網頁工具箱</span
+            >將協助您輕鬆探索各種多元資源 👀
+          </h1>
+        </section>
+        {
+          Object.entries(categorizedSites).map((categories) => {
+            return (
+              <section class=" flex flex-col px-4">
+                {categories.map((group) => {
+                  if (typeof group === 'string')
+                    return (
+                      <h2
+                        id={group}
+                        class="py-8 text-xl font-bold tracking-widest before:mr-2 target:before:content-['>'] md:pb-16"
+                      >
+                        <a href={`#${group}`}>{`${group}`}</a>
+                      </h2>
+                    );
+
+                  return (
+                    <CardGallery>
+                      {group.map((site) => {
+                        return <PostCard post={site} />;
+                      })}
+                    </CardGallery>
+                  );
+                })}
+              </section>
+            );
+          })
+        }
+        <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
+          <h1 style="max-width: 900px" class="mx-auto text-center text-3xl font-bold md:text-5xl">
+            你有<span class="text-secondary dark:text-secondary-light">想推薦</span>或<span
+              class="text-secondary dark:text-secondary-light">想修正</span
+            >的內容嗎？ 歡迎<a class="underline" href="https://github.com/riceball-tw/astro-blog">發個 PR</a>或告知我 🙌
+          </h1>
+        </section>
+      </div>
+    </main>
+  </div>
+  <Footer />
+</Base>
