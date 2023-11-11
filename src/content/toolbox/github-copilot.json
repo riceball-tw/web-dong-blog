@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/robot.svg", "alt": "機器人符號" },
+  "titleTC": "GitHub Copilot",
+  "url": "https://jitter.video/",
+  "excerpt": "Jitter 幫助我用極短的時間與功夫打造專業水準的短特效影片（用於作品集呈現），就像是 AfterEffect 但簡單好用，在網頁上剪輯短片極快加速我的產出。",
+  "category": "開發工具",
+  "tags": ["免費", "付費"]
+}

@@ -1,0 +1,11 @@
+{
+  "featureIcon": {
+    "url": "images/toolbox/grid.svg",
+    "alt": "網格圖示"
+  },
+  "titleTC": "Design Systems",
+  "url": "https://www.designsystems.com/",
+  "excerpt": "由 Figma 推行的線上刊物，由淺入深的探討留白、格線和字體等設計基礎，為設計師提供寶貴參考。實例與理論的結合了解更多有關設計系統的一切。",
+  "category": "部落格",
+  "tags": ["免費"]
+}

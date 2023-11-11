@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/code.svg", "alt": "代碼圖示" },
+  "titleTC": "freeCodeCamp news",
+  "url": "https://www.freecodecamp.org/news",
+  "excerpt": "freeCodeCamp 絕對是全球開發者免費學習社群的龍頭，而 news 是一個由 freeCodeCamp 社群維護的部落格，內容包含了各種廣泛開發技術文章，以及一些網頁開發的相關資訊。",
+  "category": "部落格",
+  "tags": ["免費"]
+}
