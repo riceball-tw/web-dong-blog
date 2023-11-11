@@ -69,7 +69,7 @@ const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(-
   }
 
   .card:hover {
-    background-color: var(--cardHoverFillColor);
+    background: radial-gradient(ellipse at bottom, var(--cardHoverFillColor) 40%, transparent 100%);
     border-color: var(--cardBorderColor);
     box-shadow: 0 0 30px 10px var(--cardShadowColor);
   }
