@@ -13,17 +13,18 @@ export interface Props {
           url: string;
         }
       | undefined;
-    slug: string;
+    slug?: string;
+    url?: string;
     titleTC: string;
     excerpt: string;
-    publishDate: Date;
+    publishDate?: Date;
     themeColor: string;
-    tags: string[];
-    category: string;
+    tags?: string[];
+    category?: string;
   };
 }
 
-const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, slug } = Astro.props.post;
+const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, slug, url } = Astro.props.post;
 ---
 
 <Card themeColor={themeColor}>
@@ -44,22 +45,25 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       )
     }
     <div>
-      <h3 transition:name={`title-${slug}`} class="mb-4 text-lg">
-        <a href={`${import.meta.env.BASE_URL}post/${slug}`}>{titleTC}</a>
+      <h3 transition:name={`title-${slug}`} class="mb-4 text-lg font-medium">
+        <a href={url ? url : `${import.meta.env.BASE_URL}post/${slug}`}>{titleTC}</a>
       </h3>
       <p>{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
+      {
+        publishDate && (
       <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
-        {
-          publishDate
+            {publishDate
             .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-            .replace(/\//g, '-')
+              .replace(/\//g, '-')}
+          </time>
+        )
         }
-      </time>
+
       <div class="flex flex-wrap">
-        <Category category={category} />
-        <Tags tags={tags} />
+        {category && <Category category={category} />}
+        {tags && <Tags tags={tags} />}
       </div>
     </div>
   </article>
