@@ -1,6 +1,6 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import {hexToRgba} from '@/helper/hexToRgba'
+import { hexToRgba } from '@/helper/hexToRgba';
 
 export interface Props extends HTMLAttributes<'div'> {}
 export interface Props {
@@ -17,7 +17,9 @@ const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(-
 ---
 
 <div {...attrs}>
-  <div class="card transform active:-translate-y-1 relative rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2">
+  <div
+    class="card relative transform rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2 active:-translate-y-1"
+  >
     <slot />
     <div class="card__light"></div>
   </div>
