@@ -16,7 +16,6 @@ export function toggleGlobalTheme(currentTheme: string) {
 }
 
 export function setGlobalTheme(newTheme: string, oldTheme?: string) {
-  console.log('theme', newTheme, oldTheme);
   localStorage.theme = newTheme;
   const HTMLElement = document.documentElement;
   if (oldTheme) {
