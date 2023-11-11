@@ -1,6 +1,5 @@
 ---
 import Clickable from '@/components/app/Clickable.astro';
-import Search from '@/components/preact/Search.jsx';
 import Logo from '@/components/app/Logo.astro';
 import Logomark from '@/components/app/Logomark.astro';
 
@@ -58,8 +57,6 @@ const mainNav = [
       </ul>
     </div>
 
-    <Search client:media="(min-width: 1024px)" />
-
     <Clickable>
       <button
         transition:persist
@@ -95,6 +92,7 @@ const mainNav = [
         >
       </button>
     </Clickable>
+    <slot />
   </div>
 </nav>
 

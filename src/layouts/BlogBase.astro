@@ -3,11 +3,14 @@ import { type BaseLayout } from '@/types.ts';
 import Navbar from '@/components/app/Navbar.astro';
 import Footer from '@/components/app/Footer.astro';
 import Base from '@/layouts/Base.astro';
+import Search from '@/components/preact/Search.jsx';
 export interface Props extends BaseLayout {}
 ---
 
 <Base {...Astro.props}>
-  <Navbar />
+  <Navbar>
+    <Search client:media="(min-width: 1024px)" />
+  </Navbar>
   <div class="min-h-screen">
     <slot />
   </div>
