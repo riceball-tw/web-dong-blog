@@ -8,7 +8,7 @@ export interface Props {
   fillColor?: string;
 }
 
-const { themeColor, fillColor, ...attrs } = Astro.props;
+const { themeColor, fillColor, class: className, ...attrs } = Astro.props;
 const borderWidth = '1px';
 const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.3) : 'rgba(var(--secondary-color) / 0.3)';
 const cardFillColor = fillColor || 'rgba(var(--secondary-color) / 0.03)';
@@ -16,13 +16,15 @@ const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.05) : 'rgba(var(--s
 const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondary-color) / 0.2)';
 ---
 
-<div {...attrs}>
-  <div
-    class="card relative transform rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2 active:-translate-y-1"
-  >
-    <slot />
-    <div class="card__light"></div>
-  </div>
+<div
+  class:list={[
+    'card relative transform rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2 active:-translate-y-1',
+    className,
+  ]}
+  {...attrs}
+>
+  <slot />
+  <div class="card__light"></div>
 </div>
 
 <style define:vars={{ themeColor, borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
