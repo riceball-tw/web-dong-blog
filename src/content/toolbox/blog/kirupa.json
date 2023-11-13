@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/code.svg", "alt": "代碼圖示" },
+  "titleTC": "KIRUPA",
+  "url": "https://www.kirupa.com/",
+  "excerpt": "一個充滿 Emoji 的可愛教學網站，網頁的方方面面像是：UX、前端基礎、資料結構、演算法都有涉略，每篇文章都有詳細的圖示由淺入深的挖掘不同知識。",
+  "category": "部落格",
+  "tags": ["免費"]
+}
