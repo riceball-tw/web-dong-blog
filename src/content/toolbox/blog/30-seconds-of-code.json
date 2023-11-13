@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/code.svg", "alt": "代碼圖示" },
+  "titleTC": "30 seconds of code",
+  "url": "https://www.30secondsofcode.org/",
+  "excerpt": "透過一篇又一篇一口大小的文章快速理解某項議題，主要聚焦在前端開發議題，同時也有面試題目解析。適合在零散時間閱讀擴充見識。",
+  "category": "部落格",
+  "tags": ["免費"]
+}
