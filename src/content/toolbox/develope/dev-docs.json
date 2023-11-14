@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/document-multiple.svg", "alt": "多個文件符號" },
+  "titleTC": "DevDocs",
+  "url": "https://devdocs.io",
+  "excerpt": "你能想像與開發有關的文件都詳細集合在一起，有即時搜尋、離線支援、行動版本、深色主題與鍵盤快捷鍵……等功能。這是一個由 freeCodeCamp 主導的開源計畫",
+  "category": "開發工具",
+  "tags": ["免費"]
+}
