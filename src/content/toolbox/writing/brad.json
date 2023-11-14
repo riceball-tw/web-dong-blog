@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/robot.svg", "alt": "機器人符號" },
+  "titleTC": "Google Brad",
+  "url": "https://bard.google.com/",
+  "excerpt": "接續 ChatGPT 的後起之秀，有時候它太忙我會找 Brad 聊聊，效果一樣不錯且看起來預設功能更多，都是協助寫作發想的好夥伴。",
+  "category": "寫作工具",
+  "tags": ["免費", "付費"]
+}
