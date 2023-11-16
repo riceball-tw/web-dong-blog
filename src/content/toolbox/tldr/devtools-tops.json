@@ -1,0 +1,11 @@
+{
+  "featureIcon": {
+    "url": "images/toolbox/application-cog.svg",
+    "alt": "視窗與齒輪圖示"
+  },
+  "titleTC": "DevTools Tips",
+  "url": "https://devtoolstips.org/",
+  "excerpt": "上百個與瀏覽器相關的技巧，包含了各式各樣瀏覽器的範例與分類，重點是有詳細的圖解與說明十分實用。",
+  "category": "乾貨",
+  "tags": ["免費"]
+}
