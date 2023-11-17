@@ -52,7 +52,7 @@ export default {
       {
         name: 'RSS',
         imgUrl: '/images/social/rss.svg',
-        url: '/rss',
+        url: '/rss.xml',
         themeColor: '#000000'
       }
     ],
