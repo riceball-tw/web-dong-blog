@@ -2,6 +2,7 @@
 import Card from '@/components/card/Card.astro';
 import Category from '@/components/taxonomy/category.astro';
 import Tags from '@/components/taxonomy/tags.astro';
+import { characterToUnicode } from '@/helper/characterToUnicode';
 
 export interface Props {
   post: {
@@ -45,7 +46,7 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       )
     }
     <div>
-      <h3 transition:name={`title-${slug}`} class="mb-4 text-lg font-medium">
+      <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
         {
           url ? (
             <a href={url}>{titleTC}</a>
