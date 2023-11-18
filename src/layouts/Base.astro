@@ -26,9 +26,12 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 <script>
   import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme';
   setGlobalTheme(getCurrentGlobalTheme());
+  document.addEventListener('astro:after-swap', () => {
+    setGlobalTheme(getCurrentGlobalTheme());
+  });
 </script>
 
-<html class="html" lang="zh-Hant-TW">
+<html transition:persist class="html" lang="zh-Hant-TW">
   <head>
     <SEO
       charset="UTF-8"
