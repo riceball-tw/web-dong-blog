@@ -20,7 +20,7 @@ const sizeClassList = {
 const themeClass = theme ? themeClassList[theme] : themeClassList['solid'];
 const sizeClass = size ? sizeClassList[size] : sizeClassList['md'];
 const defaultButtonStyle =
-  'rounded-full opacity-90 hover:opacity-100 transition-opacity border tracking-wider font-medium focus:outline-none focus:ring-4  focus:ring-secondary/60 dark:focus:ring-secondary-light/60 whitespace-nowrap';
+  'rounded-full opacity-90 hover:opacity-100 transition-opacity border tracking-wider font-medium focus:outline-none focus:ring-4  focus:ring-secondary/60 dark:focus:ring-secondary-light/60 whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
 ---
 
 <Element href={href} class:list={[defaultButtonStyle, themeClass, sizeClass]} {...rest}>
