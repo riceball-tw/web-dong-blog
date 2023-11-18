@@ -64,7 +64,6 @@ const mainNav = [
 
     <Clickable>
       <button
-        transition:persist
         data-theme-toggle
         aria-label="網頁外觀樣式切換 Theme Toggle"
         type="button"
@@ -105,7 +104,6 @@ const mainNav = [
   import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/helper/globalTheme';
 
   const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
-
   setupThemeToggler(themeToggleButton);
 
   function setupThemeToggler(targetElement: HTMLElement) {
@@ -114,4 +112,9 @@ const mainNav = [
       window.dispatchEvent(new Event('updateTheme'));
     });
   }
+
+  document.addEventListener('astro:after-swap', () => {
+    const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
+    setupThemeToggler(themeToggleButton);
+  });
 </script>
