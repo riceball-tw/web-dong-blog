@@ -1,24 +1,65 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
+import PostCard from '@/components/card/PostCard.astro';
 import Card from '@/components/card/Card.astro';
+import Button from '@/components/app/Button.astro';
+import { getCollection } from 'astro:content';
+import Logo from '@/components/app/Logo.astro';
 
-const events = [
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const toolboxSites = await getCollection('toolbox');
+
+const problems = [
   {
-    time: '2023-09 ~ 2023-10',
-    title: '2023 iThome 鐵人賽',
-    description:
-      '今年撰寫 <a class="underline" href="https://ithelp.ithome.com.tw/users/20141551/ironman/6238">Astro.js 系列介紹文</a>，文章也會同步在本部落格中。',
+    titleTC: '技術困難',
+    excerpt:
+      '網頁開發涉及的技術領域十分廣泛且迭代快速，從前端到後端，不同的程式語言、套件框架、版本相容性技術迭代等難題。',
+    featureIcon: {
+      url: 'images/about/computer.svg',
+    },
+    themeColor: '#819ff8',
   },
   {
-    time: '2023-07 ~ 2023-08',
-    title: '兵役',
-    description: '期間大機率不會有更新😐',
+    titleTC: '設計瓶頸',
+    excerpt:
+      '包含了使用者體驗與介面設計，如何讓網頁美觀易用，以及如何讓網頁更符合使用者的需求，相較於傳統平面媒材具備更大的挑戰與發展空間與挑戰。',
+    featureIcon: {
+      url: 'images/about/style.svg',
+    },
+    themeColor: '#f8bb81',
   },
   {
-    time: '2022-07 ~ 2023-07',
-    title: '六角學院線上助教',
-    description: `於 <a class="underline" href="https://www.hexschool.com/">六角學院</a> 擔任助教，期間負責近所有前端課程的問題回覆與作業批改工作，其中包含： <ul style="list-style-type: '-  '" class="list-inside marker:text-primary-600"><li><a href="https://www.hexschool.com/courses/html_css.html">HTML 與 CSS 開發網站課程</a></li><li><a href="https://www.hexschool.com/courses/bootstrap5.html">Bootstrap 5 網頁切版整合術課程</a></li><li><a href="https://www.hexschool.com/courses/jquery_ani.html">jQuery 打造互動性網頁效果課程</a></li><li><a href="https://www.hexschool.com/courses/javascript.html">JS 基礎課程</a></li><li><a href="https://www.hexschool.com/courses/js-training.html">JS 工程師養成直播班 2022 秋季</a></li><li><a href="https://www.hexschool.com/vue/">Vue 3 實戰影音課程</a></li><li><a href="https://www.hexschool.com/courses/react.html#recommend">React 實戰影音課程</a></li><li><a href="https://www.hexschool.com/2022/06/27/2022-06-27-react-study-circle/">React 讀書會</a></li></ul>`,
+    titleTC: '內容卡關',
+    excerpt: '定期產生新穎、有趣與有價值的內容保持網頁的活力，滿足使用者的需求透過各種手段將內容推廣出去。',
+    featureIcon: {
+      url: 'images/about/edit-document.svg',
+    },
+    themeColor: '#f881ce',
+  },
+  {
+    titleTC: '專案管理挑戰',
+    excerpt: '綜合以上領域，如何橫跨領域相互協調溝通，確保網頁建構順利進行、蒐集與分析用戶的需求，開出滿足用戶的需求。',
+    featureIcon: {
+      url: 'images/about/person-play.svg',
+    },
+    themeColor: '#a381f8',
+  },
+  {
+    titleTC: '創意與動力枯竭',
+    excerpt: '如何在不斷更新的技術與潮流中，激發創意與動力，創造出新的價值？',
+    featureIcon: {
+      url: 'images/about/light-bulb.svg',
+    },
+    themeColor: '#a6a6a6',
+  },
+  {
+    titleTC: '更多面向發展中',
+    excerpt: '網頁建構涉及的領域十分廣泛，網頁東東將持續探索更多面向，並提供更多有價值的內容。',
+    featureIcon: {
+      url: 'images/about/dots-horizontal.svg',
+    },
+    themeColor: '#a3f881',
   },
 ];
 ---
@@ -26,47 +67,73 @@ const events = [
 <BlogBase title={'關於'}>
   <Hero>
     <span slot="headline" style="max-width: 1300px;" class="inline-block"
-      >著重於<span class="text-secondary dark:text-secondary-light">圖像化</span>以及<span
-        class="font-bold text-secondary dark:text-secondary-light">實例操作</span
-      >降低每次學習新事物的成本</span
+      >探討什麼原因導致我們在網頁建構上<span class="text-secondary dark:text-secondary-light">遇上瓶頸</span>？</span
     >
   </Hero>
 
-  <section class="mx-4 mb-36 grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-4">
-    <h2 class="sr-only">關於本網站</h2>
-    <Card>
-      <h3 class="sr-only">網站描述</h3>
-      <img
-        style="max-width: 120px;"
-        class="-mt-8 mb-8"
-        width="300"
-        height="263"
-        src="/images/brand/logo.svg"
-        alt="WEB DONG LOGO"
-      />
-      <p class="text-lg">
-        哈囉，我是<a class="underline" href="https://weweweb.pages.dev/">宗瑋</a><br />
-        藉由用淺顯易懂的方式記錄網頁事物，並且藉由搭配動畫和圖片加深學習印象。目前台灣的開發中文資源有限，因此想把各種知識消化與搬運到中文環境讓入門工程師能夠省略大量時間與金錢踩坑學習。
-        <br />
-        <br />
-        有興趣可以到 <a class="underline" href="https://github.com/riceball-tw/astro-blog">GitHub Repo</a> 上瞭解本專案或聯絡我。
-      </p>
-    </Card>
-
-    <Card>
-      <h3 class="sr-only">網站事件</h3>
-      <ol class="relative border-l border-primary-200 text-lg dark:border-primary-700">
+  <div class="flex flex-col gap-4">
+    <section class="mx-8 grid grid-cols-1 gap-x-0 gap-y-4 md:grid-cols-3 md:gap-x-4 md:gap-y-0">
+      <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
         {
-          events.map((event) => (
-            <li class="mb-10 ml-4">
-              <div class="border-primary-300 bg-primary-300 dark:border-primary-900 dark:bg-primary-700 absolute -left-1.5 mt-1.5 h-3 w-3 rounded-full border" />
-              <time class="text-primary-400 dark:text-primary-500 text-sm font-normal leading-none">{event.time}</time>
-              <h3 class="text-primary-900 my-2 text-xl font-semibold dark:text-white">{event.title}</h3>
-              <p set:html={event.description} class="mb-4" />
-            </li>
-          ))
+          problems.map((problem) => {
+            return <PostCard post={problem} />;
+          })
         }
-      </ol>
-    </Card>
-  </section>
+      </div>
+
+      <Card class="relative overflow-hidden">
+        <div
+          class="from-primary-50/30 before:absolute before:left-0 before:top-0 before:block before:h-2/3 before:w-full before:bg-gradient-to-b before:content-[''] dark:from-primary-1000"
+        >
+          <div class="relative z-10">
+            <h2 class="mb-4 text-xl font-medium">「網頁東東」專門解決你對「網頁東東」的疑惑。</h2>
+            <p class="max-w-prose">
+              製作網頁不只考驗單一領域的深度，也同時涉及多項領域，需要多方的整合知識和技能。在建構過程中，會遇到各種挑戰，包括設計、開發、內容創作……等方面。網頁東東使命是幫助開發者們克服其中挑戰，並提供更輕鬆且直覺的學習管道。
+            </p>
+          </div>
+
+          <Logo
+            class="absolute bottom-0 right-0 -z-10 translate-x-1/3 translate-y-1/3 -rotate-12 transform opacity-60 md:opacity-100"
+            width="800"
+            height="800"
+          />
+        </div>
+      </Card>
+    </section>
+    <section class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Card class="flex flex-1 flex-col items-center justify-center">
+          <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post"
+            ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
+          >
+        </Card>
+        <Card class="flex flex-1 flex-col items-center justify-center">
+          <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox"
+            ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
+          >
+        </Card>
+      </div>
+      <Card>
+        <div class="col-start-2">
+          <div class="mb-8">
+            <h2 class="mb-4 text-xl font-medium">準備籌畫推出「東東報」</h2>
+            <p class="max-w-prose">
+              這是一個伴隨讀者一起成長的長期計畫，如果您有任何問題，歡迎在文章中留言或來信。您也可以先訂閱
+              <a class="underline" href="/rss.xml">RSS</a>，不定期發布最新消息。
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            <input
+              type="text"
+              class="rounded-full border-2 border-current bg-transparent p-4 disabled:cursor-not-allowed disabled:opacity-40"
+              placeholder="東東報規劃中……"
+              disabled
+            />
+            <Button disabled>訂閱電子報</Button>
+          </div>
+        </div>
+      </Card>
+    </section>
+  </div>
 </BlogBase>
