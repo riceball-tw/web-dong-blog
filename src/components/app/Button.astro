@@ -4,6 +4,8 @@ interface Props {
   theme?: keyof typeof themeClassList;
   size?: keyof typeof sizeClassList;
 }
+// TODO: Add Polymorphic type
+
 const { href, theme, size, ...rest } = Astro.props;
 const Element = href ? 'a' : 'button';
 const themeClassList = {
