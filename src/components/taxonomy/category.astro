@@ -2,12 +2,20 @@
 const { category } = Astro.props;
 export interface Props {
   category: string;
+  isLink: boolean;
 }
+
+const { isLink } = Astro.props;
+const Element = isLink ? 'a' : 'div';
 ---
 
-<a
+<Element
   class="relative mr-4 whitespace-nowrap capitalize opacity-40 hover:opacity-100"
-  href={`${import.meta.env.BASE_URL}post/categories/${category}`}
+  {...isLink
+      ? {
+          href: `post/categories/${category}`,
+        }
+      : {}}
 >
   {`@ ${category}`}
-</a>
+</Element>

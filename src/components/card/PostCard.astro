@@ -70,8 +70,8 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       }
 
       <div class="flex flex-wrap">
-        {category && <Category category={category} />}
-        {tags && <Tags tags={tags} />}
+        {category && <Category isLink={!Boolean(url)} category={category} />}
+        {tags && <Tags isLink={!Boolean(url)} tags={tags} />}
       </div>
     </div>
   </article>
