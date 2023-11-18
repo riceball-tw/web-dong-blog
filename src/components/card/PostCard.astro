@@ -61,13 +61,13 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
     <div class="flex flex-wrap items-center justify-between">
       {
         publishDate && (
-      <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
+          <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
             {publishDate
-            .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
               .replace(/\//g, '-')}
           </time>
         )
-        }
+      }
 
       <div class="flex flex-wrap">
         {category && <Category category={category} />}
