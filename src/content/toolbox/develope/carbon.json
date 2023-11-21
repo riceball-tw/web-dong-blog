@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/code.svg", "alt": "代碼符號" },
+  "titleTC": "carbon",
+  "url": "https://carbon.now.sh/",
+  "excerpt": "線上生成並分享漂亮的程式碼圖片，支援無數種語言與代碼高光風格，甚至可以客製化背景、字體細節與邊距，支援不同尺寸與格式輸出。製作教學文章或分享代碼片段時很好用。",
+  "category": "開發工具",
+  "tags": ["免費"]
+}

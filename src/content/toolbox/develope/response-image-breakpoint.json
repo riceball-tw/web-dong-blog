@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/photo-size-select-small.svg", "alt": "圖片縮放圖示" },
+  "titleTC": "Responsive Image Breakpoints Generator",
+  "url": "https://www.responsivebreakpoints.com/",
+  "excerpt": "用於計算與生成響應式圖片的尺寸的工具，用於生成圖片的 sizes 與 srcset 屬性值特別好用。",
+  "category": "開發工具",
+  "tags": ["免費"]
+}
