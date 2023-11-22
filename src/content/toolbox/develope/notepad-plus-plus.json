@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/note-edit.svg", "alt": "編輯文件符號" },
+  "titleTC": "notepad++",
+  "url": "https://notepad-plus-plus.org/",
+  "excerpt": "我將 notepad++ 作為臨時的程式和想法剪貼簿，它極快的啟動速度和少量的資源消耗讓我非常滿意。",
+  "category": "開發工具",
+  "tags": ["免費"]
+}
