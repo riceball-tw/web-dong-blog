@@ -47,15 +47,7 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
     }
     <div>
       <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
-        {
-          url ? (
-            <a href={url}>{titleTC}</a>
-          ) : slug ? (
-            <a href={`${import.meta.env.BASE_URL}post/${slug}`}>{titleTC}</a>
-          ) : (
-            titleTC
-          )
-        }
+        {url ? <a href={url}>{titleTC}</a> : slug ? <a href={`/post/${slug}/`}>{titleTC}</a> : titleTC}
       </h3>
       <p class="max-w-prose">{excerpt}</p>
     </div>

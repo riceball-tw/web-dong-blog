@@ -48,7 +48,7 @@ const heroBadge = {
                   transition:name={`category-${characterToUnicode(categoriesList.type)}`}
                   class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                 >
-                  <a href={`/post/categories/${categoriesList.type}`}>{categoriesList.type}</a>
+                  <a href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
                 </h2>
                 <span class="opacity-60 transition-opacity group-hover:opacity-100">
                   {categoriesList.posts.length} 篇文章
@@ -68,7 +68,7 @@ const heroBadge = {
                         <a
                           transition:name={`title-${post.slug}`}
                           class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                          href={`post/${post.slug}`}
+                          href={`/post/${post.slug}/`}
                         >
                           {post.data.titleTC}
                         </a>
