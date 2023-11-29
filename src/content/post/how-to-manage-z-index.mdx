@@ -1,0 +1,85 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/document.svg', alt: '文件符號' }
+title: 'How to Manage Z-index'
+titleTC: '一個簡單聰明的方法讓你永遠不用煩惱管理 Z-index 的問題'
+excerpt: '賦予網頁元素相對的關係而非絕對的數值，讓我們強烈聯繫元素之間的差異，而非取決於某個魔法數字可以避免很多折騰。'
+category: 'CSS'
+tags: ['概念']
+publishDate: 2023-11-29
+---
+
+## 前言
+
+最近看到一篇：[Never Get Bit by z-index Again](https://rimdev.io/never-get-bit-by-z-index-again) 文章，作者提到用 CSS Variable 來賦予相對而非絕對數值的 `z-index` 值，真是優雅簡潔的方法！完美的發揮了 CSS 變數的優勢，促使我寫下這篇文章。
+
+## 問題背景
+
+在許多情況下，我們需要調整不同元素的 `z-index`，以確保它們在疊加時顯示的順序是正確的。但使用固定的數值通常會導致代碼的脆弱性，尤其是在大型專案中，不同部分可能會因為 z-index 衝突而導致難以追蹤和維護的問題。通常會設置一個規範文件來統一規範數值，例如 Bootstrap 的 `z-index` 寫成文件是這樣規範的：
+
+```
+dropdown:                   1000;
+sticky:                     1020;
+fixed:                      1030;
+modal-backdrop:             1040;
+offcanvas:                  1050;
+modal:                      1060;
+popover:                    1070;
+tooltip:                    1080;
+```
+
+但只要是修改到代碼都會需要查看這張表單，並且確保我們的數值不會和其他元素衝突。會需要不斷的維護確保個別數值的關係正確：
+
+1. 文件與代碼需相互同步
+2. 需要時刻確保數值間的權重正確
+
+## 解決方法
+
+### 一、解決代碼與文件不同步問題
+
+幸虧在今日原生的 [CSS 變數有著很好的支援](https://caniuse.com/css-variables)，我們可以透過 CSS 變數直接定義 `z-index` 的數值解決了「需要額外文件或預處理器甚至是 JavaScript 來管理」這件事。
+
+```css
+:root {
+  --dropdown-zindex: 1;
+}
+
+.dropdown {
+  /* 直接在 CSS 內引用定義 \O/ */
+  z-index: var(--dropdown-zindex);
+}
+```
+
+### 二、解決數值間的權重問題
+
+透過 CSS 變數的方式可以直接在代碼中引用變數，而不需要再去查看文件。但是還是需要確保數值間的權重正確，這時候我們可以透過 [CSS calc()](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) 來解決這個問題。
+
+```css
+:root {
+  --dropdown-zindex: 1;
+  --sticky-zindex: calc(var(--dropdown-zindex) + 1);
+}
+```
+
+為什麼是 `+1`？因為 `z-index` 必須是整數，所以我們可以透過 `+1` 來確保 sticky 永遠高於 dropdown，當然也可以抽離這個數值自行統一定義。
+
+```css
+:root {
+  --gap-zindex: 10;
+  --dropdown-zindex: 1;
+  --sticky-zindex: calc(var(--dropdown-zindex) + var(--gap-zindex));
+}
+```
+
+如此一來我們透過完全原生的方式建立了一個簡單的 `z-index` 管理系統，不需要額外的文件或預處理器，也不需要 JavaScript，只需要一點點的 CSS 變數與計算就可以了。
+
+## 結論
+
+> 賦予相對的關係而非絕對的數值，讓我們強烈聯繫元素之間的關係，而非取決於某個魔法數字
+
+相較於給予絕對的數值，透過相對的關係來管理 `z-index` 讓我更關注在「這個元素會放在那些元素之間」而非要去記住一個死數字，回歸了使用 z-index 原先想達成的用意。
+
+## 延伸閱讀
+
+- [Index fun](https://psuter.net/2019/07/07/z-index) - psuter.net
+- [Managing CSS Z-Index In Large Projects](https://www.smashingmagazine.com/2021/02/css-z-index-large-projects/) - Smashing Magzine
