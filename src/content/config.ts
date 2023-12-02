@@ -21,15 +21,6 @@ const toolbox = defineCollection({
   }),
 });
 
-const snippet = defineCollection({
-  type: 'data',
-  schema: z.object({
-    html: z.string(),
-    css: z.string(),
-    js: z.string(),
-  }),
-});
-
 const post = defineCollection({
   slug: ({ data, defaultSlug }) => data.permalink || defaultSlug,
 
@@ -68,6 +59,5 @@ function getDefaultColor() {
 
 export const collections = {
   post,
-  snippet,
   toolbox,
 };
