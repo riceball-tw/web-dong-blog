@@ -1,0 +1,14 @@
+---
+export interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<div
+  class=`flex w-fit items-center gap-2 rounded-full border border-secondary/60 bg-secondary/10 px-4 py-2 text-xs tracking-wide opacity-80 transition-opacity hover:opacity-100 dark:border-secondary-light/60 dark:bg-secondary-light/10 ${Astro.slots.icon ? 'pr-2' : ''}`
+>
+  <slot />
+  <span>{text}</span>
+  <slot name="icon" />
+</div>
