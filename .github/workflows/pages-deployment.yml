@@ -4,6 +4,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
+      PUBLIC_YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
     permissions:
       contents: read
       deployments: write

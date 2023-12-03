@@ -5,6 +5,7 @@ import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import Footer from '@/components/app/Footer.astro';
 import Navbar from '@/components/app/Navbar.astro';
+import YoutubeChannels from '@/components/toolbox/YoutubeChannels.astro';
 
 const toolboxSites = await getCollection('toolbox');
 const categorizedSites = toolboxSites.reduce((categorizedData, site) => {
@@ -20,6 +21,101 @@ const categories = Object.keys(categorizedSites);
 const categoriesWithQunatity = categories.map((category) => {
   return { [category]: categorizedSites[category as keyof typeof categorizedSites].length };
 });
+
+const channels = [
+  { id: 'UCQT3GwtAop6cnvTTTsKUUoQ', category: '開發' },
+  { id: 'UCD00Is447lWaY04_gNTOaVA', category: '前端' },
+  { id: 'UCtEwVJZABCd0tels2KIpKGQ', category: '遊戲開發' },
+  { id: 'UCQG40havu4kNpB4pxUDQhYQ', category: '遊戲開發' },
+  { id: 'UCEL8871qFEakpqYpwBSjHNA', category: '前端' },
+  { id: 'UCd_lJ4zSp9wZDNyeKCWUstg', category: '遊戲開發' },
+  { id: 'UCtRzd9-cCQZMimoTg62I-Rw', category: '開發' },
+  { id: 'UCXzw-OdotBUcNA9yhuYQBwA', category: '前端' },
+  { id: 'UCrU33aw1k9BqTIq2yKXrmBw', category: '全端' },
+  { id: 'UC-8QAzbLcRglXeN_MY9blyw', category: '開發' },
+  { id: 'UCfFNverFD_Md_WDQGBBC7Zw', category: '前端' },
+  { id: 'UC2Xd-TjJByJyK2w1zNwY0zQ', category: '全端' },
+  { id: 'UCr7GjHXlkad7hMcXMc-R3ag', category: '開發' },
+  { id: 'UCZgt6AzoyjslHTC9dz0UoTw', category: '全端' },
+  { id: 'UCmXVXfidLZQkppLPaATcHag', category: '前端' },
+  { id: 'UCnUYZLuoy1rq1aVMwx4aTzw', category: '開發者工具' },
+  { id: 'UCyYh-eAr74avLwOyPa1dDNg', category: '開發者工具' },
+  { id: 'UCe2gI9snYbRigUF0tOlYFiQ', category: '前端' },
+  { id: 'UC1NA1famQ2CQPJr6wxhsFYg', category: '前端' },
+  { id: 'UCEbS5GE-OOsvRhn21Hw_fGQ', category: '開發' },
+  { id: 'UCaSCt8s_4nfkRglWCvNSDrg', category: '開發' },
+  { id: 'UC7pVho4O31FyfQsZdXWejEw', category: '前端' },
+  { id: 'UCrsLPlwxUInDoNubOP85EWQ', category: '開發' },
+  { id: 'UCMm15RFnHUvM-aSc50e7R9A', category: '前端' },
+  { id: 'UCEeLR5dw1gR0v3mw92ftiuw', category: '開發' },
+  { id: 'UCWI-ohtRu8eEeDj93hmUsUQ', category: '全端' },
+  { id: 'UCwYb4QztAKKqj5YcaTEtyrQ', category: '前端' },
+  { id: 'UCHa8J-xnRYOg5VuudfWpBgg', category: '前端' },
+  { id: 'UCrqAGUPPMOdo0jfQ6grikZw', category: '前端' },
+  { id: 'UC9-y-6csu5WGm29I7JiwpnA', category: '計算機科學' },
+  { id: 'UCCfqyGl3nq_V0bo64CjZh8g', category: '開發' },
+  { id: 'UCZ6WpfaTIYkdqpH-16ep2GQ', category: '前端' },
+  { id: 'UCVyRiMvfUNMA1UPlDPzG5Ow', category: '使用者介面' },
+  { id: 'UCDrekHmOnkptxq3gUU0IyfA', category: '開發' },
+  { id: 'UCV4AXpDSxschk8I0sCl8JXw', category: '前端' },
+  { id: 'UCyIe-61Y8C4_o-zZCtO4ETQ', category: '前端' },
+  { id: 'UCrUL8K81R4VBzm-KOYwrcxQ', category: '開發' },
+  { id: 'UCP4bf6IHJJQehibu6ai__cg', category: '開發者工具' },
+  { id: 'UC8butISFwT-Wl7EV0hUK0BQ', category: '開發' },
+  { id: 'UCFDF_U_uoKc6MhIZPZKo5CA', category: '全端' },
+  { id: 'UCO1cgjhGzsSYb1rsB4bFe4Q', category: '開發' },
+  { id: 'UCvmINlrza7JHB1zkIOuXEbw', category: '全端' },
+  { id: 'UCWf2ZlNsCGDS89VBF_awNvA', category: '開發者工具' },
+  { id: 'UCrZOiJyMbXpZ8T5snCIJaLA', category: '開發' },
+  { id: 'UCmEzz-dPBVrsy4ZluSsYHDg', category: '前端' },
+  { id: 'UCsMoFkb0DSPIjHGFFzYH42Q', category: '開發' },
+  { id: 'UC-T8W79DN6PBnzomelvqJYw', category: '前端' },
+  { id: 'UCvjgXvBlbQiydffZU7m1_aw', category: '開發' },
+  { id: 'UCa8W2_uf81Ew6gYuw0VPSeA', category: '使用者介面' },
+  { id: 'UCVzt0Ltq6VNKRqRMrry3OIA', category: '遊戲開發' },
+];
+
+const youtubeChannels = await getYoutubeChannels(channels);
+
+async function getYoutubeChannels(channels: { id: string; category: string }[]) {
+  const youtubeAPIKey = import.meta.env.PUBLIC_YOUTUBEAPIKEY;
+  const channelsIDs = channels.map((channel) => channel.id).join(',');
+  //  YT API V3 Subscriptions.list NOT returning nextPageToken
+  // https://issuetracker.google.com/issues/35176305
+  // Won't fix Bug, Only Maxium 50 channels per request
+  const channelBatches = channelsIDs.split(',').map((channelIDs) => {
+    return channelIDs.slice(0, 50);
+  });
+  const parts = ['snippet', 'brandingSettings'];
+  return (
+    await Promise.all(
+      channelBatches.map((channelIDs) => {
+        const youtubeRequestUrl = `https://www.googleapis.com/youtube/v3/channels?part=${parts}&id=${channelIDs}&key=${youtubeAPIKey}`;
+        return fetch(youtubeRequestUrl)
+          .then((res) => {
+            if (!res.ok) throw new Error(res.statusText);
+            return res.json();
+          })
+          .then((resJSON) => {
+            return resJSON.items.map((channel) => {
+              return {
+                id: channel.id,
+                url: `https://www.youtube.com/channel/${channel.id}`,
+                title: channel.snippet.title,
+                thumbnail: channel.snippet.thumbnails.default,
+                category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
+                brandingSettings: channel.brandingSettings,
+              };
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            return [];
+          });
+      }),
+    )
+  ).flat();
+}
 ---
 
 <script>
@@ -63,11 +159,18 @@ const categoriesWithQunatity = categories.map((category) => {
   </Navbar>
   <div class="flex">
     <aside
-      style="min-width: 300px;"
+      style=" flex: 0 0 300px;"
       data-nav
       class="fixed left-0 top-0 z-40 hidden h-full flex-col justify-between backdrop-blur-xl md:sticky md:top-[var(--mainNav-height)] md:block"
     >
       <ul class="group ml-0 divide-y divide-secondary/40 dark:divide-secondary-light/40 md:ml-4">
+        <li data-category-item>
+          <a
+            href="#開發設計相關頻道"
+            class="inline-block w-full p-4 font-medium tracking-wider transition-opacity before:mr-2 group-hover:opacity-60 group-hover:hover:opacity-100"
+            >開發設計相關頻道<sup class="p-2">{channels.length}</sup>
+          </a>
+        </li>
         {
           categoriesWithQunatity.map((category) => {
             const categoryKey = Object.keys(category)[0];
@@ -88,7 +191,7 @@ const categoriesWithQunatity = categories.map((category) => {
         }
       </ul>
     </aside>
-    <main class="flex w-full flex-col gap-4">
+    <main class="flex w-full min-w-0 flex-col gap-4">
       <div class="mt-0 md:mt-[var(--mainNav-height)]">
         <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
           <h1 class="mx-auto text-center text-3xl font-bold md:text-5xl">
@@ -96,6 +199,13 @@ const categoriesWithQunatity = categories.map((category) => {
               class="text-secondary dark:text-secondary-light">網頁工具箱</span
             >將協助您輕鬆探索各種多元資源 👀
           </h1>
+        </section>
+        <section class="flex flex-col px-4">
+          <h2 id="開發設計相關頻道" class="py-8 text-xl font-bold tracking-widest before:mr-2 md:pb-16">
+            <a href="#開發設計相關頻道">開發設計相關頻道</a>
+          </h2>
+
+          <YoutubeChannels youtubeChannels={youtubeChannels} />
         </section>
         {
           Object.entries(categorizedSites).map((categories) => {

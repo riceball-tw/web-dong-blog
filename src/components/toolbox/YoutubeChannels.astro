@@ -1,0 +1,100 @@
+---
+import Pill from '@/components/app/Pill.astro';
+import Card from '@/components/card/Card.astro';
+
+const { youtubeChannels } = Astro.props;
+const uniqueCategories = youtubeChannels
+  .map((channel: { category: string }) => channel.category)
+  .filter((category: string, index: number, self: [category: string]) => self.indexOf(category) === index);
+---
+
+<script>
+  document.querySelector('[data-category-container]')?.addEventListener('click', filteringChannels);
+
+  function filteringChannels(event: Event) {
+    const targetElement = event.target as HTMLElement;
+    if (!targetElement.hasAttribute('data-category-filter')) return;
+    const targetButton = targetElement as HTMLButtonElement;
+    const targetCategory = targetButton.dataset.categoryFilter;
+    document.querySelectorAll('[data-category-filter]').forEach((filter) => {
+      (filter as HTMLButtonElement).disabled = false;
+    });
+    targetButton.disabled = true;
+
+    document.querySelectorAll('[data-category]').forEach((channel) => {
+      const channelElement = channel as HTMLElement;
+      if (targetCategory === 'all') {
+        channelElement.style.display = '';
+      } else if (channelElement.dataset.category === targetCategory) {
+        channelElement.style.display = '';
+      } else {
+        channelElement.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+<ul class="mb-8 flex flex-wrap gap-4 whitespace-nowrap" data-category-container>
+  <li>
+    <Pill>
+      <button disabled class="disabled:opacity-60" data-category-filter="all" type="button">全部</button>
+    </Pill>
+  </li>
+  {
+    uniqueCategories.map((category: string) => {
+      return (
+        <li>
+          <Pill>
+            <button class="disabled:opacity-60" data-category-filter={category} type="button">
+              {category}
+            </button>
+          </Pill>
+        </li>
+      );
+    })
+  }
+</ul>
+<ul
+  data-youtube-channels
+  style=`grid-template-columns: repeat(auto-fill, minmax(${youtubeChannels[0].thumbnail.width + 24}px, 1fr))`
+  class="grid snap-x grid-flow-col grid-rows-2 gap-8 overflow-y-hidden overflow-x-scroll py-2"
+>
+  {
+    youtubeChannels.map((channel) => {
+      const containerWidth = channel.thumbnail.width + 24;
+      const width = channel.thumbnail.width;
+      const height = channel.thumbnail.height;
+
+      return (
+        <li data-category={channel.category} class="group relative snap-center">
+          <a class="inline-block" style={`width: ${containerWidth}px`} href={channel.url}>
+            <img
+              class="mx-auto mb-4 rounded-full grayscale transition-all group-hover:grayscale-0"
+              src={channel.thumbnail.url}
+              alt={channel.title}
+              width={width}
+              height={height}
+            />
+            <div class="text-center">{channel.title}</div>
+          </a>
+
+          <div
+            style="min-width:250px"
+            class="invisible absolute left-full top-0 z-10  hidden group-hover:visible md:block"
+          >
+            <Card class="bg-primary-100 dark:bg-primary-900">
+              <a href={channel.url}>
+                <h3 class="mb-2 min-w-max text-lg font-bold">{channel.brandingSettings.channel.title}</h3>
+              </a>
+              <p class="line-clamp-3">
+                {channel.brandingSettings.channel.description ||
+                  channel.brandingSettings.channel.keywords ||
+                  '沒有留下任何介紹'}
+              </p>
+            </Card>
+          </div>
+        </li>
+      );
+    })
+  }
+</ul>
