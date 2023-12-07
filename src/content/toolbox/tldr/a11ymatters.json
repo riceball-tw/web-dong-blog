@@ -1,0 +1,11 @@
+{
+  "featureIcon": {
+    "url": "images/toolbox/a11y.svg",
+    "alt": "人張開雙臂圖示"
+  },
+  "titleTC": "A11ymatters",
+  "url": "https://www.a11ymatters.com/",
+  "excerpt": "集合了各種與學習網頁無障礙相關知識的網站。提供了豐富的現成模式，包含了代碼示例和圖示解說，輕鬆學習如何使網頁更具可訪問性。",
+  "category": "乾貨",
+  "tags": ["免費"]
+}
