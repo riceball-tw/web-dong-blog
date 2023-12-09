@@ -29,7 +29,7 @@ publishDate: 2023-03-19
 }
 ```
 
-明確的選取元素會讓人感覺比較安心，較不會發生命名上的衝突，但在實際開發中，讀一長串且具體的選取器，不會比想一個良好的 `class` 名稱來得更快，如果對於命名上的衝突有擔憂，推薦可以參考 [BEM 命名法](/post/write-cleaner-css-with-bem)。總結把握以下原則最好：
+明確的選取元素會讓人感覺比較安心，較不會發生命名上的衝突，但在實際開發中，讀一長串且具體的選取器，不會比想一個良好的 `class` 名稱來得更快，如果對於命名上的衝突有擔憂，推薦可以參考 [BEM 命名法](/post/write-cleaner-css-with-bem/)。總結把握以下原則最好：
 
 1. 盡可能壓低選取器的權重比例
 2. 測試除錯時可以使用 [`!important`](https://developer.mozilla.org/en-US/docs/Web/CSS/important)，但用於正式環境是絕對不能被接受的
@@ -57,7 +57,7 @@ A：對的，但人家有完整的文件、規劃及設計系統，如果擅自�
 
 </Info>
 
-特別是對初學者，我還是提倡 [良好的命名網頁](/post/ways-to-help-you-write-better-code#%E6%96%B9%E6%B3%95%E4%B8%80%E8%89%AF%E5%A5%BD%E7%9A%84%E5%91%BD%E5%90%8D) 的重要性，如果你對 Utility 真的有興趣，可以參考看看我的另一個文章：[不需要學 Tailwind 也可以用 Tailwind](/post/use-tailwind-without-learning-it)。
+特別是對初學者，我還是提倡 [良好的命名網頁](/post/ways-to-help-you-write-better-code#%E6%96%B9%E6%B3%95%E4%B8%80%E8%89%AF%E5%A5%BD%E7%9A%84%E5%91%BD%E5%90%8D) 的重要性，如果你對 Utility 真的有興趣，可以參考看看我的另一個文章：[不需要學 Tailwind 也可以用 Tailwind](/post/use-tailwind-without-learning-it/)。
 
 ```css
 /* ❌ 混用 */
@@ -93,7 +93,7 @@ A：對的，但人家有完整的文件、規劃及設計系統，如果擅自�
 
 ## 方法四：不要再寫神奇數字了
 
-[神奇數字](/post/ways-to-help-you-write-better-code#%E9%81%BF%E5%85%8D%E7%A5%9E%E5%A5%87%E6%95%B8%E5%AD%97) 是指在程式中讓人無法理解其用途的數字，在早期 CSS 還沒有支援變數語法的情況下會改寫 [Sass](https://sass-lang.com/) 來使用變數，但現今 [CSS 變數](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 已經在各大瀏覽器中得到廣泛的支援，抽離出一些常用的樣式變數，並且在需要的時候引用，可以讓 CSS 的維護變得更加容易，隨著專案的規模愈龐大越應該避免散亂的變數出現在程式中。
+[神奇數字](/post/ways-to-help-you-write-better-code/#%E9%81%BF%E5%85%8D%E7%A5%9E%E5%A5%87%E6%95%B8%E5%AD%97) 是指在程式中讓人無法理解其用途的數字，在早期 CSS 還沒有支援變數語法的情況下會改寫 [Sass](https://sass-lang.com/) 來使用變數，但現今 [CSS 變數](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties) 已經在各大瀏覽器中得到廣泛的支援，抽離出一些常用的樣式變數，並且在需要的時候引用，可以讓 CSS 的維護變得更加容易，隨著專案的規模愈龐大越應該避免散亂的變數出現在程式中。
 
 可以參考看看以下我寫的時間軸範例，就使用了原生 CSS 與 Sass 的變數語法來管理各方面的變數，讓 CSS 變得更加容易維護：
 
