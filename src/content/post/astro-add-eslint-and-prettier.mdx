@@ -1,0 +1,128 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+title: 'Day24 - Astro Series: Add ESLint and Prettier'
+titleTC: 'Astro 系列文第二十四日：添加 ESLint 與 Prettier'
+excerpt: '我喜歡使用自動化的工具來為專案的代碼提供錯誤檢查與整理，因此使用 ESLint 與 Prettier 讓撰寫的代碼更一致無錯，還有額外添加 TypeScript 的檢查與 VSCode 提示。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-10-09
+---
+
+<Figure
+  width="1200"
+  height="600"
+  src="images/posts/ithome-astro/thumbnail/day24-add-eslint-and-prettier.webp"
+  alt="一個漂亮的漸層背景上面有一句標題：「添加 ESLint 與 Prettier 」"
+/>
+
+
+## 前言
+
+我喜歡使用自動化的工具來為專案的代碼提供錯誤檢查與整理，因此使用 ESLint 與 Prettier 讓撰寫的代碼更一致無錯，還有額外添加 TypeScript 的檢查與 VSCode 提示。
+
+## 使用套件說明
+
+以下是需要安裝的套件名稱與用途，這裡我選擇使用 TypeScript 與 Airbnb 風格的設定檔，可以自行決定更換合適自己的設置。
+
+- [eslint](https://eslint.org/) - 檢查並修復代碼問題
+- [eslint-config-airbnb-base](https://github.com/airbnb/javascript) - 讓 ESLint 以 Airbnb 規範檢查
+- [eslint-plugin-astro](https://github.com/ota-meshi/eslint-plugin-astro): 讓 ESLint 兼容 Astro
+- [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y): 讓 ESLint 檢查 JSX 的無障礙性問題
+- [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint)： 讓 ESLint 兼容 TypeScript
+- [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) - 讓 ESLint 檢查 imports
+- [prettier](https://prettier.io/) - 整理代碼
+- [prettier-plugin-astro](https://github.com/withastro/prettier-plugin-astro) - 讓 Prettier 兼容 Astro
+- [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier) - 讓 ESLint 與 Prettier 相互兼容
+
+## 安裝套件
+
+在專案位置執行以下指令安裝前述的所有套件： `npm install --save-dev @typescript-eslint/parser eslint eslint-config-airbnb-base eslint-config-prettier eslint-plugin-astro eslint-plugin-import eslint-plugin-jsx-a11y prettier prettier-plugin-astro`。
+
+## 設定套件
+
+創建 `eslintrc.cjs` 檔案並放置在專案的根部：
+
+```json
+module.exports = {
+  extends: ['airbnb-base', 'plugin:astro/recommended', 'plugin:astro/jsx-a11y-recommended', 'prettier'],
+  // ...
+  overrides: [
+    {
+      files: ['*.astro'],
+      parser: 'astro-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser',
+        extraFileExtensions: ['.astro'],
+      },
+      rules: {},
+    },
+  ],
+};
+
+```
+
+創建 `prettierrc.cjs` 檔案並放置在專案的根部，設置合適的風格樣式：
+
+```json
+module.exports = {
+  trailingComma: 'all',
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true,
+  printWidth: 120,
+  bracketSpacing: true,
+};
+
+```
+
+創建 `settings.json` 檔案並放置在專案的根部的 `.vscode` 資料夾，這樣可以提醒 VSCode 使用 ESLint 作為 Formatter 的時候要驗證的檔案種類：
+
+```json
+{
+  "eslint.validate": ["javascript", "javascriptreact", "astro", "typescript", "typescriptreact"]
+}
+
+```
+
+最後可以增加一些 [NPM Script](https://docs.npmjs.com/cli/v9/using-npm/scripts) 當想要手動執行 ESLint 或 Prettier 檢查的時候就可以執行 `npm run lint` 或 `npm run prettier`，在 `package.json` 中添加以下兩行指令：
+
+```json
+"scripts": {
+  // ...
+  "lint": "eslint src/**/*.{js,astro}",
+  "prettier": "prettier src/**/*.{js,astro}"
+}
+
+```
+
+此外如果有用 [Alias](https://docs.astro.build/en/guides/aliases/) 還可以再安裝 `eslint-import-resolver-alias` 套件，這樣使用 Alias 路徑的時候就會被 ESLint 認得，不會出現錯誤。
+
+```jsx
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.astro', '.ts', '.tsx', '.js', '.jsx', '.json', '.vue'],
+      },
+    },
+  },
+
+```
+
+這樣一來只要輸入 `@` 就能夠代表 `src` 資料夾，不用再根據檔案相對位置撰寫繁雜的路徑了！
+
+```jsx
+<!-- 😎 -->
+import Card from '@/components/Card.astro';
+<!-- 😫 -->
+import Card from '../../components/Card.astro'
+
+```
+
+## 結語
+
+經過以上的設定，整個專案就有完美的整理與提示了，有問題可以觀察我在自己的專案中的 [Commit](https://github.com/riceball-tw/wei-wei-web/commit/09005f3a1021dd5b1f27bb8a24679d96cca3b04e) 範例，或是在底下留言處詢問。
+
+## 延伸閱讀
+- [Day24 - 添加 ESLint 與 Prettier](https://ithelp.ithome.com.tw/articles/10336866) - 相同文章同步發布於 iThome 鐵人賽中

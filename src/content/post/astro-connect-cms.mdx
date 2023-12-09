@@ -1,0 +1,52 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+title: 'Day25 - Astro Series: Connect CMS'
+titleTC: 'Astro 系列文第二十五日：基礎指令與設定'
+excerpt: '在 Astro 中串接 CMS 是一件非常容易的事情，可以到官方文件查看各種 CMS 的傳接方式。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-10-10
+---
+
+<Figure
+  width="1200"
+  height="600"
+  src="images/posts/ithome-astro/thumbnail/day25-connect-cms.webp"
+  alt="一個漂亮的漸層背景上面有一句標題：「串接 CMS」"
+/>
+
+## 前言
+
+在 Astro 中串接 CMS 是一件非常容易的事情，可以到[官方文件](https://docs.astro.build/en/guides/cms/)查看各種 CMS 的傳接方式。
+
+## 什麼是 CMS？Headless CMS？
+
+內容管理系統 （Content Management System）是一種用於編寫和管理網站內容的工具，可以讓幫助撰寫內容與管理網站資產，不同的 CMS 廠商有各式各樣的特色像是：排程發布、編輯器、合作編輯、資產管理……等特色。
+
+傳統 CMS 會從內容管理到資料呈現一套包辦，像是 [Wordpress](https://wordpress.org/) ，但 Astro 只在乎如何呈現內容，因此可以自由地抓取不同來源的資料，於是可以搭配「無頭 CMS」，無頭 CMS（Headless CMS） 實際上就是「只在乎資料的 CMS」，專注在編輯內容的功能並透過 API 來檢索網頁內容，讓開發者有極高的自由度選擇技術與呈現方式。
+
+這樣的模式大幅的分割了前端與內容管理，自由度是其最大的賣點，通常建設好一個無頭 CMS 之後可以一邊專注的產出內容與資料規範，一邊前端則專注於索取資料與呈現內容。
+
+## 無頭 CMS 的差異？Git Based？API Driven？
+
+無頭 CMS 實作還可以再分為 Git Based 與 API Driven 兩種類型，差別在於它們如何「管理儲存內容」。Git Based 將內容儲存在類似 Git 這樣的版控系統當中，結構簡單直白，而 API Driven 則是架設專門的伺服器透過 API 動態的檢索和呈現內容，架構更複雜且需要實際的伺服器待命運作。
+
+## 我的經驗
+
+如果你的網站為輕量級且很少更新的靜態頁面，使用 Git Based 的 CMS 或完全不使用 CMS 是不錯的選擇，但如果你的網站橫跨多個平台或有動態的需求則可以考慮 API Driven 類型的 CMS。
+
+- [Front Matter CMS](https://frontmatter.codes/) - 如果只是要一個簡單快捷的 CMS 介面在 VSCode 當中是個不錯的選擇，完全支援 Astro。
+- [Decap CMS](https://decapcms.org/) - 最成熟的開源免費 Git Based CMS 方案，功能該有都有。前身為 Netlify CMS。
+- [Strapi](https://strapi.io/) - 最成熟的開源且可自架的 API Driven CMS 方案也有提供線上伺服器服務。
+
+推薦選擇開源可自己架設的 CMS，原因是因為通常到最後都會有供應商綁定（Vendor Lock-in）的問題，但自架通常也會耗費大量的時間，因此依照當下需求評估即可。
+
+## 總結
+
+本章節了解了 CMS 與 無頭 CMS 的差別，這類管理內容的工具並非必備，你仍然可以透過編寫 Markdown 或原始碼來編輯網頁內容。添加 CMS 對於非開發人員管理網站至關重要，同時也能增進
+
+## 參考資料
+
+- [Use a CMS with Astro](https://docs.astro.build/en/guides/cms/) - Astro
+- [Day25 - 串接 CMS](https://ithelp.ithome.com.tw/articles/10337071) - 相同文章同步發布於 iThome 鐵人賽中
