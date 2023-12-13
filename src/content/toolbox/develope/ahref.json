@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/toolbox/browser-activity.svg", "alt": "一台電腦顯示波紋的符號" },
+  "titleTC": "ahrefs",
+  "url": "https://ahrefs.com/",
+  "excerpt": "老牌好用的 SEO 檢測工具，功能十分全面，幫助這個部落格檢測出許多未知的問題。",
+  "category": "開發工具",
+  "tags": ["免費", "付費"]
+}
