@@ -1,8 +1,8 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/search.svg', alt: '搜尋符號' }
+featureIcon: { url: 'images/posts/feature-icon/style.svg', alt: '搜尋符號' }
 title: 'Build Product From Scratch - Color'
-titleTC: '紀錄如何從頭打造數位產品 - 顏色'
+titleTC: '紀錄如何從頭打造數位產品 - 顏色篇'
 excerpt: '近期公司購買了設計相關的課程，期望透過研究改良目前的設計來提升與開發合作的效率，恰好我之前的工作領域也與設計相關，而且我很早就想跨領域多寫與網頁相關的文章！因此打算特地開一系列文章記錄課程筆記以及我自己補充的想法與資源。'
 category: '設計'
 tags: ['顏色']
@@ -15,7 +15,16 @@ publishDate: 2024-01-23
 
 ## 選擇色域
 
-因為彩色螢幕主流都是依靠 [三原色光](https://zh.wikipedia.org/zh-tw/%E4%B8%89%E5%8E%9F%E8%89%B2%E5%85%89%E6%A8%A1%E5%BC%8F) 透過混和色光來顯示出各種顏色，但使用一些更貼近人類直覺的色域有幫助我們操作顏色，像是 [HSL](https://zh.wikipedia.org/zh-tw/HSL%E5%92%8CHSV%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4) (色相, 彩度, 明度)。
+<Figure
+  loading="lazy"
+  width="600"
+  height="433"
+  src="images/posts/build-product-from-scratch-color/hsl-vs-rgb.webp"
+  alt="HSL vs RGB in Figma"
+  title="HSL vs RGB in Figma"
+/>
+
+當前彩色螢幕主流都是依靠 [三原色光](https://zh.wikipedia.org/zh-tw/%E4%B8%89%E5%8E%9F%E8%89%B2%E5%85%89%E6%A8%A1%E5%BC%8F) 透過混和色光來顯示出各種顏色，但使用一些更貼近人類直覺的色域有助於選擇顏色，像是 [HSL](https://zh.wikipedia.org/zh-tw/HSL%E5%92%8CHSV%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4) (色相, 彩度, 明度)。
 
 - 色相：色彩的顏色種類
 - 彩度：色彩的鮮豔程度
@@ -29,7 +38,7 @@ publishDate: 2024-01-23
 | 綠   | 37  | 55  |
 | 藍   | 37  | 55  |
 
-**最終開發數位產品都仍是使用 RGB 色域**，但如果要從其他色域轉換過來也 OK，只需要整個團隊有共識統一管理即可。
+由於硬體上的呈現限制，**開發數位產品基本主流使用 RGB 色域**，但如果要從其他色域轉換過來也 OK，只需要整個團隊有共識統一管理即可。
 
 ## 選擇顏色
 
@@ -37,25 +46,36 @@ publishDate: 2024-01-23
 
 ### 60/30/10 色彩比例規則
 
-<div class="flex py-4 text-primary-900">
+<div class="flex py-4 text-primary-900" style="min-height: 200px;">
   <div class="p-4" style="width: 60%; background-color: #ffffff;">
-    60%
+    <span class="hidden md:inline">60%</span>
   </div>
   <div class="p-4" style="width: 30%; background-color: #f79a1f;">
-    30%
+    <span class="hidden md:inline">30%</span>
   </div>
   <div class="p-4" style="width: 10%; background-color: #eb4f47;">
-    10%
+    <span class="hidden md:inline">10%</span>
   </div>
 </div>
 
 [電影](https://www.youtube.com/watch?v=CYRyaY-9F_g)、[設計](https://www.youtube.com/watch?v=QkCVrNoqcBU&list=PLroLjS4HDi0BLMx3d7mzROMfm7bC9ZQuc)、[繪畫](https://www.youtube.com/watch?v=p0rVUhXnmpY)……使用者介面設計，這些與視覺相關的領域各自都有對顏色的見解，但最廣泛通用的規則即是 60:30:10 的顏色比例規則，分別是主要色、次要色與強調色。
 
-1. 主要色：營造整體環境的大氛圍
-2. 次要色：輔助主要色
-3. 強調色：強調場景中最重要的內容
+- 主要色：營造整體環境的大氛圍
+- 次要色：輔助主要色
+- 強調色：強調場景中最重要的內容
 
-特別對 UI 產品來說我特別喜歡 [Juxtopposed](https://www.youtube.com/@juxtopposed) 製作的 [Realtime Colors](https://www.realtimecolors.com) 這個網站，她製作了[兩支影片](https://www.youtube.com/watch?v=HAlIWRcldoc)描述身為 UI 設計師處理顏色到抓狂的過程，以及根據 60/30/10 色彩比例規則打造一個 Mockup 用的網站產品。還有一些以工具可以幫助我們快速產生色階，根據不同的顏色調配原則（類比、單色、三色群、補色……），可以根據品牌調性去分配顏色之間的關係：
+<Figure
+  loading="lazy"
+  width="1200"
+  height="588"
+  src="images/posts/build-product-from-scratch-color/realtime-colors-website.webp"
+  alt="Realtime Colors 網站範例 60/30/10 配色原則"
+  title="Helmholtz-Kohlrausch 效應範例圖，上下皆為相同的明度但不同彩度"
+/>
+
+特別對 UI 產品來說我特別喜歡 [Juxtopposed](https://www.youtube.com/@juxtopposed) 製作的 [Realtime Colors](https://www.realtimecolors.com)，她製作了[兩支影片](https://www.youtube.com/watch?v=HAlIWRcldoc)描述身為 UI 設計師處理顏色到抓狂的過程，以及根據 60/30/10 色彩比例規則打造一個 Mockup 用的網站產品。
+
+還有一些以工具可以幫助我們快速產生色階，根據不同的顏色調配原則（類比、單色、三色群、補色……），可以根據品牌調性去分配顏色之間的關係：
 
 - [Adobe Color](https://color.adobe.com/zh/create/color-wheel) - Adobe
 - [The super fast color palettes generator](https://uicolors.app/create) - coolors
@@ -75,33 +95,98 @@ publishDate: 2024-01-23
 
 相較於肉眼決定色彩的無障礙程度，[依靠公認的色彩驗證標準](https://huetone.ardov.me/)如：APCA、WCAG，來推行顏色確保設計可以被各族群所解讀。
 
+### 史蒂文斯冪律 - Stevens' power law
+
+<Figure
+  loading="lazy"
+  width="440"
+  height="181"
+  src="images/posts/build-product-from-scratch-color/color-foundation-perception-stevens-power-law.webp"
+  alt="Adobe Spectrum 色階系統根據冪定律來製作感知上一致的色階"
+  title="Adobe Spectrum 色階系統根據冪定律來製作感知上一致的色階"
+/>
+
+人眼亮度感知的非線性會導致亮度階梯的不平均，因此在 [Adobe Spectrum](https://spectrum.adobe.com/page/color-fundamentals/#Stevens-power-law) 色階系統中有針對此定律調整，遵循感知上的色階平均。
+
+### 色適應 - Chromatic Adaptation
+
+<Figure
+  loading="lazy"
+  width="440"
+  height="181"
+  src="images/posts/build-product-from-scratch-color/color-foundation-perception-chromatic-adaptation.webp"
+  alt="Adobe Spectrum 色階系統根據冪定律來製作感知上一致的色階"
+  title="Adobe Spectrum 色階系統根據冪定律來製作感知上一致的色階"
+/>
+
+人類根據環境設定補償顏色。 例如，大腦會淡化傍晚光線中出現的粉紅色和橙色，以便識別視野中物體的真實顏色。這稱為色彩適應（也稱為顏色恆常性）。
+
+在範例影像中，水果的排列顯示為藍色光源的外觀。水果的大部分局部顏色似乎都完好無損，橙色看起來是橘色的。但仔細一看，橘色的實際顏色是綠色。由於藍色環境中的色彩適應，這些綠色呈現橙色。
+
+[Adobe Spectrum](https://spectrum.adobe.com/page/color-system/#Grays) 使用「完全去飽和的灰色來防止因使用者介面引起的色彩適應而對顏色產生誤解」，覺得含蠻特別的，因為在[繪畫中會盡量避免純粹不自然的「無色彩灰」](https://youtu.be/YOtwCG7BLSA?si=gqafHphHz15wbHuY&t=254)也很少於自然界中存在純粹的灰色，但在 UI 設計上它們採取了相反的道路為了讓灰階保持色彩中立。
+
 ## 選擇色階
 
-單只有一種色調除了給人感覺單調之外，使用者也無從得知資訊的重要層度，但過於開放的隨意新增顏色到介面當中也會造成難以維護與不一致的問題，因此色階就是事先定義好的選項，賦予顏色不同的層度與意涵。以下是一些工具可以幫助我們快速產生色階：
+<Figure
+  loading="lazy"
+  width="1200"
+  height="823"
+  src="images/posts/build-product-from-scratch-color/color-step-tailwind.webp"
+  alt="Tailwind Color Step"
+  title="Tailwind Color Step"
+/>
+
+單只有一種色調除了給人感覺單調之外，使用者也無從得知資訊的重要層度，但隨意新增顏色到介面當中也會造成難以維護與不一致的問題，因此色階就是事先定義好的選項，賦予顏色不同的層度與意涵。以下是一些工具可以幫助我們快速產生色階：
 
 - [Scale](https://hihayk.github.io/scale/) - color scale generator
 - [Tailwind CSS Color Generator](https://uicolors.app/create) - uicolors
 
-過多的色階會造成難以維護與選擇的問題，但過少也會導致無法滿足呈現上的需求，並沒有絕對正確的答案。
-
-色階我個人認為可以從不多不少 10 個出發，原因是因為人們能根據 0 ~ 10 階在心中對色階有個直覺的概念，方便溝通交流，或是也可以詢問其他團隊是否現有習慣的樣式庫或準備導入的標準直接採納以節省切換習慣所需的成本，像是 [Tailwind 內建的樣式](https://tailwindcss.com/docs/customizing-colors)。
+色階的數量並沒有絕對正確的答案，不過我個人認為可以從不多不少 10 個出發，原因是因為人們能根據 0 ~ 10 階在心中對色階有個直覺的概念，方便溝通交流，或是也可以嘗試詢問當前團隊是否現有習慣的樣式庫或準備導入的標準直接採納以節省切換習慣所需的成本，例如： [Tailwind 內建的樣式](https://tailwindcss.com/docs/customizing-colors)。
 
 ## 顏色命名
 
-### 依照色相名稱-色階
+經過調查設計系統內擁有三種顏色命名模式可以滿足與應對大多數需求：
+
+- **全域顏色**：基礎顏色，通常依照 `顏色-色階` 的方式命名。
+- **全域語意顏色**：被賦予意涵的全域顏色。
+- **元件顏色**：被賦予意涵且在元件內的顏色。
+
+### 「全域語意顏色」或「元件顏色」的意義？
+
+如果都依照 `顏色名稱-色階` 來命名例如：`yellow-300`、`green-400`，這樣的作法只在設計元件尚不複雜情形下可行，隨著複雜程度應當適當的抽離出顏色的意涵並歸類。
+
+- **語意顏色作為範例：**
+  - 目前所有設計都使用全域顏色來製作，但如果全站的風格要調整呢？例如品牌色從藍改成紫，那會需要到每一個使用到相關顏色的地方重新定義，因此預定一些語意化的顏色，方便日後維護與修改順暢，像是對主色調創立新的 `primary` 「全域語意」顏色，這樣未來改主色調都會輕鬆許多。
+- **元件顏色作為範例：**
+  - 與語意顏色的概念相同，只是範圍侷限在元件上。
+  - 如果元件有許多種「顏色狀態」可以考慮建立元件顏色並且統一管理。舉例一個元件使用到許多相同的全域顏色，未來要更改將會需要一一選擇並調整，因此可以將元件顏色做包裝
+
+<Figure
+  loading="lazy"
+  width="1200"
+  height="823"
+  src="images/posts/build-product-from-scratch-color/component-color.webp"
+  alt="元件顏色範例"
+  title="元件顏色範例"
+/>
+
+- 還有一種使用情境是你發現元件內的顏色沒有必要存在於系統當中，但又需要在元件中使用，可能是因為這個顏色是動態生成或決定的，這時候也能定義元件顏色定義。(舉例：根據圖片生成的背景顏色)
+  最後建議是不用想得太複雜，先從全域顏色出發即可。
 
 通用顏色可以使用色相名稱-色階來命名，作為最底層可運用的顏色。
 
 ### 依照角色命名
 
-<Figure
-  loading="lazy"
-  width="688"
-  height="320"
-  src="images/posts/build-product-from-scratch-color/variables-explain.gif"
-  alt="Figma variable 改變顏色範例"
-  title="Figma variable 改變顏色範例 (圖源：Guide to variables in Figma)"
-/>
+<Video
+  width={800}
+  height={450}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/build-product-from-scratch-color/variables-explain.mp4',
+    },
+  ]}
+></Video>
 
 以「角色」作為顏色的名稱，例如 `primary`、`error`、`success` ，這麼做是為了**讓顏色與用途緊密牽連**，避免顏色調整更換時卻與意涵不吻合，舉例來說：品牌主色如果都用 `blue-xxx` 來命名，如果未來如果要調整為紫色呢？為了避免與顏色意涵脫鉤的情況發生，在顏色與用途緊密關聯的情況下請以顏色的角色用途來命名為佳。
 
@@ -125,7 +210,7 @@ publishDate: 2024-01-23
   height="300"
   src="images/posts/build-product-from-scratch-color/no-custom-color.jpg"
   alt="自創顏色錯誤範例"
-  title="Adobe Spectrum (圖源：Don't create your own colors#)"
+  title="Adobe Spectrum (圖源：Don't create your own colors)"
 />
 任何顏色都應當被規範後才能使用，以確保橫跨不同產品與團隊也能保持一致，
 
@@ -147,7 +232,7 @@ publishDate: 2024-01-23
 
 ## 總結
 
-顏色是一個很廣泛的議題，隨著與我的團隊討論與演進，這篇文章會再持續更新～
+顏色是一個很廣泛的議題，探索不同設計系統團隊對顏色的看法與規範意外發現許多有趣的知識，隨著與我的團隊討論與演進，期待這篇文章會再持續更新～
 
 ## 延伸閱讀
 
