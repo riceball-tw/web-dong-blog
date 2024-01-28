@@ -31,7 +31,12 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
   });
 </script>
 
-<html transition:persist class="html" lang="zh-Hant-TW">
+<script is:inline>
+  const theme = localStorage.getItem('theme');
+  document.querySelector('html').className = `html ${theme}`;
+</script>
+
+<html class="html" transition:persist lang="zh-Hant-TW">
   <head>
     <SEO
       charset="UTF-8"
