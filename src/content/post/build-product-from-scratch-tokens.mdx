@@ -1,0 +1,68 @@
+---
+isDraft: false
+featureIcon: { url: 'images/posts/feature-icon/style.svg', alt: '色票符號' }
+title: 'Build Product From Scratch - Tokens'
+titleTC: '紀錄如何從頭打造數位產品 - 設計令牌篇'
+excerpt: '設計令牌（Design Tokens）或令牌是一種管理設計屬性與數值的方式，用於建構 UI 最細小的元素，適當的使用設計令牌可以讓設計系統更加彈性與可擴展，不論是任何職位，只要與設計系統相關的人士都應當了解設計令牌的概念。'
+category: 'UI'
+tags: ['設計令牌']
+publishDate: 2024-01-29
+---
+
+## 前言
+
+<Video
+  width={800}
+  height={450}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/build-product-from-scratch-tokens/variables-explain.mp4',
+    },
+  ]}
+></Video>
+
+設計令牌（Design Tokens）或可以簡稱為令牌，是一種管理設計屬性與數值的方式、用於建構 UI 最細小的元素。適當的使用設計令牌可以讓設計系統更加彈性與可擴展，不論是任何職位，只要與設計系統相關的人士都應當了解設計令牌的概念。
+
+## 設計令牌是什麼？
+
+令牌實際上是「變數」的概念，一個命名對應一個值，相信對程式語言熟悉的人很快能對應上令牌的概念，或是也可以想像一個可以裝載各式各樣內容的箱子，箱子是設計令牌，而箱子內容就是設計令牌的值。
+
+設計令牌可以被裝載各式各樣與設計相關的數值像是：顏色、字體、長度、圓角……甚至是指向另一個設計令牌！
+
+<Figure width="500" height="234" src="images/posts/build-product-from-scratch-tokens/token.webp" alt="Token 範例" />
+
+## 為什麼需要設計令牌？
+
+使用令牌意味著保持「共通的語言」與「單一真相來源」，描述相同的事物更新設計與開發將會更快速與有效率，並且基於令牌能夠指向另一個令牌的特性（Aliasing）能夠讓設計更加彈性可擴展，一般會將設計令牌分為三種：
+
+- 主要令牌（Primitive Tokens / Global Tokens）- 交代設計中存在哪些屬性和值
+- 語意化令牌（Semantic Tokens）- 交代令牌意涵、目的與應當如何被使用
+- 元件令牌（Component Tokens） - 交代元件中令牌的意涵、目的與應當如何被使用
+
+### 建立主要令牌
+
+> 交代設計中存在哪些屬性和值
+
+主要令牌是系統的根基，交代設計中存在哪些屬性和值，舉例來說主要令牌會記錄系統中的所有變數並賦予對應的名稱像是：`yellow-600`、`spacing-2`。根據 [Figma 建議](https://youtu.be/JyCmacSyDY4?si=flvwjLIdxh9p4i0M&t=287) 主要令牌僅用於延伸其他語意化令牌，不能直接使用於設計當中。
+
+### 建立語意化令牌
+
+> 交代令牌意涵、目的與應當如何被使用
+
+語意化令牌替屬性賦予了義涵，交代應當如何使用，舉例來說全站的警示顏色可以被命名為 `warning`，並被賦予了 `yellow` 系列的顏色，這樣未來要更換警示顏色時只需要更換 `warning` 令牌的值即可，而不需要一個一個元件去更換顏色。
+
+語意化命名是設計系統彈性與可擴充的關鍵，可以設置任意無數層語意化令牌以便更好的定義與抽離設計當中的意涵，在需要時更動也會便捷許多。
+
+### 建立元件令牌
+
+> 交代元件中令牌的意涵、目的與應當如何被使用
+
+元件令牌基本與語意化令牌相同，不過僅用於描述元件的外貌，舉例來說一張卡片內標題與內文都使用到了相同的文字顏色，這時候可以統一創造令牌用於管理「整張卡片的文字顏色」，這麼做除了消除重複重工之外，也可以在特定場景針對特定元件複寫系統定義。
+
+元件令牌良好的定義了元件的變數介面，也增加了相同元件在不同場景的彈性與擴充性。
+
+## 延伸閱讀
+
+- [Tokens, variables, and styles - Update: Introduction to design systems](https://www.youtube.com/watch?v=JyCmacSyDY4) - Figma
+- [Let's Chat About Design System Tokens](https://jamesiv.es/blog/frontend/design/2023/09/25/lets-chat-about-design-system-tokens#design-token-naming-tool) - JAMES IVES
