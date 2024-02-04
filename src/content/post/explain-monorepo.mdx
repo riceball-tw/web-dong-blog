@@ -59,20 +59,36 @@ Monorepo
 └── package.json
 ```
 
-與 Monolith Repo 很像，同樣是「把任何專案都塞到同個儲存庫就完事」特別容易與 Monolith 的做法搞混，差異在於每個儲存庫在套件管理器當中還是視為獨立的專案，這點可以透過[套件管理器相關設定](https://docs.npmjs.com/cli/v7/using-npm/workspaces/)或是透過像是[Nx 透過客製化方案來達成](https://nx.dev/concepts/integrated-vs-package-based#integrated-repos)。
+與 Monolith Repo 很像，同樣是「把任何專案都塞到同個儲存庫就完事」特別容易與 Monolith 的做法搞混，差異在於每個儲存庫在套件管理器當中還是視為獨立的專案，這點可以透過[套件管理器相關設定](https://docs.npmjs.com/cli/v7/using-npm/workspaces/)或是透過像是[Nx 透過 TypeScript Project References](https://nx.dev/concepts/integrated-vs-package-based#integrated-repos)。
 
-這麼做主要可以改善套件管理缺乏彈性的問題，將套件共同的依賴管理在根目錄當中，但也同時允許每個專案有自己的獨立套件。至於擴張性、維護性和靈活度的挑戰還是要依靠其他工具來解決 😑。
+這麼做主要可以改善套件管理缺乏彈性的問題，將套件共同的依賴管理在根目錄當中，但也同時允許每個專案有自己的獨立套件，至於擴張性、維護性和靈活度的挑戰還是要依靠其他工具來解決 😑。
 
-## Monorepo 之外延伸
+## Monorepo 延伸
 
-基於 Monolith Repo 與 Monorepo 都有效能、權限、協作……等問題，因此通常會透過其他工具來解決這些問題，像是：[Nx](https://nx.dev/) 與 [Turborepo](https://turbo.build/)，透過團隊共享快取避免重複執行、平行化執行、自動化依賴更新各式各樣的功能來強化體驗。
+基於 Monolith Repo 與 Monorepo 都有效能、權限、協作……等問題，因此通常會透過其他工具來解決這些問題，像是：[rush](https://rushjs.io/)、[Nx](https://nx.dev/)、[Turborepo](https://turbo.build/)，透過團隊共享快取避免重複執行、平行化執行、自動化依賴更新各式各樣的功能來強化體驗。
 
 ## 總結
 
-如果專案間頻繁的有需要共用的程式片段或套件，那麼 Monorepo 是一種不錯可以考慮的解決方案，但如果專案間沒有太多關聯使用 Monorepo 反而會增加不必要的複雜度，考慮使用多儲存庫的方式。
+### Monorepo 優勢
+
+- 易於共享代碼
+- 簡化依賴管理
+- 微小更動變得容易
+- 易於大型代碼重構
+- 易於團隊跨專案合作
+- 統一 CI 流程
+
+### Monorepo 劣勢
+
+- 額外學習與維護成本
+- 效能問題
+- 權限問題
+
+Monorepo 與 Monolith Repo 的差異在於多套件管理的彈性，如果專案間頻繁的有需要共用的程式片段或套件，那麼 Monorepo 是一種不錯可以考慮的解決方案，但如果專案間沒有太多關聯使用 Monorepo 反而會增加不必要的複雜度，考慮使用多儲存庫的方式。
 
 ## 延伸閱讀
 
 - [你很常聽到 monorepo，但為什麼要用 monorepo?](https://www.explainthis.io/zh-hant/swe/why-use-monorepo) - ExplainThis
 - [The Concept Of Monorepos](https://www.youtube.com/watch?v=ErpPaoU13LU) - Ahmed Elsakaan
 - [Monorepos - How the Pros Scale Huge Software Projects // Turborepo vs Nx](https://www.youtube.com/watch?v=9iU_IE6vnJ8) - Fireship
+- [monorepo.tools](https://monorepo.tools/)
