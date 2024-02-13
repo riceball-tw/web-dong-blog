@@ -1,6 +1,7 @@
 ---
 import { characterToUnicode } from '@/helper/characterToUnicode';
 import { getCollection } from 'astro:content';
+import globalConfig from '@/globalConfig';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Card from '@/components/card/Card.astro';
 import Hero from '@/components/app/Hero.astro';
@@ -21,8 +22,9 @@ const categoriesLists = categories.map((category) => ({
 const currentTime = new Date()
   .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
   .replace(/\//g, '-');
+
 const heroBadge = {
-  href: 'https://github.com/riceball-tw/astro-blog/commits/main',
+  href: globalConfig.setting.projectUpdateBadgeUrl,
   text: `最近更新時間：${currentTime}`,
 };
 ---
