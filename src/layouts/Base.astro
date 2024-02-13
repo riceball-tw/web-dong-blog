@@ -1,10 +1,13 @@
 ---
-import { type BaseLayout } from '@/types.ts';
+import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
 import { SEO } from 'astro-seo';
 import globalConfig from '@/globalConfig';
-import { hexToRgba } from '@/helper/hexToRgba';
+// PROBELM: No idea why ESLint says missing, but still working.
+// eslint-disable-next-line import/no-unresolved
 import { ViewTransitions } from 'astro:transitions';
+import { hexToRgba } from '@/helper/hexToRgba';
+
 export interface Props extends BaseLayout {}
 
 const { brand } = globalConfig;
