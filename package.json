@@ -25,7 +25,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "astro": "^4.3.6",
-    "astro-auto-import": "^0.3.0",
+    "astro-auto-import": "^0.4.2",
     "astro-seo": "^0.7.4",
     "fuse.js": "^6.6.2",
     "preact": "^10.17.1",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.8",
     "@typescript-eslint/parser": "^5.48.1",
-    "astro-og-canvas": "^0.2.1",
+    "astro-og-canvas": "^0.4.2",
     "eslint": "8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "^8.6.0",
