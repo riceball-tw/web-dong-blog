@@ -64,7 +64,11 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
         imageAlt: `${seoImage.alt}`,
       }}
       extend={{
-        link: [{ rel: 'icon', href: '/images/brand/logo.svg', type: 'image/svg+xml' }],
+        link: [{ rel: 'icon', href: '/images/brand/logo.svg', type: 'image/svg+xml' }, {
+          rel: 'sitemap',
+          href: '/sitemap-index.xml',
+          type: 'application/xml',
+        }],
         meta: [
           {
             name: 'viewport',
