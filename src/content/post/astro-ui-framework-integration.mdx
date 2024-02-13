@@ -102,7 +102,7 @@ import MyVueComponent from '../components/MyVueComponent.vue';
 
 同時整合多個 UI 框架在同個 Astro 元件當中是可行的，但是必須留意整合多個使用 JSX 的框架（React, Preact, Solid）時就**必須要**透過設定不同框架使用的 JSX 所在的位置，Astro 才知道怎麼渲染：
 
-```JavaScript
+```javascript
 import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
 import react from '@astrojs/react';
@@ -123,7 +123,7 @@ export default defineConfig({
     solid({
       include: ['**/solid/*'],
     }),
-		svelte(),
+    svelte(),
     vue(),
   ],
 });
