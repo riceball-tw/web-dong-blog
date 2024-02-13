@@ -22,40 +22,34 @@ export default {
     socials: [
       {
         name: 'CodePen',
-        imgUrl: '/images/social/codepen.svg',
+        imgUrl: '/images/global/social/codepen.svg',
         url: 'https://codepen.io/riecball',
-        themeColor: '#000000',
       },
       {
         name: 'YouTube',
-        imgUrl: '/images/social/youtube.svg',
+        imgUrl: '/images/global/social/youtube.svg',
         url: 'https://www.youtube.com/@w3dong',
-        themeColor: '#ff0000',
       },
       {
         name: 'Instagram',
-        imgUrl: '/images/social/instagram.svg',
+        imgUrl: '/images/global/social/instagram.svg',
         url: 'https://www.instagram.com/webdong.dev',
-        themeColor: '#c32aa3',
       },
       {
         name: 'GitHub',
-        imgUrl: '/images/social/github.svg',
+        imgUrl: '/images/global/social/github.svg',
         url: 'https://github.com/riceball-tw',
-        themeColor: '#424242',
       },
       {
         name: 'Medium',
-        imgUrl: '/images/social/medium.svg',
+        imgUrl: '/images/global/social/medium.svg',
         url: 'https://medium.com/@webdong',
-        themeColor: '#000000',
       },
       {
         name: 'RSS',
-        imgUrl: '/images/social/rss.svg',
+        imgUrl: '/images/global/social/rss.svg',
         url: '/rss.xml',
-        themeColor: '#000000'
-      }
+      },
     ],
   },
 };
