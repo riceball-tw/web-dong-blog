@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/lightbulb.svg", "alt": "燈泡符號" },
+  "featureIcon": { "url": "images/icons/lightbulb.svg", "alt": "燈泡符號" },
   "titleTC": "f.lux",
   "url": "https://justgetflux.com/",
   "excerpt": "根據一天的地點和時間調整螢幕的色溫，目的是減少夜間使用時的眼睛疲勞和晝夜節律的中斷。通常大多時間都會開著減輕眼睛對強光螢幕的不適，特別適合長時間程式開發時使用。",

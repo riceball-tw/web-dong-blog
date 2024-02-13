@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
 title: 'Day17 - Astro Series: Pagination'
 titleTC: 'Astro 系列文第十七日：頁籤'
 excerpt: '透過內容集合動態的生成 Route 是件方便美好的事情，但一旦數量一多就必須要想辦法分批次顯示這些資料，恰好 Astro 內建頁籤可以幫助我們打造這方面功能。'
@@ -23,17 +23,23 @@ publishDate: 2023-10-02
 ## 定義問題
 
 ```jsx
-const students = [{
-  student: '小明'
-}, {
-  student: '小華'
-}, {
-  student: '小美'
-}, {
-  student: '小莉'
-}, {
-  student: '小王'
-}]
+const students = [
+  {
+    student: '小明',
+  },
+  {
+    student: '小華',
+  },
+  {
+    student: '小美',
+  },
+  {
+    student: '小莉',
+  },
+  {
+    student: '小王',
+  },
+];
 ```
 
 假設目前有這樣一筆學生資料，要怎麼透過 Astro 提供的頁籤功能去產生 3 個頁面，每個頁面 2 筆資料呢？舉例結果如下：

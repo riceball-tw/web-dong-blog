@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
 title: 'Day20 - Astro Series: Search Functionality'
 titleTC: 'Astro 系列文第二十日：實作搜尋功能'
 excerpt: '前面透過建立靜態端點實作了自己的 RSS Feed 算是一個簡單的練習起步，這次更進一步透過建立整個集合的資料來完成「集合文章搜尋功能」。'
@@ -52,8 +52,8 @@ function getPosts() {
 }
 
 async function handleInputFocus() {
-    setIsSearching(true);
-    if (!posts.length) {
+  setIsSearching(true);
+  if (!posts.length) {
     setPosts(await getPosts());
   }
 }
@@ -63,15 +63,15 @@ async function handleInputFocus() {
 
 ```jsx
 function handleInputBlur(e) {
-    const { currentTarget } = e;
+  const { currentTarget } = e;
 
-    // 給瀏覽器時間去 Focus 下一個元素
-    requestAnimationFrame(() => {
-      if (!currentTarget.contains(document.activeElement)) {
-        setIsSearching(false);
-      }
-    });
-  }
+  // 給瀏覽器時間去 Focus 下一個元素
+  requestAnimationFrame(() => {
+    if (!currentTarget.contains(document.activeElement)) {
+      setIsSearching(false);
+    }
+  });
+}
 ```
 
 由於在手機尺寸並不會顯示這個區塊的功能，因此可以設定只有在裝置尺寸 `1024px` 以上才載入相關的客戶端 JavaScript ，達成「有用到才載入」，節省不必要的浪費。
@@ -114,7 +114,7 @@ export async function GET() {
 每當用戶輸入時如果 fuse 實例並沒有被創造過，就創造一次到 `fuseInstance` 當中，並且透過給 fuse 實例的搜尋方法傳入「目前查詢的詞彙」可以得到模糊比對出來最貼近用戶搜尋的文章。
 
 ```jsx
-let fuseInstance
+let fuseInstance;
 function handleInputChange(e) {
   if (!fuseInstance) {
     fuseInstance = new Fuse(posts, {

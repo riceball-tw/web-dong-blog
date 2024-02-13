@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/assignment.svg', alt: '文件符號' }
+featureIcon: { url: 'images/icons/assignment.svg', alt: '文件符號' }
 title: 'Everything you need to know about HTML Form'
 titleTC: '簡單明確的了解 HTML 表單使用方式'
 excerpt: '很多時候都會忽略掉 HTML 本身就有很好的支援輸入控制與提交，讓我們來了解怎麼使用 HTML 表單製作一個無障礙且語意化的輸入表單。'
@@ -19,7 +19,7 @@ publishDate: 2023-07-23
 
 ```html
 <form method="POST">
-	<!-- ... -->
+  <!-- ... -->
 </form>
 ```
 
@@ -30,6 +30,7 @@ publishDate: 2023-07-23
   <!-- ... -->
 </form>
 ```
+
 也可以額外指定目標的 URL 使用 `action` 屬性，這樣就會對 `/new-contact` 這個相對位址發送 POST 請求，也就是 `https://webdong.dev/new-contact`。
 
 實際上現在已經很少會使用表單向伺服器溝通了，只是描述一些歷史用法，也是鋪陳說明為什麼很多教學都說要阻擋所謂「預設事件」的「預設事件」，在 JavaScript 還很初始渾沌的時代，表單原先設計就是這樣使用的。
@@ -41,22 +42,23 @@ publishDate: 2023-07-23
 const form = document.querySelector('form');
 // 如果表單被提交，就執行函式
 form.addEventListener('submit', (event) => {
-  event.preventDefault();// 避免瀏覽器預設事件發生
-  const formData = new FormData(form);// 取得表單內容
+  event.preventDefault(); // 避免瀏覽器預設事件發生
+  const formData = new FormData(form); // 取得表單內容
 });
 ```
 
 雖然語法上不使用 `<form>` 並沒有任何問題 ，但還是建議在撰寫表單控制元件 (Form Control)之前使用它，原因是因為：
 
-1. **組織資料** -  `<form>` 可以將一組相關的表單控制組織在一起，以便用戶能夠提交資料。例如，當要求用戶填寫姓名、電子郵件地址和訊息時，這些表單元素通常會放在同一個 `<form>` 標籤中，以便把資料一齊提交。
+1. **組織資料** - `<form>` 可以將一組相關的表單控制組織在一起，以便用戶能夠提交資料。例如，當要求用戶填寫姓名、電子郵件地址和訊息時，這些表單元素通常會放在同一個 `<form>` 標籤中，以便把資料一齊提交。
 2. **語意清晰** - 明確標明哪些內容是用於表單，而不是普通的文字或其他元素。這有助於維持代碼的結構性與可讀性，讓開發者和維護者更容易理解和處理。
 3. **表單控制** - 可以使用表單預設提供的方法，例如[提交](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit)、[重置](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reset)或[驗證](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reportValidity)，實踐常見的表單功能。
 
 舉例來說以下代碼就是一個簡單輸入姓名的表單，可以透過提交按鈕觸發提交事件或是重置事件：
+
 ```html
 <form>
   <label for="name">姓名</label>
-  <input id="name" type="text" placeholder="請輸入姓名">
+  <input id="name" type="text" placeholder="請輸入姓名" />
   <button type="submit">提交</button>
   <button type="reset">重置</button>
 </form>
@@ -66,29 +68,29 @@ form.addEventListener('submit', (event) => {
 
 具體來說常用的有以下幾種表單控制元件，看起來很多但實際上它們使用方式是差不多的，本文挑選一些最常見的解釋：
 
-* input - 單行文字
-* textarea - 多行文字
-* select boxes - 從下拉式選單中選取單一選項
-* radio buttons - 從多個選項中選取單一選項
-* checkboxes - 從多個選項中選取無、一個或多個選項
-* file uploads - 上傳檔案
-* 更多……
+- input - 單行文字
+- textarea - 多行文字
+- select boxes - 從下拉式選單中選取單一選項
+- radio buttons - 從多個選項中選取單一選項
+- checkboxes - 從多個選項中選取無、一個或多個選項
+- file uploads - 上傳檔案
+- 更多……
 
 ### `<label>`
 
 `<label>` 用於描述表單控制元件，可以透過 `for` 屬性與 `id` 屬性同名的控制元件明確建立關係也可以透過包裹的方式隱晦的建立關係，都是正確的方法：
 
 ```html
-<label for="name">姓名</label>
-<input id="name" type="text" placeholder="請輸入姓名">
+<label for="name">姓名</label> <input id="name" type="text" placeholder="請輸入姓名" />
 ```
 
 ```html
 <label>
   姓名
-  <input type="text" placeholder="請輸入姓名">
+  <input type="text" placeholder="請輸入姓名" />
 </label>
 ```
+
 要留意 `<label>` 的存在是為了輔助說明表單控制元件，應盡量為每個表單控制元件都添加；時常會出現為了美觀因素而省略容易造成使用者無法理解該欄位的用途的錯誤，可以透過：[隱藏標籤](https://www.w3.org/WAI/tutorials/forms/labels/#hiding-label-text)、[使用 aria-label](https://www.w3.org/WAI/tutorials/forms/labels/#using-aria-label)、[使用 aria-labelledby](https://www.w3.org/WAI/tutorials/forms/labels/#using-aria-labelledby)或[使用 title 屬性](https://www.w3.org/WAI/tutorials/forms/labels/#using-the-title-attribute)視情況來為沒有 `<label>` 的表單控制選項添加描述。
 
 ### `<input>`
@@ -100,41 +102,49 @@ form.addEventListener('submit', (event) => {
 `<input>` 在表單中最基本也是最常使用的元素，可以用於接收各種不同型態的資料，例如文字、數字、日期、時間、電子郵件、密碼、檔案……等，`<input>` 具備[多種屬性](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attributes)，最常用的有 [`required`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#required)、[`type`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types)、[`placeholder`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#placeholder)、[`value`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#value)與[`name`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#name)、[`disabled`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#disabled)……等屬性。
 
 A. 舉例來說可以為輸入框添加文字提示，使用 `placeholder` 屬性：
+
 <form>
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="input 標籤範例……"/>
+  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="input 標籤範例……" />
 </form>
 
 ```html
-<input type="text" placeholder="input 標籤範例……"/>
+<input type="text" placeholder="input 標籤範例……" />
 ```
 
 B. 或是讓輸入框預先填入預設值，使用 `value` 屬性：
+
 <form>
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" value="我是預設文字"/>
+  <input class="bg-primary-100 dark:bg-primary-900" type="text" value="我是預設文字" />
 </form>
 
 ```html
-<input type="text" value="我是預設文字"/>
+<input type="text" value="我是預設文字" />
 ```
 
 C. 或是限定必須要填寫才能提交，使用 `required` 屬性：
+
 <form class="flex gap-4">
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="嘗試不輸入就直接提交" required/>
-  <button type="submit" class="underline">提交按鈕</button>
+  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="嘗試不輸入就直接提交" required />
+  <button type="submit" class="underline">
+    提交按鈕
+  </button>
 </form>
 
 ```html
-<input type="text" required/>
+<input type="text" required />
 ```
 
 D. 或是使用 `disabled` 來禁用其功能：
+
 <form class="flex gap-4">
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="禁止輸入" disabled/>
-  <button type="submit" class="underline" disabled>提交按鈕（禁止提交）</button>
+  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="禁止輸入" disabled />
+  <button type="submit" class="underline" disabled>
+    提交按鈕（禁止提交）
+  </button>
 </form>
 
 ```html
-<input type="text" disabled/>
+<input type="text" disabled />
 ```
 
 也可以使用 `type` 的屬性來限制輸入的資料型態，例如 `type="email"` 就會限制輸入的資料必須符合電子郵件格式，`type="number"` 就會限制輸入的資料必須是數字，`type="password"` 就會將輸入的資料隱藏並且無法複製與剪下，`type="file"` 就會讓使用者可以選擇檔案上傳，依照想要獲得的資料種類都可以註明 `type` 屬性來達成。
@@ -183,10 +193,13 @@ D. 或是使用 `disabled` 來禁用其功能：
 
 <form class="flex flex-col gap-4">
   <textarea class="bg-primary-100 dark:bg-primary-900" rows="5" cols="50" placeholder="請輸入文字"></textarea>
-  <button type="submit" class="underline">提交按鈕</button>
+  <button type="submit" class="underline">
+    提交按鈕
+  </button>
 </form>
 
 ## 參考資料
+
 - [Learn Forms - web.dev](https://web.dev/learn/forms/)
 - [Is `<input>` well formed without a `<form>`? - Stack Overflow](https://stackoverflow.com/questions/3294572/is-input-well-formed-without-a-form)
 - [Forms - W3C Superseded Recommendation](https://www.w3.org/TR/html401/interact/forms.html)

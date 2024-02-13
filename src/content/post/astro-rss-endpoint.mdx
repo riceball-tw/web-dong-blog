@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
 title: 'Day19 - Astro Series: RSS Endpoint'
 titleTC: 'Astro 系列文第十九日：RSS 端點'
 excerpt: '前面學習了內容集合與頁籤的製作，今天的主題練習透過整理集合抓取到的資料更進一步製作分類功能頁面。'
@@ -46,8 +46,8 @@ export async function GET() {
   return new Response(
     JSON.stringify({
       message: 'Hello World',
-    })
-  )
+    }),
+  );
 }
 ```
 

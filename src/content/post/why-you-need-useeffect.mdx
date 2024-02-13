@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/use-effect.svg', alt: 'useEffect 文字' }
+featureIcon: { url: 'images/icons/use-effect.svg', alt: 'useEffect 文字' }
 title: 'Why You Need useEffect?'
 titleTC: '來聊聊為什麼你需要 useEffect 吧！'
 excerpt: 'useEffect 是 react 中一個相當基礎常見的 Hook，要真正學會它就必須要對 React 如何運作有基礎的認識才行。'
@@ -44,27 +44,28 @@ export default function TeaSet() {
 結果是程式變得很難維護，因為不知道每次呼叫函式會得到什麼結果。[將變數定義為全域變數](/post/understanding-the-use-cases-of-useref/#%E6%96%B9%E6%B3%95%E4%B8%80%E5%AE%9A%E7%BE%A9%E8%AE%8A%E6%95%B8%E5%9C%A8%E5%85%83%E4%BB%B6%E5%A4%96)也是非常糟糕的做法。
 
 ### 問題二：元件重新渲染導致副作用重複執行
+
 元件的渲染必須與副作用分離！否則只要元件每次重新渲染，副作用就會被執行導致不必要的效能浪費。舉例來說如果程式頻繁的重新渲染，渲染會連帶執行副作用程式片段，可能導致用戶只是填寫輸入框，但由於 `State` 的改動造成重新渲染，讓發出請求（副作用）被執行到爆！
 
 ```jsx
 export function App(props) {
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState('');
   function handleChange(e) {
-    setInput(e.target.value)
+    setInput(e.target.value);
   }
 
   // 壞做法：只要元件渲染將執行副作用！
-  fetch('https://picsum.photos/200/300')
+  fetch('https://picsum.photos/200/300');
 
   return (
-    <div className='App'>
-        <input type="text" onChange={handleChange}/>
+    <div className="App">
+      <input type="text" onChange={handleChange} />
     </div>
   );
 }
 ```
 
-以上的例子來說，只要輸入框每更動一個字，就會發送一個請求☹。
+以上的例子來說，只要輸入框每更動一個字，就會發送一個請求 ☹。
 
 ## 使用 `useEffect`
 
@@ -82,7 +83,7 @@ import { useEffect } from 'react';
 useEffect(() => {
   // 副作用
   return () => {
-  // 清理函式
+    // 清理函式
   };
 }, [依賴]);
 ```
@@ -93,8 +94,8 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-  console.log("只要元件渲染時就執行副作用")
-})
+  console.log('只要元件渲染時就執行副作用');
+});
 ```
 
 ### 第二步：註明依賴
@@ -103,15 +104,15 @@ useEffect(() => {
 
 ```jsx
 useEffect(() => {
-  console.log("只有元件第一次渲染時才會被執行")
-}, [])
+  console.log('只有元件第一次渲染時才會被執行');
+}, []);
 ```
 
 也可以傳入依賴，只有在該依賴有變動時才會執行副作用，舉例來說如果期望副作用只在 `name` 改變時執行，可以傳入 `name` 作為依賴。
 
 ```jsx
 useEffect(() => {
-  document.title = `您好！ 訪客： ${name}`; 
+  document.title = `您好！ 訪客： ${name}`;
 }, [name]);
 ```
 
@@ -122,11 +123,11 @@ useEffect(() => {
 ```jsx
 useEffect(() => {
   const handler = () => {
-    console.log("滑鼠移動了");
+    console.log('滑鼠移動了');
   };
-  window.addEventListener("mousemove", handler);
+  window.addEventListener('mousemove', handler);
   return () => {
-    window.removeEventListener("mousemove", handler);
+    window.removeEventListener('mousemove', handler);
   };
 }, []);
 ```
@@ -139,6 +140,6 @@ useEffect(() => {
 
 ## 參考資料
 
-* [Keeping Components Pure - React.dev](https://react.dev/learn/keeping-components-pure)
-* [Synchronizing with Effects - React.dev](https://react.dev/learn/synchronizing-with-effects)
-* [A Simple Explanation of React.useEffect() - Dmitri Pavlutin](https://dmitripavlutin.com/react-useeffect-explanation/)
+- [Keeping Components Pure - React.dev](https://react.dev/learn/keeping-components-pure)
+- [Synchronizing with Effects - React.dev](https://react.dev/learn/synchronizing-with-effects)
+- [A Simple Explanation of React.useEffect() - Dmitri Pavlutin](https://dmitripavlutin.com/react-useeffect-explanation/)

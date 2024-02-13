@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/metric.svg', alt: '統計符號' }
+featureIcon: { url: 'images/icons/metric.svg', alt: '統計符號' }
 title: 'All The Performance Metrics You Need To Know'
 titleTC: '學習所有 Google 提出衡量網頁效能的指標！ feat. TTFB, FCP, LCP, FID, CLS, TTI, TBT'
 excerpt: '本篇文章挑戰用自己的方式去理解並解釋所有 Google 提出網頁體驗相關的指標，陣容豪華絕對空前精彩。'
@@ -188,45 +188,47 @@ publishDate: 2023-05-10
 測量 FCP 與 TTI 之間主執行緒被阻塞到影響輸入的回應性的時間，也就是**測量網頁在載入過程中繁忙到無法回應的長度**，從這項指標中主要可以了解網頁的互動性，越好的 TBT 越能說服用戶網頁「[是否可用](#usable)」。，瀏覽器必須等到該項任務完成才能回應用戶的互動，計算模擬圖表如下：
 
 <table>
-	<tbody>
-		<tr>
-			<th>
-			</th>
-			<th>事項處理時長</th>
-			<th>事項阻塞時間</th>
-		</tr>
-		<tr>
-			<td>事項一</td>
-			<td>250 ms</td>
-			<td>200 ms</td>
-		</tr>
-		<tr>
-			<td>事項二</td>
-			<td>90 ms</td>
-			<td>40 ms</td>
-		</tr>
-		<tr>
-			<td>事項三</td>
-			<td>35 ms</td>
-			<td>0 ms</td>
-		</tr>
-		<tr>
-			<td>事項四</td>
-			<td>30 ms</td>
-			<td>0 ms</td>
-		</tr>
-		<tr>
-			<td>事項五</td>
-			<td>155 ms</td>
-			<td>105 ms</td>
-		</tr>
-		<tr>
-			<td colspan="2"><strong>總阻塞時間</strong></td>
-			<td><strong>345 ms</strong></td>
-		</tr>
-	</tbody>
+  <tbody>
+    <tr>
+      <th></th>
+      <th>事項處理時長</th>
+      <th>事項阻塞時間</th>
+    </tr>
+    <tr>
+      <td>事項一</td>
+      <td>250 ms</td>
+      <td>200 ms</td>
+    </tr>
+    <tr>
+      <td>事項二</td>
+      <td>90 ms</td>
+      <td>40 ms</td>
+    </tr>
+    <tr>
+      <td>事項三</td>
+      <td>35 ms</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td>事項四</td>
+      <td>30 ms</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td>事項五</td>
+      <td>155 ms</td>
+      <td>105 ms</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <strong>總阻塞時間</strong>
+      </td>
+      <td>
+        <strong>345 ms</strong>
+      </td>
+    </tr>
+  </tbody>
 </table>
-
 
 ## 總結
 

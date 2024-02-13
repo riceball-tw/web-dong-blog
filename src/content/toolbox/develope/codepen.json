@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/terminal.svg", "alt": "終端符號" },
+  "featureIcon": { "url": "images/icons/terminal.svg", "alt": "終端符號" },
   "titleTC": "CODEPEN",
   "url": "https://codepen.io",
   "excerpt": "將你的開發環境搬運到雲端上，一些實驗性質或簡單的專案都可以在該平台上編寫，適合一個網頁專案快速演進與分享時使用。",

@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/database.svg", "alt": "資料庫符號" },
+  "featureIcon": { "url": "images/icons/database.svg", "alt": "資料庫符號" },
   "titleTC": "JSON CRACK",
   "url": "https://jsoncrack.com/editor",
   "excerpt": "將資料轉換為可互動的圖表，不管是 JSON、YAML、XML、CSV……基本常見的資料格式都有支援，如果冰冷攏長的資料難以閱讀會建議嘗試看看使用這個工具。",

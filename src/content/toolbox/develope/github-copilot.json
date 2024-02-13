@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/robot.svg", "alt": "機器人符號" },
+  "featureIcon": { "url": "images/icons/robot.svg", "alt": "機器人符號" },
   "titleTC": "GitHub Copilot",
   "url": "https://github.com/features/copilot",
   "excerpt": "對於撰寫一些重複的 Boilerplate Code 或是簡單的概念 Copilot 都能夠秒速解決，學生有全額免費優惠，還不快去體驗！",

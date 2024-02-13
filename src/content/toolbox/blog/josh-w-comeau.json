@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/account.svg", "alt": "人物頭像圖示" },
+  "featureIcon": { "url": "images/icons/account.svg", "alt": "人物頭像圖示" },
   "titleTC": "Josh W Comeau",
   "url": "https://www.joshwcomeau.com/",
   "excerpt": "Josh W Comeau 的個人部落格親切有趣，常用簡單的描述與實例來示範與解決問題，我很感激有這樣熱心教學產出優質內容的開發者，著重於前端開發。",

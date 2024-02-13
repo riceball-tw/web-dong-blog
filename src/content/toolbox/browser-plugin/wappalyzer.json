@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/power-plug.svg", "alt": "插頭圖示" },
+  "featureIcon": { "url": "images/icons/power-plug.svg", "alt": "插頭圖示" },
   "titleTC": "Wappalyzer",
   "url": "https://www.wappalyzer.com/apps/",
   "excerpt": "鑑別網站背後所使用的技術，如果你對於一個網站背後可能技術棧感到好奇，可以使用這個套件檢查相關資訊。",

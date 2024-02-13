@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/account.svg", "alt": "人物頭像圖示" },
+  "featureIcon": { "url": "images/icons/account.svg", "alt": "人物頭像圖示" },
   "titleTC": "Web Dev Simplify",
   "url": "https://blog.webdevsimplified.com/",
   "excerpt": "如果有在接觸前端 YouTube 教學頻道，大概率你也看過 Kyle 的同名頻道影片，他的部落格算是教學影片的文字版本，同樣內容精彩豐富，著重在前端開發。",

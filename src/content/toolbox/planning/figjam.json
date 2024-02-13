@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/whiteboard.svg", "alt": "白板圖示" },
+  "featureIcon": { "url": "images/icons/whiteboard.svg", "alt": "白板圖示" },
   "titleTC": "FigJam",
   "url": "https://www.figma.com/figjam/",
   "excerpt": "直覺多功能的白板工具，如果團隊使用 Figma 可以考慮滑順接軌使用 FigJam 來構築想法。",

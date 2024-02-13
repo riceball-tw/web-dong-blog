@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/conditional-operator.svg', alt: '條件運算子符號' }
+featureIcon: { url: 'images/icons/conditional-operator.svg', alt: '條件運算子符號' }
 title: 'JavaScript Conditional Operator'
 titleTC: '可以怎麼使用 JavaScript 條件運算子？'
 excerpt: '用更精簡的語法來撰寫流程控制，條件運算子是常見且必學的語法之一'
@@ -39,26 +39,22 @@ const result = age >= 18 ? '成年' : '未成年';
 
 ```js
 // 傳統寫法
-const wallet = 100
-let result = ''
-
+const wallet = 100;
+let result = '';
 
 if (wallet >= 100) {
-  result = '買一個漢堡'
+  result = '買一個漢堡';
 } else if (wallet >= 50) {
-  result = '買一杯咖啡'
+  result = '買一杯咖啡';
 } else {
-  result = '只能喝水'
+  result = '只能喝水';
 }
 ```
 
-
 ```js
 // 條件運算子
-const wallet = 100
-const result = wallet >= 100 ? '買一個漢堡'
- : wallet >= 50 ? '買一杯咖啡'
- : '只能喝水'
+const wallet = 100;
+const result = wallet >= 100 ? '買一個漢堡' : wallet >= 50 ? '買一杯咖啡' : '只能喝水';
 ```
 
 ## 參考資料

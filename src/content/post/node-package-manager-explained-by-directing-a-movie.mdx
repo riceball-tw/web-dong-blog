@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/npm.svg', alt: 'NPM logo 符號' }
+featureIcon: { url: 'images/icons/npm.svg', alt: 'NPM logo 符號' }
 title: 'Node Package Manager Explained By Directing A Movie'
 titleTC: '藉由導演一部電影來解釋 Node Package Manager'
 excerpt: 'NPM 是 JavaScript 開發環境中一定會使用到的一款套件管理器，本篇文章將比喻導演一部電影來解釋 NPM 如何運作，以及為何你會需要它。'
@@ -39,13 +39,11 @@ npm install react
 npm uninstall react
 ```
 
-
-
 <Info type="warning">
-如果沒有特別的理由最好不要把 `node_moduels` 資料夾放到版本控制系統中，因為這個資料夾通常會非常大，而且裡面的內容也可以透過 `package.json` 來還原，編輯 `.gitignore` 來忽略該資料夾
+  如果沒有特別的理由最好不要把 `node_moduels`
+  資料夾放到版本控制系統中，因為這個資料夾通常會非常大，而且裡面的內容也可以透過 `package.json` 來還原，編輯
+  `.gitignore` 來忽略該資料夾
 </Info>
-
-
 
 ## `package.json` = 演員名冊
 
@@ -56,7 +54,7 @@ npm uninstall react
   "name": "my-project",
   "version": "1.0.0",
   "dependencies": {
-    "react": "^17.0.2",
+    "react": "^17.0.2"
   }
 }
 ```
@@ -79,11 +77,11 @@ npm uninstall react
 ```json
 {
   "devDependencies": {
-    "webpack": "^5.38.1",
+    "webpack": "^5.38.1"
   }
 }
 ```
 
 ## 參考資料
 
-* [Node Package Manager (NPM) Explained by Directing A Movie - CodeAnalogies Blog](https://blog.codeanalogies.com/2018/09/24/node-package-manager-npm-explained-by-directing-a-movie/)
+- [Node Package Manager (NPM) Explained by Directing A Movie - CodeAnalogies Blog](https://blog.codeanalogies.com/2018/09/24/node-package-manager-npm-explained-by-directing-a-movie/)

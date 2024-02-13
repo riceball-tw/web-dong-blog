@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
 title: 'Day14 - Astro Series: Image Optimization'
 titleTC: 'Astro 系列文第十四日：圖片最佳化'
 excerpt: '通常文件會伴隨著圖片，而圖片可以佔據一個頁面絕大多數的運算資源與流量！你會希望圖片能夠被好好處理避免它們壓垮整個網站的體驗，Astro 預設自帶相關的元件與方法幫助你處理這些事務。'
@@ -15,7 +15,6 @@ publishDate: 2023-09-29
   src="images/posts/ithome-astro/thumbnail/day14-image-optimization.webp"
   alt="一個漂亮的漸層背景上面有一句標題：「圖片最佳化」"
 />
-
 
 ## 前言
 
@@ -41,62 +40,49 @@ import myImage from '../assets/image.png'
 透過 `<Image />` 元件將會產生以下結果，可以發現圖片預設自動添加了不少屬性：
 
 ```html
-<img
-  src="/_astro/image.hash.webp"
-  width="1600"
-  height="900"
-  decoding="async"
-  loading="lazy"
-  alt="圖片的 alt 註解"
-/>
+<img src="/_astro/image.hash.webp" width="1600" height="900" decoding="async" loading="lazy" alt="圖片的 alt 註解" />
 ```
 
 這些屬性的預設值並不能更改，但仍然可以[自創元件去封裝設定它們](https://docs.astro.build/en/guides/images/#setting-default-values)，具體來說有以下幾點屬性：
 
 - `src` (必要)：來源。該屬性基於圖片存放的位置也會有所不同。
-    - 本地圖片在 `src/` 資料夾：你需要 `import` 圖片並透過定義好的名稱在 `src` 屬性當中。
-    
-    ```jsx
-    ---
-    import { Image } from 'astro:assets';
-    import myImportedImage from `../assets/my-local-image.png`
-    ---
-    <Image src={myImportedImage} alt="descriptive text" />
-    ```
-    
-    - 本地圖片在 `public/` 資料夾
-    
-    ```jsx
-    ---
-    import { Image } from 'astro:assets';
-    ---
-    <Image
-      src="/images/my-public-image.png"
-      alt="descriptive text"
-      width="200"
-      height="150"
-    />
-    ```
-    
-    - 遠端圖片
-    
-    ```jsx
-    ---
-    import { Image } from 'astro:assets';
-    ---
-    <Image
-      src="https://example.com/remote-image.jpg"
-      alt="descriptive text"
-      width="200"
-      height="150" />
-    ```
-    
+  - 本地圖片在 `src/` 資料夾：你需要 `import` 圖片並透過定義好的名稱在 `src` 屬性當中。
+  ```jsx
+  ---
+  import { Image } from 'astro:assets';
+  import myImportedImage from `../assets/my-local-image.png`
+  ---
+  <Image src={myImportedImage} alt="descriptive text" />
+  ```
+  - 本地圖片在 `public/` 資料夾
+  ```jsx
+  ---
+  import { Image } from 'astro:assets';
+  ---
+  <Image
+    src="/images/my-public-image.png"
+    alt="descriptive text"
+    width="200"
+    height="150"
+  />
+  ```
+  - 遠端圖片
+  ```jsx
+  ---
+  import { Image } from 'astro:assets';
+  ---
+  <Image
+    src="https://example.com/remote-image.jpg"
+    alt="descriptive text"
+    width="200"
+    height="150" />
+  ```
 - `alt` (必要)：替代文字。提供具描述性的[圖片替代文字](https://www.w3.org/WAI/tutorials/images/)是強制的，如果圖片是純粹為了裝飾用途可以傳入空字串，這樣螢幕閱讀器或其他網頁輔助軟體便知道該圖片可以略過。
 - `width` 和 `height`：寬和高。當圖片來源來自 `public/` 或遠端圖片 Astro 則無法分析這些圖片的詳細屬性因此需要額外補充來避免[布局偏移](https://web.dev/i18n/zh/cls/)問題。
 - `format`：圖片格式，預設將會產生並使用 `.webp` 格式的圖片。
 - `quality`
-    - 程度 `low`、`mid`、`high`、`max`（可在不同格式間標準化程度）
-    - 一個從 `0` 到 `100` 的數字（不同格式之間有不同的解釋）
+  - 程度 `low`、`mid`、`high`、`max`（可在不同格式間標準化程度）
+  - 一個從 `0` 到 `100` 的數字（不同格式之間有不同的解釋）
 - 額外屬性（所有 `<img>` 接受的屬性）
 
 ## 總結

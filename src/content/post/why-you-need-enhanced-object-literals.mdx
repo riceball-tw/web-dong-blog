@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/add-circle.svg', alt: '兩個加號圈圈符號' }
+featureIcon: { url: 'images/icons/add-circle.svg', alt: '兩個加號圈圈符號' }
 title: 'Why you need JavaScript Enhanced Object Literals?'
 titleTC: '為什麼你需要 JavaScript 加強版物件實字？'
 excerpt: '在 JavaScript 中活用 ES6 帶來的加強版物件實字可以精簡程式片段，甚至還可以動態的計算創造物件內的項目！'
@@ -14,25 +14,25 @@ publishDate: 2023-06-22
 ## 鍵縮寫
 
 ```js
-const name = 'Joe'
-const age = 21
+const name = 'Joe';
+const age = 21;
 
 const person = {
   name: name,
-  age: age
-}
+  age: age,
+};
 ```
 
 在以上傳統範例中，可以看到物件的鍵與變數名稱相同，這時候就可以使用鍵縮寫來簡化寫法：
 
 ```js
-const name = 'Joe'
-const age = 21
+const name = 'Joe';
+const age = 21;
 
 const person = {
   name,
-  age
-}
+  age,
+};
 ```
 
 它們的結果是一樣的，但鍵縮寫後更簡潔可以避免重複，就是一個便利的縮寫語法。
@@ -44,19 +44,19 @@ const person = {
 ```js
 const person = {
   greeting: function () {
-    console.log('Hi!')
-  }
-}
+    console.log('Hi!');
+  },
+};
 ```
 
 以上就是傳統在物件中定義函式的寫法，現在可以使用函式縮寫來簡化：
 
 ```js
 const person = {
-  greeting () {
-    console.log('Hi!')
-  }
-}
+  greeting() {
+    console.log('Hi!');
+  },
+};
 ```
 
 它們的結果是一模一樣的，但函式縮寫後更簡潔可以避免重複，就是一個便利的縮寫語法。要額外注意如果想在物件中創建箭頭函式就不能使用上述寫法，而要這樣寫：
@@ -64,9 +64,9 @@ const person = {
 ```js
 const person = {
   greeting: () => {
-    console.log('Hi!')
-  }
-}
+    console.log('Hi!');
+  },
+};
 ```
 
 關於一般函式與箭頭函式仍有些許根本上的不同，詳細可以參考我的另外一篇文章：[為什麼你需要箭頭函式？](/post/why-you-need-arrow-function/)
@@ -76,19 +76,19 @@ const person = {
 試想如果想要動態的創建物件的鍵……你沒辦法！在計算屬性出現之前只能先宣告變數再改動物鍵：
 
 ```js
-const person = {}
-person['name'] = 'Joe'
+const person = {};
+person['name'] = 'Joe';
 ```
 
 但是現在可以使用計算屬性來簡化：
 
 ```js
-const key = 'name'
-const value = 'Joe'
+const key = 'name';
+const value = 'Joe';
 
 const person = {
-  [key]: value
-}
+  [key]: value,
+};
 ```
 
 ```js
@@ -101,6 +101,6 @@ const person = {
 
 ## 參考資料
 
-* [Literal MDN](https://developer.mozilla.org/en-US/docs/Glossary/Literal)
-* [Enhanced Object Literals - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-04/use-effect/)
-* [Confusion between constants and literals? - stack overflow](https://stackoverflow.com/questions/44767354/confusion-between-constants-and-literals)
+- [Literal MDN](https://developer.mozilla.org/en-US/docs/Glossary/Literal)
+- [Enhanced Object Literals - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-04/use-effect/)
+- [Confusion between constants and literals? - stack overflow](https://stackoverflow.com/questions/44767354/confusion-between-constants-and-literals)

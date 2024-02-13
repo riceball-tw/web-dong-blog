@@ -1,6 +1,6 @@
 ---
 isDraft: false
-featureIcon: { url: 'images/posts/feature-icon/astro.svg', alt: 'Astro Logo' }
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
 title: 'Day24 - Astro Series: Add ESLint and Prettier'
 titleTC: 'Astro 系列文第二十四日：添加 ESLint 與 Prettier'
 excerpt: '我喜歡使用自動化的工具來為專案的代碼提供錯誤檢查與整理，因此使用 ESLint 與 Prettier 讓撰寫的代碼更一致無錯，還有額外添加 TypeScript 的檢查與 VSCode 提示。'
@@ -15,7 +15,6 @@ publishDate: 2023-10-09
   src="images/posts/ithome-astro/thumbnail/day24-add-eslint-and-prettier.webp"
   alt="一個漂亮的漸層背景上面有一句標題：「添加 ESLint 與 Prettier 」"
 />
-
 
 ## 前言
 
@@ -82,7 +81,6 @@ module.exports = {
 {
   "eslint.validate": ["javascript", "javascriptreact", "astro", "typescript", "typescriptreact"]
 }
-
 ```
 
 最後可以增加一些 [NPM Script](https://docs.npmjs.com/cli/v9/using-npm/scripts) 當想要手動執行 ESLint 或 Prettier 檢查的時候就可以執行 `npm run lint` 或 `npm run prettier`，在 `package.json` 中添加以下兩行指令：
@@ -125,4 +123,5 @@ import Card from '../../components/Card.astro'
 經過以上的設定，整個專案就有完美的整理與提示了，有問題可以觀察我在自己的專案中的 [Commit](https://github.com/riceball-tw/wei-wei-web/commit/09005f3a1021dd5b1f27bb8a24679d96cca3b04e) 範例，或是在底下留言處詢問。
 
 ## 延伸閱讀
+
 - [Day24 - 添加 ESLint 與 Prettier](https://ithelp.ithome.com.tw/articles/10336866) - 相同文章同步發布於 iThome 鐵人賽中

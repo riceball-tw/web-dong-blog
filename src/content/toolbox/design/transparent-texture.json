@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/texture-box.svg", "alt": "內含橫條紋的方框圖示" },
+  "featureIcon": { "url": "images/icons/texture-box.svg", "alt": "內含橫條紋的方框圖示" },
   "titleTC": "TRANSPARENT TEXTURE",
   "url": "https://www.transparenttextures.com/",
   "excerpt": "上百款各式各樣適合應用到網頁背景上的透明材質，可自由選取顏色與過濾想要的樣式，可生成 CSS 或是作為桌布使用。",

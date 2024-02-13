@@ -1,5 +1,5 @@
 {
-  "featureIcon": { "url": "images/toolbox/web.svg", "alt": "網頁圖示" },
+  "featureIcon": { "url": "images/icons/web.svg", "alt": "網頁圖示" },
   "titleTC": "Awwwards",
   "url": "https://www.awwwards.com/",
   "excerpt": "最大的網頁靈感網站，著重在展示實驗性質的介面與體驗設計，可以過濾各式各樣的顏色、行業或世界各地國家……的網頁，一窺網頁可能性的極限。",
