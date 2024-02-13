@@ -34,6 +34,8 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
+        // ESLint doesn't understand Astro's special import syntax out of the box, To fix this, gnore unresolved imports from 'astro:*'
+        'import/no-unresolved': [2, { ignore: ['astro:*'] }],
         // Ignore the import/extensions rule for `.astro` files.
         'import/prefer-default-export': 'off',
         'import/extensions': [

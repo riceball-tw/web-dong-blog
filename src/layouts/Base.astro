@@ -3,8 +3,6 @@ import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
 import { SEO } from 'astro-seo';
 import globalConfig from '@/globalConfig';
-// PROBELM: No idea why ESLint says missing, but still working.
-// eslint-disable-next-line import/no-unresolved
 import { ViewTransitions } from 'astro:transitions';
 import { hexToRgba } from '@/helper/hexToRgba';
 
@@ -28,6 +26,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 
 <script>
   import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme';
+
   setGlobalTheme(getCurrentGlobalTheme());
   document.addEventListener('astro:after-swap', () => {
     setGlobalTheme(getCurrentGlobalTheme());
