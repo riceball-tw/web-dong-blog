@@ -22,6 +22,7 @@ const seoImage = {
 };
 const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
 const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
+const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
 ---
 
 <script>
@@ -82,16 +83,16 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
     <!-- Analytics -->
     <script
       type="text/partytown"
-      src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GOOGLEANALYTIC_ID}`}
+      src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTIC_ID}`}
     ></script>
-    <script type="text/partytown">
+    <script type="text/partytown" define:vars={{GOOGLE_ANALYTIC_ID}}>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
 
-      gtag('config', import.meta.env.PUBLIC_GOOGLEANALYTIC_ID);
+      gtag('config', GOOGLE_ANALYTIC_ID);
     </script>
   </head>
   <body
