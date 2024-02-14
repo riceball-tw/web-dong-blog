@@ -11,17 +11,9 @@ jobs:
     name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: setup node
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4
         with:
-          node-version: 18
-      - name: Install Git LFS
-        run: git lfs install
-      - name: Fetch Git LFS files
-        run: git lfs fetch
-      - name: Apply Git LFS files to content
-        run: git lfs checkout
+          lfs: true
       - name: install packages and build
         run: |
           npm install
