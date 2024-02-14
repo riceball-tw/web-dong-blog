@@ -1225,15 +1225,6 @@ astro-eslint-parser@^0.9.0:
     eslint-visitor-keys "^3.0.0"
     espree "^9.0.0"
 
-astro-og-canvas@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/astro-og-canvas/-/astro-og-canvas-0.4.2.tgz"
-  integrity sha512-OQsH6Gr2HX9ZRHdVy2OcXVBIPI65WvEtLG/60krnphh8d3ldhuAFunymYaNGcrdSZcYgXkHWejbPt//3qaRidA==
-  dependencies:
-    canvaskit-wasm "^0.37.0"
-    deterministic-object-hash "^2.0.2"
-    entities "^4.4.0"
-
 astro-seo@^0.7.4:
   version "0.7.6"
   resolved "https://registry.npmjs.org/astro-seo/-/astro-seo-0.7.6.tgz"
@@ -1524,11 +1515,6 @@ caniuse-lite@^1.0.30001520, caniuse-lite@^1.0.30001580:
   version "1.0.30001587"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001587.tgz"
   integrity sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==
-
-canvaskit-wasm@^0.37.0:
-  version "0.37.2"
-  resolved "https://registry.npmjs.org/canvaskit-wasm/-/canvaskit-wasm-0.37.2.tgz"
-  integrity sha512-212imazRF98gLOTiU4JAXM7xDvaknI7jaPtAg4ETXGW5rLQs6pomgIvVPUSfoKnQVTdGgzj+B4e+/u0Da20aGg==
 
 ccount@^2.0.0:
   version "2.0.1"
@@ -1869,7 +1855,7 @@ detect-libc@^2.0.0, detect-libc@^2.0.1, detect-libc@^2.0.2:
   resolved "https://registry.npmjs.org/detect-libc/-/detect-libc-2.0.2.tgz"
   integrity sha512-UX6sGumvvqSaXgdKGUsgZWqcUyIXZ/vZTrlRT/iobiKhGL0zL4d3osHj3uqllWJK+i+sixDS/3COVEOFbupFyw==
 
-deterministic-object-hash@^2.0.1, deterministic-object-hash@^2.0.2:
+deterministic-object-hash@^2.0.1:
   version "2.0.2"
   resolved "https://registry.npmjs.org/deterministic-object-hash/-/deterministic-object-hash-2.0.2.tgz"
   integrity sha512-KxektNH63SrbfUyDiwXqRb1rLwKt33AmMv+5Nhsw1kqZ13SJBRTgZHtGbE+hH3a1mVW1cz+4pqSWVPAtLVXTzQ==
