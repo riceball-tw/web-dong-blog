@@ -26,14 +26,12 @@ const post = defineCollection({
 
   schema: z.object({
     isDraft: z.boolean().default(true),
-    featureIcon: z
-      .object({
-        width: z.number().default(64),
-        height: z.number().default(64),
-        alt: z.string(),
-        url: z.string(),
-      })
-      .optional(),
+    featureIcon: z.object({
+      width: z.number().default(64),
+      height: z.number().default(64),
+      alt: z.string(),
+      url: z.string(),
+    }),
     featureImage: z
       .object({
         width: z.number().default(64),
