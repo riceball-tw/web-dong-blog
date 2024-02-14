@@ -65,11 +65,20 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
         imageAlt: `${seoImage.alt}`,
       }}
       extend={{
-        link: [{ rel: 'icon', href: '/images/brand/logo.svg', type: 'image/svg+xml' }, {
-          rel: 'sitemap',
-          href: '/sitemap-index.xml',
-          type: 'application/xml',
-        }],
+        link: [
+          // @ts-ignore
+          // Link 'sizes' property is DOMTokenList type not string
+          // https://github.com/jonasmerlin/astro-seo/issues/87
+          { rel: 'icon', href: 'favicon.ico', sizes: '32x32' },
+          { rel: 'icon', href: '/images/brand/favicon/logo.svg', type: 'image/svg+xml' },
+          { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+          { rel: 'manifest', href: '/manifest.webmanifest' },
+          {
+            rel: 'sitemap',
+            href: '/sitemap-index.xml',
+            type: 'application/xml',
+          },
+        ],
         meta: [
           {
             name: 'viewport',
