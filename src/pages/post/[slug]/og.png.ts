@@ -80,7 +80,7 @@ export async function GET({ props }: Props) {
 
   return new ImageResponse(html, {
     width: 1200,
-    height: 600,
+    height: 630,
     fonts: [
       {
         name: 'Noto Sans TC Bold',
