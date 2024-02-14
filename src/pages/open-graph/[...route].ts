@@ -1,6 +1,6 @@
 import { OGImageRoute } from 'astro-og-canvas';
 
-export const { getStaticPaths, get } = OGImageRoute({
+export const { getStaticPaths, GET } = OGImageRoute({
   // https://github.com/delucis/astro-og-canvas/tree/latest/packages/astro-og-canvas
   param: 'route',
 
