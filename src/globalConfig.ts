@@ -10,7 +10,7 @@ export default {
     slogan: '把網頁開發知識一桿進洞',
     description:
       '是什麼原因導致網頁建構上遭遇瓶頸？以及如何突破？網頁東東用最親切簡單的方式描述如何設計與架構網頁，著重於圖像化以及實例操作，累積教學上的經驗降低每次學習新事物的成本',
-    themeColor: '#534af7',
+    themeColor: '#0d0a28',
     thumbnail: {
       width: 1200,
       height: 630,
