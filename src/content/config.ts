@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { toolboxSchema, postSchema } from '@/content/schemas.ts';
+import { toolboxSchema, postSchema, characterSchema } from '@/content/schemas.ts';
 
 export const collections = {
   post: defineCollection({
@@ -8,5 +8,9 @@ export const collections = {
   toolbox: defineCollection({
     type: 'data',
     schema: toolboxSchema,
+  }),
+  author: defineCollection({
+    type: 'data',
+    schema: characterSchema,
   }),
 };

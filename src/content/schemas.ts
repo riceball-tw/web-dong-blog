@@ -1,4 +1,4 @@
-import { z } from 'astro:content';
+import { reference, z } from 'astro:content';
 import uniqolor from 'uniqolor';
 
 function getDefaultColor() {
@@ -38,6 +38,7 @@ export const postSchema = z.object({
       url: z.string(),
     })
     .optional(),
+  author: reference('character').optional(),
   title: z.string(),
   titleTC: z.string(),
   excerpt: z.string(),
@@ -46,4 +47,13 @@ export const postSchema = z.object({
   themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
   publishDate: z.date(),
   permalink: z.string().optional(),
+});
+
+export const characterSchema = z.object({
+  name: z.string(),
+  social: z
+    .object({
+      url: z.string(),
+    })
+    .optional(),
 });
