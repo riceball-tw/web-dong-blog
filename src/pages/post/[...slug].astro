@@ -1,10 +1,11 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
-import { getCollection} from 'astro:content';
+import { getCollection, getEntry} from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Tags from '@/components/taxonomy/tags.astro';
 import Category from '@/components/taxonomy/category.astro';
 import Utteranc from '@/components/app/Utteranc.astro';
+import PostJSONLD from '@/components/app/PostJSONLD.astro';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -22,9 +23,24 @@ const { post } = Astro.props;
 const { featureImage, featureIcon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
 const { Content, headings } = await post.render();
+
+const author = post.data.author && (await getEntry('character', post.data.author?.id));
 ---
 
 <BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
+  <PostJSONLD
+    slot="head"
+    headline={post.data.titleTC}
+    description={post.data.excerpt}
+    publishDate={post.data.publishDate}
+    keywords={post.data.tags}
+    articleSection={post.data.category}
+    author={author && {
+      nameTC: author.data.nameTC,
+      url: author.data.social.url,
+    }}
+
+  />
   <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
     <article
       data-article
