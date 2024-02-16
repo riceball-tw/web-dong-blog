@@ -9,6 +9,7 @@ export interface Props extends BaseLayout {}
 ---
 
 <Base {...Astro.props}>
+  <slot name="head" slot="head"/>
   <Navbar>
     <Search client:media="(min-width: 1024px)" />
   </Navbar>
