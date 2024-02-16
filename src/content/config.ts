@@ -9,7 +9,7 @@ export const collections = {
     type: 'data',
     schema: toolboxSchema,
   }),
-  author: defineCollection({
+  character: defineCollection({
     type: 'data',
     schema: characterSchema,
   }),
