@@ -1,5 +1,6 @@
 ---
 import { getEntry } from 'astro:content';
+import sanitizeHtml from 'sanitize-html';
 
 interface Props {
   headline: string;
@@ -54,4 +55,4 @@ const postSchema = {
 
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(postSchema)} />
+<script type="application/ld+json" set:html={sanitizeHtml(JSON.stringify(postSchema))}></script>
