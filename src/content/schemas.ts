@@ -51,6 +51,7 @@ export const postSchema = z.object({
 
 export const characterSchema = z.object({
   name: z.string(),
+  nameTC: z.string(),
   social: z
     .object({
       url: z.string(),
