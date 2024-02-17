@@ -42,11 +42,11 @@ const postSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "url": Astro.url,
+  "image": new URL(`og.png`, Astro.url),
   "headline": headline,
   "description": description,
   "keywords": keywords,
-  /* the schema expects is ISO 8601 format. For Date that is yyyy-MM-dd */
-  "datePublished": publishDate.toISOString().substring(0, 10),
+  "datePublished": new Date(publishDate).toISOString(),
   "publisher": defaultOrganization,
   "articleSection": articleSection,
   ...(author ? postAuthor : defaultAuthor),
