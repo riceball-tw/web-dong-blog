@@ -20,7 +20,7 @@ const me = await getEntry('character', 'me');
 const defaultOrganization = {
   "@type": "Organization",
   "name": mySite.data.nameTC,
-  "url": mySite.data.social.url
+  "url": mySite.data?.social?.url
   }
 const postAuthor = {
     "author": {
@@ -34,7 +34,7 @@ const defaultAuthor = {
   "author": {
     "@type": "Person",
     "name": me.data.nameTC,
-    "url": me.data.social.url,
+    "url": me.data?.social?.url,
   }
 }
 
