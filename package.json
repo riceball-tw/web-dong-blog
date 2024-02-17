@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.8",
+    "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint": "8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -58,6 +59,7 @@
     "hastscript": "^7.2.0",
     "prettier": "^2.8.2",
     "prettier-plugin-astro": "^0.7.2",
-    "prettier-plugin-tailwindcss": "^0.2.7"
+    "prettier-plugin-tailwindcss": "^0.2.7",
+    "sanitize-html": "^2.11.0"
   }
 }
