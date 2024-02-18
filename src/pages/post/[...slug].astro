@@ -6,6 +6,7 @@ import Tags from '@/components/taxonomy/tags.astro';
 import Category from '@/components/taxonomy/category.astro';
 import Utteranc from '@/components/app/Utteranc.astro';
 import PostJSONLD from '@/components/app/PostJSONLD.astro';
+import PostImage from '@/components/post/PostImage.astro';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -114,7 +115,7 @@ const author = post.data.author && (await getEntry('character', post.data.author
           )
         }
       </aside>
-      <Content />
+      <Content components={{ img: PostImage }} />
       <Utteranc />
     </article>
   </main>
