@@ -46,10 +46,10 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       )
     }
     <div>
-      <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
+      <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-xl font-medium">
         {url ? <a href={url}>{titleTC}</a> : slug ? <a href={`/post/${slug}/`}>{titleTC}</a> : titleTC}
       </h3>
-      <p class="max-w-prose">{excerpt}</p>
+      <p class="line-clamp-3 max-w-prose text-base leading-loose tracking-wide">{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
       {
