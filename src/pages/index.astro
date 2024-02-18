@@ -41,11 +41,11 @@ const heroBadge = {
   <section>
     <h2 class="sr-only">文章種類</h2>
     <div class="flex flex-wrap gap-4">
-      <div class="mx-4 grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="mx-4 grid w-full grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {
           categoriesLists.map((categoriesList) => (
             <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
-              <div class="mb-8 flex items-center justify-between">
+              <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
                 <h2
                   transition:name={`category-${characterToUnicode(categoriesList.type)}`}
                   class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
@@ -57,12 +57,16 @@ const heroBadge = {
                 </span>
               </div>
 
-              <ul class=" flex flex-col gap-4">
+              <ul class="flex flex-col gap-4">
                 {categoriesList.posts.map(
                   (post, index) =>
                     index + 1 < 4 && (
-                      <li class="group/list flex gap-8">
-                        <time class="whitespace-nowrap opacity-80 group-hover/list:opacity-100">
+                      <li class="group/list inline-flex gap-12">
+                        <time
+                          {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
+                          style="margin-top: 0.3em"
+                          class="inline-block whitespace-nowrap opacity-80 group-hover/list:opacity-100 "
+                        >
                           {post.data.publishDate
                             .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
                             .replace(/\//g, '-')}
