@@ -41,11 +41,6 @@ module.exports = {
       },
     },
     extend: {
-      gridTemplateColumns: {
-        gallery: 'repeat(auto-fit, minmax(300px, 1fr))',
-        'gallery-lg': 'repeat(auto-fit, minmax(450px, 1fr))',
-      },
-
       // variable colors with <alpha-value> not working with theme function on plugins
       // https://github.com/tailwindlabs/tailwindcss/issues/9143#issuecomment-1579382345
       typography: ({ theme }) => ({
