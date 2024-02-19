@@ -37,11 +37,12 @@ const author = post.data.author && (await getEntry('character', post.data.author
     publishDate={post.data.publishDate}
     keywords={post.data.tags}
     articleSection={post.data.category}
-    author={author && {
-      nameTC: author.data.nameTC,
-      url: author.data.social.url,
-    }}
-
+    author={author
+      ? {
+          nameTC: author.data.nameTC,
+          url: author.data?.social?.url,
+        }
+      : {}}
   />
   <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
     <article
