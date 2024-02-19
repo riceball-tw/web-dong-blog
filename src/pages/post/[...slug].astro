@@ -24,8 +24,8 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { featureImage, featureIcon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
-const { Content, headings } = await post.render();
-
+const { Content, headings, remarkPluginFrontmatter } = await post.render();
+const lastModified = new Date(remarkPluginFrontmatter.lastModified);
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 ---
 
@@ -84,37 +84,61 @@ const author = post.data.author && (await getEntry('character', post.data.author
               <Category category={category} />
               <Tags tags={tags} />
             </div>
-            <time class="opacity-40 hover:opacity-100">
-              {
-                publishDate
-                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                  .replace(/\//g, '-')
-              }
-            </time>
           </div>
         </div>
       </header>
-
       <aside style="top: var(--mainNav-height)" class="sticky col-start-3 row-start-2 ml-4 hidden xl:block">
-        {
-          Boolean(headings.length) && (
-            <div class="absolute top-0">
-              <ul data-toc class="toc m-0 list-none p-0">
-                {headings.map(({ depth, slug: headingSlug, text }) => (
-                  <li>
-                    <a
-                      class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
-                      href={`#${headingSlug}`}
-                      aria-label={`移動到 ${text} 標題區塊`}
-                    >
-                      {text}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+        <div class="absolute top-0 divide-y divide-primary-200 dark:divide-primary-800">
+          <!-- TOC -->
+          <div class="p-4">
+            {
+              Boolean(headings.length) && (
+                <div class="">
+                  <ul data-toc class="toc m-0 list-none p-0">
+                    {headings.map(({ depth, slug: headingSlug, text }) => (
+                      <li>
+                        <a
+                          class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                          href={`#${headingSlug}`}
+                          aria-label={`移動到 ${text} 標題區塊`}
+                        >
+                          {text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            }
+          </div>
+
+          <!-- Post Date Info -->
+          <div class="inline-flex w-full flex-col gap-2 p-4">
+            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+              發布日期：
+              <time>
+                {
+                  publishDate
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                }
+              </time>
             </div>
-          )
-        }
+            <a
+              href={`https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post/${post.slug}.mdx`}
+              class="inline-flex items-center gap-2 text-sm font-normal opacity-40 hover:opacity-100"
+            >
+              最後更新：
+              <time>
+                {
+                  lastModified
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                }
+              </time>
+            </a>
+          </div>
+        </div>
       </aside>
       <Content components={{ img: PostImage, blockquote: PostBlockquote }} />
       <Utteranc />
