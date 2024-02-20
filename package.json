@@ -27,6 +27,7 @@
     "@vercel/og": "^0.6.2",
     "astro": "^4.4.0",
     "astro-auto-import": "^0.4.2",
+    "astro-expressive-code": "^0.32.4",
     "astro-seo": "^0.7.4",
     "fuse.js": "^6.6.2",
     "preact": "^10.17.1",
