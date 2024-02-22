@@ -38,7 +38,20 @@ export function toggleGlobalTheme(currentTheme: string) {
 export function setGlobalTheme(newTheme: string, oldTheme?: string) {
   localStorage.theme = newTheme;
   const HTMLElement = document.documentElement;
+
+  const themeMap: { [key: string]: { expressiveCodeBlock: string } } = {
+    light: {
+      expressiveCodeBlock: 'github-light',
+    },
+    dark: {
+      expressiveCodeBlock: 'github-dark',
+    },
+  };
+
   oldTheme && HTMLElement.classList.remove(oldTheme);
   HTMLElement.classList.add(newTheme);
+  if (themeMap[newTheme]) {
+    HTMLElement.dataset.theme = themeMap[newTheme]?.expressiveCodeBlock;
+  }
   window.dispatchEvent(new Event('updateTheme'));
 }
