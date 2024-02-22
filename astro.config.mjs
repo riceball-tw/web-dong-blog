@@ -9,8 +9,8 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import AutoImport from 'astro-auto-import';
-
 import { h, s } from 'hastscript';
+import expressiveCode from 'astro-expressive-code';
 
 export default defineConfig({
   site: 'https://www.webdong.dev',
@@ -65,6 +65,12 @@ export default defineConfig({
     }),
     AutoImport({
       imports: ['@/components/post/Info.astro', '@/components/post/Figure.astro', '@/components/post/Video.astro'],
+    }),
+    expressiveCode({
+      themes: ['github-dark', 'github-light'],
+      styleOverrides: {
+        codeFontSize: '1rem',
+      },
     }),
     mdx({
       drafts: false,
