@@ -40,4 +40,5 @@ export function setGlobalTheme(newTheme: string, oldTheme?: string) {
   const HTMLElement = document.documentElement;
   oldTheme && HTMLElement.classList.remove(oldTheme);
   HTMLElement.classList.add(newTheme);
+  window.dispatchEvent(new Event('updateTheme'));
 }

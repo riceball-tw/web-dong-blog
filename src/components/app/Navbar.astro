@@ -110,7 +110,6 @@ const mainNav = [
     targetElement.addEventListener('click', () => {
       const localStorageTheme = localStorage.theme;
       toggleGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-      window.dispatchEvent(new Event('updateTheme'));
     });
   }
 
