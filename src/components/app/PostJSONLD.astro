@@ -8,10 +8,12 @@ interface Props {
   publishDate: Date;
   keywords: string[];
   articleSection: string;
-  author: {
-    nameTC: string;
-    url: string;
-  } | undefined;
+  author:
+    | {
+        nameTC: string;
+        url: string | undefined;
+      }
+    | undefined;
 }
 
 const { headline, description, publishDate, keywords, author, articleSection } = Astro.props;

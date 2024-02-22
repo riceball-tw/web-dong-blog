@@ -39,7 +39,7 @@ const author = post.data.author && (await getEntry('character', post.data.author
     articleSection={post.data.category}
     author={author && {
       nameTC: author.data.nameTC,
-      url: author.data.social.url,
+      url: author.data?.social?.url,
     }}
 
   />
