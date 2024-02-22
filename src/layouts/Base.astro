@@ -28,15 +28,21 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
 <script>
   import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme';
 
-  setGlobalTheme(getCurrentGlobalTheme());
+  const localStorageTheme = localStorage.theme;
+  setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
   document.addEventListener('astro:after-swap', () => {
-    setGlobalTheme(getCurrentGlobalTheme());
+    setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
   });
 </script>
 
 <script is:inline>
-  const theme = localStorage.getItem('theme');
-  document.querySelector('html').className = `html ${theme}`;
+  /**
+   * Sets the theme immediately at the first load, to avoid theme flashing.
+   */
+  const localStorageTheme = localStorage.theme;
+  const codeBlockTheme = localStorageTheme === 'dark' ? 'github-dark' : 'github-light';
+  document.querySelector('html').className = `html ${localStorageTheme}`;
+  document.querySelector('html').setAttribute('data-theme', codeBlockTheme);
 </script>
 
 <html class="html" transition:persist lang="zh-Hant-TW">
