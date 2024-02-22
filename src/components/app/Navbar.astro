@@ -108,7 +108,8 @@ const mainNav = [
 
   function setupThemeToggler(targetElement: HTMLElement) {
     targetElement.addEventListener('click', () => {
-      toggleGlobalTheme(getCurrentGlobalTheme());
+      const localStorageTheme = localStorage.theme;
+      toggleGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
       window.dispatchEvent(new Event('updateTheme'));
     });
   }
