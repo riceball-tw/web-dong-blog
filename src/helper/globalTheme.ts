@@ -1,3 +1,5 @@
+import globalConfig from '@/globalConfig';
+
 /**
  * Checks System preference and LocalStorage if the global theme is set to dark.
  * @returns whether the global theme is set to dark.
@@ -35,23 +37,14 @@ export function toggleGlobalTheme(currentTheme: string) {
  * @param newTheme - The new theme to be set.
  * @param oldTheme - (Optional) The old theme to be removed.
  */
-export function setGlobalTheme(newTheme: string, oldTheme?: string) {
+export function setGlobalTheme(newTheme: 'light' | 'dark', oldTheme?: string) {
   localStorage.theme = newTheme;
   const HTMLElement = document.documentElement;
-
-  const themeMap: { [key: string]: { expressiveCodeBlock: string } } = {
-    light: {
-      expressiveCodeBlock: 'github-light',
-    },
-    dark: {
-      expressiveCodeBlock: 'github-dark',
-    },
-  };
-
+  const editorThemeMap = globalConfig.setting.editorTheme;
   oldTheme && HTMLElement.classList.remove(oldTheme);
   HTMLElement.classList.add(newTheme);
-  if (themeMap[newTheme]) {
-    HTMLElement.dataset.theme = themeMap[newTheme]?.expressiveCodeBlock;
+  if (editorThemeMap[newTheme]) {
+    HTMLElement.dataset.theme = editorThemeMap[newTheme];
   }
   window.dispatchEvent(new Event('updateTheme'));
 }

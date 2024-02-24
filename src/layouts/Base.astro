@@ -1,28 +1,18 @@
 ---
 import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
-import { SEO } from 'astro-seo';
-import globalConfig from '@/globalConfig';
 import { ViewTransitions } from 'astro:transitions';
 import { hexToRgba } from '@/helper/hexToRgba';
+import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
+import DefaultHead from '@/components/app/head/DefaultHead.astro'
+import ThemeInit from '@/components/app/head/ThemeInit.astro'
 
 export interface Props extends BaseLayout {}
 
-const { brand } = globalConfig;
-const { title, description, themeColor, thumbnail } = Astro.props;
-const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
-const seoDescription = description || brand.description;
-const seoImage = {
-  src: thumbnail?.src
-    ? new URL(`/post/${thumbnail.src}/og.png`, Astro.url)
-    : new URL(brand.thumbnail.src, Astro.url),
-  width: thumbnail?.width ?? brand.thumbnail.width,
-  height: thumbnail?.height ?? brand.thumbnail.height,
-  alt: thumbnail?.alt ?? brand.thumbnail.alt,
-};
+const { themeColor } = Astro.props;
+
 const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
 const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
-const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
 ---
 
 <script>
@@ -35,84 +25,14 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
   });
 </script>
 
-<script is:inline>
-  /**
-   * Sets the theme immediately at the first load, to avoid theme flashing.
-   */
-  const localStorageTheme = localStorage.theme;
-  const codeBlockTheme = localStorageTheme === 'dark' ? 'github-dark' : 'github-light';
-  document.querySelector('html').className = `html ${localStorageTheme}`;
-  document.querySelector('html').setAttribute('data-theme', codeBlockTheme);
-</script>
 
-<html class="html" transition:persist lang="zh-Hant-TW">
+
+<html transition:persist lang="zh-Hant-TW">
   <head>
-    <SEO
-      charset="UTF-8"
-      title={seoTitle}
-      description={seoDescription}
-      openGraph={{
-        basic: {
-          title: `${seoTitle}`,
-          type: 'website',
-          image: `${seoImage.src}`,
-        },
-        image: {
-          type: 'image/jpeg',
-          alt: `${seoImage.alt}`,
-          width: seoImage.width,
-          height: seoImage.height,
-        },
-      }}
-      twitter={{
-        title: `${seoTitle}`,
-        description: `${seoDescription}`,
-        image: `${seoImage.src}`,
-        imageAlt: `${seoImage.alt}`,
-      }}
-      extend={{
-        link: [
-          // @ts-ignore
-          // Link 'sizes' property is DOMTokenList type not string
-          // https://github.com/jonasmerlin/astro-seo/issues/87
-          { rel: 'icon', href: '/images/brand/favicon/favicon.ico', sizes: '32x32' },
-          { rel: 'icon', href: '/images/brand/favicon/logo.svg', type: 'image/svg+xml' },
-          { rel: 'apple-touch-icon', href: '/images/brand/favicon/apple-touch-icon.png' },
-          { rel: 'manifest', href: '/manifest.webmanifest' },
-          {
-            rel: 'sitemap',
-            href: '/sitemap-index.xml',
-            type: 'application/xml',
-          },
-        ],
-        meta: [
-          {
-            name: 'viewport',
-            content: 'width=device-width, initial-scale=1',
-          },
-          {
-            name: 'theme-color',
-            content: brand.themeColor,
-          },
-        ],
-      }}
-    />
+    <ThemeInit />
+    <DefaultHead { ...Astro.props}/>
     <ViewTransitions fallback="none" />
-
-    <!-- Analytics -->
-    <script
-      type="text/partytown"
-      src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTIC_ID}`}
-    ></script>
-    <script type="text/partytown" define:vars={{GOOGLE_ANALYTIC_ID}}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', GOOGLE_ANALYTIC_ID);
-    </script>
+    <GoogleAnalytic />
     <slot name="head" />
   </head>
   <body
@@ -120,7 +40,7 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
   >
     <slot />
     <style define:vars={{ bgGradientColor, bgGradientColorDark }}>
-      .html::after {
+      html::after {
         content: '';
         position: absolute;
         top: 0;
@@ -132,7 +52,7 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
         background-size: auto;
       }
 
-      .html::after {
+      html::after {
         background-image: linear-gradient(0deg, rgb(var(--primary-color-50)), transparent 15%),
           linear-gradient(
             220deg,
@@ -142,7 +62,7 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
           );
       }
 
-      .dark.html::after {
+      html.dark::after {
         background-image: linear-gradient(0deg, rgb(var(--primary-color-1000)) 1%, transparent 40%),
           linear-gradient(
             60deg,

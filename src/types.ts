@@ -1,8 +1,10 @@
-export interface BaseLayout {
-  test?: string;
+export interface BaseLayout extends GlobalHead {
+  themeColor?: string;
+}
+
+export interface GlobalHead {
   title?: string;
   description?: string;
-  themeColor?: string;
   thumbnail?: {
     width?: number;
     height?: number;

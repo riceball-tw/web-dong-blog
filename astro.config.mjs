@@ -12,6 +12,9 @@ import AutoImport from 'astro-auto-import';
 import { remarkModifiedTime } from './src/helper/remark-modified-time';
 import { h, s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
+import globalConfig from './src/globalConfig';
+
+const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 
 export default defineConfig({
   site: 'https://www.webdong.dev',
@@ -69,7 +72,7 @@ export default defineConfig({
       imports: ['@/components/post/Info.astro', '@/components/post/Figure.astro', '@/components/post/Video.astro'],
     }),
     expressiveCode({
-      themes: ['github-dark', 'github-light'],
+      themes: allEditorTheme,
       styleOverrides: {
         codeFontSize: '1rem',
       },
