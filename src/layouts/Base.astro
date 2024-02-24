@@ -4,7 +4,7 @@ import '@/styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
 import { hexToRgba } from '@/helper/hexToRgba';
 import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
-import GlobalHead from '@/components/app/head/GlobalHead.astro'
+import DefaultHead from '@/components/app/head/DefaultHead.astro'
 
 export interface Props extends BaseLayout {}
 
@@ -36,7 +36,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 
 <html class="html" transition:persist lang="zh-Hant-TW">
   <head>
-    <GlobalHead { ...Astro.props}/>
+    <DefaultHead { ...Astro.props}/>
     <ViewTransitions fallback="none" />
     <GoogleAnalytic />
     <slot name="head" />
