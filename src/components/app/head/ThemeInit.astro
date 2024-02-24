@@ -1,0 +1,15 @@
+---
+import globalConfig from '@/globalConfig';
+import { getCurrentGlobalTheme } from '@/helper/globalTheme';
+const { editorTheme } = globalConfig.setting 
+const getCurrentGlobalThemeSerialized = getCurrentGlobalTheme.toString();
+---
+<script define:vars={{ editorTheme, getCurrentGlobalThemeSerialized }}>
+  function deSerializeFunction(serializedFunction) {
+    return Function(`return ${serializedFunction}`)();
+  }
+  const currentTheme = deSerializeFunction(getCurrentGlobalThemeSerialized)(localStorage.theme);
+  const codeBlockTheme = editorTheme[currentTheme];
+  document.querySelector('html').className = `${currentTheme}`;
+  document.querySelector('html').setAttribute('data-theme', codeBlockTheme);
+</script>

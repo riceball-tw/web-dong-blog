@@ -5,6 +5,7 @@ import { ViewTransitions } from 'astro:transitions';
 import { hexToRgba } from '@/helper/hexToRgba';
 import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
 import DefaultHead from '@/components/app/head/DefaultHead.astro'
+import ThemeInit from '@/components/app/head/ThemeInit.astro'
 
 export interface Props extends BaseLayout {}
 
@@ -24,18 +25,11 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
   });
 </script>
 
-<script is:inline>
-  /**
-   * Sets the theme immediately at the first load, to avoid theme flashing.
-   */
-  const localStorageTheme = localStorage.theme;
-  const codeBlockTheme = localStorageTheme === 'dark' ? 'github-dark' : 'github-light';
-  document.querySelector('html').className = `html ${localStorageTheme}`;
-  document.querySelector('html').setAttribute('data-theme', codeBlockTheme);
-</script>
 
-<html class="html" transition:persist lang="zh-Hant-TW">
+
+<html transition:persist lang="zh-Hant-TW">
   <head>
+    <ThemeInit />
     <DefaultHead { ...Astro.props}/>
     <ViewTransitions fallback="none" />
     <GoogleAnalytic />
@@ -46,7 +40,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
   >
     <slot />
     <style define:vars={{ bgGradientColor, bgGradientColorDark }}>
-      .html::after {
+      html::after {
         content: '';
         position: absolute;
         top: 0;
@@ -58,7 +52,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
         background-size: auto;
       }
 
-      .html::after {
+      html::after {
         background-image: linear-gradient(0deg, rgb(var(--primary-color-50)), transparent 15%),
           linear-gradient(
             220deg,
@@ -68,7 +62,7 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
           );
       }
 
-      .dark.html::after {
+      html.dark::after {
         background-image: linear-gradient(0deg, rgb(var(--primary-color-1000)) 1%, transparent 40%),
           linear-gradient(
             60deg,
