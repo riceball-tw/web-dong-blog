@@ -9,6 +9,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import AutoImport from 'astro-auto-import';
+import { remarkModifiedTime } from './src/helper/remark-modified-time';
 import { h, s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
 import globalConfig from './src/globalConfig';
@@ -56,6 +57,7 @@ export default defineConfig({
         },
       ],
     ],
+    remarkPlugins: [remarkModifiedTime],
     shikiConfig: {
       theme: 'github-dark',
     },
