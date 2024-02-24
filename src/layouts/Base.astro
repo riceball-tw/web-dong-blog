@@ -5,6 +5,8 @@ import { SEO } from 'astro-seo';
 import globalConfig from '@/globalConfig';
 import { ViewTransitions } from 'astro:transitions';
 import { hexToRgba } from '@/helper/hexToRgba';
+import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
+
 
 export interface Props extends BaseLayout {}
 
@@ -22,7 +24,7 @@ const seoImage = {
 };
 const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
 const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
-const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
+
 ---
 
 <script>
@@ -98,21 +100,7 @@ const GOOGLE_ANALYTIC_ID = import.meta.env.PUBLIC_GOOGLEANALYTIC_ID
       }}
     />
     <ViewTransitions fallback="none" />
-
-    <!-- Analytics -->
-    <script
-      type="text/partytown"
-      src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTIC_ID}`}
-    ></script>
-    <script type="text/partytown" define:vars={{GOOGLE_ANALYTIC_ID}}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-
-      gtag('config', GOOGLE_ANALYTIC_ID);
-    </script>
+    <GoogleAnalytic />
     <slot name="head" />
   </head>
   <body
