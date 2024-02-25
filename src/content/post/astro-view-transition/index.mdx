@@ -1,0 +1,101 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day27 - Astro Series: View Transition?'
+titleTC: 'Astro 系列文第二十七日：視圖過度 '
+excerpt: '本章節來談談 Astro 3.0 版本最吸睛的一項功能：View Transitions ，讓你的靜態網頁也能達成 App 應用一樣的絲滑感受。由於這項技術還在實驗階段，因此放在後面的章節補充。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-10-11
+---
+
+![一個漂亮的漸層背景上面有一句標題：「視圖過度」](./day27-view-transition.webp)
+
+## 前言
+
+本章節來談談 Astro 3.0 版本最吸睛的一項功能：View Transitions ，讓你的靜態網頁也能達成 App 應用一樣的絲滑感受。
+
+由於這項技術還在實驗階段，因此放在後面的章節補充。
+
+## 為什麼需要 View Transitions？
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube-nocookie.com/embed/JCJUPJ_zDQ4?si=ixkIc_ef6z-LhupD&amp;controls=0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
+
+[View Transitions API](https://developer.chrome.com/docs/web-platform/view-transitions/) 是瀏覽器正推出的一項 API，提供簡易的方法對任何 DOM 狀態更換提供轉場特效，這項技術可以用運在較小的範圍像是切換內容，也可以是更廣的範圍像是頁面切換的轉場。
+
+這是一項仍在推出的標準，當前約略僅有 65% 的瀏覽器支援，可以[漸進增強](https://developer.mozilla.org/zh-TW/docs/Glossary/Progressive_Enhancement)的使用這項技術。除了酷炫以外也能更好的引導視覺的流向、降低使用者等待的體感時間，進而提升網站的用戶體驗。
+
+## Astro 與 View Transition
+
+在 Astro 中可以預設很輕易的在切換靜態頁面時達成：
+
+- 元素在不同頁面之間的形變動畫
+- 淡入淡出或滑入滑出元素動畫
+- 在不刷新頁面的情況下，保持共用的用戶界面元素
+
+只需要在每個頁面的 `<head>` 添加 `<ViewTransitions />` 就可以在該頁面上使用 ViewTransition 過渡動畫。
+
+```jsx
+---
+// 對所有想添加 View Transition 的頁面添加 "<ViewTransitions />" component
+import {ViewTransitions} from 'astro:transitions';
+---
+<head>
+  <title>My View Transition Demo</title>
+  <ViewTransitions />
+</head>
+<body>
+  <!-- -->
+</body>
+```
+
+接著整個網站切換頁面時就會如同 SPA (Single Page Application) 一樣流暢，不用刷新頁面也能載入新內容了。
+
+### 元素在不同頁面之間的型變動畫
+
+如果在 A 頁面有一個標題，而 B 頁面也有相同的標題想要再換頁時有過度的動畫可以替各自相同的元件綁定 `transition:name` ：
+
+```jsx
+<aside transition:name="hero">
+```
+
+這樣該元件就會在切換頁面時增添過渡動畫。
+
+### 元素在不同頁面之間的狀態保持
+
+有的時候頁面切換之前還是希望保持上個頁面的狀態，這時候就可以使用 `transition:persist` ，孤島元件也可以。
+
+```jsx
+<Counter client:load transition:persist count={5} />
+```
+
+## 後備方案
+
+可以替 `<ViewTransitions>` 添加不同的 `fallback` 屬性來描述當瀏覽器不支援時的後備方案，當前有以下幾種選擇：
+
+- `animate` (預設, 推薦) - Astro 將會模擬動畫，不過該功能[尚未完成並不會有任何效果](https://github.com/withastro/astro/issues/8301#issuecomment-1699546688)。
+- `swap` - Astro 將會直接替換新的頁面。
+- `none` - Astro 將會直接刷新頁面來加載新頁面。
+
+```jsx
+<ViewTransitions fallback="swap">
+```
+
+## 總結
+
+Astro 提供便捷的方式讓靜態網站使用 Transition API 更為便捷，讓傳統靜態網站也能搖身一變升級為 App 體驗般的感受。
+
+## 延伸閱讀
+
+- [View Transition](https://docs.astro.build/en/guides/view-transitions/) - Astro DOCS
+- [astro movies](https://astro-movies.pages.dev/movies/615656) - Astro Movies 動態轉場範例
+- [View Transitions API](https://caniuse.com/view-transitions) - Can I use
+- [Day27 - 視圖過度](https://ithelp.ithome.com.tw/articles/10338720) - 相同文章同步發布於 iThome 鐵人賽中

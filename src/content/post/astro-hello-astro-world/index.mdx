@@ -1,0 +1,131 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day3 - Astro Series: Hello Astro World'
+titleTC: 'Astro 系列文第三日：建構新專案'
+excerpt: '藉由本系列文章將持續 30 日不間斷的更新帶領你上手它！今日介紹如何從頭建構一個專案並且了解資料夾結構。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-18
+---
+
+![一個漂亮的漸層背景上面有一句標題：「建構新專案」](./day3-hello-astro-world.webp)
+
+## 前言
+
+前面提到 Astro 是如何建構頁面的，像是將網頁拆分成「元件」以及透過 Astro Island 的方式來建構網頁，接著本章節就要來實際創建一個 Astro 專案囉！
+
+## 建構專案
+
+### 前置準備
+
+Astro 提供了自動建構專案的 CLI 工具，在建構專案之前會需要以下環境：
+
+- [Node.js](https://nodejs.org/zh-tw) - `18.14.1` 或更高（可考慮使用 [nvm](https://www.casper.tw/development/2022/01/10/install-nvm/) 切換不同版本）
+- 文字編輯器 - VS Code 搭配[官方插件](https://marketplace.visualstudio.com/items?itemName=astro-build.astro-vscode)最佳（或是你偏好其他文字編輯器也可參考[官方文件](https://docs.astro.build/zh-tw/editor-setup/#%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BC%8F%E7%B7%A8%E8%BC%AF%E5%99%A8)的說明）
+- 終端
+
+### 透過自動建構工具創建 Astro
+
+```bash
+npm create astro@latest
+```
+
+```bash
+# 安裝以下套件 create-astro@4.0.1？ 輸入 y 繼續
+Need to install the following packages:
+  create-astro@4.0.1
+Ok to proceed? (y) y
+
+# 要在哪裡創建您的新專案？
+   dir   Where should we create your new project?
+         ./專案名稱
+
+# 要使用專案模板嗎？ 1. 使用專案模板（推薦） 2. 使用部落格模板 3. 不使用
+   tmpl   How would you like to start your new project?
+         > Include sample files (recommended)
+         — Use blog template
+         — Empty
+
+# 要安裝依賴套件嗎（推薦）？
+   deps   Install dependencies? (recommended)
+         ● Yes  ○ No
+
+# 要使用 TypeScript 嗎？
+   ts   Do you plan to write TypeScript?
+         ● Yes  ○ No
+
+# TypeScript 設定上應該多嚴格？ 1. 嚴格（推薦） 2. 最嚴格 3. 鬆散
+   use   How strict should TypeScript be?
+         > Strict (recommended)
+         — Strictest
+         — Relaxed
+
+# 初始化 Git Repo 嗎？
+git   Initialize a new git repository? (optional)
+         ● Yes  ○ No
+```
+
+這樣一個完整的 Astro 便完成了，整體專案會是這樣的架構：
+
+```bash
+專案
+├── .git # Git 相關檔案
+├── .vscode # vscode 相關檔案
+├── node_modules # NPM 依賴套件
+├── public # 任何不希望經由 Astro 處理的檔案
+│   └── favicon.svg
+├── src # 專案的代碼
+│   ├── pages
+│   │   └── index.astro
+│   └── env.d.ts
+├── .gitignore
+├── astro.config.mjs # Astro 的設定文件
+├── package.json # NPM 相關紀錄
+├── README.md # 專案描述文件
+└── tsconfig.json # TypeScript 設定文件
+```
+
+### `public/` 資料夾
+
+用於存放非原始碼不想被 Astro 處理的檔案，內容會被原封不動的放置到渲染出來的資料夾中。
+
+### `src/` 資料夾
+
+用於存放與專案原始碼有關的文件，可以在這裡透過資料夾來分類專案原始碼。資料夾名稱可以自由命名，常見的 `src` 資料夾結構會像是這樣子：
+
+```bash
+src/
+├── components # 元件
+├── content # 存放與 Content Collections 相關的文件
+├── layouts # 布局用元件
+├── pages # 頁面用元件
+└── styles # 專案樣式
+```
+
+除了 `src/pages/` 與 `src/content/` 之外資料夾名稱都可以隨自己偏好命名，並且只有 `pages` 資料夾是必要存在的，因為該資料夾內的文件會被用於創建頁面，稍後章節會介紹它們個別的用途，目前大致知道專案結構即可。
+
+### 啟動 Astro
+
+常見會用到三個指令：開啟開發伺服器、渲染網頁、預覽已渲染網頁。網頁渲染出來預設會被存放到一個 `dist` 資料夾中。
+
+```bash
+# 開啟開發伺服器
+npm run dev
+
+# 渲染網頁
+npm run build
+
+# 預覽已渲染網頁
+npm run preview
+```
+
+## 總結
+
+建構 Astro 專案非常簡單，透過 CLI 工具很快就能設定好一個可運作的專案。如果你熟悉 Vite 的話這樣的架構或許對你來說非常的熟悉，因為 Astro 底層實際上底層就是使用 Vite 來製作的！
+
+## 延伸閱讀
+
+- [The Astro CLI - Astro DOCS](https://docs.astro.build/en/reference/cli-reference/#build)
+- [Install Astro with the Automatic CLI - Astro DOCS](https://docs.astro.build/en/install/auto/)
+- [Day3 - 建構新專案](https://ithelp.ithome.com.tw/articles/10319824) - 相同文章同步發布於 iThome 鐵人賽中

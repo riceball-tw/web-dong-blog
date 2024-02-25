@@ -1,0 +1,71 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/list.svg', alt: '清單的符號' }
+title: 'Learn Hoppscotch'
+titleTC: '從圖片學習使用 Hoppscotch 來打出 API'
+excerpt: 'Hoppscotch 是一個線上工具，可以讓你在瀏覽器上迅捷的測試後端提供的 API，相比於過於臃腫的 Postman，這款清新好用的開源工具已經是我的愛用工具之一。'
+category: '分享'
+tags: ['API']
+publishDate: 2023-04-14
+---
+
+## 前言
+
+![Hoppscotch 介面](./ui.webp)
+
+鑒於很多同學都一拿到後端的文件就直接上手寫程式，導致在寫程式的時候常常疏漏許多問題，像是請求方式錯誤、少夾帶參數、網址錯誤、資料不存在……等，因此我都會建議對方先熟悉怎麼用現成的工具來測試 API，使用圖形化的介面可以更直觀的管理 API 們，並且將除錯的範圍侷限在一支 API 裡面，而不是整個網站。
+
+這篇文章將會用圖解教你如何使用 [Hoppscotch](https://github.com/hoppscotch/hoppscotch) 這款熱門開源的線上工具來示範測試 REST API。
+
+## 首次使用
+
+### 登入不是必要的
+
+進入 [Hoppscotch](https://hoppscotch.io/) 網站，會發現並不要求你登入，也沒有一大堆繁瑣的設定，即開即用是我愛用它的主要原因 🤗。想要登入也可以點擊右上角的 Login 來使用 GitHub、Google、Microsoft 或是 Email 登入，登入的帳號可以將個人化的設定保存在帳號中，而非瀏覽器的紀錄內。
+
+![Hoppscotch 網頁登入面板](./login.webp '選擇你愛用的方式登入')
+
+### 個人化設定
+
+點擊左側齒輪圖示，可以進入設定面板設定偏好，例如語言、強調色、字體大小、實驗功能……等。有很多種類的語言支持和主題選擇，可以根據自己的喜好來調整。
+
+![Hoppscotch 網頁設定面板](./setting.webp '調整你的偏好')
+
+## 測試 API
+
+### [創建一個新的請求](https://docs.hoppscotch.io/documentation/getting-started/rest/creating-a-request)
+
+讓我們拿官方提供的範例來測試：輸入 `https://echo.hoppscotch.io` 到網址欄位，並使用 `GET` 方式，並點擊傳送請求，就這樣你成功的使用 Hoppscotch 打出一個 `GET` 請求了！
+
+![Hoppscotch 請求面板](./get.webp '你的第一支 GET 請求成功！')
+
+### [添加參數](https://docs.hoppscotch.io/documentation/getting-started/rest/using-parameters)
+
+當然前面的 `GET` 是一個很簡單的例子，我們可以在請求裡面夾帶更多資訊，不管是 `body` 的內容還是 `header` 的資訊，都可以在頁籤內設定，任何請求的細節都可以調整。
+
+![Hoppscotch 設定參數](./parameter.webp '設定參數')
+
+### 生成程式碼
+
+當你確定請求的內容沒有問題，可以點擊傳送旁邊的小箭頭 > 顯示程式碼按鈕，Hoppscotch 會幫你產生程式碼，可以直接複製到實際的專案中使用，像在圖例中就選擇了生成使用 [Axios](https://axios-http.com/) 函式庫的請求寫法，連寫程式都免了！
+
+![Hoppscotch 產生程式碼面板](./axios.webp '產生 Axios 請求寫法的程式碼')
+
+### 進階：[收藏請求](https://docs.hoppscotch.io/documentation/getting-started/rest/organizing-your-requests)
+
+有時候一個規模大一點的網站會有很多隻 API ，每次想要測試的時候都要重新設定是非常繁瑣累人的事，因此可以使用收藏(Collection) 的功能管理你的請求，只要點擊儲存 > 另存為的按鈕就可以將該請求給收藏起來，之後就可以在左側的收藏夾中找到它。特別是在建構大型專案的時候把一隻隻 API 給收藏分類好，除了測試方便之外心情也感覺很好 😎。
+
+![Hoppscotch 產生程式碼面板](./collection.webp '產生 Axios 請求寫法的程式碼')
+
+### 進階：[使用環境變數](https://docs.hoppscotch.io/documentation/getting-started/rest/environment-variables)
+
+在收藏按鈕底下就是環境變數的設定，可以在這裡設定一些常用的變數，例如說你的 API 伺服器網址、API 金鑰、使用者的 token 等等，這樣在測試的時候可以直接使用變數，可以集中管理外比較隱密的資料也可以收藏在此不怕暴露。
+
+在設定好環境變數之後只要在想要引用變數的地方撰寫 `<<變數名稱>>` 就可以使用該變數。
+
+![Hoppscotch 環境變數面板](./env.webp '新增環境變數')
+![Hoppscotch 環境變數面板](./env-2.webp '輸入環境變數，並且在請求中使用')
+
+## 總結
+
+Hoppscotch 是一個非常好用的開源 API 測試工具，在 GitHub 上已經有 50 k 以上的星星，如果要測試 API 的話這會是我的首選工具。

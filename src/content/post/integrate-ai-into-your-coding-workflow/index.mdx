@@ -1,0 +1,214 @@
+---
+isDraft: false
+featureIcon: { 'url': 'images/icons/robot.svg', 'alt': '機器人符號' }
+title: 'Integrate AI into your coding workflow - GitHub Copilot'
+titleTC: '將 AI 應用到你的 Coding 工作流當中 - GitHub Copilot'
+excerpt: '開發者的工作性質造就我們注定要站在最前線與 AI 並肩作戰，而 GitHub Copilot 這些年的陪伴顯著的提升了我的開發生產力與更有效率的學習開發技巧，是少數我覺得真正值得付費的服務之一。'
+category: '分享'
+tags: ['生產力']
+publishDate: 2023-12-26
+---
+
+## 前言
+
+GitHub Copilot 是微軟推出的一款一種人工智慧的協作程式工具，在[各大 IDE 中都有支援](https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot?tool=azure_data_studio)，而我使用它的契機是因為在還是學生時領取過 [GitHub 學生大禮包](https://education.github.com/pack) ，只需要使用學校 Email 註冊加上一些在學證明即能領取，這些年有它的陪伴顯著的提升了我的開發生產力與更有效率的學習開發技巧，是**少數我覺得真正值得付費的服務之一**。
+
+<Info type="info">
+  如果是學生非常推薦領取 [GitHub 學生大禮包](https://education.github.com/pack)，也可以[免費試用 Copilot 30
+  天](https://github.com/github-copilot/signup)
+</Info>
+
+## GitHub Copilot 的定位
+
+Copilot 現階段非常適合協助開發者自動解決程式底層實踐的操作，例如：填寫些 Boilerplate Code（公式化代碼）、生成文件與假資料、常見有明顯解答的問題、撰寫測試……等用途，使開發者們可以花費更多心力著重在規劃程式頂層邏輯的實踐而非底部瑣碎的操作。
+
+### 如果你是一位新手
+
+> 現在是最好的時機透過 AI 輔助學習開發
+
+對於剛踏入程式開發領域的你，可能還在摸索語法、理解流程，這時 Copilot 就像是一位熟稔常見套路的導師，總能夠提供正確且符合標準的程式碼示例。它可以幫助你快速理解不同語言的寫法，同時在學習過程中提供實際的參考。在初學階段可以極大的培養你的寫程式的信心，不過也要小心過於依賴提示而盲目接受。
+
+建議 Copilot 提示的每一行代碼都要仔細閱讀並積極查證，確保理解每行代碼背後的意涵，並且能夠解釋為什麼這樣寫，這樣才能夠真正的學到東西，而不是只是照著提示輸入。
+
+### 如果你清楚自己在做什麼
+
+> 值得導入並立即感受生產力飛躍性的提升
+
+對於那些對自己項目有明確計劃、清晰目標的開發者，Copilot 也是一個強大的助手。當了解並掌握了大部分語法基礎或背景時，Copilot 可以成為你的快速開發夥伴，專注於更高層次的設計和邏輯。這使得你在開發過程中更加高效，能夠更迅速地實現你的想法。同時，Copilot 的建議也可以作為一個好參考，有時甚至能夠無意間啟發解決問題的新思路。
+
+善用 GitHub Copilot，讓它成為你開發路上的得力助手，不僅提高了生產力，更有機會使你的程式碼更加精簡而高效。
+
+## 基礎操作
+
+在[官方文件](https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode)有詳細的各類整合方式，以我常用的 VS Code 來說只需要簡單的在擴充功能中新增 Copilot 並登入 GitHub 帳號即可，且在安裝完成後右下角將出現一個 Copilot 的圖示，就代表已經成功安裝，並且可以透過點擊它來設定 Copilot：
+
+![VSCode 右下角的 GitHub Copilot 圖示](./show-copilot-status-menu.webp)
+
+### 接受提示
+
+只要在程式碼中輸入到一半 Copilot 便會開始提示，並且按下 <kbd>tab</kbd>接受提示：
+
+<Video
+  width={600}
+  height={214}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/integrate-ai-into-your-coding-workflow/greeting.mp4',
+    },
+  ]}
+></Video>
+
+### 接受部分提示
+
+如果同意提示中的部分內容可以透過快捷鍵採納部分提示。
+
+<Video
+  width={600}
+  height={282}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/integrate-ai-into-your-coding-workflow/word.mp4',
+    },
+  ]}
+></Video>
+
+<table>
+  <thead>
+    <tr>
+      <th>作業系統</th>
+      <th>採納下一個提示的詞</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>macOS</td>
+      <td>
+        <kbd>Command</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>
+        <kbd>Control</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>
+        <kbd>Control</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 切換提示
+
+如果對於提示結果不滿意也可以透過快捷鍵或透過將鼠標移動到提示上點擊介面來切換不同的提示，或者是 <kbd>Ctrl</kbd> + <kbd>Enter</kbd>則會開啟新的視窗並生成更多提示建議（可以點擊「採納」按鈕來加入現有代碼中）：
+
+<Video
+  width={600}
+  height={364}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/integrate-ai-into-your-coding-workflow/next.mp4',
+    },
+  ]}
+></Video>
+
+<table>
+  <thead>
+    <tr>
+      <th>作業系統</th>
+      <th>檢視下一個提示</th>
+      <th>檢視上一個提示</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>macOS</td>
+      <td>
+        <kbd>Option (⌥) 或 Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Option (⌥) 或 Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+![更多建議 Copilot 視窗](./more.webp '更多建議提示視窗')
+
+## 進階操作 - 與 Copilot 交談
+
+透過安裝額外的 [Copilot 聊天擴展功能](https://docs.github.com/en/copilot/github-copilot-chat/using-github-copilot-chat-in-your-ide)，可以透過對話的方式與 Copilot 進行互動，在對話框中透過關鍵字：`@workspace`、`@vscode`、`@terminal` 來指定對話的前後文範圍，並且透過 `/` 來指定動作，像是：`@workspace /explain 這個專案是怎麼運作的？`
+
+![使用 GitHub Copilot 聊天擴展功能](./devcontainer-explain.webp)
+
+### 指令範本
+
+說得多不如實際操作，以下是一些可以嘗試在現有專案中輸入的 Prompt：
+
+- `/help`：列出 Copilot 的指令
+- `/clear`：清除 Copilot 的對話
+- `@workspace /explain`：解釋透選取代碼如何運透過一系列步驟
+- `@workspace /fix`：修復選取代碼中的錯誤
+- `@workspace /new`：創建新的專案透過描述
+- `@workspace /newNotebook`：創建新的 Jupyter Notebook 透過描述
+- `@workspace /tests`：創建單元測試透過選取代碼
+- `@vscode /api`：詢問 VSCode 插件相關問題
+- `@terminal`：解釋需求如何透過終端中達成
+
+除了標註 `@` 作為前後文之外，也可以透過選取代碼並右鍵使用「行內聊天 Inline Chat」功能來指定想要詢問 Copilot 的片段，這樣 Copilot 就能夠更了解你的需求，並且提供更準確的提示。
+
+![Inline Chat](./inline-chat.webp)
+
+## 進階操作 - 生成 Commit 訊息
+
+這項功能我還在觀望並不常使用，原因是因為親自體驗下來生成解果並不是特別好，而且工作因素上習慣是使用中文 Commit 就更少，但看起來是不錯的方向！
+
+![VSCode 的 Git 面板](./generate-commit.webp)
+
+## 總結
+
+期待 Copilot 更多新功能的推出，
+
+Copilot 支援各式各樣的語言與框架，不過通常 Python、JavaScript、TypeScript、Ruby、Go、C# 還有 C++ 的提示會更為完善。透過分析代碼前後文與使用的框架提供下一步的代碼提示。
+
+### 限制
+
+- **有限的範圍** - 尚無法處理複雜的程式結構或晦澀少見的程式語言或框架，答案的品質取決於訓練術具的多樣性，因此在較為冷門的語言或框架上 Copilot 的表現會較差。
+- **潛在的偏見** - 基於現有訓練資料來自各種儲存庫，人為的偏見與錯誤可能會被學習到並且產生不良的代碼。
+- **風險疑慮** - 撰寫安全敏感的程式時應謹慎操作，始終詳細檢查和測試生成的代碼。
+
+### 要點
+
+- **不要盲目接受** - Copilot 提供的提示暫且只會是大方向的參考，不要盲目接受，要仔細閱讀並積極查證，確保理解每行代碼背後的意涵，並且能夠解釋為什麼這樣寫。
+- **提供完善的前後文與意圖** - Copilot 透過分析目前打開的檔案作為回應的前後文，因此良好的命名、註解與範例代碼都可以更好的協助 Copilot 提供更準確的提示。具體來說像是使用規格化的註解規則： [JSDOC](https://jsdoc.app/) 能夠有效的與 Copilot 溝通程式的需求。
+- **使用英文溝通** - 可能單純是我的偏見，不過為了避免因為語言間轉換而曲解意圖，通常我會覺得用英文與 Copilot 溝通效果會更好。
+
+## 延伸閱讀
+
+- [Quickstart for GitHub Coppilot - GitHub](https://docs.github.com/en/copilot/quickstart)
+- [GitHub Copilot - Visual Studio Code](https://code.visualstudio.com/docs/editor/github-copilot)
+- [Copilot Chat in Visual Studio Code - GitHub Universe](https://www.youtube.com/watch?v=a2DDYMEPwbE)

@@ -1,0 +1,235 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/metric.svg', alt: '統計符號' }
+title: 'All The Performance Metrics You Need To Know'
+titleTC: '學習所有 Google 提出衡量網頁效能的指標！ feat. TTFB, FCP, LCP, FID, CLS, TTI, TBT'
+excerpt: '本篇文章挑戰用自己的方式去理解並解釋所有 Google 提出網頁體驗相關的指標，陣容豪華絕對空前精彩。'
+category: '網頁效能'
+tags: ['指標']
+publishDate: 2023-05-10
+---
+
+## 前言
+
+原先只想寫寫關於 [核心 Web 指標](https://web.dev/i18n/zh/vitals/) 關聯的三個指標解釋而已……結果發現一窩蜂的指標還是有必要去認識，因此本篇文章挑戰用自己的方式去理解並解釋所有 Google 提出網頁體驗相關的指標，陣容豪華絕對 <del>學不完 🥺</del> 夠學。
+
+我發現沒有必要一次性的記憶所有種類的指標，因此製作了一個懶人包與該文章，方便你我查詢與學習：
+
+## 指標的測量
+
+指標就是為了能夠客觀的測量網站體驗而生的統計數值，在深入了解各項指標之前先來了解一下指標的測量基礎依據：
+
+<table>
+  <tbody>
+    <tr id="happening">
+      <td style="min-width: 120px;">
+        <strong>是否正在發生？</strong>
+      </td>
+      <td>
+        頁面導航是否成功啟動？伺服器有回應嗎？ 關聯指標：[FFTB](#ttfb---首次位元組時間)、[FCP](#fcp---首次內容繪製)
+      </td>
+    </tr>
+    <tr id="useful">
+      <td>
+        <strong>是否有用？</strong>
+      </td>
+      <td>是否渲染了足夠的內容讓用戶可以深入其中？ 關聯指標：[LCP](#lcp---最大內容繪製-)</td>
+    </tr>
+    <tr id="usable">
+      <td>
+        <strong>是否可用？</strong>
+      </td>
+      <td>
+        頁面是否繁忙？用戶是否可以與頁面互動？
+        關聯指標：[FID](#fid---首次輸入延遲-)、[TTI](#tti---可互動時間)、[TBT](#tbt---總阻塞時間)
+      </td>
+    </tr>
+    <tr id="delightful">
+      <td>
+        <strong>是否令人愉快？</strong>
+      </td>
+      <td>頁面互動起來是否流暢自然？沒有延遲卡頓？ 關聯指標：[CLS](#cls---累積布局偏移-)</td>
+    </tr>
+  </tbody>
+</table>
+
+以及延伸出來的指標種類如下：
+
+<table>
+  <tbody>
+    <tr>
+      <td style="min-width: 120px;">
+        <strong>感知加載速度</strong>
+      </td>
+      <td>頁面加載渲染出所有視覺元素的速度</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>加載響應度</strong>
+      </td>
+      <td>頁面加載和執行任何所需的 JavaScript 所需的速度</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>運行時響應度</strong>
+      </td>
+      <td>頁面加載後，對用戶互動的響應速度</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>視覺穩定性</strong>
+      </td>
+      <td>頁面加載過程內容元素變更位置的程度</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>滑順度</strong>
+      </td>
+      <td>頁面變化時保持穩定幀率和順暢性的程度</td>
+    </tr>
+  </tbody>
+</table>
+
+## <abbr title="Time to First Byte">TTFB</abbr> - 首次位元組時間
+
+![良好的 TTFB 數值建議在 800 毫秒以內，在 1800 毫秒以上則視為差勁，在此之間則需要改進](./ttfb.svg)
+
+測量網頁載入過程中從請求一個資源到第一個位元組回應所需的時間，從這項指標中主要可以了解用戶獲取資源的速度，是在其他指標之前最為根基的指標。越好的 TTFB 代表網頁「[正在發生](#happening)」，用戶可以越快速的獲取資源」。
+
+<Info type="warning">
+  TTFB 並非網頁核心指標，建議範圍參考即可。如果頁面需要 JavaScript 來渲染內容，那麼 TTFB
+  就極為關鍵，但如果是純粹靜態內容，TTFB 就不會像前者一樣那麼關鍵，須考量網頁的[渲染模式](/post/rendering-pattern/)。
+</Info>
+
+## <abbr title="First Contentful Paint">FCP</abbr> - 首次內容繪製
+
+![良好的 FCP 數值建議在 1.8 秒以內，在 3 秒以上則視為差勁，在此之間則需要改進](./fcp.svg)
+
+測量網頁載入過程中「首個內容的出現所需的時間」，所謂的內容指的是文字、圖片（包含背景圖片）、`<svg>` 元素或非白色的 `<canvas>` 元素。也就是**測量網頁要花多久時間去顯示其內容**。從這項指標中主要可以了解網頁的載入速度，越好的 FCP 越能說服用戶網頁「[正在發生](#happening)」。
+
+## <abbr title="Largest Contentful Paint">LCP</abbr> - 最大內容繪製 🌟
+
+![良好的 LCP 數值建議在 2.5 秒以內，在 4 秒以上則視為差勁，在此之間則需要改進](./lcp.svg)
+
+測量網頁載入過程中「首個最大內容的出現所需的時間」，所謂的最大內容包含：
+
+- `<img>` 元素
+- 內嵌在 `<svg>` 元素中的 `<image>` 元素
+- 使用封面圖像的 `<video>` 元素
+- 透過 [`url()`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/url) 函數加載帶有背景圖像的元素
+- 具有文字節點或其他行內元素的[塊級元素](https://developer.mozilla.org/zh-CN/docs/Glossary/Block-level_content)的子元素
+
+也就是**測量網頁要花多久時間去顯示其最大內容**，從這項指標中主要可以了解網頁載入時用戶的體驗，越好的 LCP 越能說服用戶網頁「[是否有用](#useful)」。
+
+<Info type="info">LCP 與前者 FCP 非常相似，但測量目的不同，差別僅在於 LCP 測量最大內容，FCP 則是測量首個內容。</Info>
+
+## <abbr title="First Input Delay">FID</abbr> - 首次輸入延遲 🌟
+
+![良好的 FID 數值建議在 100 豪秒以內，在 300 毫秒以上則視為差勁，在此之間則需要改進](./fid.svg)
+
+測量網頁載入過程中第一次與網站互動（點選連結、按鈕或是使用自訂的 JavaScript 控制），「瀏覽器能夠回應互動的時間點」，也就是**測量網頁要花多久時間去回應用戶的互動**，從這項指標中主要可以了解網頁的互動性，越好的 FID 越能說服用戶網頁「[是否可用](#usable)」。
+
+具體來說該指標計算用戶首次互動需要花多少時間瀏覽器才能反應（不包含事件處理的時間），隨著用戶的行為不同結果也會不同。
+
+## <abbr title="Cumulative Layout Shift">CLS</abbr> - 累積布局偏移 🌟
+
+![良好的 CLS 數值建議在 0.1 以內，在 0.25 以上則視為差勁，在此之間則需要改進](./cls.svg)
+
+測量網頁「內容的穩定性」也就是**測量網頁內容位置變換的頻繁程度**，從這項指標中主要可以了解網頁在視覺上的穩定性，越好的 FID 越能讓用戶感受網頁使用起來「[是令人愉悅的](#delightful)」。
+
+## <abbr title="Time to Interactive">TTI</abbr> - 可互動時間
+
+![良好的 TTI 數值建議在 3.8 秒以內，在 7.3 秒以上則視為差勁，在此之間則需要改進](./tti.svg)
+
+**測量網頁要花多久時間讓用戶可以與網頁互動**，從這項指標中主要可以了解網頁的互動性，越好的 TTI 越能說服用戶網頁「[是否可用](#usable)」。
+網頁會因為執行序被堵塞而導致事項被延遲執行，或是受 JavaScript 控制的介面還未完整的載入，這些都會導致網頁無法與用戶互動，這些問題應當被測量且盡可能的避免。
+
+具體來說該數值會先從 [FCP](#fcp---首次內容繪製) 發生的時間點開始計算，並且找到在網頁加載過程中最後的長事項的結尾，該區間就是 TTI 的計算範圍，如果並沒有任何長事項則將會以 FCP 的時間點作為 TTI 的數值。
+
+## <abbr title="Total Blocking Time">TBT</abbr> - 總阻塞時間
+
+![良好的 TBT 數值建議在 200 豪秒以內，在 600 豪秒以上則視為差勁，在此之間則需要改進](./tbt.svg)
+
+測量 FCP 與 TTI 之間主執行緒被阻塞到影響輸入的回應性的時間，也就是**測量網頁在載入過程中繁忙到無法回應的長度**，從這項指標中主要可以了解網頁的互動性，越好的 TBT 越能說服用戶網頁「[是否可用](#usable)」。，瀏覽器必須等到該項任務完成才能回應用戶的互動，計算模擬圖表如下：
+
+<table>
+  <tbody>
+    <tr>
+      <th></th>
+      <th>事項處理時長</th>
+      <th>事項阻塞時間</th>
+    </tr>
+    <tr>
+      <td>事項一</td>
+      <td>250 ms</td>
+      <td>200 ms</td>
+    </tr>
+    <tr>
+      <td>事項二</td>
+      <td>90 ms</td>
+      <td>40 ms</td>
+    </tr>
+    <tr>
+      <td>事項三</td>
+      <td>35 ms</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td>事項四</td>
+      <td>30 ms</td>
+      <td>0 ms</td>
+    </tr>
+    <tr>
+      <td>事項五</td>
+      <td>155 ms</td>
+      <td>105 ms</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <strong>總阻塞時間</strong>
+      </td>
+      <td>
+        <strong>345 ms</strong>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## 總結
+
+本篇文章是我的進階消化版，實際上 Google 的文件已經很完整了，如果想要更深入了解，可以參考
+[以用戶為中心的性能指標](https://web.dev/i18n/zh/user-centric-performance-metrics/#in-the-lab)
+有完善的解釋，翻譯也齊全。隨著網頁的發展，指標也會隨之改變，因此本篇文章會持續更新，如果有任何錯誤或是建議，歡迎告知！
+
+## 補充
+
+### [長事項](https://web.dev/custom-metrics/#long-tasks-api)
+
+當主執行緒執行單個事項超過 50 毫秒就會被視為是一件長事項。[TTI](#tti---可互動時間) 與 [TBT](#tbt---總阻塞時間) 皆建構於長事項 API 之上。
+
+### 網頁核心指標（Core Web Vitals）
+
+網頁核心指標旨在簡化環境，並幫助網站專注於最重要的指標。如果使用 Google 提供的網站檢測工具，像是 [PageSpeed](https://pagespeed.web.dev/)，會使用以上的網頁指標： [LCP](#lcp---最大內容繪製) 、 [FID](#fid---首次輸入延遲) 或 [CLS](#cls---累積布局偏移) 為網站評比分數，分別從效能、交互性與視覺穩定為衡量基準，來測量該網頁的瀏覽體驗。
+
+<Info type="info">它們是必了解的核心指標，也能快速的了解網頁的使用體驗，在標題用 🌟 特別標註起來囉～</Info>
+
+### 網頁分數測量基準
+
+以上三種網頁指標基準都是根據 Google 統整並定義出來的，其中行動裝置與電腦也會根據性能上的差異有不一樣的要求，詳細可以參考看看：[定義核心 Web 指標閥值](https://web.dev/i18n/zh/defining-core-web-vitals-thresholds/)。
+
+此外須留意 Google 的搜尋引擎會根據網站的所有頁面統整做個綜合評分，如果 75% 的頁面達成「優良」評分，那麼該網站在該指標下就會被評為「優良」，因此監控整體網站內所有頁面的評分是重要的。
+
+## 參考資料
+
+- [First Contentful Paint (FCP) - web.dev](https://web.dev/fcp)
+- [Largest Contentful Paint (LCP) - web.dev](https://web.dev/lcp)
+- [First Input Delay (FID) - web.dev](https://web.dev/fid)
+- [Cumulative Layout Shift (CLS) - web.dev](https://web.dev/cls)
+- [Time to First Byte (TTFB) - web.dev](https://web.dev/ttfb/)
+- [Time to Interactive (TTI) - web.dev](https://web.dev/tti/)
+- [Total Blocking Time (TBT) - web.dev](https://web.dev/tbt/)
+
+<Info type="info">
+  本文中的部分內容是根據 Google 所建立並分享的內容所進行的修改，並遵循 [創用 CC 4.0
+  姓名標示授權條款](https://creativecommons.org/licenses/by/4.0/) 中所述的條款使用。{' '}
+</Info>
