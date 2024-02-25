@@ -8,7 +8,6 @@ import partytown from '@astrojs/partytown';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import AutoImport from 'astro-auto-import';
 import { remarkModifiedTime } from './src/helper/remark-modified-time';
 import { h, s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
@@ -67,9 +66,6 @@ export default defineConfig({
       config: {
         applyBaseStyles: false,
       },
-    }),
-    AutoImport({
-      imports: ['@/components/post/Info.astro', '@/components/post/Figure.astro', '@/components/post/Video.astro'],
     }),
     expressiveCode({
       themes: allEditorTheme,

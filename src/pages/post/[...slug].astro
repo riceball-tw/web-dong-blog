@@ -8,6 +8,8 @@ import Utteranc from '@/components/app/Utteranc.astro';
 import PostJSONLD from '@/components/app/head/PostJSONLD.astro';
 import PostImage from '@/components/post/PostImage.astro';
 import PostBlockquote from '@/components/post/PostBlockquote.astro';
+import Info from '@/components/post/Info.astro'
+import Video from '@/components/post/Video.astro'
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -139,7 +141,7 @@ const author = post.data.author && (await getEntry('character', post.data.author
           </div>
         </div>
       </aside>
-      <Content components={{ img: PostImage, blockquote: PostBlockquote }} />
+      <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
       <Utteranc />
     </article>
   </main>
