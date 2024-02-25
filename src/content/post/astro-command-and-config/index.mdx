@@ -1,0 +1,104 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day4 - Astro Series: Hello Astro World'
+titleTC: 'Astro 系列文第四日：基礎指令與設定'
+excerpt: '藉由本系列文章將持續 30 日不間斷的更新帶領你上手它！今日介紹 Astro 的 CLI 指令與設置 `astro.config` 檔案。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-19
+---
+
+![一個漂亮的漸層背景上面有一句標題：「基礎指令與設定」](./day4-command-and-config.webp)
+
+## 前言
+
+前面建構了一個全新的 Astro 專案，並說明了專案的大致架構。接著開始從 Astro 命令列介面與如何設置 `astro.config` 檔案說起。
+
+## Astro CLI
+
+你可以使用自己喜愛的套件管理器來執行 Astro ，不管是 npm、pnpm、yarn 甚至是 [bun](https://docs.astro.build/en/recipes/bun/)！以下是大致上 Astro 具備的 CLI 指令，實際上常用的指令除了： `dev` 、`build`、`preview` 之外並不多，因此有需要時再查閱[文件](https://docs.astro.build/en/reference/cli-reference)即可。
+
+```bash
+astro [command] [...flags]
+
+   Commands
+                add  添加整合插件
+              build  建構專案
+              check  檢測專案
+                dev  開啟開發伺服器
+               docs  在瀏覽器中打開官方文件網站
+               info  顯示目前專案的設置
+            preview  在本地預覽
+               sync  生成 collection types
+          telemetry  匿名官方資料蒐集
+
+   Global Flags
+    --config <path>  配置設定檔案位址
+      --root <path>  配置專案根部位址
+       --site <url>  配置網站位址
+  --base <pathname>  配置網站 base 路徑
+          --verbose  啟用完整日誌
+           --silent  關閉日誌
+          --version  顯示版本
+             --help  顯示幫助訊息
+```
+
+## 設置 Astro
+
+Astro 在執行時會自動找尋 `astro.config` 檔案，如果找尋不到便會使用預設設定。推薦在設定檔中使用 `defineConfig()` 助手函式可以為 IDE 提供代碼提示：
+
+```jsx
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({
+  // 設定於此...
+});
+```
+
+同樣大多數設定[查閱文件](https://docs.astro.build/en/reference/configuration-reference/)即可，以下是一些可以特別留意的設定屬性：
+
+### [頂層選項](https://docs.astro.build/en/reference/configuration-reference/#top-level-options)
+
+各式各樣的路徑路徑設置與功能的選項。
+
+### [建構設定](https://docs.astro.build/en/reference/configuration-reference/#build-options)
+
+一切與 Astro 建構時相關的設定，如輸出時的檔案架構、檔案前墜……等。
+
+### [伺服器設定](https://docs.astro.build/en/reference/configuration-reference/#server-options)
+
+在此設置伺服器相關的設定，像是位址、Port 或表頭。
+
+### [圖片設定](https://docs.astro.build/en/reference/configuration-reference/#image-options)
+
+Astro 官方預設提供自動化圖片處理是透過 [Sharp](https://sharp.pixelplumbing.com/) ，在此可以設置圖片處理相關屬性。
+
+### [Markdown 設定](https://docs.astro.build/en/reference/configuration-reference/#markdown-options)
+
+Astro 完整支援 Markdown 並且預設整合了不同的套件，像是代碼高光功能或 GitHub 風格的 Markdown 等，可以在此設置，並且也能擴充 [remark](https://docs.astro.build/en/reference/configuration-reference/#markdownremarkplugins) 或 [rehype](https://docs.astro.build/en/reference/configuration-reference/#markdownrehypeplugins) 插件。
+
+```json
+{
+  "markdown": {}
+}
+```
+
+### [整合插件 Integrations](https://docs.astro.build/en/reference/configuration-reference/#integrations)
+
+Astro 提供插件來客製化擴充更多框架、函示庫或功能，在 `integrations` 屬性中引入要整合的插件。未來章節將會有獨立章節介紹如何撰寫不同 UI 框架到 Astro 當中。
+
+```javascript
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+{
+  // 範例: 添加 React + Tailwind 支援
+  integrations: [react(), tailwind()];
+}
+```
+
+## 延伸閱讀
+
+- [CLI Commands](https://docs.astro.build/en/reference/cli-reference/) - Astro DOCS
+- [Configuration Reference](https://docs.astro.build/en/reference/configuration-reference/) - Astro DOCS
+- [Day4 - 基礎指令與設定](https://ithelp.ithome.com.tw/articles/10321590) - 相同文章同步發布於 iThome 鐵人賽中

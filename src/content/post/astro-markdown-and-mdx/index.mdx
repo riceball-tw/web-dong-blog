@@ -1,0 +1,144 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day13 - Astro Series: Markdown and MDX'
+titleTC: 'Astro 系列文第十三日：Markdown 與 MDX'
+excerpt: '撰寫網站最終還是要回歸到易於維護，能不能不需要接觸程式，只需透過編寫文件就能更改頁面內容呢？也就是將內容與版面、邏輯做分離。本章節我們將會學習 Markdown 與 MDX 來達成這件事。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-28
+---
+
+![一個漂亮的漸層背景上面有一句標題：「Markdown 與 MDX」](./day13-markdown-and-mdx.webp)
+
+## 前言
+
+前面介紹了元件與路由，相信製作靜態為主的網站已經難不倒你，甚至還可以發揮 Astro 最強大的優勢，透過選擇性 Hydration 添加些動態內容到頁面之中。
+
+但撰寫網站最終還是要回歸到易於維護，能不能不需要接觸程式，只需透過編寫文件就能更改頁面內容呢？也就是將內容與版面、邏輯做分離。
+
+本章節我們將會學習 Markdown 與 MDX 來達成這件事。
+
+## Markdown
+
+![Markdown 懶人包](./markdown-cheatsheet.webp)
+
+[Markdown](https://daringfireball.net/projects/markdown/) 是輕量級的標記語言，甚至你會在一些論壇或是筆記軟體中接觸到這款語言用於編寫文件。可以在 `src/pages` 創建 `.md` 文件並且用它來編寫你的網頁。
+
+除了編寫網頁文件，也可以在檔案的開頭添加 YAML 格式的 Frontmatter，將一些文件額外的資料給記錄下來，像是：標題、作者、日期、分類……等
+
+```markdown
+---
+title: 我的第一個 Markdown 檔案
+author: 'Joe'
+publishDate: '2023'
+category: 'other'
+---
+
+# 這是我的第一個 Markdown 檔案
+
+可以透過 Markdown 文件來添加一些基礎的語意，像是：
+
+- **粗體** 或 _斜體_
+- [連結](https://astro.build)
+- ![圖片](image.jpg)
+- ……更多
+```
+
+撰寫 Markdown 相較於 HTML 更為輕便而且不用煩惱過多的細節，並且保留極高的靈活度。
+
+## MDX
+
+![左邊是一段 MDX 代碼，右邊是一個由 MDX 產生的畫面](./mdx-chart.webp)
+
+可以額外透過[安裝 MDX 整合](https://docs.astro.build/en/guides/integrations-guide/mdx/)來讓 Astro 支援 MDX。[MDX](https://mdxjs.com/) 就像 Markdown 與 JSX 的綜合體，單純的 Markdown 可能無法滿足你撰寫複雜文章的需求，像是添加額外的元件或動態資料，這時候 MDX 就是很好的選擇。舉例來說我的部落格文章有示範 React 元件的需要，因此就是很好的時機使用 MDX。
+
+### 在 MDX 使用導出的變數與 Frontmatter
+
+可以透過 `{JSX 表達式}` 來呈現變數內容，也可以存取 Frontmatter 的內容。
+
+```mdx
+export const title = '我的 MDX 變數';
+
+# {title}
+```
+
+```mdx
+---
+title: '我的第一篇 MDX 文章'
+---
+
+# {frontmatter.title}
+```
+
+### 在 MDX 使用元件
+
+可以在 MDX 元件中引入 Astro 元件或者是其他 UI 框架的元件，用法和在 `.astro` 的情況一樣！
+
+```mdx
+---
+---
+
+import Button from '../components/Button.astro';
+import ReactCounter from '../components/ReactCounter.jsx';
+
+以下按鈕是一個 Astro 元件，在 MDX 中被引入：
+
+<Button title="Contact me" />.
+
+以下是我的計數器元件，在 MDX 中被引入：
+
+<ReactCounter client:load />
+```
+
+## 其他特性
+
+### 標題 ID
+
+使用標題將會自動生成 ID，好讓你使用 `<a>` 連結通往文件中的某個區塊。
+
+```mdx
+## 前言
+
+這裡是前言，想直接按結論可以到 [總結區塊](#總結)
+
+## 內容
+
+...
+
+## 總結
+
+...
+```
+
+### 特殊字元
+
+一些特殊的字元將會被解讀為 HTML 或 JavaScript 的代碼，像是 `<` 與 `{`，因此建議使用[HTML 字符實體](https://html.spec.whatwg.org/multipage/named-characters.html#named-character-references)來替代，像是 `&lt;` 或是 `&lcub;`。
+
+### 語法高光
+
+預設 Astro 支援使用 [Shiki](https://shiki.matsu.io/) 或 [Prism](https://prismjs.com/) 來為代碼提供語法高光，可以透過以下幾種方式來顯示：
+
+- 在 Markdown 或 MDX 中使用代碼圍欄（`````）
+- 使用內建 [`<Code/>`](https://docs.astro.build/en/reference/api-reference/#code-) 元件
+- 使用內建 [`<Prism />`](https://docs.astro.build/en/reference/api-reference/#prism-) 元件
+
+預設將會使用 Shiki ，並且採用 `github-dark` 樣式，所有的樣式都會採用行內注入，不會有額外的樣式檔、客戶端 JavaScript 需要處理。進一步的設定可以在章節四中了解。
+
+### 額外插件
+
+Astro 使用 remark 來處理 Markdown 並且預設應用了 [GitHub 風格的 Markdown](https://github.com/remarkjs/remark-gfm) 與 [SmartyPants](https://github.com/silvenon/remark-smartypants) 插件。更多插件的設置細節可以在第四章節 - 基礎指令與設定中的 [Markdown 設定](https://docs.astro.build/en/reference/configuration-reference/#markdown-options)中設置。
+
+## 總結
+
+先對這兩種檔案格式有個印象，下一章節將會介紹如何替這些 `.md` 或 `.mdx` 甚至是整個網站的布局進行規劃。
+
+**最後會建議實際動手練習：**
+
+- 創建 Markdown 檔案在 `/pages` 當中，並且熟悉其語法，編寫一些文件文章。
+- 在 MDX 中引入製作好的元件（可選）
+
+## 延伸閱讀
+
+- [Markdown & MDX](https://docs.astro.build/en/guides/markdown-content/) - Astro DOCS
+- [Day13 - Markdown & MDX](https://ithelp.ithome.com.tw/articles/10330095) - 相同文章同步發布於 iThome 鐵人賽中

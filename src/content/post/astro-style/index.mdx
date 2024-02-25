@@ -1,0 +1,143 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day6 - Astro Series: Style'
+titleTC: 'Astro 系列文第六日：樣式'
+excerpt: '綜合來說 Astro 讓你用自己習慣的方式撰寫 CSS，不管是 import 還是 <link> 還是 Scoped CSS 或是各式各樣的預處理語言或框架皆有支援。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-21
+---
+
+![一個漂亮的漸層背景上面有一句標題：「樣式」](./day6-style.webp)
+
+## 前言
+
+前面提到撰寫 Astro 元件所需要知道的基本知識，在本章節將會更進一步說明如何為元件撰寫添加樣式。
+
+## 樣式在 Astro
+
+在 Astro 中撰寫樣式是一件非常容易的事，並且有多樣選項可供挑選。像是使用 Sass、Less 這類預處理語言或是透過插件整合添加 Tailwind，或是撰寫 Scoped CSS。
+
+### 作用域樣式
+
+可以在客戶端模板部分添加 `<style>` 標籤來為元件或頁面模板添加樣式，預設會被自動的封裝使其作用在該元件之中，舉例來說以下的元件樣式：
+
+```astro
+<style>
+h1 {
+    color: red;
+  }
+
+  .text {
+    color: blue;
+  }
+</style>
+```
+
+會自動渲染出這樣的結果來讓樣式只作用在該元件之中：
+
+```astro
+<style>
+  h1[data-astro-cid-hhnqfkh6] {
+     color: red;
+  }
+
+  .text[data-astro-cid-hhnqfkh6] {
+    color: blue;
+  }
+</style>
+```
+
+這種樣式被侷限在元件範圍的特性讓元件與元件之間保留了邊界，可以自由的撰寫元件內的樣式而不用擔心樣式互相汙染干擾。
+
+### 全局樣式
+
+在元件內依然可以撰寫全域的 CSS ，但並不推薦，原因是因為散落包含全域樣式的組件可能會導致錯誤排查困難。一共有三種方法來撰寫全域樣式：
+
+```astro
+<style is:global>
+  /* 直接套用至網站上所有的 <h1> 標籤 */
+  h1 { color: red; }
+</style>
+```
+
+或者使用 `:global()` 來達成：
+
+```astro
+<style>
+  :global(h1) {
+    color: red;
+  }
+</style>
+```
+
+當然也可以自由額外撰寫 CSS 檔案在 `src` 資料夾當中，並根據需要引入：
+
+```astro
+import '../styles/global.css';
+import 'package-name/styles.css';
+```
+
+## 用 `class:list` 組合 `class`
+
+如果需要動態的組合 `class` 可以使用 `[class:list](https://docs.astro.build/zh-cn/reference/directives-reference/#classlist)` 工具屬性來達成：
+
+```astro
+---
+const { isRed } = Astro.props;
+---
+<!-- 如果 `isRed` 為真值, class 將會是 "box red" -->
+<!-- 如果 `isRed` 為假值, class 將會是 "box" -->
+<div class:list={['box', { red: isRed }]}><slot /></div>
+```
+
+## 用 `define:vars` 使用 CSS 變數
+
+`<style>` 標籤除了可以讀取整個頁面存在的 CSS 變數之外，也可以透過 `define:vars` 工具屬性來達成創建元件 CSS 的變數。
+
+```astro
+---
+const foregroundColor = "rgb(221 243 228)";
+const backgroundColor = "rgb(24 121 78)";
+---
+<style define:vars={{ foregroundColor, backgroundColor }}>
+  h1 {
+    background-color: var(--backgroundColor);
+    color: var(--foregroundColor);
+  }
+</style>
+<h1>Hello</h1>
+```
+
+具體來說 Astro 會自動在該元件最外層的元素使用行內 CSS 添加 CSS 變數，如此一來整個元素便能使用該變數。
+
+## 傳遞 `class` 屬性
+
+在使用 Props 傳遞 `class` 屬性時須留意 `class` 在 JavaScript 中是[保留字](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Lexical_grammar#%E4%BF%9D%E7%95%99%E5%AD%97)，應適當更改變數名稱。
+
+```astro
+---
+const { class: className } = Astro.props;
+---
+<div class={className}>
+  <slot/>
+</div>
+```
+
+## 其他 CSS 方案
+
+到此基本的 Astro 樣式使用方式都介紹完畢了！其他像是 [CSS 預處理器](https://docs.astro.build/en/guides/styling/#css-preprocessors) 或是整合插件像是 [Tailwind](https://docs.astro.build/en/guides/styling/#tailwind) 都可以從文檔中找到說明，Tailwind 在後期章節我會花更多篇幅介紹如何整合入 Astro 專案之中。
+
+## 總結
+
+綜合來說 Astro 讓你用自己習慣的方式撰寫 CSS，不管是 `import` 還是 `<link>` 還是 Scoped CSS 或是各式各樣的預處理語言或框架皆有支援，引入時相互覆蓋的優先權如下：
+
+- `<link>` 標籤在 `<head>` 當中（最低優先權）
+- `import` 樣式
+- Scoped 樣式（最高優先權）
+
+## 延伸閱讀
+
+- [Style & CSS](https://docs.astro.build/en/guides/styling) - Astro DOCS
+- [Day6 - 樣式](https://ithelp.ithome.com.tw/articles/10323371) - 相同文章同步發布於 iThome 鐵人賽中

@@ -1,0 +1,79 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/astro.svg', alt: 'Astro Logo' }
+title: 'Day9 - Astro Series: Client Side Script'
+titleTC: 'Astro 系列文第九日：腳本'
+excerpt: '當你希望 Astro 處理腳本時可以直接撰寫 <script> 標籤到元件模板之中，當需要直接插入行內腳本可以使用 is:inline 模板指令。'
+category: 'Astro'
+tags: ['系列文']
+publishDate: 2023-09-23
+---
+
+![一個漂亮的漸層背景上面有一句標題：「腳本」](./day9-client-side-script.webp)
+
+## 前言
+
+到目前為止還沒有接觸到如何在元件中執行客戶端 JavaScript，在本章節將會介紹「本地腳本」與「外部腳本」兩種方法。通常操縱 DOM 的行為都會放在客戶端腳本中，像是事件監聽、動畫、Ajax……一切與瀏覽器貼近的行為都會放在這裡。
+
+## 在 Astro 中使用腳本
+
+可以透過在元件模板中添加 `<script>` 標籤來引入 JavaScript 在元件中，預設 Astro 會將元件模板中的 `<script>` 經過以下處理並注入到 `<head>` 中連帶添加 `type="module"`。
+
+- 任何 `import` 將會連帶打包，引入本地檔案或 Node 套件
+- 支持 TypeScript
+- 就算元件被多次引入在同個頁面中也只會實際被引入一次
+
+```astro
+---
+---
+
+<script>
+  console.log('Welcome, browser console!');
+</script>
+```
+
+如果不希望 Astro 管理元件中的腳本也可以設定使用 `is:inline` 指令來直接將這段腳本插入 HTML 之中，但必須留意使用該指令將會導致每當元件被重複引入就會被重複執行。
+
+```astro
+<script is:inline>
+  // 將會被寫入 HTML 中，套件引入將無法運作且每當元件重複使用時該片段也會被重複執行
+</script>
+```
+
+## 引入本地腳本
+
+當你的腳本放置在 `src/` 時可以直接連接該檔案，Astro 同樣會打包處理。
+
+```astro
+<!-- 腳本路徑： `src/scripts/local.js` -->
+<script src="../scripts/local.js"></script>
+
+<!-- TypeScript 同樣支援 -->
+<script src="./script-with-types.ts"></script>
+```
+
+## 引入外部腳本
+
+當你的腳本放置在 `public` 或 CDN 上時，同樣可以使用 `is:inline` 將其不做處理的加入進頁面中。
+
+```astro
+<!-- 腳本路徑： `public/my-script.js` -->
+<script is:inline src="/my-script.js"></script>
+
+<!-- 連向遠端伺服器的腳本位址 -->
+<script is:inline src="https://my-analytics.com/script.js"></script>
+```
+
+## 總結
+
+當你希望 Astro 處理腳本時可以直接撰寫 `<script>` 標籤到元件模板之中，當需要直接插入行內腳本可以使用 [is:inline](https://docs.astro.build/en/reference/directives-reference/#isinline) 模板指令。嘗試看看用客戶端腳本替你的頁面製作一些功能吧！像是：
+
+- 頁面分享按鈕（[Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API)）
+- Ajax 載入資料（嘗試抓 API 並呈現資料到畫面上）
+- 暗黑/明亮模式切換按鈕（[Thinking on ways to solve a DARK/LIGHT THEME SWITCH](https://www.youtube.com/watch?v=kZiS1QStIWc)）
+
+都會是很好的小練習。
+
+## 延伸閱讀
+
+- [Scripts and Event Handling](https://docs.astro.build/en/guides/client-side-scripts/) - Astro DOCS
