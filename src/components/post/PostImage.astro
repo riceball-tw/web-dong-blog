@@ -22,7 +22,10 @@ const ImageWrapper = title ? 'figure' : 'div';
 const imageStyle = 'text-center mx-auto';
 ---
 
-<ImageWrapper>
+<ImageWrapper style={{
+  gridColumn: '1 / -1',
+  zIndex: 1,
+}}>
   {
     isExternalImage(imageInput) ? (
       <Image class={imageStyle} inferSize src={imageInput} {alt} />
