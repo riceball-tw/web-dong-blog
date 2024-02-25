@@ -24,25 +24,13 @@ publishDate: 2023-12-14
 
 在用戶觸發操作後通常會有一段不可避免的等待時間，受限於例如：網路請求、資料庫查詢……等背後操作，等待操作核實或新資料的回傳成功，使用者介面才能展現出行動後的結果。
 
-<Figure
-  width="600"
-  height="300"
-  loading="lazy"
-  src="images/posts/optimistic-ui/loading-ui.svg"
-  alt="一般 UI 加載流程"
-/>
+![一般 UI 加載流程](./loading-ui.svg)
 
 ## 樂觀 UI 加載流程
 
 為了減少等待時間，樂觀 UI 在觸發的當下就假定操作成功，並且立即更新介面讓使用者能夠立即得到操作的反饋，這種模式能夠有效縮短用戶等待時間，創造更流暢、令人滿意的互動體驗。
 
-<Figure
-  width="600"
-  height="300"
-  loading="lazy"
-  src="images/posts/optimistic-ui/optimistic-ui.svg"
-  alt="樂觀 UI 加載流程"
-/>
+![樂觀 UI 加載流程](./optimistic-ui.svg)
 
 ## 樂觀 UI 的優點
 
