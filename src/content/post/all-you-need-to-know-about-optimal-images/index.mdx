@@ -25,14 +25,7 @@ publishDate: 2023-05-19
 
 設計師不一定會留意這一點，身為前端工程師需要與設計者溝通，讓對方提供合適的圖片供網頁使用，工程師也可以學習基本的繪圖軟體輸出操作，要多大的素材自行輸出，或是上網找圖片壓縮與裁切工具。
 
-<Figure
-  width="1200"
-  height="675"
-  src="images/posts/all-you-need-to-know-about-optimal-images/export.webp"
-  alt="Figma 與 Adobe XD 的輸出介面"
-  title="Figma 與 Adobe XD 都可以選擇畫布的輸出大小與格式"
-  loading="lazy"
-/>
+![Figma 與 Adobe XD 的輸出介面](./export.webp 'Figma 與 Adobe XD 都可以選擇畫布的輸出大小與格式')
 
 不同的「裝置尺寸 Device Resolution」與「像素密度 Pixel Density」下合適的圖片大小也會有所不同
 
@@ -40,21 +33,8 @@ publishDate: 2023-05-19
 
 不同的圖片格式有不同的特性與局限，先思考好要使用什麼方式傳輸圖像，是向量還是點陣？影片還是圖片序列？
 
-<Figure
-  width="1200"
-  height="720"
-  src="images/posts/all-you-need-to-know-about-optimal-images/vector-or-raster.webp"
-  alt="向量與點陣的比較"
-  loading="lazy"
-/>
-
-<Figure
-  width="1200"
-  height="720"
-  src="images/posts/all-you-need-to-know-about-optimal-images/video-or-image.webp"
-  alt="影片與圖片"
-  loading="lazy"
-/>
+![向量與點陣的比較](./vector-or-raster.webp)
+![影片與圖片](./video-or-image.webp)
 
 衡量「檔案格式的特性」與「網站需要到達支援程度」，將圖片用最合適的方式呈現可以大幅增進網頁效能與加載時間。如果不確定格式支援程度可以到 [Can I use](https://caniuse.com/) 網站上輸入格式名稱，了解網站客群有沒有在範圍之內？能不能使用更新型的檔案格式？以下是我對常用格式的濃縮建議：
 
@@ -155,13 +135,7 @@ ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 
 但除了十分攏長之外仍有許多需求無法達成，像是：提供不同的圖片格式作為後備方案、懶加載、加載順序……等。
 
-<Figure
-  width="1200"
-  height="300"
-  src="images/posts/all-you-need-to-know-about-optimal-images/loading-order.webp"
-  alt="圖片加載順序的比較"
-  loading="lazy"
-/>
+![圖片加載順序的比較](./loading-order.webp)
 
 在外連樣式的情況下，也會導致需要等待 CSS 下載完畢開始解析的時候才能開始加載圖片，相比於使用 `<img>` 引入圖片的方式就會讓圖片加載速度受到影響，需要使用行內樣式、[預加載](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered)圖片、[預連接](https://developer.chrome.com/zh/docs/lighthouse/performance/uses-rel-preconnect/)等方式來避免該問題。
 
@@ -175,13 +149,7 @@ ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 
 底下有一張很明顯的橘色貓咪圖，但如果是使用[螢幕閱讀器](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8)，或是搜尋引擎、網頁爬蟲想要了解網站圖片內容就會出現無法解讀的問題，為了解決該狀況，就**務必**要為每一個 `<img>` 添加 `alt` 屬性。
 
-<Figure
-  width="1200"
-  height="900"
-  src="images/posts/all-you-need-to-know-about-optimal-images/sleeping-orange-cat.webp"
-  alt="一隻橘貓在人行道上曬太陽睡覺"
-  loading="lazy"
-/>
+![一隻橘貓在人行道上曬太陽睡覺](./sleeping-orange-cat.webp)
 
 沒有為圖片撰寫良好的替代描述，將會導致搜尋引擎、部分網站用戶無法正確的了解圖片內容。撰寫圖片的描述可以參考「[Google 搜尋中心提供的建議](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw#descriptive-alt-text)」，更好的的描述網頁圖片。
 
