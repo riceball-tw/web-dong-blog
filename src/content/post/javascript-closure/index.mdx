@@ -53,12 +53,7 @@ function sayHello() {
 console.log(sayHello()); // 仍舊可以打印出 Hello
 ```
 
-<Figure
-  width="1200"
-  height="308"
-  src="images/posts/javascript-closure/scope.webp"
-  alt="使用 console.dir 打印函式觀察結果"
-/>
+![使用 console.dir 打印函式觀察結果](./scope.webp)
 
 具體來說可以用 `console.dir()` 來觀察該函式，會發現 `sayHello` 函式具備該函式作用域以外的資料，這筆資料就算是在 `sayHello` 函式執行完成後，仍然可以存取到。
 
