@@ -92,12 +92,7 @@ publishDate: 2023-05-10
 
 ## <abbr title="Time to First Byte">TTFB</abbr> - 首次位元組時間
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/ttfb.svg"
-  alt="良好的 TTFB 數值建議在 800 毫秒以內，在 1800 毫秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 TTFB 數值建議在 800 毫秒以內，在 1800 毫秒以上則視為差勁，在此之間則需要改進](./ttfb.svg)
 
 測量網頁載入過程中從請求一個資源到第一個位元組回應所需的時間，從這項指標中主要可以了解用戶獲取資源的速度，是在其他指標之前最為根基的指標。越好的 TTFB 代表網頁「[正在發生](#happening)」，用戶可以越快速的獲取資源」。
 
@@ -108,23 +103,13 @@ publishDate: 2023-05-10
 
 ## <abbr title="First Contentful Paint">FCP</abbr> - 首次內容繪製
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/fcp.svg"
-  alt="良好的 FCP 數值建議在 1.8 秒以內，在 3 秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 FCP 數值建議在 1.8 秒以內，在 3 秒以上則視為差勁，在此之間則需要改進](./fcp.svg)
 
 測量網頁載入過程中「首個內容的出現所需的時間」，所謂的內容指的是文字、圖片（包含背景圖片）、`<svg>` 元素或非白色的 `<canvas>` 元素。也就是**測量網頁要花多久時間去顯示其內容**。從這項指標中主要可以了解網頁的載入速度，越好的 FCP 越能說服用戶網頁「[正在發生](#happening)」。
 
 ## <abbr title="Largest Contentful Paint">LCP</abbr> - 最大內容繪製 🌟
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/lcp.svg"
-  alt="良好的 LCP 數值建議在 2.5 秒以內，在 4 秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 LCP 數值建議在 2.5 秒以內，在 4 秒以上則視為差勁，在此之間則需要改進](./lcp.svg)
 
 測量網頁載入過程中「首個最大內容的出現所需的時間」，所謂的最大內容包含：
 
@@ -140,12 +125,7 @@ publishDate: 2023-05-10
 
 ## <abbr title="First Input Delay">FID</abbr> - 首次輸入延遲 🌟
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/fid.svg"
-  alt="良好的 FID 數值建議在 100 豪秒以內，在 300 毫秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 FID 數值建議在 100 豪秒以內，在 300 毫秒以上則視為差勁，在此之間則需要改進](./fid.svg)
 
 測量網頁載入過程中第一次與網站互動（點選連結、按鈕或是使用自訂的 JavaScript 控制），「瀏覽器能夠回應互動的時間點」，也就是**測量網頁要花多久時間去回應用戶的互動**，從這項指標中主要可以了解網頁的互動性，越好的 FID 越能說服用戶網頁「[是否可用](#usable)」。
 
@@ -153,23 +133,13 @@ publishDate: 2023-05-10
 
 ## <abbr title="Cumulative Layout Shift">CLS</abbr> - 累積布局偏移 🌟
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/cls.svg"
-  alt="良好的 CLS 數值建議在 0.1 以內，在 0.25 以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 CLS 數值建議在 0.1 以內，在 0.25 以上則視為差勁，在此之間則需要改進](./cls.svg)
 
 測量網頁「內容的穩定性」也就是**測量網頁內容位置變換的頻繁程度**，從這項指標中主要可以了解網頁在視覺上的穩定性，越好的 FID 越能讓用戶感受網頁使用起來「[是令人愉悅的](#delightful)」。
 
 ## <abbr title="Time to Interactive">TTI</abbr> - 可互動時間
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/tti.svg"
-  alt="良好的 TTI 數值建議在 3.8 秒以內，在 7.3 秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 TTI 數值建議在 3.8 秒以內，在 7.3 秒以上則視為差勁，在此之間則需要改進](./tti.svg)
 
 **測量網頁要花多久時間讓用戶可以與網頁互動**，從這項指標中主要可以了解網頁的互動性，越好的 TTI 越能說服用戶網頁「[是否可用](#usable)」。
 網頁會因為執行序被堵塞而導致事項被延遲執行，或是受 JavaScript 控制的介面還未完整的載入，這些都會導致網頁無法與用戶互動，這些問題應當被測量且盡可能的避免。
@@ -178,12 +148,7 @@ publishDate: 2023-05-10
 
 ## <abbr title="Total Blocking Time">TBT</abbr> - 總阻塞時間
 
-<Figure
-  width="700"
-  height="230"
-  src="images/posts/all-the-performance-metrics-you-need-to-know/tbt.svg"
-  alt="良好的 TBT 數值建議在 200 豪秒以內，在 600 豪秒以上則視為差勁，在此之間則需要改進"
-/>
+![良好的 TBT 數值建議在 200 豪秒以內，在 600 豪秒以上則視為差勁，在此之間則需要改進](./tbt.svg)
 
 測量 FCP 與 TTI 之間主執行緒被阻塞到影響輸入的回應性的時間，也就是**測量網頁在載入過程中繁忙到無法回應的長度**，從這項指標中主要可以了解網頁的互動性，越好的 TBT 越能說服用戶網頁「[是否可用](#usable)」。，瀏覽器必須等到該項任務完成才能回應用戶的互動，計算模擬圖表如下：
 
