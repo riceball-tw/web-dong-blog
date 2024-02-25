@@ -24,14 +24,7 @@ publishDate: 2023-11-14
 
 分析各式各樣的可能性，還真的蠻多種選擇的，像是：[Vuelidate](https://vuelidate-next.netlify.app/)、[VeeValidate](https://vee-validate.logaretm.com/v4/)、樣式庫自帶包裝驗證、自造整套輪子的可能性……
 
-<Figure
-  width="1360"
-  height="2081"
-  src="images/posts/how-to-integrate-client-side-form-validation-into-legacy-code/analyze.webp"
-  alt="列出導入客戶端驗證的可能性"
-  title="列出導入客戶端驗證的可能性"
-  loading="lazy"
-/>
+![列出導入客戶端驗證的可能性](./analyze.webp '列出導入客戶端驗證的可能性')
 
 最後經過討論目光鎖定在：「[原生的客戶端驗證](https://developer.mozilla.org/zh-CN/docs/Learn/Forms/Form_validation)」，基於瀏覽器原生就有客戶端驗證機制，[CSS 也有支援相關的選擇器](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLInputElement/invalid_event)與 [JS 約束驗證 API](https://developer.mozilla.org/zh-CN/docs/Learn/Forms/Form_validation)看似也十分強大，有什麼理由不嘗試使用原生的客戶端驗證呢？
 
