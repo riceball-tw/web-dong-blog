@@ -41,9 +41,6 @@ dependencies:
   astro:
     specifier: ^4.4.0
     version: 4.4.0(typescript@5.3.3)
-  astro-auto-import:
-    specifier: ^0.4.2
-    version: 0.4.2(astro@4.4.0)
   astro-expressive-code:
     specifier: ^0.32.4
     version: 0.32.4(astro@4.4.0)
@@ -1611,17 +1608,6 @@ packages:
   /astring@1.8.6:
     resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
     hasBin: true
-    dev: false
-
-  /astro-auto-import@0.4.2(astro@4.4.0):
-    resolution: {integrity: sha512-ZgWZQ58+EhbEym1+aoUnNyECOy0wsG5uRUs+rVp/7BzHtj1V76J2qkhjaTWLplgNb+8WrzhvTQNxytmXRCW+Ow==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      astro: ^2.0.0 || ^3.0.0-beta || ^4.0.0-beta
-    dependencies:
-      '@types/node': 18.17.17
-      acorn: 8.11.3
-      astro: 4.4.0(typescript@5.3.3)
     dev: false
 
   /astro-eslint-parser@0.9.5:
