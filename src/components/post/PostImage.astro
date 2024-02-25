@@ -18,7 +18,7 @@ function isExternalImage(imageInput: ImageInput): imageInput is string {
   return typeof imageInput === 'string';
 }
 
-const ImageWrapper = title ? 'figure' : 'span';
+const ImageWrapper = title ? 'figure' : 'div';
 const imageStyle = 'text-center mx-auto';
 ---
 
