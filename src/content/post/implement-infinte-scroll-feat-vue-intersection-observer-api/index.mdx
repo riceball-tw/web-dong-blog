@@ -13,12 +13,7 @@ publishDate: 2023-12-23
 
 近期工作剛好接觸很多介面開發的部分，其中一個需求實作「無限滾動加載功能」，這是一種常見的加載策略出現在 Facebook、Instagram、Twitter、Pinterest……等主流網站，當使用者滾動到頁面底部時，會自動加載更多的資料，讓使用者不用點擊按鈕就能瀏覽更多的資料，就像是自動版的加載按鈕。
 
-<Figure
-  width="1200"
-  height="600"
-  src="images/posts/implement-infinte-scroll-feat-vue-intersection-observer-api/loading-strategy.webp"
-  alt="頁籤、無限滑動、加載按鈕範例"
-/>
+![頁籤、無限滑動、加載按鈕範例](./loading-strategy.webp)
 
 工作中使用的是 Options API 不過這次範例會以 Composition API 來實作，同樣的邏輯也可以套用在任何程式或框架上。
 
@@ -196,12 +191,7 @@ const handleLoadmore = throttle(
 
 這是一個很實在的練習題目，特別是在製作更進階的「無限滾動搜尋功能」時碰到了非常多的狀態需要管理，有空或許我會再寫一篇進階版本的文章，並描述我怎麼推導出最終成果。
 
-<Figure
-  width="1200"
-  height="650"
-  src="images/posts/implement-infinte-scroll-feat-vue-intersection-observer-api/result.webp"
-  alt="程式結果呈現"
-/>
+![程式結果呈現](./result.webp)
 
 如果你有更好的想法或是發現任何問題，歡迎在下方留言討論，我會非常的有興趣嘗試或討論看看不同的設計方式，像是：更為 Immutable 的寫法、有限狀態機、State Pattern！
 
