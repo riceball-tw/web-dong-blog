@@ -22,12 +22,7 @@ publishDate: 2023-09-17
 
 可以想像得到靜態與動態網站各有它們的優缺點，問題不在「哪種方法比較優越？」而是「哪種方法比較符合需求？」，靜態網頁內容制式但便宜方便部屬，動態網頁靈活但複雜昂貴許多，就像是超市冷凍披薩和手工現烤披薩一樣。
 
-<Figure
-  width="1200"
-  height="600"
-  src="images/posts/ithome-astro/day2-problem-solution/pizza.webp"
-  alt="剛出爐的披薩在烤爐旁"
-/>
+![剛出爐的披薩在烤爐旁](./pizza.webp)
 
 慶幸的是現今有許多的框架可以讓我們自由的切換渲染網頁的時機與模式，渲染網頁的方法可以被統稱為「渲染模式 Rendering Pattern」，關係到用戶與開發者的體驗。由於渲染模式與網頁效能指標是額外且獨立的課題，因此附上我所撰寫的相關文章補充：
 
@@ -68,12 +63,8 @@ import Article from '/components/Article.astro';
 
 為了達成「運送盡可能少的 JavaScript 到客戶端」Astro 預設會在伺服端將所有元件預先渲染完畢，並且在頁面需要該元件被使用時再加載關聯 JavaScript 到網頁中使其可以被使用，這樣的行為也被稱為 Hydration。Astro 中我們可以簡單的透過「[範本指令 Template Directives Reference](https://docs.astro.build/zh-tw/reference/directives-reference/)」來為元件 Hydrate 的時機，像是：**`client:visible`、`client:media`**……等。
 
-<Figure
-  width="1200"
-  height="600"
-  src="images/posts/ithome-astro/day2-problem-solution/selective-hydration.webp"
-  alt="選擇性 hydration"
-/>
+![選擇性 hydration](./selective-hydration.webp)
+
 ```astro
 <!-- 該導覽列切換元件只在裝置尺寸 500px 以下才開始加載-->
 <NavbarToggle client:media="(max-width: 500px)" />
@@ -85,12 +76,8 @@ import Article from '/components/Article.astro';
 
 以上便是 Astro 為了針對「內容為主軸的網頁」所選擇的網頁渲染方案：「Selective Hydration」也就是「 Astro Island」 架構實踐的模式，這種渲染方式對於偏靜態類型的網頁來說剛剛好，既確保了網頁速度與 SEO，同時也能有效率的加載頁面中的 JavaScript。
 
-<Figure
-  width="1200"
-  height="1100"
-  src="images/posts/ithome-astro/day2-problem-solution/selective-hydration-process.webp"
-  alt="選擇性 hydration 流程圖"
-/>
+![選擇性 hydration 流程圖](./selective-hydration-process.webp)
+
 ## 總結
 
 今天理解到了動態網站與靜態網站的區別（冷凍披薩與現烤披薩），並且也大致了解現代網頁有各式各樣的需求，有的網頁內容偏向靜態，有的偏向動態，關係到了網頁「渲染模式」的抉擇，而 Astro 就及是一個瞄準生成靜態頁面為主的框架。
