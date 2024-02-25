@@ -133,7 +133,7 @@ export const developerExperiences = [
 
 靜態網站可以由靜態渲染的方式來生成，透過自動化的工具例如： [Jekyll](https://jekyllrb.com/)、[Hugo](https://gohugo.io/)、[11ty](https://www.11ty.dev/)……等靜態生產器（Static Site Generator）將資料與介面分離，並透過模板引擎（Template Engine）生成網頁文件，這樣的模式也被稱為靜態生產（Static Site Generation）。
 
-<Figure width="1300" height="600" src="images/posts/rendering-pattern/static-rendering.webp" alt="靜態網站" />
+![靜態網站](./static-rendering.webp)
 
 相較於手動編輯靜態網站，使用靜態生產器渲染可以更有效率的更新與管理網頁，但仍然有幾個問題需要注意：
 
@@ -154,12 +154,7 @@ export const developerExperiences = [
 
 在靜態渲染的基礎上使用 [Ajax](/post/why-you-need-ajax-and-why-not-call-it-ajaj/) 的方式，在客戶端使用 JavaScript 來送出請求獲得資料並更新內容，這樣就可以在靜態網站中加入動態內容了，但仍需考慮幾點問題：
 
-<Figure
-  width="1300"
-  height="600"
-  src="images/posts/rendering-pattern/static-with-client-side-fetch.webp"
-  alt="靜態網站加上 Ajax"
-/>
+![靜態網站加上 Ajax](./static-with-client-side-fetch.webp)
 
 <ul style="list-style-image: url(/images/icons/release-alert.svg);">
   <li>
@@ -180,7 +175,7 @@ export const developerExperiences = [
 
 伺服器渲染是指在用戶每次請求網頁時，伺服器都會重新生成網頁內容並回傳給用戶，由於頁面及時生成需要時間，因此伺服器渲染的網站通常會比靜態網站慢，但也因為如此，伺服器渲染的網站可以輕易的加入動態內容在頁面之中。
 
-<Figure width="1300" height="600" src="images/posts/rendering-pattern/server-rendering.webp" alt="動態網站" />
+![動態網站](./server-rendering.webp)
 
 <ul style="list-style-image: url(/images/icons/release-alert.svg);">
   <li>
@@ -199,7 +194,7 @@ export const developerExperiences = [
 
 客戶端渲染是指使用 JavaScript 渲染整個頁面在瀏覽器上，當用戶請求網頁時，伺服器只會回傳一個空白的 HTML 檔案，並藉由客戶端 JavaScript 來動態生成網頁內容。
 
-<Figure width="1300" height="600" src="images/posts/rendering-pattern/client-side-rendering.webp" alt="動態網站" />
+![動態網站](./client-side-rendering.webp)
 
 <ul style="list-style-image: url(/images/icons/release-alert.svg);">
   <li>
@@ -212,12 +207,7 @@ export const developerExperiences = [
 
 增量靜態生產是基於靜態生產的改良，用於解決大量頁面導致建構時間長、動態資料無法即時呈現的問題。在 ISR 中，只會事先渲染部分重要頁面，剩餘的頁面就等到有用戶請求再渲染，也有作法是在指定的時間由伺服器重新渲染該頁面，就可以定期的刷新靜態頁面中的內容。
 
-<Figure
-  width="1300"
-  height="600"
-  src="images/posts/rendering-pattern/incremental-static-regeneration.webp"
-  alt="增量靜態生產網站"
-/>
+![增量靜態生產網站](./incremental-static-regeneration.webp)
 
 <ul style="list-style-image: url(/images/icons/release-alert.svg);">
   <li>伺服器營運成本：需要一個伺服器在背後持續的渲染新頁面，相較於完全的靜態生成會有維持伺服器的開銷</li>
