@@ -10,6 +10,7 @@ import PostImage from '@/components/post/PostImage.astro';
 import PostBlockquote from '@/components/post/PostBlockquote.astro';
 import Info from '@/components/post/Info.astro'
 import Video from '@/components/post/Video.astro'
+import PostTableOfContent from '@/components/post/PostTableOfContent.astro';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -90,28 +91,9 @@ const author = post.data.author && (await getEntry('character', post.data.author
       </header>
       <aside style="top: var(--mainNav-height)" class="sticky col-start-3 row-start-2 ml-4 hidden xl:block">
         <div class="absolute top-0 divide-y divide-primary-200 dark:divide-primary-800">
-          <!-- TOC -->
-          <div class="p-4">
-            {
-              Boolean(headings.length) && (
-                <div class="">
-                  <ul data-toc class="toc m-0 list-none p-0">
-                    {headings.map(({ depth, slug: headingSlug, text }) => (
-                      <li>
-                        <a
-                          class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
-                          href={`#${headingSlug}`}
-                          aria-label={`移動到 ${text} 標題區塊`}
-                        >
-                          {text}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            }
-          </div>
+         
+
+          <PostTableOfContent {headings} />
 
           <!-- Post Date Info -->
           <div class="inline-flex w-full flex-col gap-2 p-4">
@@ -146,28 +128,3 @@ const author = post.data.author && (await getEntry('character', post.data.author
     </article>
   </main>
 </BlogBase>
-
-<script is:inline>
-  function generateTOC() {
-    const headings = document.querySelectorAll('[data-article] h2, h3');
-    const tocHeadings = document.querySelectorAll('[data-toc] a');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          tocHeadings.forEach((heading) => {
-            heading.classList.remove('toc-link--active');
-            if (entry.target.textContent === heading.textContent.trim()) {
-              heading.classList.toggle('toc-link--active');
-            }
-          });
-        }
-      });
-    });
-
-    return { headings, observer };
-  }
-
-  generateTOC().headings.forEach((heading) => {
-    generateTOC().observer.observe(heading);
-  });
-</script>
