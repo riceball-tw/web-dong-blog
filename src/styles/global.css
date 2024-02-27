@@ -112,22 +112,10 @@ html {
   opacity: 1;
 }
 
-.article-grid > .imgFigure {
-  width: 100%;
-  grid-column: 1 / -1;
-  transition: 0.3s;
-  z-index: 1;
-}
-
 .article-grid > video {
   margin: 0 auto;
   grid-column: 1 / -1;
   z-index: 1;
-}
-
-.article-grid > img {
-  margin: 0 auto;
-  grid-column: 1 / -1;
 }
 
 astro-island {
