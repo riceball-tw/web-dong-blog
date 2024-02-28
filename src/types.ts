@@ -1,6 +1,4 @@
-export interface BaseLayout extends GlobalHead {
-  themeColor?: string;
-}
+export interface BaseLayout extends GlobalHead, themeColor {}
 
 export interface GlobalHead {
   title?: string;
@@ -11,4 +9,8 @@ export interface GlobalHead {
     src: string;
     alt: string;
   };
+}
+
+export interface themeColor {
+  themeColor?: string | undefined;
 }

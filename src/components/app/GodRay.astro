@@ -1,0 +1,58 @@
+---
+import type { themeColor } from '@/types';
+import uniqolor from 'uniqolor';
+
+interface Props extends themeColor {}
+const { themeColor } = Astro.props
+
+function getThemeColor(lightness: number = 60): string {
+  return uniqolor.random({ saturation: 70, lightness: [lightness] }).color;
+}
+
+const defaultMainThemeColor = getThemeColor()
+const mainThemeColor = themeColor ? themeColor : defaultMainThemeColor
+const themeColorA = getThemeColor()
+const themeColorB = getThemeColor()
+const themeColorC = getThemeColor()
+---
+
+<div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="godray absolute -inset-[10px] transition-opacity opacity-30">
+    </div>
+</div>
+
+<style style={{
+
+}} define:vars={{mainThemeColor, themeColorA, themeColorB, themeColorC}}>
+@keyframes godrayAnimation {
+  0% {
+    transform: translateX(0)
+  }
+  to {
+    transform: translateX(-50%)
+  }
+}
+
+.godray {
+  --loopDuration: 20s;
+  --rayDegree: 120deg;
+  --stripes:repeating-linear-gradient(var(--rayDegree),#FFF,#FFF 7%,transparent 10%,transparent 12%,#FFF 16%);
+  --rainbow:repeating-linear-gradient(var(--rayDegree),var(--themeColorA) 10%,var(--themeColorB) 15%,var(--mainThemeColor) 20%,var(--themeColorC) 25%,var(--mainThemeColor) 30%);
+  filter:invert(100%) blur(15px);
+  -webkit-mask-image:radial-gradient(ellipse at 100% 0,#000 20%,transparent 70%);
+  mask-image:radial-gradient(ellipse at 100% 0,#000 20%,transparent 70%);
+  pointer-events:none
+}
+.godray,
+.godray:after {
+  background-image:var(--stripes),var(--rainbow)
+}
+.godray:after {
+  content: "";
+  position: absolute;
+  width: 300%;
+  height: 100%;
+  animation: godrayAnimation var(--loopDuration) ease-in-out infinite alternate;
+  mix-blend-mode: difference
+}
+</style>
