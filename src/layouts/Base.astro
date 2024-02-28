@@ -2,17 +2,14 @@
 import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
 import { ViewTransitions } from 'astro:transitions';
-import { hexToRgba } from '@/helper/hexToRgba';
 import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
 import DefaultHead from '@/components/app/head/DefaultHead.astro'
 import ThemeInit from '@/components/app/head/ThemeInit.astro'
+import GodRay from '@/components/app/GodRay.astro'
 
 export interface Props extends BaseLayout {}
 
 const { themeColor } = Astro.props;
-
-const bgGradientColor = themeColor ? hexToRgba(themeColor, 0.5) : '#dcbadc';
-const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
 ---
 
 <script>
@@ -39,39 +36,6 @@ const bgGradientColorDark = themeColor ? hexToRgba(themeColor, 0.3) : '#1f2c94';
     class="bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-secondary selection:text-primary-50 dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
   >
     <slot />
-    <style define:vars={{ bgGradientColor, bgGradientColorDark }}>
-      html::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -10;
-        height: 100%;
-        width: 100%;
-        background-repeat: repeat;
-        background-size: auto;
-      }
-
-      html::after {
-        background-image: linear-gradient(0deg, rgb(var(--primary-color-50)), transparent 15%),
-          linear-gradient(
-            220deg,
-            rgb(var(--primary-color-300)) 5%,
-            var(--bgGradientColor) 40%,
-            rgb(var(--primary-color-50)) 90%
-          );
-      }
-
-      html.dark::after {
-        background-image: linear-gradient(0deg, rgb(var(--primary-color-1000)) 1%, transparent 40%),
-          linear-gradient(
-            60deg,
-            var(--bgGradientColorDark),
-            rgb(var(--primary-color-700)) 30%,
-            var(--bgGradientColorDark) 40%,
-            rgb(var(--primary-color-1000)) 60%
-          );
-      }
-    </style>
+    <GodRay {themeColor}/>
   </body>
 </html>
