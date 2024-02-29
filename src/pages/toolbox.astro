@@ -18,9 +18,7 @@ const categorizedSites = toolboxSites.reduce((categorizedData, site) => {
 }, {});
 const categories = Object.keys(categorizedSites);
 
-const categoriesWithQunatity = categories.map((category) => {
-  return { [category]: categorizedSites[category as keyof typeof categorizedSites].length };
-});
+const categoriesWithQunatity = categories.map((category) => ({ [category]: categorizedSites[category as keyof typeof categorizedSites].length }));
 
 const channels = [
   { id: 'UCQT3GwtAop6cnvTTTsKUUoQ', category: '開發' },
@@ -144,9 +142,7 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
   //  YT API V3 Subscriptions.list NOT returning nextPageToken
   // https://issuetracker.google.com/issues/35176305
   // Won't fix Bug, Only Maxium 50 channels per request
-  const channelBatches = channelsIDs.split(',').map((channelIDs) => {
-    return channelIDs.slice(0, 50);
-  });
+  const channelBatches = channelsIDs.split(',').map((channelIDs) => channelIDs.slice(0, 50));
   const parts = ['snippet', 'brandingSettings'];
   return (
     await Promise.all(
@@ -157,18 +153,14 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
             if (!res.ok) throw new Error(res.statusText);
             return res.json();
           })
-          .then((resJSON) => {
-            return resJSON.items.map((channel) => {
-              return {
+          .then((resJSON) => resJSON.items.map((channel) => ({
                 id: channel.id,
                 url: `https://www.youtube.com/channel/${channel.id}`,
                 title: channel.snippet.title,
                 thumbnail: channel.snippet.thumbnails.default,
                 category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
                 brandingSettings: channel.brandingSettings,
-              };
-            });
-          })
+              })))
           .catch((err) => {
             console.error(err);
             return [];
@@ -269,8 +261,7 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
           <YoutubeChannels youtubeChannels={youtubeChannels} />
         </section>
         {
-          Object.entries(categorizedSites).map((categories) => {
-            return (
+          Object.entries(categorizedSites).map((categories) => (
               <section class=" flex flex-col px-4">
                 {categories.map((group) => {
                   if (typeof group === 'string')
@@ -285,15 +276,12 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
 
                   return (
                     <CardGallery>
-                      {group.map((site) => {
-                        return <PostCard post={site} />;
-                      })}
+                      {group.map((site) => <PostCard post={site} />)}
                     </CardGallery>
                   );
                 })}
               </section>
-            );
-          })
+            ))
         }
         <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
           <h2 style="max-width: 900px" class="mx-auto text-center text-3xl font-bold md:text-5xl">
