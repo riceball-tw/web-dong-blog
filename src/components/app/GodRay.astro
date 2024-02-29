@@ -10,7 +10,7 @@ function getThemeColor(lightness: number = 60): string {
 }
 
 const defaultMainThemeColor = getThemeColor()
-const mainThemeColor = themeColor ? themeColor : defaultMainThemeColor
+const mainThemeColor = themeColor || defaultMainThemeColor
 const themeColorA = getThemeColor()
 const themeColorB = getThemeColor()
 const themeColorC = getThemeColor()
