@@ -24,8 +24,14 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   overrides: [
     {
+      files: ['*.ts'],
+      rules: {
+        'import/no-unresolved': [2, { ignore: ['astro:*'] }],
+      },
+    },
+    {
       // Define the configuration for `.astro` file.
-      files: ['*.astro', '*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.vue'],
+      files: ['*.astro'],
       // Allows Astro components to be parsed.
       parser: 'astro-eslint-parser',
       // Parse the script in `.astro` as TypeScript by adding the following configuration.
@@ -39,19 +45,7 @@ module.exports = {
         'import/no-unresolved': [2, { ignore: ['astro:*'] }],
         // Ignore the import/extensions rule for `.astro` files.
         'import/prefer-default-export': 'off',
-        'import/extensions': [
-          'error',
-          'ignorePackages',
-          {
-            js: 'never',
-            jsx: 'never',
-            ts: 'never',
-            tsx: 'never',
-          },
-        ],
       },
     },
-
-    // ...
   ],
 };
