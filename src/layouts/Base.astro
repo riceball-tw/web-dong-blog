@@ -33,7 +33,7 @@ const { themeColor } = Astro.props;
     <slot name="head" />
   </head>
   <body
-    class="bg-primary-50 from-white bg-cover bg-center bg-no-repeat text-primary-800 selection:bg-secondary selection:text-primary-50 dark:bg-primary-1000 dark:from-primary-800 dark:to-primary-900 dark:text-primary-50"
+    class="bg-surface-lowest text-surface-inverse selection:bg-highlight selection:text-brand-background"
   >
     <slot />
     <GodRay {themeColor}/>
