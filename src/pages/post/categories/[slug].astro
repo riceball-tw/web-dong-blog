@@ -43,8 +43,10 @@ const avaliableCurrentCategoryPosts = publishedPosts
               excerpt: post.data.excerpt,
               publishDate: post.data.publishDate,
               themeColor: post.data.themeColor,
-              tags: post.data.tags,
+              categoryHref: `/post/categories/${post.data.category}/`,
               category: post.data.category,
+              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+              tags: post.data.tags,
             }}
           />
         ))
