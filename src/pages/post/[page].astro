@@ -34,8 +34,10 @@ const { page } = Astro.props;
               excerpt: post.data.excerpt,
               publishDate: post.data.publishDate,
               themeColor: post.data.themeColor,
-              tags: post.data.tags,
               category: post.data.category,
+              categoryHref: `/post/categories/${post.data.category}/`,
+              tags: post.data.tags,
+              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
             }}
           />
         ))

@@ -14,3 +14,13 @@ export interface GlobalHead {
 export interface themeColor {
   themeColor?: string | undefined;
 }
+
+export interface CategoryList {
+  categoryHref?: string;
+  category: string;
+}
+
+export interface TagsList {
+  tagHrefs?: string[] | undefined;
+  tags: string[];
+}

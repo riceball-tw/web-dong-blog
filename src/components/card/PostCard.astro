@@ -1,11 +1,11 @@
 ---
+import type { CategoryList as CategoryListType, TagsList } from '@/types'
 import Card from '@/components/card/Card.astro';
-import Category from '@/components/taxonomy/category.astro';
-import Tags from '@/components/taxonomy/tags.astro';
+import CategoryList from '@/components/post/CategoryList.astro';
+import TagList from '@/components/post/TagsList.astro';
 import { characterToUnicode } from '@/helper/characterToUnicode';
 
-export interface Props {
-  post: {
+interface PostCard extends CategoryListType, TagsList {
     featureIcon?:
       | {
           width: number;
@@ -20,12 +20,13 @@ export interface Props {
     excerpt: string;
     publishDate?: Date;
     themeColor: string;
-    tags?: string[];
-    category?: string;
-  };
+  }
+
+export interface Props {
+  post: PostCard
 }
 
-const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, slug, url } = Astro.props.post;
+const { featureIcon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
 ---
 
 <Card themeColor={themeColor}>
@@ -63,8 +64,16 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor, tags, category, 
       }
 
       <div class="flex flex-wrap">
-        {category && <Category isLink={!url} category={category} />}
-        {tags && <Tags isLink={!url} tags={tags} />}
+        {
+          category && (
+            <CategoryList {...(categoryHref && ({categoryHref}))} {category} />
+          )
+        }
+        {
+          tags && (
+            <TagList {...(tagHrefs && ({tagHrefs}))} {tags} />
+          )
+        }
       </div>
     </div>
   </article>

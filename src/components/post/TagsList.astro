@@ -1,0 +1,25 @@
+---
+import type { TagsList } from '@/types'
+
+export interface Props extends TagsList {}
+
+const { tags, tagHrefs } = Astro.props;
+---
+
+<ul class="flex gap-4 whitespace-nowrap">
+  {
+    tagHrefs ? tagHrefs.map((href, index) => (
+      <li>
+        <a class="capitalize opacity-40 hover:opacity-100" {href}>
+          # {tags[index]}
+        </a>
+      </li>
+    )) : tags.map((tag) => (
+      <li>
+        <span class="capitalize opacity-40 hover:opacity-100">
+          # {tag}
+        </span>
+      </li>
+    ))
+  }
+</ul>
