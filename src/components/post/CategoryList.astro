@@ -1,0 +1,17 @@
+---
+import type { CategoryList } from '@/types'
+
+export interface Props extends CategoryList {}
+
+const { category, categoryHref } = Astro.props;
+const CategoryElement = categoryHref ? 'a' : 'div';
+---
+
+<CategoryElement
+  class="relative mr-4 whitespace-nowrap capitalize opacity-40 hover:opacity-100"
+  {...categoryHref && {
+    href: categoryHref,
+  }}
+>
+  {`@ ${category}`}
+</CategoryElement>
