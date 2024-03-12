@@ -12,5 +12,6 @@
   },
   "files.associations": {
     "*.mdx": "markdown"
-  }
+  },
+  "editor.formatOnSave": true
 }

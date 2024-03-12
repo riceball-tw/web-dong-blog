@@ -41,8 +41,7 @@ const uniqueCategories = youtubeChannels
     </Pill>
   </li>
   {
-    uniqueCategories.map((category: string) => {
-      return (
+    uniqueCategories.map((category: string) => (
         <li>
           <Pill>
             <button class="disabled:opacity-60" data-category-filter={category} type="button">
@@ -50,8 +49,7 @@ const uniqueCategories = youtubeChannels
             </button>
           </Pill>
         </li>
-      );
-    })
+      ))
   }
 </ul>
 <ul
@@ -62,8 +60,8 @@ const uniqueCategories = youtubeChannels
   {
     youtubeChannels.map((channel) => {
       const containerWidth = channel.thumbnail.width + 24;
-      const width = channel.thumbnail.width;
-      const height = channel.thumbnail.height;
+      const {width} = channel.thumbnail;
+      const {height} = channel.thumbnail;
 
       return (
         <li data-category={channel.category} class="group relative snap-center">
