@@ -1,7 +1,7 @@
 ---
-import { characterToUnicode } from '@/helper/characterToUnicode';
+import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { getCollection } from 'astro:content';
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Card from '@/components/card/Card.astro';
 import Hero from '@/components/app/Hero.astro';
@@ -62,8 +62,8 @@ const heroBadge = {
                   (post, index) =>
                     index + 1 < 4 && (
                       <li class="group/list inline-flex gap-12">
+                        {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
                         <time
-                          {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
                           style="margin-top: 0.3em"
                           class="inline-block whitespace-nowrap opacity-80 group-hover/list:opacity-100 "
                         >

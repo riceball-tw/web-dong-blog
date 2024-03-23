@@ -134,8 +134,6 @@ const channels = [
   { id: 'UC1KKByu8cgQWPiKe1GZZQbg', category: '使用者介面' },
 ];
 
-const youtubeChannels = await getYoutubeChannels(channels);
-
 async function getYoutubeChannels(channels: { id: string; category: string }[]) {
   const youtubeAPIKey = import.meta.env.PUBLIC_YOUTUBEAPIKEY;
   const channelsIDs = channels.map((channel) => channel.id).join(',');
@@ -169,6 +167,8 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
     )
   ).flat();
 }
+
+const youtubeChannels = await getYoutubeChannels(channels);
 ---
 
 <script>

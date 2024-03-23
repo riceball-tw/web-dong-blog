@@ -1,20 +1,21 @@
 ---
+import type { GetStaticPaths } from 'astro'
 import { getCollection } from 'astro:content';
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 
-export async function getStaticPaths({ paginate }) {
+export const getStaticPaths= (async ({ paginate }) => {
   const { paginationSize } = globalConfig.setting;
   const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
   const dateSortedPublishedPosts = publishedPosts.sort(
     (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
-  );
-
+  )
   return paginate(dateSortedPublishedPosts, { pageSize: paginationSize });
-}
+}) satisfies GetStaticPaths
+
 const { page } = Astro.props;
 ---
 

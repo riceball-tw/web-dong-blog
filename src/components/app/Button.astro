@@ -1,9 +1,5 @@
 ---
-interface Props {
-  href?: string;
-  theme?: keyof typeof themeClassList;
-  size?: keyof typeof sizeClassList;
-}
+
 // TODO: Add Polymorphic type
 
 const { href, theme, size, ...rest } = Astro.props;
@@ -14,11 +10,19 @@ const themeClassList = {
   secondary: 'bg-secondary dark:bg-secondary-light dark:text-primary-1000 text-primary-50',
   link: 'border-0 underline',
 };
+
 const sizeClassList = {
   md: 'px-4 py-2',
   lg: 'px-6 py-3',
   block: 'block w-full px-8 py-4',
 };
+
+interface Props {
+  href?: string;
+  theme?: keyof typeof themeClassList;
+  size?: keyof typeof sizeClassList;
+}
+
 const themeClass = theme ? themeClassList[theme] : themeClassList.solid;
 const sizeClass = size ? sizeClassList[size] : sizeClassList.md;
 const defaultButtonStyle =

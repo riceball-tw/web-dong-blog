@@ -37,7 +37,7 @@ export function toggleGlobalTheme(currentTheme: string) {
  * @param newTheme - The new theme to be set.
  * @param oldTheme - (Optional) The old theme to be removed.
  */
-export function setGlobalTheme(newTheme: 'light' | 'dark', oldTheme?: string) {
+export function setGlobalTheme(newTheme: string, oldTheme?: string) {
   localStorage.theme = newTheme;
   const HTMLElement = document.documentElement;
   const editorThemeMap = globalConfig.setting.editorTheme;

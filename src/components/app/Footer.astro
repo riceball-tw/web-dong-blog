@@ -1,5 +1,5 @@
 ---
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 import Clickable from '@/components/app/Clickable.astro';
 
 interface Social {
@@ -68,7 +68,7 @@ const { copyright, socials } = globalConfig.brand;
         .then(() => {
           console.log('Thanks for sharing!');
         })
-        .catch(() => {
+        .catch((err) => {
           console.error(err);
         });
     } else {

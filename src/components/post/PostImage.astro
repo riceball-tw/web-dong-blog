@@ -14,8 +14,8 @@ type Props = {
 };
 
 const { src: imageInput, alt, title } = Astro.props;
-function isExternalImage(imageInput: ImageInput): imageInput is string {
-  return typeof imageInput === 'string';
+function isExternalImage(image: ImageInput): image is string {
+  return typeof image === 'string';
 }
 
 const ImageWrapper = title ? 'figure' : 'div';

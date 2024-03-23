@@ -8,10 +8,10 @@ import partytown from '@astrojs/partytown';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { remarkModifiedTime } from './src/helper/remark-modified-time';
 import { h, s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
-import globalConfig from './src/globalConfig';
+import { remarkModifiedTime } from './src/helper/remark-modified-time';
+import globalConfig from './src/globalConfig.ts';
 
 const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 

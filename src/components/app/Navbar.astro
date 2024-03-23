@@ -101,20 +101,17 @@ const mainNav = [
 </nav>
 
 <script>
-  import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/helper/globalTheme';
+  import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/helper/globalTheme.ts';
 
   const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
-  setupThemeToggler(themeToggleButton);
-
   function setupThemeToggler(targetElement: HTMLElement) {
     targetElement.addEventListener('click', () => {
       const localStorageTheme = localStorage.theme;
       toggleGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
     });
   }
-
+  setupThemeToggler(themeToggleButton);
   document.addEventListener('astro:after-swap', () => {
-    const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
-    setupThemeToggler(themeToggleButton);
+    setupThemeToggler(document.querySelector('[data-theme-toggle]') as HTMLButtonElement);
   });
 </script>

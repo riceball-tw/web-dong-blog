@@ -3,7 +3,7 @@ import type { CategoryList as CategoryListType, TagsList } from '@/types'
 import Card from '@/components/card/Card.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
-import { characterToUnicode } from '@/helper/characterToUnicode';
+import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 
 interface PostCard extends CategoryListType, TagsList {
     featureIcon?:
@@ -48,7 +48,9 @@ const { featureIcon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, c
     }
     <div>
       <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
-        {url ? <a href={url}>{titleTC}</a> : slug ? <a href={`/post/${slug}/`}>{titleTC}</a> : titleTC}
+        {url && <a href={url}>{titleTC}</a>}
+        {slug && !url && <a href={`/post/${slug}/`}>{titleTC}</a>}
+        {!url && !slug && titleTC}
       </h3>
       <p class="line-clamp-3 max-w-prose tracking-wide">{excerpt}</p>
     </div>
