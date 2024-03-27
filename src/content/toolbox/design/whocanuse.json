@@ -1,0 +1,8 @@
+{
+  "featureIcon": { "url": "images/icons/eye.svg", "alt": "眼睛符號" },
+  "titleTC": "Whocanuse",
+  "url": "https://www.whocanuse.com/",
+  "excerpt": "透過模擬視覺障礙人士的視覺，理解顏色間的對比如何影響妳的使用者，從各式各樣的色盲到視力模糊、白內障、環境光影響都可以模擬，並且會提供對比度數值與 WCAG 等級的檢測。",
+  "category": "設計工具",
+  "tags": ["免費"]
+}
