@@ -1,0 +1,61 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/document.svg', alt: '文件符號' }
+title: 'Type Safety at Runtime with Zod'
+titleTC: '使用 Zod 於 Runtime 檢驗型別'
+excerpt: 'Zod 是以 TypeScript 為首的 Schema 聲明和驗證庫，為什麼有了 TypeScript 還需要 Zod？輕易的撰寫 Runtime 資料驗證就是 Zod 的目的。'
+category: 'TypeScript'
+tags: ['Zod']
+publishDate: 2024-03-30
+---
+
+## 前言
+
+> Zod 是以 TypeScript 為首的 Schema 聲明和驗證庫
+
+不管是在 [Astro](https://astro.build/)、[tRPC](https://trpc.io/)、[React Hook Form](https://react-hook-form.com/)、[VeeValidate](https://vee-validate.logaretm.com/v4/) 背後都有使用到 Zod，這是個簡單但充滿威力的庫值得去了解。
+
+## 為什麼你需要 Zod？
+
+通常為了驗證資料的正確性，我們會使用 [JSDoc](https://jsdoc.app/) 或是 [TypeScript](https://www.typescriptlang.org/) 用於標註型別，雖然 TypeScript 可以幫助我們檢查程式執行之前的型別，但在編譯成 JavaScript 後還是仍有可能會於執行時因為資料與預期不符而出錯，通常源自外部的資料（表單、網址、LocalStorage、API 回應）。這時候就是使用 [Zod](https://zod.dev/) 的時間，協助在程式執行時檢查資料的型別，以達到 Runtime 時的資料 Schema 檢查。
+
+## 實際範例
+
+舉例來說一個 `getPerson` 函式會透過 ID 來取得不同人物的資料，就算可以替這個函式返回標註型別，在實際運作時仍就無法肯定 API 回應如同 TypeScript 內的 `Person` 型別：
+
+```ts
+interface Person = {
+  name: string
+};
+
+const getPerson = async (id: string): Person => {
+  return await fetch('https://www.example.com/people/' + id + '.json')
+  .then((res) => res.json());
+};
+```
+
+在使用 Zod 後，我們可以動態的檢查 API 回應的資料是否符合 `Person` 型別，這麼做不管在 TypeScript 還是 Runtime 都能確保資料的正確性：
+
+```ts
+import { z } from 'zod';
+
+const Person = z.object({
+  name: z.string(),
+});
+
+// TS 型別： const getPerson: (id: string) => Promise<string>
+const getPerson = async (id: string) => {
+  const response = await fetch('https://www.example.com/people/' + id + '.json').then((res) => res.json());
+  const result = Person.parse(response);
+  // 經過 Zod 驗證，確保資料符合 Person
+  return result;
+};
+```
+
+從以上的範例可以觀察到 zod，Zod 有許多驗證方法可以使用，例如 `z.string()`、`z.number()`、`z.boolean()`、`z.object()`、`z.array()`、`z.union()`、`z.enum()`、`z.optional()`、`z.nullable()` ……等，這些方法可以組合使用來檢查資料是否符合預期的型別，也可以自由定義錯誤時拋出的訊息，更多可以參考 [Zod 文件即可](https://zod.dev/?id=introduction)，可以到延伸閱讀了解更多實際案例與習題。
+
+## 延伸閱讀
+
+- [You Might Be Using Typescript Wrong... - Theo - t3.gg](https://www.youtube.com/watch?v=RmGHnYUqQ4k)
+- [Zod - TotalTypeScript](https://www.totaltypescript.com/tutorials/zod)
+- [Zod Tutorial - All 10 places for Zod in your React / Next.js app - ByteGrad](https://www.youtube.com/watch?v=AeQ3f4zmSMs)
