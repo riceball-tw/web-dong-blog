@@ -1,0 +1,63 @@
+---
+isDraft: false
+featureIcon: { url: 'images/icons/check-circle.svg', alt: '一個勾在圈圈內的符號' }
+title: 'Why Shadcn UI'
+titleTC: '什麼是 Shadcn UI？為什麼在前端圈這麼火爆？'
+excerpt: '近期工作接觸使用 Shadcn for Vue 來打造網頁 UI，這是一款基於 Tailwind 可彈性客製化的元件組合，讓我們可以快速建立出符合需求的網頁介面。這篇文章將會介紹現有樣式庫的問題以及 Shadcn UI 的特色，以及為什麼在前端圈這麼火爆。'
+category: 'UI'
+tags: ['Shadcn']
+publishDate: 2024-04-01
+---
+
+## 前言
+
+近期工作接觸使用 [Shadcn for Vue](https://www.shadcn-vue.com/) 來打造網頁 UI，這是一款基於 Tailwind 可彈性客製化的元件組合，讓我們可以快速建立出符合需求的網頁介面。這篇文章將會介紹現有樣式庫的問題以及 Shadcn UI 的特色，以及為什麼在前端圈這麼火爆。
+
+## 了解現有樣式庫的問題
+
+在 Shadcn 之前大宗的老牌樣式庫像是 [Bootstrap](https://getbootstrap.com/) 你一定聽過甚至使用過，它能提供一定整齊劃一的風格樣式，但是在客製化上仍有一定的限制，這是它與 Shadcn 間最大的區別。
+
+我在剛加入前端時第一個使用的樣式庫也是 Bootstrap，它實際上是由 Sass 語言構成，透過預處理器將其轉換成 CSS，如果要客製化像 Bootstrap 這樣的 UI 庫會需要特別閱讀文件了解檔案結構、了解背後工具（Sass）、了解命名原則（<abbr title="Object-Oriented CSS">OOCSS</abbr>），並且在每次更新樣式時重新編譯出整包 CSS 檔案……很繁瑣不是嗎？所以我最常看到兩種 Bootstrap：
+
+- 直接使用 Bootstrap 的預設樣式，不做任何客製化（無聊！）
+- 亂改得像垃圾場充滿詛咒的 Bootstrap（WTF！）
+
+傳統的樣式庫並不是沒有客製化的可能，就是會需要花費大量的心力和前置知識去維護，並且其中一些設計抉擇參雜了舊時代的考量，像是 Sass 和 OOCSS 也沒有這麼必要和流行了，要去哪裡找熟悉且認同這些理念的人去維護呢？
+
+並且單純的樣式並不能滿足現代前端的需求，網頁的適用性與功能的規格化也是一個重要的議題，身為前端開發者並不是每個人都有專業的 UX 經驗與時間去研製功能，眼下最重要的是快速的將功能上線，這也是為什麼越來越多的無頭（Headless）框架興起的原因，像是 [Headlss UI](https://headlessui.com/)、[TanStack Table](https://tanstack.com/table/latest)、[React Hook Form](https://react-hook-form.com/) 這類功能導向的庫更關注在功能的實現上。
+
+單純的現成樣式已經無法滿足如今的網頁開發需求，我們需要一致、高彈性、方便的方式讓開發者可以讓「做正確的事」成為常態，而不是在壓力下捨棄對適用性與使用者體驗的追求。
+
+## 了解 Shadcn 解決那些問題
+
+網頁元件化的盛行時代是 Atomic CSS 的舞台，因而推動了 Tailwind 的盛行，而 Shadcn 具備了不錯的完整性使它成為了一個很好的選擇。
+
+### 學習曲線低
+
+必須說 Tailwind 的學習曲線天生就較為緩和，只要熟悉 CSS 基本語法就能夠上手，而 Shadcn 在 Tailwind 的基礎上構建了整套元件，讓你能夠更快速的建立出符合需求的網頁介面。
+
+Shadcn 有別於其他樣式庫，它是一款你只需要[複製貼上即可運作的原件組合](https://ui.shadcn.com/docs/installation/vite)，只需要事先安裝 Tailwind 與其使用的套件（[Tailwind Merge](https://www.npmjs.com/package/tailwind-merge)、[clsx](https://github.com/lukeed/clsx)、[CVA](https://cva.style/docs)）便能上路，所以代碼都存在於你的專案中，你隨時能更改 Tailwind 的設定或元件的樣式。
+
+### 不只解決樣式問題
+
+舉例老牌的 Bootstrap 和開源 Tailwind 樣式庫有 [DaisyUI](https://daisyui.com/) 這樣的對手，Shadcn 又帶來哪些額外的優勢？結合前面提到的 Headless 無頭設計理念，Shadcn 綜合並替這些元件提供了中性的外表，方便你客製化符合自己的需求。
+
+我發現 Shadcn 從[表單](https://www.shadcn-vue.com/docs/components/data-table.html)、[日期選擇](https://www.shadcn-vue.com/docs/components/date-picker.html)、[輪播](https://www.shadcn-vue.com/docs/components/carousel.html)都替我提供了一套完整齊全的解決方案，讓開發重心更著重在功能的實踐而不是瑣碎的細節。
+
+### 社群熱情且廣泛
+
+主流框架都可以使用 Shadcn - [React](https://ui.shadcn.com/)、[Vue](https://www.shadcn-vue.com/)、[Angular](https://www.spartan.ng/)、[Svelt](https://www.shadcn-svelte.com/) 值得一試，社群也製作了許多 Shadcn 相關的 [Figma 元件](https://www.figma.com/community/file/1203061493325953101/shadcn-ui-design-system)可自由使用。
+
+## 了解你為什麼不應該使用 Shadcn
+
+選擇技術背後都是一定包含不同的考量與抉擇，Shadcn 也不是萬能的，這裡列出一些你不應該使用 Shadcn 的情況：
+
+1. 你討厭 Tailwind
+2. 你沒有這麼高的客製化需求
+3. 你的專案沒有打算使用任何 UI 框架
+
+## 延伸閱讀
+
+- [淺談 Atomic CSS 的發展背景與 Tailwind CSS - Huli's blog](https://blog.huli.tw/2022/05/23/atomic-css-and-tailwind-css/)
+- [How Shadcn/ui ACTUALLY Works - Theo - t3.gg](https://www.youtube.com/watch?v=AqmMx_JidGo)
+- [The anatomy of shadcn/ui](https://manupa.dev/blog/anatomy-of-shadcn-ui)
