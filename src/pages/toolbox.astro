@@ -32,29 +32,27 @@ async function getYoutubeChannels(channels: Channels) {
   const channelBatches = channelsIDs.split(',').map((channelIDs) => channelIDs.slice(0, 50));
   const parts = ['snippet', 'brandingSettings'];
   return (
-    await Promise.all(
-      channelBatches.map((channelIDs) => {
-        const youtubeRequestUrl = `https://www.googleapis.com/youtube/v3/channels?part=${parts}&id=${channelIDs}&key=${youtubeAPIKey}`;
-        return fetch(youtubeRequestUrl)
-          .then((res) => {
-            if (!res.ok) throw new Error(res.statusText);
-            return res.json();
-          })
-          // External API might change so type any
-          .then((resJSON) => resJSON.items.map((channel: any) => ({
-                id: channel.id,
-                url: `https://www.youtube.com/channel/${channel.id}`,
-                title: channel.snippet.title,
-                thumbnail: channel.snippet.thumbnails.default,
-                category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
-                brandingSettings: channel.brandingSettings,
-              })))
-          .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.error(err);
-            return [];
-          });
-      }),
+        await Promise.all(
+        channelBatches.map(async (channelIDs) => {
+            const youtubeRequestUrl = `https://www.googleapis.com/youtube/v3/channels?part=${parts}&id=${channelIDs}&key=${youtubeAPIKey}`;
+            try {
+                const res = await fetch(youtubeRequestUrl);
+                if (!res.ok) throw new Error(res.statusText);
+                const resJSON = await res.json();
+                return resJSON.items.map((channel: any) => ({
+                    id: channel.id,
+                    url: `https://www.youtube.com/channel/${channel.id}`,
+                    title: channel.snippet.title,
+                    thumbnail: channel.snippet.thumbnails.default,
+                    category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
+                    brandingSettings: channel.brandingSettings,
+                }));
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error(err);
+                return [];
+            }
+        }),
     )
   ).flat();
 }
