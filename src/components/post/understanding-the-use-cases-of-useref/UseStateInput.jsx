@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
 export default function UseStateInput() {
-  const [name, setName] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [_name, setName] = useState('');
   const renderCount = useRef(1);
 
   useEffect(() => {

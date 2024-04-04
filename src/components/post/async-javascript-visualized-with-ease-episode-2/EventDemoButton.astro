@@ -9,7 +9,9 @@ import Clickable from '@/components/app/Clickable.astro';
 <script is:inline>
   const button = document.querySelector('[data-demo-button]');
   button.addEventListener('click', (event) => {
+    // eslint-disable-next-line no-console
     console.log(event);
+    // eslint-disable-next-line no-alert
     alert(`你點擊了按鈕！請打開瀏覽器 console 查看結果。`);
   });
 </script>

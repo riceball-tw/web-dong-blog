@@ -3,9 +3,10 @@ import Split from 'react-split';
 import { useState, useRef, useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import ThemeDropdown from '@/components/react/editor/ThemeDropdown';
-import { isGlobalThemeDark } from '@/helper/globalTheme';
+import { isGlobalThemeDark } from '@/helper/globalTheme.ts';
 
-export default function Foo({ defaultHTML, defaultCSS, defaultJS }) {
+// eslint-disable-next-line import/prefer-default-export
+export function MonacoEditor({ defaultHTML, defaultCSS, defaultJS }) {
   const tabBarHeight = '48px';
   const defaultTheme = isGlobalThemeDark() ? 'vs-dark' : 'vs-light';
   const files = {
@@ -71,11 +72,12 @@ export default function Foo({ defaultHTML, defaultCSS, defaultJS }) {
     if (language === 'html') return HTML;
     if (language === 'css') return CSS;
     if (language === 'javascript') return JS;
+    throw new Error('Invalid language');
   }
 
   function handleThemeChange(event) {
-    const theme = event.target.value;
-    setTheme(theme);
+    const newTheme = event.target.value;
+    setTheme(newTheme);
   }
 
   return (

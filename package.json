@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "sync": "astro sync",
-    "lint": "eslint --ext .js,.astro src",
+    "lint": "eslint --ext .jsx,.tsx,.js,.ts,.astro src",
     "prettier": "prettier -w src"
   },
   "dependencies": {

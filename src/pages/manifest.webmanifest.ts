@@ -1,7 +1,8 @@
 import type { APIRoute } from 'astro';
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 
 // https://web.dev/articles/add-manifest
+// eslint-disable-next-line import/prefer-default-export
 export const GET: APIRoute = () =>
   new Response(
     JSON.stringify({

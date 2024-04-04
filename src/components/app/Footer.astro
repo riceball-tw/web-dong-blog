@@ -65,14 +65,13 @@ const { copyright, socials } = globalConfig.brand;
           title,
           url,
         })
-        .then(() => {
-          console.log('Thanks for sharing!');
-        })
         .catch((err) => {
+          // eslint-disable-next-line no-console
           console.error(err);
         });
     } else {
-      alert('沒有支援分享功能，有空補上這個功能 -_-');
+      // eslint-disable-next-line no-alert
+      alert("Your Browser currently don't Support Navigator API. 瀏覽器尚未支援分享功能");
     }
   });
 </script>

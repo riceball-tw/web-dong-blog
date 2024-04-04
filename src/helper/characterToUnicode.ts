@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export function characterToUnicode(inputText: string): string {
   return Array.from(inputText)
     .map((char) => {

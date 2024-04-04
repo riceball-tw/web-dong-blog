@@ -2,24 +2,28 @@ import { useState } from 'preact/hooks';
 import Fuse from 'fuse.js';
 
 let fuseInstance;
-export default function Search() {
+// eslint-disable-next-line import/prefer-default-export
+export function Search() {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [results, setResults] = useState([]);
-  const [searchPhrase, setSearchPhrase] = useState('');
+  const [searchPhrase] = useState('');
 
   function getPosts() {
     setIsLoading(true);
-    return fetch('/search.json')
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .catch((err) => console.error(err))
-      .finally(setIsLoading(false));
+    return (
+      fetch('/search.json')
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
+        // eslint-disable-next-line no-console
+        .catch((err) => console.error(err))
+        .finally(setIsLoading(false))
+    );
   }
 
   async function handleInputFocus() {

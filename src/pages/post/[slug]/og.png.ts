@@ -2,7 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import fs from 'fs';
 import path from 'path';
 import { ImageResponse } from '@vercel/og';
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 
 interface Props {
   params: { slug: string };
