@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 let renderCount = 0;
 
-export default function WatchExampleTwo() {
+// eslint-disable-next-line import/prefer-default-export
+export function WatchExampleTwo() {
   const [name, setName] = useState();
   renderCount += 1;
 

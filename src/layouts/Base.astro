@@ -13,9 +13,9 @@ const { themeColor } = Astro.props;
 ---
 
 <script>
-  import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme';
+  import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme.ts';
 
-  const localStorageTheme = localStorage.theme;
+  const localStorageTheme = localStorage.theme
   setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
   document.addEventListener('astro:after-swap', () => {
     setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));

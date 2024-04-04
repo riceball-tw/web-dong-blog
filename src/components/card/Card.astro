@@ -1,9 +1,8 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
-import { hexToRgba } from '@/helper/hexToRgba';
+import { hexToRgba } from '@/helper/hexToRgba.ts';
 
-export interface Props extends HTMLAttributes<'div'> {}
-export interface Props {
+export interface Props extends HTMLAttributes<'div'> {
   themeColor?: string;
   fillColor?: string;
 }

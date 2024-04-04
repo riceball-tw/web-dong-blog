@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "sync": "astro sync",
-    "lint": "eslint --ext .js,.astro src",
+    "lint": "eslint --ext .jsx,.tsx,.js,.ts,.astro src",
     "prettier": "prettier -w src"
   },
   "dependencies": {
@@ -37,6 +37,7 @@
     "rehype-autolink-headings": "^6.1.1",
     "rehype-external-links": "^2.0.1",
     "rehype-slug": "^5.1.0",
+    "sanitize-html": "^2.11.0",
     "sharp": "^0.31.3",
     "tailwindcss": "^3.3.3",
     "tailwindcss-fluid-type": "^2.0.3",
@@ -46,6 +47,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.8",
     "@types/sanitize-html": "^2.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^5.48.1",
     "eslint": "8.2.0",
     "eslint-config-airbnb-base": "15.0.0",
@@ -59,7 +61,6 @@
     "hastscript": "^7.2.0",
     "prettier": "^2.8.2",
     "prettier-plugin-astro": "^0.7.2",
-    "prettier-plugin-tailwindcss": "^0.2.7",
-    "sanitize-html": "^2.11.0"
+    "prettier-plugin-tailwindcss": "^0.2.7"
   }
 }

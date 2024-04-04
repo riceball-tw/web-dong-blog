@@ -1,6 +1,8 @@
 module.exports = {
   // ...
   globals: {
+    document: true,
+    requestAnimationFrame: true,
     localStorage: true,
     window: true,
   },

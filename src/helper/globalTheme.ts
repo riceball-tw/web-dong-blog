@@ -1,4 +1,4 @@
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 
 /**
  * Checks System preference and LocalStorage if the global theme is set to dark.
@@ -24,27 +24,30 @@ export function getCurrentGlobalTheme(globalTheme?: string): string {
 }
 
 /**
+ * Sets the global theme for the application.
+ * @param newTheme - The new theme to be set.
+ * @param oldTheme - (Optional) The old theme to be removed.
+ */
+export function setGlobalTheme(newTheme: string, oldTheme?: string) {
+  localStorage.theme = newTheme;
+  const HTMLElement = document.documentElement;
+  const editorThemeMap = globalConfig.setting.editorTheme;
+  if (oldTheme) {
+    HTMLElement.classList.remove(oldTheme);
+  }
+  HTMLElement.classList.add(newTheme);
+  type PossableTheme = 'light' | 'dark';
+  if (editorThemeMap[newTheme as PossableTheme]) {
+    HTMLElement.dataset.theme = editorThemeMap[newTheme as PossableTheme];
+  }
+  window.dispatchEvent(new Event('updateTheme'));
+}
+
+/**
  * Toggles the global theme between 'dark' and 'light'.
  * @param currentTheme - The current theme ('dark' or 'light').
  */
 export function toggleGlobalTheme(currentTheme: string) {
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   setGlobalTheme(newTheme, currentTheme);
-}
-
-/**
- * Sets the global theme for the application.
- * @param newTheme - The new theme to be set.
- * @param oldTheme - (Optional) The old theme to be removed.
- */
-export function setGlobalTheme(newTheme: 'light' | 'dark', oldTheme?: string) {
-  localStorage.theme = newTheme;
-  const HTMLElement = document.documentElement;
-  const editorThemeMap = globalConfig.setting.editorTheme;
-  oldTheme && HTMLElement.classList.remove(oldTheme);
-  HTMLElement.classList.add(newTheme);
-  if (editorThemeMap[newTheme]) {
-    HTMLElement.dataset.theme = editorThemeMap[newTheme];
-  }
-  window.dispatchEvent(new Event('updateTheme'));
 }

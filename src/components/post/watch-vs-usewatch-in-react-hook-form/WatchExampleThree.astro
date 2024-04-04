@@ -1,8 +1,8 @@
 ---
 import ExamplePanel from '@/components/post/ExamplePanel.astro';
-import WatchExampleThree from './WatchExampleThree.jsx';
+import {WatchExampleThree as WatchExample} from './WatchExampleThree.jsx';
 ---
 
 <ExamplePanel>
-  <WatchExampleThree client:idle />
+  <WatchExample client:idle />
 </ExamplePanel>

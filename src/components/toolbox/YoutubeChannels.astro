@@ -9,14 +9,14 @@ const uniqueCategories = youtubeChannels
 ---
 
 <script>
-  document.querySelector('[data-category-container]')?.addEventListener('click', filteringChannels);
-
   function filteringChannels(event: Event) {
     const targetElement = event.target as HTMLElement;
     if (!targetElement.hasAttribute('data-category-filter')) return;
     const targetButton = targetElement as HTMLButtonElement;
     const targetCategory = targetButton.dataset.categoryFilter;
     document.querySelectorAll('[data-category-filter]').forEach((filter) => {
+      // Modify DOM to reset all buttons
+      // eslint-disable-next-line no-param-reassign
       (filter as HTMLButtonElement).disabled = false;
     });
     targetButton.disabled = true;
@@ -32,6 +32,7 @@ const uniqueCategories = youtubeChannels
       }
     });
   }
+  document.querySelector('[data-category-container]')?.addEventListener('click', filteringChannels);
 </script>
 
 <ul class="mb-8 flex flex-wrap gap-4 whitespace-nowrap" data-category-container>
@@ -58,7 +59,8 @@ const uniqueCategories = youtubeChannels
   class="grid snap-x grid-flow-col grid-rows-2 gap-8 overflow-y-hidden overflow-x-scroll py-2"
 >
   {
-    youtubeChannels.map((channel) => {
+    // Uncontrollable data, typed as any
+    youtubeChannels.map((channel: any) => {
       const containerWidth = channel.thumbnail.width + 24;
       const {width} = channel.thumbnail;
       const {height} = channel.thumbnail;

@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 
-export default function WatchExampleOne() {
+// eslint-disable-next-line import/prefer-default-export
+export function WatchExampleOne() {
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       paymentMethod: 'cashOnDelivery',
@@ -9,6 +10,7 @@ export default function WatchExampleOne() {
   const [paymentMethod] = watch(['paymentMethod']);
 
   return (
+    // eslint-disable-next-line no-console
     <form className="text-white" onSubmit={handleSubmit((data) => console.log(data))}>
       <label>
         <span className="mr-2 inline-block">付款方式：</span>

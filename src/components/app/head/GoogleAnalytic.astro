@@ -10,9 +10,9 @@ src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTIC_ID}`}
 <script type="text/partytown" define:vars={{GOOGLE_ANALYTIC_ID}}>
 window.dataLayer = window.dataLayer || [];
 function gtag() {
+  // eslint-disable-next-line no-undef, prefer-rest-params
   dataLayer.push(arguments);
 }
 gtag('js', new Date());
-
 gtag('config', GOOGLE_ANALYTIC_ID);
 </script>

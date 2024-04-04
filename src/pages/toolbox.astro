@@ -8,19 +8,58 @@ import Navbar from '@/components/app/Navbar.astro';
 import YoutubeChannels from '@/components/toolbox/YoutubeChannels.astro';
 
 const toolboxSites = await getCollection('toolbox');
-const categorizedSites = toolboxSites.reduce((categorizedData, site) => {
+const categorizedSites = toolboxSites.reduce((categorizedData: Record<string, any[]>, site) => {
   const { data } = site;
   const { category } = data;
   return {
     ...categorizedData,
-    [category]: [...(categorizedData[category as keyof typeof categorizedData] || []), data],
+    [category]: [...(categorizedData[category] || []), data],
   };
 }, {});
+
 const categories = Object.keys(categorizedSites);
+const categoriesWithQunatity = categories.map((category) => ({ [category]: categorizedSites[category]?.length }));
 
-const categoriesWithQunatity = categories.map((category) => ({ [category]: categorizedSites[category as keyof typeof categorizedSites].length }));
+interface Channel { id: string; category: string }
+interface Channels extends Array<Channel> {}
 
-const channels = [
+async function getYoutubeChannels(channels: Channels) {
+  const youtubeAPIKey = import.meta.env.PUBLIC_YOUTUBEAPIKEY;
+  const channelsIDs = channels.map((channel) => channel.id).join(',');
+  //  YT API V3 Subscriptions.list NOT returning nextPageToken
+  // https://issuetracker.google.com/issues/35176305
+  // Won't fix Bug, Only Maxium 50 channels per request
+  const channelBatches = channelsIDs.split(',').map((channelIDs) => channelIDs.slice(0, 50));
+  const parts = ['snippet', 'brandingSettings'];
+  return (
+    await Promise.all(
+      channelBatches.map((channelIDs) => {
+        const youtubeRequestUrl = `https://www.googleapis.com/youtube/v3/channels?part=${parts}&id=${channelIDs}&key=${youtubeAPIKey}`;
+        return fetch(youtubeRequestUrl)
+          .then((res) => {
+            if (!res.ok) throw new Error(res.statusText);
+            return res.json();
+          })
+          // External API might change so type any
+          .then((resJSON) => resJSON.items.map((channel: any) => ({
+                id: channel.id,
+                url: `https://www.youtube.com/channel/${channel.id}`,
+                title: channel.snippet.title,
+                thumbnail: channel.snippet.thumbnails.default,
+                category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
+                brandingSettings: channel.brandingSettings,
+              })))
+          .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.error(err);
+            return [];
+          });
+      }),
+    )
+  ).flat();
+}
+
+const youtubeChannelInfos = [
   { id: 'UCQT3GwtAop6cnvTTTsKUUoQ', category: '開發' },
   { id: 'UCD00Is447lWaY04_gNTOaVA', category: '前端' },
   { id: 'UCtEwVJZABCd0tels2KIpKGQ', category: '遊戲開發' },
@@ -132,46 +171,24 @@ const channels = [
   { id: 'UC45xDuLSKCXhw-gtTtPV7Ew', category: '前端' },
   { id: 'UC7ArpUezGLX-dZ0FTS_jVMQ', category: '前端' },
   { id: 'UC1KKByu8cgQWPiKe1GZZQbg', category: '使用者介面' },
-];
+]
 
-const youtubeChannels = await getYoutubeChannels(channels);
-
-async function getYoutubeChannels(channels: { id: string; category: string }[]) {
-  const youtubeAPIKey = import.meta.env.PUBLIC_YOUTUBEAPIKEY;
-  const channelsIDs = channels.map((channel) => channel.id).join(',');
-  //  YT API V3 Subscriptions.list NOT returning nextPageToken
-  // https://issuetracker.google.com/issues/35176305
-  // Won't fix Bug, Only Maxium 50 channels per request
-  const channelBatches = channelsIDs.split(',').map((channelIDs) => channelIDs.slice(0, 50));
-  const parts = ['snippet', 'brandingSettings'];
-  return (
-    await Promise.all(
-      channelBatches.map((channelIDs) => {
-        const youtubeRequestUrl = `https://www.googleapis.com/youtube/v3/channels?part=${parts}&id=${channelIDs}&key=${youtubeAPIKey}`;
-        return fetch(youtubeRequestUrl)
-          .then((res) => {
-            if (!res.ok) throw new Error(res.statusText);
-            return res.json();
-          })
-          .then((resJSON) => resJSON.items.map((channel) => ({
-                id: channel.id,
-                url: `https://www.youtube.com/channel/${channel.id}`,
-                title: channel.snippet.title,
-                thumbnail: channel.snippet.thumbnails.default,
-                category: channels.find((localChannel) => channel.id === localChannel.id)?.category,
-                brandingSettings: channel.brandingSettings,
-              })))
-          .catch((err) => {
-            console.error(err);
-            return [];
-          });
-      }),
-    )
-  ).flat();
-}
+const youtubeChannels = await getYoutubeChannels(youtubeChannelInfos);
 ---
 
 <script>
+ function refreshCategory() {
+    const categoryItems = document.querySelectorAll('[data-category-item]');
+    categoryItems.forEach((categoryItem) => {
+      const categoryItemLink = categoryItem.querySelector('a');
+      categoryItemLink?.classList.remove('before:content-[">"]');
+      if (window.location.hash === '') return;
+      if (categoryItemLink?.href.includes(window.location.hash)) {
+        categoryItemLink?.classList.add('before:content-[">"]');
+      }
+    });
+  }
+
   const nav = document.querySelector('[data-nav]');
 
   document.querySelector('[data-nav-close]')?.addEventListener('click', () => {
@@ -188,18 +205,6 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
   });
 
   refreshCategory();
-
-  function refreshCategory() {
-    const categoryItems = document.querySelectorAll('[data-category-item]');
-    categoryItems.forEach((categoryItem) => {
-      const categoryItemLink = categoryItem.querySelector('a');
-      categoryItemLink?.classList.remove('before:content-[">"]');
-      if (window.location.hash === '') return;
-      if (categoryItemLink?.href.includes(window.location.hash)) {
-        categoryItemLink?.classList.add('before:content-[">"]');
-      }
-    });
-  }
 </script>
 
 <Base title="網頁工具箱" description="網路上有許多新奇有趣的網站，網頁工具箱將協助您輕鬆探索各種多元資源 👀">
@@ -221,7 +226,7 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
           <a
             href="#開發設計相關頻道"
             class="inline-block w-full p-4 font-medium tracking-wider transition-opacity before:mr-2 group-hover:opacity-60 group-hover:hover:opacity-100"
-            >開發設計相關頻道<sup class="p-2">{channels.length}</sup>
+            >開發設計相關頻道<sup class="p-2">{youtubeChannelInfos.length}</sup>
           </a>
         </li>
         {
@@ -261,9 +266,9 @@ async function getYoutubeChannels(channels: { id: string; category: string }[]) 
           <YoutubeChannels youtubeChannels={youtubeChannels} />
         </section>
         {
-          Object.entries(categorizedSites).map((categories) => (
+          Object.entries(categorizedSites).map((siteCategories) => (
               <section class=" flex flex-col px-4">
-                {categories.map((group) => {
+                {siteCategories.map((group) => {
                   if (typeof group === 'string')
                     return (
                       <h2

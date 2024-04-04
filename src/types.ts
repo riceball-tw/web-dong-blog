@@ -1,5 +1,3 @@
-export interface BaseLayout extends GlobalHead, themeColor {}
-
 export interface GlobalHead {
   title?: string;
   description?: string;
@@ -14,6 +12,8 @@ export interface GlobalHead {
 export interface themeColor {
   themeColor?: string | undefined;
 }
+
+export interface BaseLayout extends GlobalHead, themeColor {}
 
 export interface CategoryList {
   categoryHref?: string;

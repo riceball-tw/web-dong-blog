@@ -1,11 +1,12 @@
 import rss from '@astrojs/rss';
-import globalConfig from '@/globalConfig';
+import globalConfig from '@/globalConfig.ts';
 import { getCollection } from 'astro:content';
+import type { APIContext } from 'astro';
 
 const { brand } = globalConfig;
 
 // eslint-disable-next-line import/prefer-default-export
-export const GET = async (context) => {
+export const GET = async (context: APIContext) => {
   const posts = await getCollection('post');
   const avaliablePosts = posts.filter((post) => !post.data.isDraft);
   const rssContent = await rss({

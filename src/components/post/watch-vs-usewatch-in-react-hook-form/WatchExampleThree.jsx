@@ -17,7 +17,8 @@ function FirstNameWatched({ control }) {
   );
 }
 
-export default function WatchExampleOne() {
+// eslint-disable-next-line import/prefer-default-export
+export function WatchExampleThree() {
   const { register, control } = useForm();
   useWatch({
     name: 'firstName',
