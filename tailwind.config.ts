@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import type { PluginUtils } from 'tailwindcss/types/config';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 const colors = {
@@ -61,7 +62,7 @@ export default {
     extend: {
       // variable colors with <alpha-value> not working with theme function on plugins
       // https://github.com/tailwindlabs/tailwindcss/issues/9143#issuecomment-1579382345
-      typography: ({ theme }) => ({
+      typography: ({ theme }: PluginUtils) => ({
         DEFAULT: {
           css: {
             '--tw-prose-body': theme('colors.surface.inverse'),

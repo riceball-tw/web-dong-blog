@@ -19,6 +19,7 @@ export async function GET({ props }: Props) {
   // Astro doesn't support tsx endpoints so usign React-element objects
   const html = {
     type: 'div',
+    key: 'og',
     props: {
       children: [
         {
