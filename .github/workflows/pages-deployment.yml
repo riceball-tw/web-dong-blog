@@ -42,10 +42,12 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: install packages and build
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm build
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Build
+        run: pnpm build
       - name: Publish
         uses: cloudflare/pages-action@1
         with:
