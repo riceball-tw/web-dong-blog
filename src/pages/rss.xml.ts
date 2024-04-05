@@ -12,7 +12,7 @@ export const GET = async (context: APIContext) => {
   const rssContent = await rss({
     title: brand.nameTC,
     description: brand.description,
-    site: context.site,
+    site: context.site || "",
     items: avaliablePosts.map((post) => ({
       title: post.data.titleTC,
       description: post.data.excerpt,

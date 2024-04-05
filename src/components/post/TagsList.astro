@@ -6,7 +6,7 @@ export interface Props extends TagsList {}
 const { tags, tagHrefs } = Astro.props;
 ---
 
-<ul class="flex gap-4 whitespace-nowrap">
+{tags && <ul class="flex gap-4 whitespace-nowrap">
   {
     tagHrefs ? tagHrefs.map((href, index) => (
       <li>
@@ -23,3 +23,4 @@ const { tags, tagHrefs } = Astro.props;
     ))
   }
 </ul>
+}

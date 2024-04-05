@@ -17,10 +17,10 @@ export interface BaseLayout extends GlobalHead, themeColor {}
 
 export interface CategoryList {
   categoryHref?: string;
-  category: string;
+  category?: string;
 }
 
 export interface TagsList {
   tagHrefs?: string[] | undefined;
-  tags: string[];
+  tags?: string[];
 }
