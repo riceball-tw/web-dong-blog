@@ -1592,7 +1592,8 @@ packages:
       '@types/semver': 7.5.8
       '@typescript-eslint/scope-manager': 7.5.0
       '@typescript-eslint/types': 7.5.0
-      '@typescript-eslint/typescript-estree': 7.5.0(typescript@5.4.3)
+      '@typescript-eslint/
+      ': 7.5.0(typescript@5.4.3)
       eslint: 8.2.0
       semver: 7.6.0
     transitivePeerDependencies:
