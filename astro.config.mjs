@@ -3,7 +3,6 @@ import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import preact from '@astrojs/preact';
 import partytown from '@astrojs/partytown';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeSlug from 'rehype-slug';
@@ -79,9 +78,6 @@ export default defineConfig({
     sitemap(),
     react({
       include: ['**/react/*'],
-    }),
-    preact({
-      include: ['**/preact/*'],
     }),
     import.meta.env.DEV
       ? ''
