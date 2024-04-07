@@ -18,6 +18,11 @@
 }
 
 @layer base {
+  mark {
+    background-color: var(--color-highlight);
+    color: var(--color-brand-background);
+  }
+
   :root {
     /* TODO: Replace Old Color System */
     --primary-color-50: 248 250 251;
@@ -39,11 +44,14 @@
     --error-color: #b52f74;
     --mainNav-height: 80px;
 
-    /* New Color System */
+    /* New Primitive Color System */
     --color-brand: #352fcf;
     --color-on-brand: #ffffff;
+    --color-primitive-border: #e0e0e0;
+
     --color-brand-dark: #b887f7;
     --color-on-brand-dark: #000000;
+    --color-primitive-border-dark: #333333;
   }
 }
 
@@ -57,6 +65,9 @@ html {
 
   --color-brand-background: var(--color-on-brand);
   --color-highlight: var(--color-brand);
+
+  --color-brand: var(--color-brand);
+  --color-border: var(--color-primitive-border);
 }
 
 html.dark {
@@ -69,6 +80,26 @@ html.dark {
 
   --color-brand-background: var(--color-on-brand-dark);
   --color-highlight: var(--color-brand-dark);
+
+  --color-brand: var(--color-brand-dark);
+  --color-border: var(--color-primitive-border-dark);
+}
+
+:root.light,
+:root.dark {
+  /* Overwrite pagefind default */
+  /* https://pagefind.app/docs/ui-usage/ */
+  --pagefind-ui-scale: 1.5;
+  --pagefind-ui-primary: var(--color-brand);
+  --pagefind-ui-text: var(--color-inverse-surface);
+  --pagefind-ui-background: var(--color-surface);
+  --pagefind-ui-border: var(--color-border);
+  --pagefind-ui-tag: #eeeeee;
+  --pagefind-ui-border-width: 2px;
+  --pagefind-ui-border-radius: 8px;
+  --pagefind-ui-image-border-radius: 8px;
+  --pagefind-ui-image-box-ratio: 3 / 2;
+  --pagefind-ui-font: sans-serif;
 }
 
 @layer components {
