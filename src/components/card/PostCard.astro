@@ -1,26 +1,10 @@
 ---
-import type { CategoryList as CategoryListType, TagsList } from '@/types'
+import type { CategoryList as CategoryListType, TagsList , PostPage } from '@/types'
 import Card from '@/components/card/Card.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
 import { characterToUnicode } from '@/helper/characterToUnicode.ts';
-
-interface PostCard extends CategoryListType, TagsList {
-    featureIcon?:
-      | {
-          width: number;
-          height: number;
-          alt: string;
-          url: string;
-        }
-      | undefined;
-    slug?: string;
-    url?: string;
-    titleTC: string;
-    excerpt: string;
-    publishDate?: Date;
-    themeColor: string;
-  }
+type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
 
 export interface Props {
   post: PostCard
