@@ -11,13 +11,13 @@ const { tags, tagHrefs } = Astro.props;
     tagHrefs ? tagHrefs.map((href, index) => (
       <li>
         <a class="capitalize opacity-40 hover:opacity-100" {href}>
-          # {tags[index]}
+          <span>#</span> <span data-pagefind-filter="tag">{tags[index]}</span>
         </a>
       </li>
     )) : tags.map((tag) => (
       <li>
         <span class="capitalize opacity-40 hover:opacity-100">
-          # {tag}
+          <span>#</span> <span data-pagefind-filter="tag">{tag}</span>
         </span>
       </li>
     ))

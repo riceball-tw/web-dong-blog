@@ -29,13 +29,43 @@ const heroBadge = {
 };
 ---
 
+<script>
+  function initPagefind() {
+    // External Code, Skip lint
+    // https://pagefind.app/docs/ui-usage/
+    // @ts-ignore-next-line
+    // eslint-disable-next-line no-new, no-undef
+    new PagefindUI({
+      element: "#pagefind-search", 
+      showSubResults: true,
+      showImages: false,
+      resetStyles: false,
+      excerptLength: 60,
+      sort: { date: "desc" },
+    });
+  }
+
+  document.addEventListener('astro:after-swap', () => {
+    initPagefind();
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    initPagefind();
+  });
+</script>
+
 <BlogBase>
+  <slot name="head">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  </slot>
   <Hero badge={heroBadge}>
     <span slot="headline" style="max-width: 1400px;" class="inline-block">
       網頁東東用最<span class="text-secondary dark:text-secondary-light">親切簡單</span>的方式描述如何<span
         class="text-secondary dark:text-secondary-light">設計與架構網頁</span
       >
     </span>
+    <div id="pagefind-search"></div>
   </Hero>
 
   <section>
