@@ -89,7 +89,7 @@ html.dark {
 :root.dark {
   /* Overwrite pagefind default */
   /* https://pagefind.app/docs/ui-usage/ */
-  --pagefind-ui-scale: 1.5;
+  --pagefind-ui-scale: 1;
   --pagefind-ui-primary: var(--color-brand);
   --pagefind-ui-text: var(--color-inverse-surface);
   --pagefind-ui-background: var(--color-surface);
