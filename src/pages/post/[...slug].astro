@@ -48,6 +48,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
   />
   <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
     <article
+      data-pagefind-body
       data-article
       class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert dark:prose-dark md:prose-xl lg:grid"
     >
@@ -55,6 +56,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         {
           featureImage && (
             <img
+              data-pagefind-ignore
               class="mx-auto mb-16"
               src={import.meta.env.URL_PREFIX + featureImage.url}
               width={featureImage.width}
@@ -65,7 +67,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         }
         {
           featureIcon && (
-            <div class="mb-8 max-w-fit overflow-hidden rounded-lg" style={`background-color: ${themeColor}`}>
+            <div data-pagefind-ignore="all" class="mb-8 max-w-fit overflow-hidden rounded-lg" style={`background-color: ${themeColor}`}>
               <img
                 src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
                 width={featureIcon.width}
@@ -77,8 +79,8 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         }
         <div class="relative mx-auto">
           <div class="text-surface-inverse">
-            <div class="mb-2">{title}</div>
-            <h1 transition:name={`title-${slug}`} class="mb-4 text-4xl font-black md:text-6xl">
+            <div data-pagefind-ignore class="mb-2">{title}</div>
+            <h1 data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} transition:name={`title-${slug}`} class="mb-4 text-4xl font-black md:text-6xl">
               {titleTC}
             </h1>
           </div>
@@ -100,7 +102,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
           <div class="inline-flex w-full flex-col gap-2 p-4">
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
               發布日期：
-              <time>
+              <time data-pagefind-sort="date">
                 {
                   publishDate
                     .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
@@ -109,6 +111,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
               </time>
             </div>
             <a
+              data-pagefind-ignore="all"
               href={`https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post/${post.slug}.mdx`}
               class="inline-flex items-center gap-2 text-sm font-normal opacity-40 hover:opacity-100"
             >

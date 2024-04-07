@@ -13,5 +13,6 @@ const CategoryElement = categoryHref ? 'a' : 'div';
     href: categoryHref,
   }}
 >
-  {`@ ${category}`}
+<span>@</span>
+<span data-pagefind-filter="category">{category}</span>
 </CategoryElement>
