@@ -21,22 +21,19 @@ const dateSortedPublishedPosts = publishedPosts.sort(
     <h2 class="sr-only">所有文章列表</h2>
     <CardGallery>
       {
-        dateSortedPublishedPosts.map((post) => (
+        dateSortedPublishedPosts.map((post) => {
+          const { data } = post
+          return (
           <PostCard
-            post={{
-              slug: post.slug,
-              featureIcon: post.data.featureIcon,
-              titleTC: post.data.titleTC,
-              excerpt: post.data.excerpt,
-              publishDate: post.data.publishDate,
-              themeColor: post.data.themeColor,
+          post={{
               categoryHref: `/post/categories/${post.data.category}/`,
-              category: post.data.category,
               tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
-              tags: post.data.tags,
+              slug: post.slug,
+              ...data
             }}
           />
-        ))
+        )
+        })
       }
     </CardGallery>
   </section>

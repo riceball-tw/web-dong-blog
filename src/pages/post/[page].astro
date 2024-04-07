@@ -26,22 +26,19 @@ const { page } = Astro.props;
   <section class="px-4">
     <CardGallery>
       {
-        page.data.map((post) => (
+        page.data.map((post) => {
+          const { slug, data } = post 
+          return (
           <PostCard
             post={{
-              slug: post.slug,
-              featureIcon: post.data.featureIcon,
-              titleTC: post.data.titleTC,
-              excerpt: post.data.excerpt,
-              publishDate: post.data.publishDate,
-              themeColor: post.data.themeColor,
-              category: post.data.category,
               categoryHref: `/post/categories/${post.data.category}/`,
-              tags: post.data.tags,
               tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+              slug,
+              ...data,
             }}
           />
-        ))
+          )
+        })
       }
     </CardGallery>
   </section>

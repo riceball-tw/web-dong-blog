@@ -4,29 +4,26 @@ import Card from '@/components/card/Card.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
 import { characterToUnicode } from '@/helper/characterToUnicode.ts';
+import { Icon } from 'astro-icon/components'
+
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
 
 export interface Props {
   post: PostCard
 }
 
-const { featureIcon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
+const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
 ---
 
 <Card themeColor={themeColor}>
-  <article class={`flex h-full flex-col justify-between gap-8  ${featureIcon ? 'pt-8' : ''}`}>
+  <article class={`flex h-full flex-col justify-between gap-8  ${icon ? 'pt-8' : ''}`}>
     {
-      featureIcon && (
+      icon && (
         <div
           style={`background-color: ${themeColor}`}
-          class="absolute left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg"
+          class="absolute size-16 left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg flex justify-center items-center"
         >
-          <img
-            src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
-            width={featureIcon.width}
-            height={featureIcon.height}
-            alt={featureIcon.alt}
-          />
+          <Icon size={32} class="text-black" name={icon.name} title={icon.title} />
         </div>
       )
     }

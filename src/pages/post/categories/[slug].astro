@@ -34,22 +34,19 @@ const avaliableCurrentCategoryPosts = publishedPosts
   <section class="px-4">
     <CardGallery>
       {
-        avaliableCurrentCategoryPosts.map((post) => (
-          <PostCard
-            post={{
-              slug: post.slug,
-              featureIcon: post.data.featureIcon,
-              titleTC: post.data.titleTC,
-              excerpt: post.data.excerpt,
-              publishDate: post.data.publishDate,
-              themeColor: post.data.themeColor,
-              categoryHref: `/post/categories/${post.data.category}/`,
-              category: post.data.category,
-              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
-              tags: post.data.tags,
-            }}
-          />
-        ))
+        avaliableCurrentCategoryPosts.map((post) => {
+          const { data } = post 
+          return (
+            <PostCard
+              post={{
+                categoryHref: `/post/categories/${post.data.category}/`,
+                tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+                slug: post.slug,
+                ...data,
+              }}
+            />
+          )
+        })
       }
     </CardGallery>
   </section>

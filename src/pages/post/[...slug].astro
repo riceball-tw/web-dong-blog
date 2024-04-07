@@ -11,6 +11,7 @@ import PostBlockquote from '@/components/post/PostBlockquote.astro';
 import Info from '@/components/post/Info.astro'
 import Video from '@/components/post/Video.astro'
 import PostTableOfContent from '@/components/post/PostTableOfContent.astro';
+import { Icon } from 'astro-icon/components'
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -25,7 +26,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { featureImage, featureIcon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
+const { featureImage, icon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const lastModified = new Date(remarkPluginFrontmatter.lastModified);
@@ -66,14 +67,9 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
           )
         }
         {
-          featureIcon && (
-            <div data-pagefind-ignore="all" class="mb-8 max-w-fit overflow-hidden rounded-lg" style={`background-color: ${themeColor}`}>
-              <img
-                src={`${import.meta.env.BASE_URL}${featureIcon.url}`}
-                width={featureIcon.width}
-                height={featureIcon.height}
-                alt={featureIcon.alt}
-              />
+          icon && (
+            <div data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
+              <Icon class="text-black" name={icon.name} size={32} />
             </div>
           )
         }
