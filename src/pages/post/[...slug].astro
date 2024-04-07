@@ -79,7 +79,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         }
         <div class="relative mx-auto">
           <div class="text-surface-inverse">
-            <div data-pagefind-ignore class="mb-2">{title}</div>
+            <div data-pagefind-weight="2" class="mb-2">{title}</div>
             <h1 data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} transition:name={`title-${slug}`} class="mb-4 text-4xl font-black md:text-6xl">
               {titleTC}
             </h1>
