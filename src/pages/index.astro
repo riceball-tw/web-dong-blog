@@ -30,19 +30,27 @@ const heroBadge = {
 ---
 
 <script>
+  function initPagefind() {
+    // External Code, Skip lint
+    // https://pagefind.app/docs/ui-usage/
+    // @ts-ignore-next-line
+    // eslint-disable-next-line no-new, no-undef
+    new PagefindUI({
+      element: "#pagefind-search", 
+      showSubResults: true,
+      showImages: false,
+      resetStyles: false,
+      excerptLength: 60,
+      sort: { date: "desc" },
+    });
+  }
+
+  document.addEventListener('astro:after-swap', () => {
+    initPagefind();
+  });
+
   window.addEventListener('DOMContentLoaded', () => {
-      // External Code, Skip lint
-      // https://pagefind.app/docs/ui-usage/
-      // @ts-ignore-next-line
-      // eslint-disable-next-line no-new, no-undef
-      new PagefindUI({
-         element: "#pagefind-search", 
-         showSubResults: true,
-         showImages: false,
-         resetStyles: false,
-         excerptLength: 60,
-         sort: { date: "desc" },
-        });
+    initPagefind();
   });
 </script>
 
