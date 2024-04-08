@@ -7,9 +7,20 @@ import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { Icon } from 'astro-icon/components'
 
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
+type CustomCard = Partial<Pick<PostPage, "slug">> & CategoryListType & TagsList & {
+  url?: string;
+  publishDate?: Date;
+  titleTC: string;
+  excerpt: string;
+  icon: {
+    name: string;
+    title: string;
+  };
+  themeColor: string;
+};
 
 export interface Props {
-  post: PostCard
+  post: PostCard | CustomCard
 }
 
 const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
