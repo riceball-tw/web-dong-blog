@@ -6,14 +6,15 @@ function getDefaultColor() {
 }
 
 export const toolboxSchema = z.object({
-  featureIcon: z
+  icon: z
     .object({
-      width: z.number().default(64),
-      height: z.number().default(64),
-      alt: z.string(),
-      url: z.string(),
+      title: z.string(),
+      name: z.string(),
     })
-    .optional(),
+    .default({
+      name: 'material-symbols:web-traffic-rounded',
+      title: '鼠標點擊圖示',
+    }),
   titleTC: z.string(),
   url: z.string(),
   excerpt: z.string(),
@@ -24,12 +25,15 @@ export const toolboxSchema = z.object({
 
 export const postSchema = z.object({
   isDraft: z.boolean().default(true),
-  featureIcon: z.object({
-    width: z.number().default(64),
-    height: z.number().default(64),
-    alt: z.string(),
-    url: z.string(),
-  }),
+  icon: z
+    .object({
+      title: z.string(),
+      name: z.string(),
+    })
+    .default({
+      name: 'material-symbols:article-outline-rounded',
+      title: '文章圖示',
+    }),
   featureImage: z
     .object({
       width: z.number().default(64),

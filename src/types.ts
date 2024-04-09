@@ -1,3 +1,6 @@
+import type { InferGetStaticPropsType } from 'astro';
+import { getStaticPaths } from '@/pages/post/[...slug].astro';
+
 export interface GlobalHead {
   title?: string;
   description?: string;
@@ -24,3 +27,4 @@ export interface TagsList {
   tagHrefs?: string[] | undefined;
   tags?: string[];
 }
+export type PostPage = InferGetStaticPropsType<typeof getStaticPaths>['post'];

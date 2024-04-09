@@ -31,6 +31,7 @@ const heroBadge = {
 
 <script>
   function initPagefind() {
+    if (!document.getElementById('pagefind-search')) return
     // External Code, Skip lint
     // https://pagefind.app/docs/ui-usage/
     // @ts-ignore-next-line
@@ -45,11 +46,7 @@ const heroBadge = {
     });
   }
 
-  document.addEventListener('astro:after-swap', () => {
-    initPagefind();
-  });
-
-  window.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('astro:page-load', () => {
     initPagefind();
   });
 </script>

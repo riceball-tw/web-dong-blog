@@ -14,7 +14,8 @@ export async function GET({ props }: Props) {
   const { themeColor } = post.data;
   const NotoSansBold = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Bold.ttf'));
   const NotoSansRegular = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Regular.ttf'));
-  const logoImageBase64 = fs.readFileSync(`./public/${post.data.featureIcon.url}`).toString('base64');
+  // TODO: Hardcoded post image, waiting to switch to iconify icon
+  const logoImageBase64 = fs.readFileSync(`./public/images/icons/document.svg`).toString('base64');
 
   // Astro doesn't support tsx endpoints so usign React-element objects
   const html = {
