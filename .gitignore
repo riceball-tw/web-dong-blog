@@ -23,3 +23,6 @@ pnpm-debug.log*
 
 # Pagefind for dev server
 public/pagefind
+
+# Lighthouse report
+.lighthouseci
