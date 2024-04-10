@@ -12,7 +12,8 @@
     "sync": "astro sync",
     "typecheck": "astro check",
     "lint": "eslint --ext .jsx,.tsx,.js,.ts,.astro src",
-    "prettier": "prettier -w src"
+    "prettier": "prettier -w src",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
@@ -48,6 +49,7 @@
   "devDependencies": {
     "@iconify-json/devicon-plain": "^1.1.36",
     "@iconify-json/material-symbols": "^1.1.76",
+    "@lhci/cli": "^0.13.0",
     "@tailwindcss/typography": "^0.5.8",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
