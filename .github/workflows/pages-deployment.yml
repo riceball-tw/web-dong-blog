@@ -6,6 +6,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
       PUBLIC_YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
     permissions:
@@ -15,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -54,6 +57,8 @@ jobs:
         run: pnpm typecheck
       - name: Build
         run: pnpm build
+      - name: Lighthouse
+        run: pnpm lhci autorun
       - name: Publish
         uses: cloudflare/pages-action@1
         with:
