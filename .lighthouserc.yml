@@ -1,0 +1,18 @@
+ci:
+  collect:
+    numberOfRuns: 1
+
+  assert:
+    preset: 'lighthouse:recommended'
+    assertions:
+      csp-xss: 'warn'
+
+  upload:
+    target: 'temporary-public-storage'
+    # upload options here
+
+  server:
+    # server options here
+
+  wizard:
+    # wizard options here
