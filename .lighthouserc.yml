@@ -1,0 +1,20 @@
+ci:
+  collect:
+    numberOfRuns: 3
+
+  assert:
+    preset: 'lighthouse:no-pwa'
+    assertions:
+      csp-xss: 'warn'
+      total-byte-weight: 'off' # TODO: enable this when this bug is fixed: https://github.com/GoogleChrome/lighthouse-ci/issues/1001
+      identical-links-same-purpose: 'off'
+
+  upload:
+    target: 'temporary-public-storage'
+    # upload options here
+
+  server:
+    # server options here
+
+  wizard:
+    # wizard options here

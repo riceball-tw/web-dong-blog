@@ -39,11 +39,11 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
       )
     }
     <div>
-      <h3 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
+      <h2 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
         {url && <a href={url}>{titleTC}</a>}
         {slug && !url && <a href={`/post/${slug}/`}>{titleTC}</a>}
         {!url && !slug && titleTC}
-      </h3>
+      </h2>
       <p class="line-clamp-3 max-w-prose tracking-wide">{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
