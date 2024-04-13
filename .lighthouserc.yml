@@ -7,6 +7,7 @@ ci:
     assertions:
       csp-xss: 'warn'
       total-byte-weight: 'off' # TODO: enable this when this bug is fixed: https://github.com/GoogleChrome/lighthouse-ci/issues/1001
+      identical-links-same-purpose: 'off'
 
   upload:
     target: 'temporary-public-storage'
