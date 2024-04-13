@@ -31,7 +31,9 @@ const heroBadge = {
 
 <script>
   function initPagefind() {
-    if (!document.getElementById('pagefind-search')) return
+    const pagefindElement = document.getElementById('pagefind-search');
+    if (pagefindElement?.dataset.initialized) return;
+    pagefindElement?.setAttribute("data-initialized", 'true')
     // External Code, Skip lint
     // https://pagefind.app/docs/ui-usage/
     // @ts-ignore-next-line
@@ -45,10 +47,12 @@ const heroBadge = {
       sort: { date: "desc" },
     });
   }
-
+  
   document.addEventListener('astro:page-load', () => {
     initPagefind();
   });
+  
+  initPagefind()
 </script>
 
 <BlogBase>
