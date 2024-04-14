@@ -11,7 +11,7 @@ export default {
     name: 'WebDong',
     nameTC: '網頁東東',
     short: 'WD',
-    slogan: '把網頁開發知識一桿進洞',
+    slogan: '親切簡單描述如何建構網頁',
     description:
       '是什麼原因導致網頁建構上遭遇瓶頸？以及如何突破？網頁東東用最親切簡單的方式描述如何設計與架構網頁，著重於圖像化以及實例操作，累積教學上的經驗降低每次學習新事物的成本',
     themeColor: '#0d0a28',
@@ -27,32 +27,18 @@ export default {
     },
     socials: [
       {
-        name: 'CodePen',
-        imgUrl: '/images/global/social/codepen.svg',
-        url: 'https://codepen.io/riecball',
-      },
-      {
-        name: 'YouTube',
-        imgUrl: '/images/global/social/youtube.svg',
-        url: 'https://www.youtube.com/@w3dong',
-      },
-      {
-        name: 'Instagram',
-        imgUrl: '/images/global/social/instagram.svg',
-        url: 'https://www.instagram.com/webdong.dev',
+        name: 'Thread',
+        iconName: 'simple-icons:threads',
+        url: 'https://www.threads.net/@webdong.dev',
       },
       {
         name: 'GitHub',
-        imgUrl: '/images/global/social/github.svg',
+        iconName: 'simple-icons:github',
         url: 'https://github.com/riceball-tw',
       },
       {
-        name: 'Medium',
-        imgUrl: '/images/global/social/medium.svg',
-        url: 'https://medium.com/@webdong',
-      },
-      {
         name: 'RSS',
+        iconName: 'simple-icons:rss',
         imgUrl: '/images/global/social/rss.svg',
         url: '/rss.xml',
       },

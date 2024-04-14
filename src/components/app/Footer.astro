@@ -1,11 +1,12 @@
 ---
 import globalConfig from '@/globalConfig.ts';
 import Clickable from '@/components/app/Clickable.astro';
+import { Icon } from 'astro-icon/components'
 
 interface Social {
-  url: string;
-  imgUrl: string;
   name: string;
+  iconName: string;
+  url: string;
 }
 const { copyright, socials } = globalConfig.brand;
 ---
@@ -24,14 +25,7 @@ const { copyright, socials } = globalConfig.brand;
           <li class="flex-1">
             <Clickable>
               <a class="inline-block p-4" href={social.url}>
-                <img
-                  loading="lazy"
-                  width="16"
-                  height="16"
-                  class=" mx-auto filter dark:invert"
-                  src={social.imgUrl}
-                  alt={social.name}
-                />
+                <Icon size={16} name={social.iconName} title={social.name} />
               </a>
             </Clickable>
           </li>
@@ -41,11 +35,7 @@ const { copyright, socials } = globalConfig.brand;
       <li class="flex-1">
         <Clickable>
           <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
-            <svg width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1005 1005"
-              ><path
-                d="M785.2 1005c-43.6 0-80.7-15.3-111.2-45.8s-45.8-67.6-45.8-111.2c0-7 .4-13.3 1.3-19s2.2-12 3.9-19L321.9 620.3c-13.1 13.9-28.6 24-46.5 30.1s-36.4 9.2-55.6 9.2c-43.6 0-80.7-15.3-111.2-45.8s-45.8-67.6-45.8-111.2 15.3-80.7 45.8-111.2 67.6-45.8 111.2-45.8c19.2 0 37.7 3.3 55.6 9.8s33.4 16.4 46.5 29.5L633.3 195c-1.7-7-3-13.3-3.9-19s-1.3-12-1.3-19c0-43.6 15.3-80.7 45.8-111.2S741.5 0 785.2 0s80.7 15.3 111.2 45.8 45.8 67.6 45.8 111.2-15.3 80.7-45.8 111.2S828.8 314 785.2 314c-19.2 0-37.7-3.1-55.6-9.2s-33.4-16.1-46.5-30.1L371.7 464.6c1.7 7 3 13.3 3.9 19s1.3 12 1.3 19-.4 13.3-1.3 19-2.2 12-3.9 19l311.4 189.8c13.1-14.8 28.6-25.1 46.5-30.8s36.4-8.5 55.6-8.5c43.6 0 80.7 15.3 111.2 45.8s45.8 67.6 45.8 111.2-15.3 80.7-45.8 111.2c-30.5 30.4-67.6 45.7-111.2 45.7zm0-785.2c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5 27 18.3 44.5 18.3zM219.8 565.3c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5c12.3 12.2 27.1 18.3 44.5 18.3zm565.4 345.5c17.5 0 32.3-6.1 44.5-18.3s18.3-27 18.3-44.5-6.1-32.3-18.3-44.5-27-18.3-44.5-18.3-32.3 6.1-44.5 18.3-18.3 27-18.3 44.5 6.1 32.3 18.3 44.5 27 18.3 44.5 18.3z"
-              ></path></svg
-            >
+            <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
           </button>
         </Clickable>
       </li>
