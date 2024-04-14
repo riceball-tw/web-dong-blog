@@ -94,6 +94,9 @@ devDependencies:
   '@iconify-json/material-symbols':
     specifier: ^1.1.78
     version: 1.1.78
+  '@iconify-json/simple-icons':
+    specifier: ^1.1.99
+    version: 1.1.99
   '@lhci/cli':
     specifier: ^0.13.0
     version: 0.13.0
@@ -1239,6 +1242,12 @@ packages:
 
   /@iconify-json/material-symbols@1.1.78:
     resolution: {integrity: sha512-WNDaCOdxIMAVer6fWYCsi7iUJM43sBIRd8bFExOifyb4RpXP1dG+Zh3MXqCX56iwaQ9Ra/a2XlFDNZfKnE4NWQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/simple-icons@1.1.99:
+    resolution: {integrity: sha512-/csVihX/ztkl2j4Vk4JoEJv8DdQHrZafzC5QHe21Y+ztuVglvavjb4yWEn9KQHTitLH2fIMnP8+RSTxu5kdmtw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
