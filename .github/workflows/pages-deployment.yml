@@ -7,8 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
-      PUBLIC_YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
     permissions:
       contents: read
       deployments: write

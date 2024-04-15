@@ -24,7 +24,7 @@ interface Channel { id: string; category: string }
 interface Channels extends Array<Channel> {}
 
 async function getYoutubeChannels(channels: Channels) {
-  const youtubeAPIKey = import.meta.env.PUBLIC_YOUTUBEAPIKEY;
+  const youtubeAPIKey = import.meta.env.YOUTUBEAPIKEY;
   const channelsIDs = channels.map((channel) => channel.id).join(',');
   //  YT API V3 Subscriptions.list NOT returning nextPageToken
   // https://issuetracker.google.com/issues/35176305
