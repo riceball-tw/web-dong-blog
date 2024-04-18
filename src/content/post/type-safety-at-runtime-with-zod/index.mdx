@@ -19,7 +19,7 @@ publishDate: 2024-03-30
 
 通常為了驗證資料的正確性，我們會使用 [JSDoc](https://jsdoc.app/) 或是 [TypeScript](https://www.typescriptlang.org/) 用於標註型別，雖然 TypeScript 可以幫助我們檢查程式執行之前的型別，但在編譯成 JavaScript 後還是仍有可能會於執行時因為資料與預期不符而出錯，通常源自外部的資料（表單、網址、LocalStorage、API 回應）。這時候就是使用 [Zod](https://zod.dev/) 的時間，協助在程式執行時檢查資料的型別，以達到 Runtime 時的資料 Schema 檢查。
 
-## 實際範例
+## 範例：第三方 API 資料檢測
 
 舉例來說一個 `getPerson` 函式會透過 ID 來取得不同人物的資料，就算可以替這個函式返回標註型別，在實際運作時仍就無法肯定 API 回應如同 TypeScript 內的 `Person` 型別：
 
@@ -38,11 +38,9 @@ const getPerson = async (id: string): Person => {
 
 ```ts
 import { z } from 'zod';
-
 const Person = z.object({
   name: z.string(),
 });
-
 // TS 型別： const getPerson: (id: string) => Promise<string>
 const getPerson = async (id: string) => {
   const response = await fetch('https://www.example.com/people/' + id + '.json').then((res) => res.json());
@@ -50,9 +48,44 @@ const getPerson = async (id: string) => {
   // 經過 Zod 驗證，確保資料符合 Person
   return result;
 };
+
+try {
+  getPerson(1);
+} catch (e) {
+  console.error(e);
+}
 ```
 
-從以上的範例可以觀察到 zod，Zod 有許多驗證方法可以使用，例如 `z.string()`、`z.number()`、`z.boolean()`、`z.object()`、`z.array()`、`z.union()`、`z.enum()`、`z.optional()`、`z.nullable()` ……等，這些方法可以組合使用來檢查資料是否符合預期的型別，也可以自由定義錯誤時拋出的訊息，更多可以參考 [Zod 文件即可](https://zod.dev/?id=introduction)，可以到延伸閱讀了解更多實際案例與習題。
+## 範例：URL 參數驗證
+
+近期使用 Nuxt 框架有留意到這篇文章：[Zod and Query String Variables in Nuxt](https://vueschool.io/articles/vuejs-tutorials/zod-and-query-string-variables-in-nuxt/)，於是嘗試在 Middleware（導覽到特定頁面前會執行的代碼）安插 Zod 來檢驗用戶傳入的 URL query 參數正確性，優雅且簡潔的解決了驗證用戶輸入的問題！
+
+```ts
+// 用戶要前往的頁面 query 必須存在 order 且 filter 可選，否則跳轉預設路徑 (query: { order: 'DESC' })
+import { z } from 'zod';
+definePageMeta({
+  middleware: defineNuxtRouteMiddleware((to) => {
+    const querySchema = z
+      .object({
+        order: z.enum(['ASC', 'DESC']),
+        filter: z.enum(['CURRENT', 'PAST', 'CURRENT,PAST']).optional(),
+      })
+      .strict();
+    const defaultQuery = { order: 'DESC' };
+    const targetPath = to.fullPath;
+    try {
+      querySchema.parse(to.query);
+    } catch (e) {
+      // console.error(e)
+      return navigateTo({ path: targetPath, query: defaultQuery });
+    }
+  }),
+});
+```
+
+## 總結
+
+從以上的範例可以觀察到 zod，Zod 有許多驗證方法可以使用，例如 `z.string()`、`z.number()`、`z.boolean()` ……等，這些方法可以組合使用來檢查資料是否符合預期的型別，也可以自由定義錯誤時拋出的訊息，更多可以參考 [Zod 文件即可](https://zod.dev/?id=introduction)，可以到延伸閱讀了解更多實際案例與習題。
 
 ## 延伸閱讀
 
