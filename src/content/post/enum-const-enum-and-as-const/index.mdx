@@ -1,0 +1,188 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:stacked-inbox-outline-rounded', title: '堆疊信件符號' }
+title: 'enum, const enum, as const'
+titleTC: 'enum、const enum 和 as const，應該如何列舉資料於 TypeScript 當中？'
+excerpt: '近期重寫的專案中有許多狀態需要管理，會需要統一管理資料於專案中，為了避免寫死代碼（Hard Coded）並且讓接手的人都能輕易地瞭解資料型態，這裡記錄一些過程中的發現。結論是應該使用 as const 來達成列舉資料管理，因為它更加直覺沒有什麼認知負擔，並且更加靈活。'
+category: 'TypeScript'
+tags: ['Enum']
+publishDate: 2024-04-26
+---
+
+## 尋找列舉資料的方法
+
+近期重寫的專案中有許多狀態需要管理，會需要統一管理資料於專案中，為了避免寫死代碼（Hard Coded）並且讓接手的人都能輕易地瞭解資料型態，這裡記錄一些過程中的發現。舉例來說目前有個警告程度資料：
+
+```typescript
+const LogLevel = {
+  DEBUG: 'DEBUG',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+};
+```
+
+如果我在專案不同地方需要使用到或會接受到這筆資料，要怎麼確保「依靠單一資料來源」去提示不同地方會接收到這筆資料呢？
+
+```typescript
+// 我只希望這個函式接收到 LogLevel 這筆資料，而不是其他任何型態
+function doSomeThing(level: unknown) {
+  // Do Something
+}
+```
+
+## 使用列舉 `enum`
+
+由於是 TypeScript 專案，我第一時間想到的是使用列舉（Enums）來管理資料，枚舉是特殊的「非型別層級」的 TS，用於表示一組常數（不可變的數值）。它有些怪怪的魔法在裡面並不是所有人都喜歡，比如說一個簡單的 enum：
+
+```typescript
+enum LogLevel {
+  DEBUG,
+  WARNING,
+  ERROR,
+}
+```
+
+實際編譯出來會是以下這坨東東：
+
+```typescript
+var LogLevel;
+(function (LogLevel) {
+  LogLevel[(LogLevel['DEBUG'] = 0)] = 'DEBUG';
+  LogLevel[(LogLevel['WARNING'] = 1)] = 'WARNING';
+  LogLevel[(LogLevel['ERROR'] = 2)] = 'ERROR';
+})(LogLevel || (LogLevel = {}));
+```
+
+也就是像是這樣物件的效果：
+
+```typescript
+const LogLevel = {
+  DEBUG: 0
+  0: 'DEBUG',
+  WARNING: 1,
+  1: 'WARNING',
+  ERROR: 2,
+  2: 'ERROR',
+};
+```
+
+以上是 [Numberic Enums](https://www.typescriptlang.org/docs/handbook/enums.html#numeric-enums) 所以通常會使用 [String Enums](https://www.typescriptlang.org/docs/handbook/enums.html#string-enums) ：
+
+```typescript
+enum LogLevel {
+  DEBUG = 'DEBUG',
+  WARNING = 'WARNING',
+  ERROR = 'ERROR',
+}
+
+function doSomeThing(level: LogLevel) {
+  // Do Something
+}
+
+doSomeThing(LogLevel.DEBUG);
+```
+
+也就是說 Enums 型別是獨特的，就算有另一個一樣型別定義的 LogLevel 還是會被視為不同型別，這樣的語法讓通常是 Structural Type 特性的 TS 強化為 Nominal Type 系統的特性，背後 TS 使用了一些魔法抽象但實際上還是在包裝一個 JS 物件。
+
+1. 不是很喜歡 TS 的一些難以預知的魔法轉換（如果不定義值會建立成 Numeric Enums，通常是不樂見的）
+2. 型別系統的特性稍微不同，不過我想不是大問題
+3. [TypeScript Team 討論如果能現在重來，大概不會添加這個功能](https://youtu.be/vBJF0cJ_3G0?si=_NOX5g1YXgHEgPjZ&t=1000)
+
+## 使用 `const enum`
+
+這種做法會讓 TypeScript 只處理列舉的值在型別上，也就是說並不會有任何 JS 在編譯後產生，這聽起來很乾淨且直覺！TS 會直接在編譯時將使用到 `const enum` 的地方替換成對應的值。不過在 [TS 官方文件](https://www.typescriptlang.org/docs/handbook/enums.html#const-enum-pitfalls)基本上完全不推薦使用 `const enum`，如果使用在共用代碼庫中沒有辦法控制編譯器可能會造成問題。
+
+```typescript
+const enum LogLevel {
+  DEBUG,
+  WARNING,
+  ERROR,
+}
+```
+
+## 使用 `as const`
+
+結果繞了一大圈原來最好的方法就在腳下？？介紹老 JS 物件 POJO (Plain Old JavaScript Object) ，其實就是一個 JS 物件使用 `as const` 告知 TS 這個物件是完全不可變的，像是 [Object.freeze()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)，不過是深層次並且不存在於執行時，真正意義上不變的值。
+
+如果不熟悉 JS 的特性的話可能會認為 JS 的 `const` 就意味著宣告內容不可變的變數，但實際上這裡的不可變意思是指變數不可再被指派新記憶體地址，也是因為這樣的特性 TS 並沒有辦法確定 `const` 宣告的變數是否為不可變的值。
+
+```typescript
+const logLevel = {
+  DEBUG: 'DEBUG',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+};
+
+logLevel.DEBUG = 'WHATEVER'; // 可以被重新指派內容
+
+// 型別：
+// const logLevel: {
+//     DEBUG: string;
+//     WARNING: string;
+//     ERROR: string;
+// }
+```
+
+但當我們在 TS 中使用 `as const` 就真的讓 TS 知道是不可變的，於是我們能拿到更為明確的型別：
+
+```typescript
+const logLevel = {
+  DEBUG: 'DEBUG',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+} as const;
+
+// 型別
+// const logLevel: {
+//     readonly DEBUG: "DEBUG";
+//     readonly WARNING: "WARNING";
+//     readonly ERROR: "ERROR";
+// }
+```
+
+好耶！也就是說我們可以用 `keyof` 和 `typeof` 來取得這個物件的型別，並且運用在任何地方：
+
+```typescript
+type LogLevel = (typeof logLevel)[keyof typeof logLevel];
+```
+
+甚至製作一個工具型別來幫助我們做轉換：
+
+```typescript
+type ObjectValues<T> = T[keyof T];
+
+const logLevel = {
+  DEBUG: 'DEBUG',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+} as const;
+
+type LogLevel = ObjectValues<typeof logLevel>;
+
+function doSomeThing(level: LogLevel) {
+  // Do Something
+}
+
+doSomeThing('DEBUG');
+```
+
+## 抉擇
+
+討論不要使用 Enum 的論點可以總結為：
+
+- 在編譯後成果有點怪異，這些怪異的點會需要特別觀察編譯結果或閱讀文件才能了解
+- Enum 在使用上會更加死板（必須傳入 Enum 作為值、相比於 `as const` 只需要傳入對應的值即可）
+
+不過我認為 Enum 也有它的優點：
+
+- Enum 名稱與用途都非常明確
+- 非常死板，所有值只能夠過 Enum 輸入，確保資料的正確性
+
+完全使用 `as const` 來達成列舉資料管理，因為它更加直覺沒有什麼認知負擔，並且更加靈活。
+
+## 延伸閱讀
+
+- [Enums - TypeScript](https://www.typescriptlang.org/docs/handbook/enums.html)
+- [Enums considered harmful - Matt Pocock](https://www.youtube.com/watch?v=jjMbPt_H3RQ&t=354s)
+- [The TRUTH About TypeScript Enums - James Q Quick](https://www.youtube.com/watch?v=VhzId8v3gYA)
+- [as const: the most underrated TypeScript feature - Matt Pocock](https://www.youtube.com/watch?v=6M9aZzm-kEc)
