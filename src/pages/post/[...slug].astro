@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { featureImage, icon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
+const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
 const { Content, headings, remarkPluginFrontmatter } = await post.render();
 const lastModified = new Date(remarkPluginFrontmatter.lastModified);
@@ -54,18 +54,6 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
       class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert dark:prose-dark md:prose-xl lg:grid"
     >
       <header class="not-prose col-start-2 mb-16">
-        {
-          featureImage && (
-            <img
-              data-pagefind-ignore
-              class="mx-auto mb-16"
-              src={import.meta.env.URL_PREFIX + featureImage.url}
-              width={featureImage.width}
-              height={featureImage.height}
-              alt={featureImage.alt}
-            />
-          )
-        }
         {
           icon && (
             <div data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>

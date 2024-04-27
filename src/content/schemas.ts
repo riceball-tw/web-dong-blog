@@ -34,14 +34,6 @@ export const postSchema = z.object({
       name: 'material-symbols:article-outline-rounded',
       title: '文章圖示',
     }),
-  featureImage: z
-    .object({
-      width: z.number().default(64),
-      height: z.number().default(64),
-      alt: z.string(),
-      url: z.string(),
-    })
-    .optional(),
   author: reference('character').optional(),
   title: z.string(),
   titleTC: z.string().max(60),
