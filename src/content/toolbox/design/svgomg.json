@@ -1,5 +1,4 @@
 {
-  "featureIcon": { "url": "images/icons/compress.svg", "alt": "壓縮圖示" },
   "titleTC": "SVGOMG",
   "url": "https://jakearchibald.github.io/svgomg/",
   "excerpt": "線上壓縮與最佳化 SVG 檔案的工具，特別適合開發與設計網頁，檔案尺寸分毫必爭時使用，進一步減輕 SVG 圖示大小。",

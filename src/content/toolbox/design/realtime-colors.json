@@ -1,5 +1,4 @@
 {
-  "featureIcon": { "url": "images/icons/colorize.svg", "alt": "滴管圖示" },
   "titleTC": "Realtime Colors",
   "url": "https://www.realtimecolors.com/?colors=e5f8ed-030b06-94e4b1-207a7f-4fbfd3&fonts=Poppins-Poppins",
   "excerpt": "實時的調配網站的強調色/輔助色/主色調與字體等搭配，更直觀的及時預覽與抓住網站的風格調性，線上即可操作且可以輸出 Tailwind 或 CSS 設定檔！如果你考慮創建新網站但沒概念整體調性可以怎麼搭配可以嘗試看看。",

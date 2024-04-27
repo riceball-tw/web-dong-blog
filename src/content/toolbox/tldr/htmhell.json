@@ -1,8 +1,4 @@
 {
-  "featureIcon": {
-    "url": "images/icons/html.svg",
-    "alt": "HTML 圖示"
-  },
   "titleTC": "HTMHell",
   "url": "https://www.htmhell.dev/",
   "excerpt": "從糟糕的實際案例中學習 HTML，不良實踐的集合",
