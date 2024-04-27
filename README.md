@@ -2,7 +2,6 @@
 
 [About](https://www.webdong.dev/about/) /
 [Posts](https://www.webdong.dev/post/) /
-[Editor](https://www.webdong.dev/editor/) /
 [Toolbox](https://www.webdong.dev/toolbox/)
 
 <br/>
