@@ -1,5 +1,4 @@
 {
-  "featureIcon": { "url": "images/icons/power-plug.svg", "alt": "插頭圖示" },
   "titleTC": "Popup Blocker (strict)",
   "url": "https://webextension.org/listing/popup-blocker.html",
   "excerpt": "阻擋任何彈出式視窗，當彈跳視窗被觸發時該擴充功能會顯示通知，你可以自由決定拒絕或接受彈跳請求。",

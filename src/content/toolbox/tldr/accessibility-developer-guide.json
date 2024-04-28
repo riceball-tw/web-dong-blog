@@ -1,8 +1,4 @@
 {
-  "featureIcon": {
-    "url": "images/icons/a11y.svg",
-    "alt": "人張開雙臂圖示"
-  },
   "titleTC": "Accessibility Developer Guide",
   "url": "https://www.accessibility-developer-guide.com/",
   "excerpt": "給開發者的無障礙指南",
