@@ -39,7 +39,10 @@ const heroBadge = {
     // @ts-ignore-next-line
     // eslint-disable-next-line no-new, no-undef
     new PagefindUI({
-      element: "#pagefind-search", 
+      element: "#pagefind-search",
+      translations: {
+        placeholder: "搜尋網頁東東所有文章……"
+      },
       showSubResults: true,
       showImages: false,
       resetStyles: false,
@@ -54,6 +57,13 @@ const heroBadge = {
   
   initPagefind()
 </script>
+
+<style is:inline>
+  #pagefind-search .pagefind-ui__search-input::placeholder {
+  opacity: 0.6;
+  color: currentColor;
+  }
+</style>
 
 <BlogBase>
   <slot name="head">
