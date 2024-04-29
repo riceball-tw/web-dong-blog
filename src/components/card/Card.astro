@@ -38,8 +38,9 @@ const cardActiveDuraction = 'active:duration-[34ms]'
     </div>
 </div>
 
-<style 
-define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor }}>
+{/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
+<style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor }}>
+
   .card {
     --border-width: 1px;
     background-color: var(--cardDefaultBorderColor);

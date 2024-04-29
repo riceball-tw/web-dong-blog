@@ -11,8 +11,8 @@ const { class: className, ...attrs } = Astro.props;
   <slot />
 </div>
 
-<style 
-define:vars={{ minCardWidth }}>
+{/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
+<style define:vars={{ minCardWidth }}>
   .cards-container:hover > .card::after {
     opacity: 1;
   }
