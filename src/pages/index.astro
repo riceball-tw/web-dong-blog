@@ -5,6 +5,7 @@ import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Card from '@/components/card/Card.astro';
 import Hero from '@/components/app/Hero.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
 import uniqolor from 'uniqolor';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
@@ -82,8 +83,8 @@ const heroBadge = {
 
   <section>
     <h2 class="sr-only">文章種類</h2>
-    <div class="flex flex-wrap gap-4">
-      <div class="mx-4 grid w-full grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+    <div class="flex flex-wrap gap-4 px-4">
+      <CardGallery minCardWidth={700}>
         {
           categoriesLists.map((categoriesList) => (
             <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
@@ -127,7 +128,7 @@ const heroBadge = {
             </Card>
           ))
         }
-      </div>
+      </CardGallery>
     </div>
   </section>
 </BlogBase>

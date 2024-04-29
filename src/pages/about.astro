@@ -6,6 +6,7 @@ import Card from '@/components/card/Card.astro';
 import Button from '@/components/app/Button.astro';
 import { getCollection } from 'astro:content';
 import Logo from '@/components/app/Logo.astro';
+import CardGallery from '@/components/card/CardGallery.astro';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
 const toolboxSites = await getCollection('toolbox');
@@ -108,12 +109,11 @@ const problems = [
 
   <div class="flex flex-col gap-4">
     <section class="mx-8 grid grid-cols-1 gap-x-0 gap-y-4 md:grid-cols-3 md:gap-x-4 md:gap-y-0">
-      <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
+      <CardGallery class={'col-span-2'}>
         {
           problems.map((problem) => <PostCard post={problem} />)
         }
-      </div>
-
+      </CardGallery>
       <Card class="relative overflow-hidden">
         <div
           class="from-primary-50/30 before:absolute before:left-0 before:top-0 before:block before:h-2/3 before:w-full before:bg-gradient-to-b before:content-[''] dark:from-primary-1000"
@@ -135,15 +135,19 @@ const problems = [
     </section>
     <section class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-3">
       <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card class="flex flex-1 flex-col items-center justify-center">
-          <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
+        <Card>
+          <div class="h-full flex justify-center items-center">
+            <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
             ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
-          >
+            >
+          </div>
         </Card>
-        <Card class="flex flex-1 flex-col items-center justify-center">
-          <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
-            ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
-          >
+        <Card>
+          <div class="h-full flex justify-center items-center">
+            <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
+              ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
+            >
+          </div>
         </Card>
       </div>
       <Card>
