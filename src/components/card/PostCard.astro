@@ -3,7 +3,6 @@ import type { CategoryList as CategoryListType, TagsList , PostPage } from '@/ty
 import Card from '@/components/card/Card.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
-import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { Icon } from 'astro-icon/components'
 
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
@@ -39,7 +38,7 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
       )
     }
     <div>
-      <h2 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
+      <h2 class="mb-4 text-lg font-medium">
         {url && <a href={url}>{titleTC}</a>}
         {slug && !url && <a href={`/post/${slug}/`}>{titleTC}</a>}
         {!url && !slug && titleTC}
