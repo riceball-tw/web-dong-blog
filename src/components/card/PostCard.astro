@@ -39,7 +39,7 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
       )
     }
     <div>
-      <h2 transition:name={`title-${slug || characterToUnicode(titleTC)}`} class="mb-4 text-lg font-medium">
+      <h2 class="mb-4 text-lg font-medium">
         {url && <a href={url}>{titleTC}</a>}
         {slug && !url && <a href={`/post/${slug}/`}>{titleTC}</a>}
         {!url && !slug && titleTC}
