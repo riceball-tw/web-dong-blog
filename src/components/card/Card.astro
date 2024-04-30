@@ -4,85 +4,97 @@ import { hexToRgba } from '@/helper/hexToRgba.ts';
 
 export interface Props extends HTMLAttributes<'div'> {
   themeColor?: string;
-  fillColor?: string;
+  class?: string;
 }
 
-const { themeColor, fillColor, class: className, ...attrs } = Astro.props;
-const borderWidth = '1px';
-const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.3) : 'rgba(var(--secondary-color) / 0.3)';
-const cardFillColor = fillColor || 'rgba(var(--secondary-color) / 0.03)';
-const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.05) : 'rgba(var(--secondary-color) / 0.05)';
-const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondary-color) / 0.2)';
+const { themeColor, class: className, ...attrs } = Astro.props;
+const cardDefaultBorderColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondary-color) / 0.2)';
+const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondary-color) / 0.6)';
+const cardFillColor = themeColor ? hexToRgba(themeColor, 1) : 'rgba(var(--secondary-color) / 1)';
+const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondary-color) / 0.05)';
+const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondary-color) / 0.1)';
+const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondary-color) / 0.2)';
+const cardAnimationCurve = 'ease-[cubic-bezier(0.30,0.70,0.40,0.10)]'
+const cardActiveDuraction = 'active:duration-[34ms]'
+const borderRadius = '8px'
 ---
 
 <div
+  style="border-radius: var(--borderRadius)"
+  class="card transform hover:-translate-y-2 active:-translate-y-1 transition-transform relative flex"
   class:list={[
-    'card relative transform rounded-lg p-6 filter backdrop-blur-xl transition-all hover:-translate-y-2 active:-translate-y-1',
     className,
+    cardAnimationCurve,
+    cardActiveDuraction
   ]}
   {...attrs}
 >
-  <slot />
-  <div class="card__light"></div>
+    <div class="card-content bg-primary-50/90 dark:bg-primary-1000/90 group">
+      <div 
+      style="border-radius: var(--borderRadius)"
+      class="group-hover:bg-[var(--cardHoverFillColor)] group-active:bg-[var(--cardHoverActiveColor)] p-6 h-full transition-colors"
+      class:list={[
+        cardActiveDuraction
+      ]}
+      >
+        <slot />
+      </div>
+    </div>
 </div>
 
-<style define:vars={{ themeColor, borderWidth, cardHoverFillColor, cardBorderColor, cardFillColor, cardShadowColor }}>
+{/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
+<style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor, borderRadius }}>
+
   .card {
-    background-color: var(--cardFillColor);
-    border: var(--borderWidth) solid var(--cardBorderColor);
+    --border-width: 1px;
+    --inner-border-radius: calc(var(--borderRadius) - var(--border-width));
+    background-color: var(--cardDefaultBorderColor);
   }
-
-  .card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 0.3rem;
-    transform: translate(0, 100%);
-    background-color: var(--cardFillColor);
-    border: var(--borderWidth) solid var(--cardBorderColor);
-    border-top: 0;
-    border-radius: 0 0 10px 10px;
-    opacity: 0.5;
-    transition: 0.3s;
-  }
-
-  .card__light {
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
-  .card__light::before {
-    content: '';
-    width: 100px;
-    height: 100px;
-    top: 0;
-    left: 0;
-    position: absolute;
-    background-color: var(--themeColor);
-    opacity: 0.1;
-    filter: blur(30px);
+  
+  .card:hover::before {
+    opacity: 1;
   }
 
   .card:hover {
-    background: radial-gradient(ellipse at bottom, var(--cardHoverFillColor) 40%, transparent 100%);
-    border-color: var(--cardBorderColor);
     box-shadow: 0 0 30px 10px var(--cardShadowColor);
   }
-
-  .card:hover:after {
-    height: 0.6rem;
-    background: linear-gradient(0deg, transparent, var(--cardHoverFillColor));
-    opacity: 0.45;
+  
+  .card::before,
+  .card::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: inherit;
+    transition: opacity 500ms;
   }
-
-  .card:active:after {
-    height: 0.3rem;
-    opacity: 1;
+  
+  .card::before {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y), 
+      var(--cardFillColor),
+      transparent 40%
+    );
+    z-index: 2;
   }
-</style>
+  
+  .card::after {  
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y), 
+      var(--cardBorderColor),
+      transparent 40%
+    );
+    z-index: 1;
+  }
+  
+  .card > .card-content {
+    border-radius: var(--inner-border-radius);
+    margin: var(--border-width);
+    width: calc(100% - var(--border-width) * 2);
+    height: calc(100% - var(--border-width) * 2);
+    z-index: 2;
+  }
+  </style>

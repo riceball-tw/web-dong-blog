@@ -1,6 +1,65 @@
 ---
+interface Props {
+  minCardWidth?: number;
+  class?: string;
+}
+const minCardWidth = `${Astro.props.minCardWidth ?? 500}px`;
+const { class: className, ...attrs } = Astro.props;
 ---
 
-<div class="mt-8 grid w-full grid-cols-1 gap-4 p-0 md:mt-0 md:grid-cols-[repeat(auto-fill,minmax(500px,1fr))] md:gap-4">
+<div class="cards-container mt-8 grid w-full grid-cols-1 gap-4 p-0 md:mt-0 md:grid-cols-[repeat(auto-fill,minmax(var(--minCardWidth),1fr))] md:gap-4" class:list={[className]} {...attrs}>
   <slot />
 </div>
+
+{/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
+<style define:vars={{ minCardWidth }}>
+  .cards-container:hover > .card::after {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  
+  function throttle(fn:Function, wait:number){
+    let isCalled = false;
+    // eslint-disable-next-line func-names
+    return function(...args: any){
+        if (!isCalled){
+            fn(...args);
+            isCalled = true;
+            setTimeout(()=> {
+                isCalled = false;
+            }, wait)
+        }
+    };
+  }
+
+  function elementIsVisibleInViewport(element: HTMLElement, isPartiallyVisible = true) {
+    const { top, left, bottom, right } = element.getBoundingClientRect();
+    const { innerHeight, innerWidth } = window;
+    return isPartiallyVisible
+      ? ((top > 0 && top < innerHeight) ||
+          (bottom > 0 && bottom < innerHeight)) &&
+          ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+      : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+  }
+
+  function updateCard(e: MouseEvent) {
+    [...document.querySelectorAll<HTMLElement>(".card")].forEach(card => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (elementIsVisibleInViewport(card)) {
+        card.style.setProperty("--mouse-x", `${x}px`);
+        card.style.setProperty("--mouse-y", `${y}px`);
+      }
+    });
+    }
+
+  const cardContainers = [...document.querySelectorAll<HTMLDivElement>(".cards-container")];
+  cardContainers.forEach(cardContainer => {
+    cardContainer.addEventListener('mousemove', throttle(updateCard, 10));
+  })
+
+
+</script>
