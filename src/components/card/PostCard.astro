@@ -3,7 +3,6 @@ import type { CategoryList as CategoryListType, TagsList , PostPage } from '@/ty
 import Card from '@/components/card/Card.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
-import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { Icon } from 'astro-icon/components'
 
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
