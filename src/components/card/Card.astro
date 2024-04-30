@@ -16,10 +16,12 @@ const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(-
 const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondary-color) / 0.2)';
 const cardAnimationCurve = 'ease-[cubic-bezier(0.30,0.70,0.40,0.10)]'
 const cardActiveDuraction = 'active:duration-[34ms]'
+const borderRadius = '8px'
 ---
 
 <div
-  class="card transform hover:-translate-y-2 active:-translate-y-1 transition-transform rounded-lg relative flex"
+  style="border-radius: var(--borderRadius)"
+  class="card transform hover:-translate-y-2 active:-translate-y-1 transition-transform relative flex"
   class:list={[
     className,
     cardAnimationCurve,
@@ -28,7 +30,9 @@ const cardActiveDuraction = 'active:duration-[34ms]'
   {...attrs}
 >
     <div class="card-content bg-primary-50/90 dark:bg-primary-1000/90 group">
-      <div class="group-hover:bg-[var(--cardHoverFillColor)] group-active:bg-[var(--cardHoverActiveColor)] p-6 rounded-lg h-full transition-colors"
+      <div 
+      style="border-radius: var(--borderRadius)"
+      class="group-hover:bg-[var(--cardHoverFillColor)] group-active:bg-[var(--cardHoverActiveColor)] p-6 h-full transition-colors"
       class:list={[
         cardActiveDuraction
       ]}
@@ -39,10 +43,11 @@ const cardActiveDuraction = 'active:duration-[34ms]'
 </div>
 
 {/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
-<style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor }}>
+<style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor, borderRadius }}>
 
   .card {
     --border-width: 1px;
+    --inner-border-radius: calc(var(--borderRadius) - var(--border-width));
     background-color: var(--cardDefaultBorderColor);
   }
   
@@ -86,7 +91,7 @@ const cardActiveDuraction = 'active:duration-[34ms]'
   }
   
   .card > .card-content {
-    border-radius: inherit;
+    border-radius: var(--inner-border-radius);
     margin: var(--border-width);
     width: calc(100% - var(--border-width) * 2);
     height: calc(100% - var(--border-width) * 2);
