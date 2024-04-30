@@ -44,7 +44,7 @@ const { class: className, ...attrs } = Astro.props;
       : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
   }
 
-  function updateCard(e) {
+  function updateCard(e: MouseEvent) {
     [...document.querySelectorAll<HTMLElement>(".card")].forEach(card => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
