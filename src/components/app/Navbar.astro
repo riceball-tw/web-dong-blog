@@ -106,7 +106,4 @@ const mainNav = [
     });
   }
   setupThemeToggler(themeToggleButton);
-  document.addEventListener('astro:after-swap', () => {
-    setupThemeToggler(document.querySelector('[data-theme-toggle]') as HTMLButtonElement);
-  });
 </script>

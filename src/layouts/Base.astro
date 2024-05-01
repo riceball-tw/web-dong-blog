@@ -1,7 +1,6 @@
 ---
 import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
-import { ViewTransitions } from 'astro:transitions';
 import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
 import DefaultHead from '@/components/app/head/DefaultHead.astro'
 import ThemeInit from '@/components/app/head/ThemeInit.astro'
@@ -17,18 +16,14 @@ const { themeColor } = Astro.props;
 
   const localStorageTheme = localStorage.theme
   setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-  document.addEventListener('astro:after-swap', () => {
-    setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-  });
 </script>
 
 
 
-<html transition:persist lang="zh-Hant-TW">
+<html lang="zh-Hant-TW">
   <head>
     <ThemeInit />
     <DefaultHead { ...Astro.props}/>
-    <ViewTransitions fallback="none" />
     <GoogleAnalytic />
     <slot name="head" />
   </head>

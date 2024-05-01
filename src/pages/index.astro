@@ -1,5 +1,4 @@
 ---
-import { characterToUnicode } from '@/helper/characterToUnicode.ts';
 import { getCollection } from 'astro:content';
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
@@ -51,7 +50,7 @@ const heroBadge = {
       sort: { date: "desc" },
     });
   }
-  
+
   initPagefind()
 </script>
 
@@ -95,7 +94,6 @@ const heroBadge = {
             <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
               <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
                 <h2
-                  transition:name={`category-${characterToUnicode(categoriesList.type)}`}
                   class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                 >
                   <a href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
@@ -120,7 +118,6 @@ const heroBadge = {
                             .replace(/\//g, '-')}
                         </time>
                         <a
-                          transition:name={`title-${post.slug}`}
                           class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
                           href={`/post/${post.slug}/`}
                         >
