@@ -34,6 +34,20 @@ const { headings } = Astro.props
   }
 </div>
 
+<style>
+.toc-link {
+  opacity: 0.6;
+}
+
+.toc-link--active {
+  opacity: 1;
+}
+
+.toc-link--active a {
+  opacity: 1;
+}
+</style>
+
 <script>
   function generateTOC() {
     const headings = document.querySelectorAll('[data-article] h2, h3');
