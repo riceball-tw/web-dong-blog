@@ -95,15 +95,19 @@ html.dark {
   --pagefind-ui-background: transparent;
   --pagefind-ui-border: rgba(var(--secondary-color) / 0.6);
   --pagefind-ui-tag: #eeeeee;
-  --pagefind-ui-border-width: 2px;
+  --pagefind-ui-border-width: 1px;
   --pagefind-ui-border-radius: 9999px;
   --pagefind-ui-image-border-radius: 8px;
   --pagefind-ui-image-box-ratio: 3 / 2;
   --pagefind-ui-font: sans-serif;
+  /* Custom Pagefind UI */
+  --pagefind-ui-input-active: rgba(var(--secondary-color) / 0.1);
 }
 
 :root.dark {
   --pagefind-ui-border: rgba(var(--secondary-color-light) / 0.6);
+  /* Custom Pagefind UI */
+  --pagefind-ui-input-active: rgba(var(--secondary-color-light) / 0.2);
 }
 
 @layer components {
