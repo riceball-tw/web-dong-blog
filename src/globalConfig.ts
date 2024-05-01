@@ -2,6 +2,7 @@ export default {
   setting: {
     paginationSize: 15,
     projectUpdateBadgeUrl: 'https://github.com/riceball-tw/astro-blog/commits/main',
+    postLastModifiedDateUrl: 'https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post',
     editorTheme: {
       light: 'github-light',
       dark: 'github-dark',
