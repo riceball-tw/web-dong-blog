@@ -10,7 +10,6 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { h, s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
-import { remarkModifiedTime } from './src/helper/remark-modified-time';
 import globalConfig from './src/globalConfig.ts';
 
 const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
@@ -67,7 +66,6 @@ export default defineConfig({
         },
       ],
     ],
-    remarkPlugins: [remarkModifiedTime],
     shikiConfig: {
       theme: 'github-dark',
     },

@@ -28,8 +28,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category } = post.data;
 const { slug } = post;
-const { Content, headings, remarkPluginFrontmatter } = await post.render();
-const lastModified = new Date(remarkPluginFrontmatter.lastModified);
+const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
 ---
@@ -99,14 +98,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
               href={`https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post/${post.slug}.mdx`}
               class="inline-flex items-center gap-2 text-sm font-normal opacity-40 hover:opacity-100"
             >
-              最後更新：
-              <time>
-                {
-                  lastModified
-                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                    .replace(/\//g, '-')
-                }
-              </time>
+              最後更新：查看更新紀錄
             </a>
           </div>
         </div>
