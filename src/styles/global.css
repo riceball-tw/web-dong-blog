@@ -1,6 +1,121 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary */
+    --primary-color-50: 248 250 251;
+    --primary-color-100: 235 239 251;
+    --primary-color-200: 214 214 247;
+    --primary-color-300: 180 178 236;
+    --primary-color-400: 151 137 222;
+    --primary-color-500: 126 101 210;
+    --primary-color-600: 103 73 190;
+    --primary-color-700: 78 54 155;
+    --primary-color-800: 54 38 110;
+    --primary-color-900: 34 24 75;
+    --primary-color-1000: 13 10 40;
+
+    /* Secondary */
+    --secondary-color-light: 184 135 247;
+    --secondary-color: 83 74 247;
+
+    /* Accent */
+    --accent-color-light: 240 147 89;
+    --accent-color: 210 143 101;
+
+    /* Success */
+    --success-color: #4af7c9;
+
+    /* Error */
+    --error-color: #b52f74;
+
+    /* Scale */
+    --mainNav-height: 80px;
+
+    /* Brand */
+    --color-brand: #352fcf;
+    --color-brand-dark: #b887f7;
+
+    /* On Brand */
+    --color-on-brand: #ffffff;
+    --color-on-brand-dark: #000000;
+  }
+}
+
+@layer base {
+  html {
+    /* Surface */
+    --color-surface-lowest: #ffffff;
+    --color-surface-low: #f7f2fa;
+    --color-surface: #f3edf7;
+    --color-surface-high: #ece6f0;
+    --color-surface-highest: #e6e0e9;
+    --color-inverse-surface: #1d0471;
+
+    /* Brand Background */
+    --color-brand: var(--color-brand);
+    --color-brand-background: var(--color-on-brand);
+
+    /* Highlight */
+    --color-highlight: var(--color-brand);
+  }
+
+  html.dark {
+    /* Surface */
+    --color-surface-lowest: #0c022b;
+    --color-surface-low: #2f2e47;
+    --color-surface: #3e3d55;
+    --color-surface-high: #4a495f;
+    --color-surface-highest: #545368;
+    --color-inverse-surface: #e6e0e9;
+
+    /* Brand */
+    --color-brand: var(--color-brand-dark);
+    --color-brand-background: var(--color-on-brand-dark);
+
+    /* Highlight */
+    --color-highlight: var(--color-brand-dark);
+  }
+
+  /* Overwrite pagefind default */
+  /* https://pagefind.app/docs/ui-usage/ */
+  html.light,
+  html.dark {
+    --pagefind-ui-scale: 1;
+    --pagefind-ui-primary: var(--color-brand);
+    --pagefind-ui-text: var(--color-inverse-surface);
+    --pagefind-ui-background: transparent;
+    --pagefind-ui-border: rgba(var(--secondary-color) / 0.6);
+    --pagefind-ui-tag: #eeeeee;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 9999px;
+    --pagefind-ui-image-border-radius: 8px;
+    --pagefind-ui-image-box-ratio: 3 / 2;
+    --pagefind-ui-font: sans-serif;
+    /* Custom Pagefind UI Strat */
+    --pagefind-ui-input-active: rgba(var(--secondary-color) / 0.1);
+    --pagefind-ui-placeholder: rgba(var(--secondary-color) / 0.8);
+    /* Custom Pagefind UI End */
+  }
+
+  html.dark {
+    --pagefind-ui-border: rgba(var(--secondary-color-light) / 0.6);
+    /* Custom Pagefind UI Strat */
+    --pagefind-ui-input-active: rgba(var(--secondary-color-light) / 0.2);
+    --pagefind-ui-placeholder: rgba(var(--secondary-color-light) / 0.8);
+    /* Custom Pagefind UI End */
+  }
+}
+
+@layer base {
+  mark {
+    background-color: var(--color-highlight);
+    color: var(--color-brand-background);
+  }
+}
+
 @layer utilities {
   /*
     Chromium browsers don't render nested backdrop filters.
@@ -17,184 +132,9 @@
   }
 }
 
-@layer base {
-  mark {
-    background-color: var(--color-highlight);
-    color: var(--color-brand-background);
-  }
-
-  :root {
-    /* TODO: Replace Old Color System */
-    --primary-color-50: 248 250 251;
-    --primary-color-100: 235 239 251;
-    --primary-color-200: 214 214 247;
-    --primary-color-300: 180 178 236;
-    --primary-color-400: 151 137 222;
-    --primary-color-500: 126 101 210;
-    --primary-color-600: 103 73 190;
-    --primary-color-700: 78 54 155;
-    --primary-color-800: 54 38 110;
-    --primary-color-900: 34 24 75;
-    --primary-color-1000: 13 10 40;
-    --secondary-color-light: 184 135 247;
-    --secondary-color: 83 74 247;
-    --accent-color-light: 240 147 89;
-    --accent-color: 210 143 101;
-    --success-color: #4af7c9;
-    --error-color: #b52f74;
-    --mainNav-height: 80px;
-
-    /* New Primitive Color System */
-    --color-brand: #352fcf;
-    --color-on-brand: #ffffff;
-    --color-primitive-border: #e0e0e0;
-
-    --color-brand-dark: #b887f7;
-    --color-on-brand-dark: #000000;
-    --color-primitive-border-dark: #333333;
-  }
-}
-
-html {
-  --color-surface-lowest: #ffffff;
-  --color-surface-low: #f7f2fa;
-  --color-surface: #f3edf7;
-  --color-surface-high: #ece6f0;
-  --color-surface-highest: #e6e0e9;
-  --color-inverse-surface: #1d0471;
-
-  --color-brand-background: var(--color-on-brand);
-  --color-highlight: var(--color-brand);
-
-  --color-brand: var(--color-brand);
-  --color-border: var(--color-primitive-border);
-}
-
-html.dark {
-  --color-surface-lowest: #0c022b;
-  --color-surface-low: #2f2e47;
-  --color-surface: #3e3d55;
-  --color-surface-high: #4a495f;
-  --color-surface-highest: #545368;
-  --color-inverse-surface: #e6e0e9;
-
-  --color-brand-background: var(--color-on-brand-dark);
-  --color-highlight: var(--color-brand-dark);
-
-  --color-brand: var(--color-brand-dark);
-  --color-border: var(--color-primitive-border-dark);
-}
-
-/* Overwrite pagefind default */
-/* https://pagefind.app/docs/ui-usage/ */
-:root.light,
-:root.dark {
-  --pagefind-ui-scale: 1;
-  --pagefind-ui-primary: var(--color-brand);
-  --pagefind-ui-text: var(--color-inverse-surface);
-  --pagefind-ui-background: transparent;
-  --pagefind-ui-border: rgba(var(--secondary-color) / 0.6);
-  --pagefind-ui-tag: #eeeeee;
-  --pagefind-ui-border-width: 1px;
-  --pagefind-ui-border-radius: 9999px;
-  --pagefind-ui-image-border-radius: 8px;
-  --pagefind-ui-image-box-ratio: 3 / 2;
-  --pagefind-ui-font: sans-serif;
-  /* Custom Pagefind UI */
-  --pagefind-ui-input-active: rgba(var(--secondary-color) / 0.1);
-  --pagefind-ui-placeholder: rgba(var(--secondary-color) / 0.8);
-}
-
-:root.dark {
-  --pagefind-ui-border: rgba(var(--secondary-color-light) / 0.6);
-  /* Custom Pagefind UI */
-  --pagefind-ui-input-active: rgba(var(--secondary-color-light) / 0.2);
-  --pagefind-ui-placeholder: rgba(var(--secondary-color-light) / 0.8);
-}
-
 @layer components {
   *:is(h1, h2, h3, h4, h5, h6) {
     scroll-margin-top: var(--mainNav-height);
     position: relative;
   }
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion) {
-  html {
-    scroll-behavior: none;
-  }
-}
-
-/* TOC */
-.toc-link {
-  opacity: 0.6;
-}
-
-.toc-link--active {
-  opacity: 1;
-}
-
-.toc-link--active a {
-  opacity: 1;
-}
-
-/* Article Layout */
-.article-grid {
-  grid-template-columns: 1fr min(65ch, 100%) 1fr;
-}
-
-.article-grid > * {
-  grid-column: 2;
-}
-
-.article-grid > h2:first-of-type {
-  margin-top: 0;
-}
-
-/* Heading Link */
-.heading-link {
-  display: inline-block;
-  position: absolute;
-  top: 50%;
-  left: -1rem;
-  opacity: 0.4;
-  transform: translate(-100%, -50%);
-  transition: opacity 0.3s;
-  opacity: 0;
-}
-.heading-link:hover {
-  opacity: 1;
-}
-:is(h1, h2, h3, h4, h5, h6):hover .heading-link {
-  opacity: 1;
-}
-
-/* External Link */
-.external-link-icon {
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-/* Inside article-content */
-.article-grid a:hover .external-link-icon {
-  opacity: 1;
-}
-
-.article-grid > video {
-  margin: 0 auto;
-  grid-column: 1 / -1;
-  z-index: 1;
-}
-
-astro-island {
-  display: inline-block;
-}
-
-iframe {
-  max-width: 100%;
-  margin: 0 auto;
 }

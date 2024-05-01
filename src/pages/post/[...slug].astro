@@ -116,3 +116,64 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
     </article>
   </main>
 </BlogBase>
+
+<style is:global>
+  /* Article Layout */
+.article-grid {
+  grid-template-columns: 1fr min(65ch, 100%) 1fr;
+}
+
+.article-grid > * {
+  grid-column: 2;
+}
+
+.article-grid > h2:first-of-type {
+  margin-top: 0;
+}
+
+/* Heading Link */
+.heading-link {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: -1rem;
+  opacity: 0.4;
+  transform: translate(-100%, -50%);
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+.heading-link:hover {
+  opacity: 1;
+}
+:is(h1, h2, h3, h4, h5, h6):hover .heading-link {
+  opacity: 1;
+}
+
+/* Link icon inside article */
+.external-link-icon {
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.article-grid a:hover .external-link-icon {
+  opacity: 1;
+}
+
+/* Video inside article */
+.article-grid > video {
+  margin: 0 auto;
+  grid-column: 1 / -1;
+  z-index: 1;
+}
+
+/* Island inside article */
+astro-island {
+  display: inline-block;
+}
+
+/* Iframe Inside article */
+iframe {
+  max-width: 100%;
+  margin: 0 auto;
+}
+</style>
