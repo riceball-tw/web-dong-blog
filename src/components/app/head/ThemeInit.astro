@@ -12,6 +12,6 @@ const getCurrentGlobalThemeSerialized = getCurrentGlobalTheme.toString();
   }
   const currentTheme = deSerializeFunction(getCurrentGlobalThemeSerialized)(localStorage.theme);
   const codeBlockTheme = editorTheme[currentTheme];
-  document.querySelector('html').className = `${currentTheme}`;
+  document.querySelector('html').classList.add(`${currentTheme}`);
   document.querySelector('html').setAttribute('data-theme', codeBlockTheme);
 </script>
