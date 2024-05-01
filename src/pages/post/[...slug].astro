@@ -12,6 +12,7 @@ import Info from '@/components/post/Info.astro'
 import Video from '@/components/post/Video.astro'
 import PostTableOfContent from '@/components/post/PostTableOfContent.astro';
 import { Icon } from 'astro-icon/components'
+import globalConfig from '@/globalConfig.ts';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -95,7 +96,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
             </div>
             <a
               data-pagefind-ignore="all"
-              href={`https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post/${post.slug}.mdx`}
+              href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
               class="inline-flex items-center gap-2 text-sm font-normal opacity-40 hover:opacity-100"
             >
               最後更新：查看更新紀錄
