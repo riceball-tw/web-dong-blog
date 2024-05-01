@@ -58,13 +58,18 @@ const heroBadge = {
 <style is:inline>
   #pagefind-search .pagefind-ui__search-input::placeholder {
     opacity: 0.6;
-    color: currentColor;
+    color: var(--pagefind-ui-placeholder);
     font-weight: normal;
   }
   #pagefind-search .pagefind-ui__search-input:focus {
     outline: none;
     background-color: var(--pagefind-ui-input-active)
   }
+
+  #pagefind-search .pagefind-ui__form::before {
+    background-color: var(--pagefind-ui-border);
+  }
+
 </style>
 
 <BlogBase>
