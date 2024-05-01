@@ -42,6 +42,7 @@ export const postSchema = z.object({
   tags: z.array(z.string()).default(['unsorted']),
   themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
   publishDate: z.date(),
+  lastModifiedDate: z.date().optional(),
   permalink: z.string().optional(),
 });
 
