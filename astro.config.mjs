@@ -18,6 +18,7 @@ const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.webdong.dev',
+  prefetch: true,
   markdown: {
     rehypePlugins: [
       rehypeSlug,

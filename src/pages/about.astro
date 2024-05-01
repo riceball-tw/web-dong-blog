@@ -137,14 +137,14 @@ const problems = [
       <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <div class="h-full flex justify-center items-center">
-            <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
+            <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
             ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
             >
           </div>
         </Card>
         <Card>
           <div class="h-full flex justify-center items-center">
-            <a class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
+            <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
               ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
             >
           </div>

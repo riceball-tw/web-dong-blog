@@ -96,7 +96,7 @@ const heroBadge = {
                 <h2
                   class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                 >
-                  <a href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
+                  <a data-astro-prefetch href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
                 </h2>
                 <span class="opacity-60 transition-opacity group-hover:opacity-100">
                   {categoriesList.posts.length} 篇文章
@@ -118,6 +118,7 @@ const heroBadge = {
                             .replace(/\//g, '-')}
                         </time>
                         <a
+                          data-astro-prefetch
                           class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
                           href={`/post/${post.slug}/`}
                         >

@@ -32,6 +32,7 @@ const mainNav = [
   >
     <div class="flex w-full items-center gap-2 md:gap-4">
       <a
+        data-astro-prefetch
         title="網頁東東首頁"
         href="/"
         class="inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
@@ -43,7 +44,7 @@ const mainNav = [
         {
           mainNav.map((navbarLink) => (
             <li class={`relative ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'}`}>
-              <a href={navbarLink.url} class="p-2 md:p-4 ">
+              <a data-astro-prefetch href={navbarLink.url} class="p-2 md:p-4 ">
                 {navbarLink.name}
                 {navbarLink.isNew && (
                   <div class="text-secondary dark:text-secondary-light absolute -top-1 right-0 -translate-y-1/2 translate-x-1/2 transform-gpu text-xs tracking-widest">
