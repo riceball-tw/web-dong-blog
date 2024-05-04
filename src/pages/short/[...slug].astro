@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import BlogBase from '@/layouts/BlogBase.astro';
+import ShortList from '@/components/short/ShortsList.astro'
+
+export async function getStaticPaths() {
+  const shorts = await getCollection('shortPost');
+  return shorts.map((short) => ({
+    params: { slug: short.slug },
+    props: { short, shorts },
+  }));
+}
+const { short: shortPost, shorts } = Astro.props;
+const { Content } = await shortPost.render();
+---
+<BlogBase>
+  <main class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
+    <ShortList shorts={shorts} currentSlug={shortPost.slug}>
+      <Content/>
+    </ShortList>
+  </main>
+</BlogBase>

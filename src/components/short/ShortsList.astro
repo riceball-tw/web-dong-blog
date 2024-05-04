@@ -1,0 +1,46 @@
+---
+import type { ShortPage } from '@/types'
+import { Icon } from 'astro-icon/components'
+
+type Short = ShortPage
+export type Props = {
+  shorts: Short[]
+  currentSlug?: string
+} 
+
+const { shorts, currentSlug } = Astro.props
+---
+<ul class=" space-y-4 md:space-y-8">
+  {
+    shorts.map((short, index) => (
+      <li class="text-xl md:text-4xl gap-2 md:gap-4 flex flex-col">
+        <a class="group" href={`/short/${short.slug}`}>
+          <h3 class={`group-hover:opacity-100 
+            ${(short.slug === currentSlug || !currentSlug) ? 'opacity-100' : 'opacity-60'}`}
+            >
+            <span>.0{index} </span>
+            <span class={` group-hover:opacity-100 transition-opacity ${(short.slug === currentSlug || !currentSlug) ? 'opacity-100' : 'opacity-60 md:opacity-0'}`}>
+              {short.data.titleTC}
+            </span>
+          </h3>
+        </a>
+
+            {
+              (short.slug === currentSlug) ? <div style="margin-left: 2.5ch" class=" max-w-prose">
+          <slot /></div> : ''
+            }
+            <div style="margin-left: 2.5ch" class={`pt-4 ${(short.slug === currentSlug || !currentSlug) ? 'opacity-100' : 'opacity-60 md:opacity-0'}`}>
+
+            {
+              short.data?.social?.threads ? 
+            <a class="inline-block" href={short.data.social.threads}>
+              <Icon name="simple-icons:threads"></Icon>
+            </a>
+           : ''
+            }
+       
+            </div>
+      </li>
+    ))
+  }
+</ul>
