@@ -18,8 +18,14 @@ const mainNav = [
     name: '工具箱',
     url: '/toolbox/',
     isShownOnMobile: true,
-    isNew: true,
   },
+  {
+    name: '短文',
+    url: '/short/',
+    isShownOnMobile: true,
+    subText: 'New',
+  },
+
 ];
 ---
 
@@ -46,9 +52,9 @@ const mainNav = [
             <li class={`relative ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'}`}>
               <a data-astro-prefetch href={navbarLink.url} class="p-2 md:p-4 ">
                 {navbarLink.name}
-                {navbarLink.isNew && (
+                {navbarLink.subText && (
                   <div class="text-secondary dark:text-secondary-light absolute -top-1 right-0 -translate-y-1/2 translate-x-1/2 transform-gpu text-xs tracking-widest">
-                    New
+                    {navbarLink.subText}
                   </div>
                 )}
               </a>
