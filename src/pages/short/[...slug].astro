@@ -2,21 +2,26 @@
 import { getCollection } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import ShortList from '@/components/short/ShortsList.astro'
+import PostImage from '@/components/post/PostImage.astro';
 
 export async function getStaticPaths() {
   const shorts = await getCollection('shortPost');
-  return shorts.map((short) => ({
+  const dateSortedPublishedShorts = shorts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+);
+  return dateSortedPublishedShorts.map((short) => ({
     params: { slug: short.slug },
-    props: { short, shorts },
+    props: { short, shorts: dateSortedPublishedShorts },
   }));
 }
 const { short: shortPost, shorts } = Astro.props;
 const { Content } = await shortPost.render();
+const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`
 ---
-<BlogBase>
-  <main class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
+<BlogBase title={shortPost.data.titleTC} description={shortPost.body}>
+  <main style={leaveSpaceforLastShortStyle} class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
     <ShortList shorts={shorts} currentSlug={shortPost.slug}>
-      <Content/>
+      <Content components={{ img: PostImage }}  />
     </ShortList>
   </main>
 </BlogBase>
