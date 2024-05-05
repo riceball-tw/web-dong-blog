@@ -46,6 +46,16 @@ export const postSchema = z.object({
   permalink: z.string().optional(),
 });
 
+export const shortPostSchema = z.object({
+  titleTC: z.string().max(60),
+  publishDate: z.date(),
+  social: z
+    .object({
+      threads: z.string().optional(),
+    })
+    .optional(),
+});
+
 export const characterSchema = z.object({
   name: z.string(),
   nameTC: z.string(),

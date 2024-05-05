@@ -1,5 +1,6 @@
 import type { InferGetStaticPropsType } from 'astro';
-import { getStaticPaths } from '@/pages/post/[...slug].astro';
+import { getStaticPaths as PostGetStaticPaths } from '@/pages/post/[...slug].astro';
+import { getStaticPaths as ShortGetStaticPaths } from '@/pages/short/[...slug].astro';
 
 export interface GlobalHead {
   title?: string;
@@ -27,4 +28,6 @@ export interface TagsList {
   tagHrefs?: string[] | undefined;
   tags?: string[];
 }
-export type PostPage = InferGetStaticPropsType<typeof getStaticPaths>['post'];
+export type PostPage = InferGetStaticPropsType<typeof PostGetStaticPaths>['post'];
+
+export type ShortPage = InferGetStaticPropsType<typeof ShortGetStaticPaths>['short'];

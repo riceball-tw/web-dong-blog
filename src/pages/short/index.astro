@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import BlogBase from '@/layouts/BlogBase.astro';
+import Hero from '@/components/app/Hero.astro';
+import ShortList from '@/components/short/ShortsList.astro'
+
+const shorts = await getCollection('shortPost');
+const dateSortedPublishedShorts = shorts.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+);
+---
+
+<BlogBase title={'所有短篇文章'} description={`所有短篇共 ${dateSortedPublishedShorts.length} 篇`}>
+  <Hero>
+    <Fragment slot="headline">
+      所有短文共 {dateSortedPublishedShorts.length} 篇
+    </Fragment>
+  </Hero>
+  
+  <section class="px-4">
+    <h2 class="sr-only">所有短文列表</h2>
+    <ShortList shorts={dateSortedPublishedShorts}>
+    </ShortList>
+  </section>
+</BlogBase>
