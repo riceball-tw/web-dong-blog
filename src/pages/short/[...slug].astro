@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import ShortList from '@/components/short/ShortsList.astro'
 import PostImage from '@/components/post/PostImage.astro';
+import MarkdownIt from 'markdown-it';
 
 export async function getStaticPaths() {
   const shorts = await getCollection('shortPost');
@@ -17,8 +18,16 @@ export async function getStaticPaths() {
 const { short: shortPost, shorts } = Astro.props;
 const { Content } = await shortPost.render();
 const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`
+// How to Create Excerpts With Astro
+// https://www.paulie.dev/posts/2023/09/how-to-create-excerpts-with-astro/#creating-the-substring
+const markdownParser = new MarkdownIt()
+const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.render(body).split('\n').slice(0, 6)
+  .map((str: string) => str.replace(/<\/?[^>]+(>|$)/g, '').split('\n'))
+  .flat()
+  .join(' ')
+  .substring(0, maxLength)
 ---
-<BlogBase title={shortPost.data.titleTC} description={shortPost.body}>
+<BlogBase title={shortPost.data.titleTC} description={createExcerpt(shortPost.body)}>
   <main style={leaveSpaceforLastShortStyle} class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
     <ShortList shorts={shorts} currentSlug={shortPost.slug}>
       <Content components={{ img: PostImage }}  />
