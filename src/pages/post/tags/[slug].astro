@@ -5,19 +5,22 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
+import Pill from '@/components/app/Pill.astro';
+import { Icon } from 'astro-icon/components'
 
 export interface Props {
   posts: CollectionEntry<'post'>;
   publishedPosts: CollectionEntry<'post'>[];
+  tags: string[]
 }
 
 export async function getStaticPaths() {
   const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
   const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())];
-  return tags.flatMap((tag) => [{ params: { slug: tag }, props: { publishedPosts } }]);
+  return tags.flatMap((tag) => [{ params: { slug: tag }, props: { publishedPosts, tags } }]);
 }
 const { slug } = Astro.params;
-const { publishedPosts } = Astro.props;
+const { publishedPosts, tags } = Astro.props;
 const avaliableCurrentTagPosts = publishedPosts
   .filter((post) => post.data.tags.includes(slug as string))
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
@@ -25,6 +28,18 @@ const avaliableCurrentTagPosts = publishedPosts
 
 <BlogBase title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
   <Hero>
+    <div slot="badge" class="flex mx-auto gap-8">
+      <Pill>
+        <a class="flex gap-2 items-center" href="/post/tags/">
+          <Icon 
+          class=""
+          name="material-symbols:label-important-outline-rounded"
+          size={24}
+          ></Icon>
+          查看 { tags.length } 種標籤
+        </a>
+      </Pill>
+    </div>
     <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
   </Hero>
   <section class="px-4">
