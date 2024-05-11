@@ -54,6 +54,7 @@ export const shortPostSchema = z.object({
       threads: z.string().optional(),
     })
     .optional(),
+  themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
 });
 
 export const characterSchema = z.object({
