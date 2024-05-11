@@ -26,7 +26,7 @@ const { shorts, currentSlug } = Astro.props
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : 'opacity-60'}
             ${isNoActiveShort || !isActiveShort ? '' : 'font-bold'}
-            `}  href={`/short/${short.slug}#${short.slug}`}>
+            `}  href={`/short/${short.slug}/#${short.slug}`}>
             <HeadingComponent style='scroll-margin: calc(var(--mainNav-height) + 1rem)' id={short.slug}>
               <span>{short.data.titleTC}</span>
             </HeadingComponent>
