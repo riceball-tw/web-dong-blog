@@ -28,7 +28,7 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   .join(' ')
   .substring(0, maxLength)
 ---
-<BlogBase title={titleTC} description={createExcerpt(shortPost.body)} thumbnail={{ src: `${shortPost.slug}`, alt: `${titleTC}` }}>
+<BlogBase title={titleTC} description={createExcerpt(shortPost.body)} thumbnail={{ src: `/short/${shortPost.slug}`, alt: `${titleTC}` }}>
   <main style={leaveSpaceforLastShortStyle} class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
     <ShortList shorts={shorts} currentSlug={shortPost.slug}>
       <Content components={{ img: PostImage }}  />
