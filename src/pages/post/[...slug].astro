@@ -34,7 +34,7 @@ const author = post.data.author && (await getEntry('character', post.data.author
 const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
 ---
 
-<BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `${slug}`, alt: `${titleTC}` }}>
+<BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${titleTC}` }}>
   <PostJSONLD
     slot="head"
     headline={post.data.titleTC}
