@@ -30,8 +30,8 @@ const foo: number = 'Hello World';
 `@ts-expect-error` 與前者功能一致，但差別在於可以確定下一行程式碼會報錯，**如果該行的程式碼沒有報錯，則會報錯**。
 
 ```ts
-// @ts-expect-error
-const a: number = 'Hello World';
+// @ts-expect-error 一些描述可以撰寫於此
+const bar: number = 'Hello World';
 ```
 
 上面的程式碼會報錯，因為我們將字串指定給數字，但我們確定這樣是錯誤的，所以就可以使用 `@ts-expect-error` 來確保該行的程式碼會報錯。
