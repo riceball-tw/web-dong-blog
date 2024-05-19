@@ -1,0 +1,59 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:error-circle-rounded-outline-sharp', title: '警告符號' }
+title: '@ts-ignore vs @ts-expect-error'
+titleTC: '@ts-ignore 與 @ts-expect-error 的使用時機差異'
+excerpt: '近期在替專案做大型重構，其中就有將技術轉換為 TypeScript 與 Monorepo，途中一些還沒有頭緒如何解決的型別問題，就會使用 `@ts-ignore` 或 `@ts-expect-error` 來先行忽略，但這兩者的使用時機有所不同，這篇文章就來談談這兩者的差異。'
+category: 'TypeScript'
+tags: ['錯誤']
+publishDate: 2024-05-19
+lastModifiedDate: 2024-05-19
+---
+
+## 前言
+
+近期在替專案做大型重構，其中就有將技術轉換為 TypeScript 與 Monorepo，途中一些還沒有頭緒如何解決的型別問題，就會使用 `@ts-ignore` 或 `@ts-expect-error` 來先行忽略，但這兩者的使用時機有所不同，這篇文章就來談談這兩者的差異。
+
+## @ts-ignore
+
+只要在註解中撰寫 `@ts-ignore` TypeScript 就會忽略下一行的型別檢查，通常是因為該行的型別檢查會報錯，但我們確定該行的程式碼是正確的，所以就可以使用 `@ts-ignore` 來忽略型別檢查。
+
+```ts
+// @ts-ignore 一些描述可以撰寫於此
+const foo: number = 'Hello World';
+```
+
+由於將字串指定給數字所以在靜態檢查時 TS 會報錯，於是我們透過 `@ts-ignore` 來忽略該行的型別檢查。
+
+## @ts-expect-error
+
+`@ts-expect-error` 與前者功能一致，但差別在於可以確定下一行程式碼會報錯，**如果該行的程式碼沒有報錯，則會報錯**。
+
+```ts
+// @ts-expect-error
+const a: number = 'Hello World';
+```
+
+上面的程式碼會報錯，因為我們將字串指定給數字，但我們確定這樣是錯誤的，所以就可以使用 `@ts-expect-error` 來確保該行的程式碼會報錯。
+
+## 結論
+
+> `@ts-ignore` 是用來忽略某一行的型別檢查，而 `@ts-expect-error` 是用來確保某一行的程式碼會報錯再忽略，這兩者的使用時機有所不同，
+
+`@ts-expect-error` 是 TypeScript 於 3.9 版本添加的新功能，大多時候我會偏好更積極檢測問題的 `@ts-expect-error`，並且**堅持撰寫忽略錯誤的原因，避免忽略到其他問題**。
+
+- **選擇 `@ts-ignore` 的情況：**
+
+  - 真的沒有時間決定哪個選項更合適。
+  - 項目規模較大，且新出現的錯誤在代碼中沒有明確的負責人。
+  - 正在進行 TypeScript 兩個不同版本之間的升級，且某行代碼在一個版本中報錯而在另一個版本中不報錯。
+
+- **選擇 `@ts-expect-error` 的情況：**
+  - 正在編寫測試代碼，實際上希望型別系統對某個操作報錯。
+  - 預期問題會很快得到解決，因此只需要一個臨時的解決方案。
+  - 項目規模適中，且團隊積極主動，會在受影響的代碼恢復有效後盡快移除抑制註解。
+
+## 延伸閱讀
+
+- [@ts-expect-error Comments - TypeScript](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#-ts-expect-error-comments)
+- [How to use @ts-expect-error](https://www.totaltypescript.com/concepts/how-to-use-ts-expect-error)
