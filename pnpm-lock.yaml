@@ -98,8 +98,8 @@ devDependencies:
     specifier: ^1.1.78
     version: 1.1.78
   '@iconify-json/simple-icons':
-    specifier: ^1.1.99
-    version: 1.1.99
+    specifier: ^1.1.102
+    version: 1.1.102
   '@lhci/cli':
     specifier: ^0.13.0
     version: 0.13.0
@@ -1252,8 +1252,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify-json/simple-icons@1.1.99:
-    resolution: {integrity: sha512-/csVihX/ztkl2j4Vk4JoEJv8DdQHrZafzC5QHe21Y+ztuVglvavjb4yWEn9KQHTitLH2fIMnP8+RSTxu5kdmtw==}
+  /@iconify-json/simple-icons@1.1.102:
+    resolution: {integrity: sha512-ErRQGs7tjGsq4sj5SSeYwBOQ766yd9LtWblWakyL+ugg1k48ImabkI3mptDN5o+XSUb9SC+b7YNSStlrrecqNQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
