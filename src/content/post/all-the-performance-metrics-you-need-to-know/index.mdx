@@ -2,11 +2,12 @@
 isDraft: false
 icon: { name: 'material-symbols:performance-max-outline-rounded', title: '效能指標符號' }
 title: 'All The Performance Metrics You Need To Know'
-titleTC: '學習所有 Google 提出的衡量網頁效能指標！ TTFB, FCP, LCP, FID, CLS, TTI, TBT'
+titleTC: '學習 Google 衡量網頁效能指標！ TTFB, FCP, LCP, FID, INP, CLS, TTI, TBT'
 excerpt: '指標就是為了能夠客觀的測量網站體驗而生的統計數值，本篇文章挑戰用自己的方式去理解並解釋所有 Google 提出網頁體驗相關的指標，我發現沒有必要一次性的記憶所有種類的指標，因此製作了一個懶人包與該文章，方便你我查詢與學習。'
 category: '網頁效能'
 tags: ['指標']
 publishDate: 2023-05-10
+lastModifiedDate: 2024-05-20
 ---
 
 ## 前言
@@ -41,7 +42,7 @@ publishDate: 2023-05-10
       </td>
       <td>
         頁面是否繁忙？用戶是否可以與頁面互動？
-        關聯指標：[FID](#fid---首次輸入延遲-)、[TTI](#tti---可互動時間)、[TBT](#tbt---總阻塞時間)
+        關聯指標：[FID](#fid---首次輸入延遲-)、[INP](#inp---互動到下一次繪製-)、[TTI](#tti---可互動時間)、[TBT](#tbt---總阻塞時間)
       </td>
     </tr>
     <tr id="delightful">
@@ -123,13 +124,21 @@ publishDate: 2023-05-10
 
 <Info type="info">LCP 與前者 FCP 非常相似，但測量目的不同，差別僅在於 LCP 測量最大內容，FCP 則是測量首個內容。</Info>
 
-## <abbr title="First Input Delay">FID</abbr> - 首次輸入延遲 🌟
+## <abbr title="First Input Delay">FID</abbr> - 首次輸入延遲(已被 INP 取代) 🌟
 
 ![良好的 FID 數值建議在 100 豪秒以內，在 300 毫秒以上則視為差勁，在此之間則需要改進](./fid.svg)
 
 測量網頁載入過程中第一次與網站互動（點選連結、按鈕或是使用自訂的 JavaScript 控制），「瀏覽器能夠回應互動的時間點」，也就是**測量網頁要花多久時間去回應用戶的互動**，從這項指標中主要可以了解網頁的互動性，越好的 FID 越能說服用戶網頁「[是否可用](#usable)」。
 
 具體來說該指標計算用戶首次互動需要花多少時間瀏覽器才能反應（不包含事件處理的時間），隨著用戶的行為不同結果也會不同。
+
+## <abbr title="Interaction to Next Paint">INP</abbr> - 互動到下一次繪製 🌟
+
+![良好的 INP 數值建議在 200 豪秒以內，在 500 毫秒以上則視為差勁，在此之間則需要改進](./inp.svg)
+
+INP 在 2024 年 3 月取代 FID，同樣是**測量網頁要花多久時間去回應用戶的互動**，但 INP 會以網頁整體的互動品質來進行評估，而不是僅依據第一次互動的延遲時間。相較於 FID 是一款頁面加載型指標，INP 更是一款用於測試整體網站可靠程度的指標，越好的 INP 越能說服用戶網頁「[是否可用](#usable)」。
+
+具體來說該指標觀察使用者在網頁造訪期間發生的點擊、輕觸和鍵盤互動所經歷的延遲時間，並且只會計算從行為觸發 ～ 主執行緒被占用 ～ 準備可以開始渲染畫面反饋這段時間，也就是說主執行緒以外的等待時間並不算在內（例如按下按鈕後發送表單請求的等待時間）。
 
 ## <abbr title="Cumulative Layout Shift">CLS</abbr> - 累積布局偏移 🌟
 
@@ -224,6 +233,7 @@ publishDate: 2023-05-10
 - [First Contentful Paint (FCP) - web.dev](https://web.dev/fcp)
 - [Largest Contentful Paint (LCP) - web.dev](https://web.dev/lcp)
 - [First Input Delay (FID) - web.dev](https://web.dev/fid)
+- [Interaction to Next Paint (INP) - web.dev](https://web.dev/inp/)
 - [Cumulative Layout Shift (CLS) - web.dev](https://web.dev/cls)
 - [Time to First Byte (TTFB) - web.dev](https://web.dev/ttfb/)
 - [Time to Interactive (TTI) - web.dev](https://web.dev/tti/)
