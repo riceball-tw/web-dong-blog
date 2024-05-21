@@ -7,6 +7,7 @@ excerpt: '為了達成最佳化網頁加載的順序，本篇文章以實際案�
 category: 'HTML'
 tags: ['語法']
 publishDate: 2023-02-10
+lastModifiedDate: 2023-05-21
 ---
 
 ## 發現問題
@@ -145,7 +146,7 @@ publishDate: 2023-02-10
 <script src="script.js" async defer></script>
 ```
 
-第二屬性會被作為備用屬性，如果瀏覽器不支援第一項屬性，就會使用第二項屬性。舉例來說，如果瀏覽器不支援 `async`，就會使用 `defer`，如果瀏覽器不支援 `defer`，就會使用預設的行為。
+兩項屬性同時使用的情境通常在於支援舊瀏覽器只支援 `defer` 屬性的情況下，如果不支援 `async`，就會使用 `defer`，後描述的屬性會被視為備用方案，當首要描述的屬性不支援時才會被採用。
 
 ## 參考資料
 
