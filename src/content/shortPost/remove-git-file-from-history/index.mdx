@@ -1,0 +1,40 @@
+---
+titleTC: '如何從 Git 歷史中徹底移除機密文件？'
+publishDate: 2024-05-22
+category: '開發'
+social:
+  threads: 'https://www.threads.net/@webdong.dev/post/C7RdXjlhNnm'
+---
+
+有時候不小心推送了不該推送的機密文件到 Git 當中，如何徹底從記錄中移除是個問題。以下用環境變數 `.env` 來解釋可以怎麼補救。
+
+🐑 第一步：亡羊補牢
+
+先把文件加入到 `.gitignore` 中，避免未來犯下相同的錯誤。
+
+🌿 第二步：表面清潔
+
+執行 `git rm -r --cached .env` ，把 `.env` 從 Git 當中移除，但這樣只是從暫存區移除，並沒有從歷史記錄中移除。
+
+- `r` 遞歸刪除目標資料夾中的文件
+- `--cached` 只從暫存區刪除，不會刪除實際文件
+- `.env` 是要刪除的文件或資料夾名稱
+
+🧽 第三步：深層清理
+
+執行 `git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch .env" HEAD` 來修改歷史。
+
+- `r` 遞歸刪除目標資料夾中的文件
+- `f` 強制刪除文件，無須確認
+- `--cached` 只從暫存區刪除，不會刪除實際文件
+- `ignore-unmatch` 忽略如果文件不存在的錯誤。這個選項保證即使 `.env` 文件在某些提交中不存在，命令也會執行成功
+- HEAD 表示要對當前最新的提交及其祖先進行過濾操作
+
+✨ 第四步：推送修改
+
+使用 `git push --force` 來強制覆蓋修改過結果到遠端。
+
+⚠ 補充：任何公開過的敏感資訊應當視為外洩，應立即替換不再使用，因此直接替換所有敏感資訊而不是修改紀錄是最安全的做法。近期有遇到不小心把敏感資訊推上私有倉庫上的問題，就挺適合用這招來剔除。
+
+- [git-rm](https://git-scm.com/docs/git-rm)
+- [git-filter-branch](https://git-scm.com/docs/git-filter-branch)
