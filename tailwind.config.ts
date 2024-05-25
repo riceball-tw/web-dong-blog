@@ -65,6 +65,7 @@ export default {
       typography: ({ theme }: PluginUtils) => ({
         DEFAULT: {
           css: {
+            // Light Mode
             '--tw-prose-body': theme('colors.surface.inverse'),
             '--tw-prose-headings': theme('colors.surface.inverse'),
             '--tw-prose-lead': theme('colors.surface.inverse'),
@@ -82,13 +83,14 @@ export default {
             '--tw-prose-th-borders': theme('colors.primary[300] / 1'),
             '--tw-prose-td-borders': theme('colors.primary[200] / 1'),
 
+            // Dark Mode
             '--tw-prose-invert-body': theme('colors.surface.inverse'),
             '--tw-prose-invert-headings': 'white',
             '--tw-prose-invert-lead': theme('colors.surface.inverse'),
             '--tw-prose-invert-links': theme('colors.surface.inverse'),
-            '--tw-prose-invert-bold': theme('colors.surface.inverse'),
+            '--tw-prose-invert-bold': theme('colors.highlight'),
             '--tw-prose-invert-counters': theme('colors.surface.inverse'),
-            '--tw-prose-invert-bullets': theme('colors.surface.inverse'),
+            '--tw-prose-invert-bullets': theme('colors.primary[600] / 1'),
             '--tw-prose-invert-hr': theme('colors.surface.inverse'),
             '--tw-prose-invert-quotes': theme('colors.surface.inverse'),
             '--tw-prose-invert-quote-borders': theme('colors.surface.inverse'),
@@ -128,20 +130,9 @@ export default {
               borderRadius: theme('borderRadius.lg'),
               scrollbarWidth: 'thin',
             },
-
             ':not(pre) > code': {
-              padding: theme('spacing.1'),
-              '@apply bg-primary-200 bg-opacity-60 border border-primary-300': {},
-            },
-          },
-        },
-        dark: {
-          css: {
-            figcaption: {
-              '@apply border-primary-600': {},
-            },
-            ':not(pre) > code': {
-              '@apply bg-primary-800 bg-opacity-60 border border-primary-700': {},
+              '@apply p-1 bg-primary-200 dark:bg-primary-800 bg-opacity-60 border border-primary-300 dark:border-primary-700 hover:bg-primary-200 hover:border-primary-400 dark:hover:bg-primary-700 dark:hover:border-primary-600 transition-colors':
+                {},
             },
           },
         },
