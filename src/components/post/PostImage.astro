@@ -34,7 +34,7 @@ const ImageWrapper = title ? 'figure' : 'div';
       <Image class="rounded-lg" src={imageInput} {alt} />
     )
   }
-  <Icon data-post-image-icon class="top-1/2 left-1/2 absolute -translate-y-1/2 -translate-x-1/2 animate-pulse" size={64} name="material-symbols:imagesmode-outline-rounded"></Icon>
+  <Icon data-post-image-icon class="-z-10 top-1/2 left-1/2 absolute -translate-y-1/2 -translate-x-1/2 animate-pulse" size={64} name="material-symbols:imagesmode-outline-rounded"></Icon>
   {title && <figcaption class="text-center absolute -bottom-6 left-1/2 -translate-x-1/2 translate-y-full">{title}</figcaption>}
 </div>
 </ImageWrapper>
