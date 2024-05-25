@@ -5,6 +5,7 @@
  */
 import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components'
 
 type ImageInput = string | ImageMetadata;
 type Props = {
@@ -19,19 +20,40 @@ function isExternalImage(image: ImageInput): image is string {
 }
 
 const ImageWrapper = title ? 'figure' : 'div';
-const imageStyle = 'text-center mx-auto';
 ---
 
 <ImageWrapper style={{
   gridColumn: '1 / -1',
   zIndex: 1,
 }}>
+<div data-post-image-wrapper class="flex flex-col relative w-fit h-fit mx-auto justify-center text-center before:content-[''] before:bg-primary-100 dark:before:bg-primary-900 before:animate-pulse before:-z-10  before:inset-0 before:absolute before:rounded-lg">
   {
     isExternalImage(imageInput) ? (
-      <Image class={imageStyle} inferSize src={imageInput} {alt} />
+      <Image class="rounded-lg" inferSize src={imageInput} {alt} />
     ) : (
-      <Image class={imageStyle} src={imageInput} {alt} />
+      <Image class="rounded-lg" src={imageInput} {alt} />
     )
   }
-  {title && <figcaption class="text-center">{title}</figcaption>}
+  <Icon data-post-image-icon class="-z-10 top-1/2 left-1/2 absolute -translate-y-1/2 -translate-x-1/2 animate-pulse" size={64} name="material-symbols:imagesmode-outline-rounded"></Icon>
+  {title && <figcaption class="text-center absolute -bottom-6 left-1/2 -translate-x-1/2 translate-y-full">{title}</figcaption>}
+</div>
 </ImageWrapper>
+<script>
+  document.querySelectorAll('[data-post-image-wrapper]').forEach(wrapper => {
+    const image = wrapper.querySelector<HTMLImageElement>('img')
+    const imageIcon = wrapper.querySelector<HTMLElement>('[data-post-image-icon]')
+    if (!image || !imageIcon) throw new Error('Image or Image Icon not found');
+    if (!image.complete) {
+      image.addEventListener('load', () => {
+        wrapper.classList.add('before:hidden');
+        imageIcon.classList.add('hidden');
+      }, { once: true });
+      image.addEventListener('error', () => {
+        throw new Error('Image failed to load');
+      }, { once: true });
+    } else {
+      wrapper.classList.add('before:hidden');
+      imageIcon.classList.add('hidden');
+    }
+  });
+</script>
