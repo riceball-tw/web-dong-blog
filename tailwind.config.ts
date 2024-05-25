@@ -63,8 +63,22 @@ export default {
       // variable colors with <alpha-value> not working with theme function on plugins
       // https://github.com/tailwindlabs/tailwindcss/issues/9143#issuecomment-1579382345
       typography: ({ theme }: PluginUtils) => ({
+        xl: {
+          css: {
+            img: {
+              marginTop: theme('spacing.0'),
+              marginBottom: theme('spacing.0'),
+            },
+          },
+        },
         DEFAULT: {
           css: {
+            img: {
+              marginTop: theme('spacing.0'),
+              marginBottom: theme('spacing.0'),
+            },
+
+            // Light Mode
             '--tw-prose-body': theme('colors.surface.inverse'),
             '--tw-prose-headings': theme('colors.surface.inverse'),
             '--tw-prose-lead': theme('colors.surface.inverse'),
@@ -102,9 +116,6 @@ export default {
             'blockquote p:last-of-type::after': true,
             'code::before': false,
             'code::after': false,
-            img: {
-              borderRadius: theme('borderRadius.lg'),
-            },
             video: {
               borderRadius: theme('borderRadius.lg'),
             },
