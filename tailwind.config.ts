@@ -86,7 +86,7 @@ export default {
             '--tw-prose-counters': theme('colors.primary[600] / 1'),
             '--tw-prose-bullets': theme('colors.primary[400] / 1'),
             '--tw-prose-hr': theme('colors.primary[300] / 1'),
-            '--tw-prose-quotes': theme('colors.primary[900] / 1'),
+            '--tw-prose-quotes': theme('colors.surface.inverse'),
             '--tw-prose-quote-borders': theme('colors.primary[300] / 1'),
             '--tw-prose-captions': theme('colors.primary[700] / 1'),
             '--tw-prose-code': theme('colors.primary[900] / 1'),
