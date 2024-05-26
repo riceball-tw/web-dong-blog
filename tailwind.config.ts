@@ -119,22 +119,6 @@ export default {
             video: {
               borderRadius: theme('borderRadius.lg'),
             },
-            blockquote: {
-              textAlign: 'center',
-              paddingLeft: 'none',
-              border: 'none',
-              padding: '1rem',
-              fontSize: '1.5rem',
-              fontStyle: 'normal',
-              '&::before': {
-                content: "'* * *'",
-                opacity: 0.3,
-              },
-              '&::after': {
-                content: "'* * *'",
-                opacity: 0.3,
-              },
-            },
             code: {
               borderRadius: theme('borderRadius.lg'),
               scrollbarWidth: 'thin',
