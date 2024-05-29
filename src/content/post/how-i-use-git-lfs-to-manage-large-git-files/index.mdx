@@ -1,0 +1,113 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:upload-file-outline-rounded', title: '上傳檔案圖示' }
+title: 'How I Use Git LFS to Manage Large Git Files?'
+titleTC: '我如何使用 Git LFS 來託付大型 Git 檔案？'
+excerpt: 'Git 允許我們紀錄任何檔案的變更，並且可以輕鬆地回溯到任何一個版本，但是當需要儲存大型檔案時 Git 就會顯得力不從心，因為 Git 並不是為了儲存大型檔案（圖片、影片、音樂……等二進制檔案）而設計的。而這次介紹的 Git Large File Storage 是 Git 的擴充，專門用於解決以上問題。'
+category: '技術討論'
+tags: ['Git']
+publishDate: 2024-05-29
+---
+
+## 前言
+
+Git 是一款強大的版本控制系統，允許我們紀錄任何檔案的變更，並且可以輕鬆地回溯到任何一個版本，但是當需要儲存大型檔案時 Git 就會顯得力不從心，因為 **Git 並不是為了儲存大型檔案（圖片、影片、音樂……等二進制檔案）而設計的**。
+
+試想一張 `1MB` 的圖片只要改動了 10 次，Git 就會儲存 10 個版本的圖片也就是 `10 MB` 到儲存庫當中！這樣會導致效能問題、浪費儲存空間、耗費網路資源……等問題，而這次介紹的 Git Large File Storage 是 Git 的擴充，專門用於解決以上問題。
+
+## Git LFS 如何解決問題？
+
+Git LFS 解決問題的方式是將大型檔案內容儲存在額外的伺服器上，而不是直接儲存在 Git 儲存庫中，藉由**將實際大型檔案替換成指向大型檔案的指標**，就算檔案再大、更動再多次，Git 儲存庫的大小都不會增加。
+
+除了儲存得到改善，同步大型檔案到本地也更加容易，並且相較於下載整個 Git 儲存庫的歷史，使用 LFS 我們可以要求只下載當前必要的大型檔案以節省資源。
+
+## 如何使用 Git LFS？
+
+### 安裝 Git LFS
+
+### 一、下載 GitLFS
+
+首先需要安裝 Git LFS （廢話 😐）
+
+```bash
+git lfs install
+```
+
+### 二、設定要使用 Git LFS 的檔案
+
+在要使用 Git LFS 的 Git 儲存庫中，選擇希望 Git LFS 管理的檔案類型（或直接編輯 .gitattributes），可以在任何時刻配置新的需要 LFS 介入處理的檔案副檔名，以下設定告知了 LFS 需要處理所有有關 `.png` 副檔名的檔案。
+
+```bash
+git lfs track "*.png"
+```
+
+設定完成後須確保 `.gitattributes` 的更動有被提交到 Git 儲存庫中。
+
+<Info type="info">
+  定義 Git LFS 應追蹤的文件類型本身不會將任何預先存在的文件轉換為 Git
+  LFS，例如其他分支上或先前提交歷史記錄中的文件。為此請使用 [git lfs
+  migrate(1)](https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-migrate.adoc?utm_source=gitlfs_site&utm_medium=doc_man_migrate_link&utm_campaign=gitlfs)
+  命令，該命令具有一系列旨在滿足各種潛在用例的選項。
+</Info>
+
+### 三、提交檔案
+
+```bash
+git add foobar.png
+git commit -m "Add foobar.png"
+git push origin main
+```
+
+如果你像我一樣使用 GitHub 來託管代碼，那麼只需像平常一樣提交檔案即可，GitHub 會替你處理好後續的事情 🤯。在 GitHub 上預覽 LFS 檔案時也會有標註，除此之外使用上與沒有用 LFS 體驗上完全一致。
+![GitHub LFS](./store-with-git-lfs.webp)
+
+如果想要列出當前被 LFS 管理的檔案可以執行以下指令查閱：
+
+```bash
+git lfs ls-files
+```
+
+會得到詳盡的 LFS 管理檔案清單如下：
+
+```
+071ba8a6fd * fonts/NotoSansTC-Bold.ttf
+6b137e2eb5 * fonts/NotoSansTC-Regular.ttf
+ba2e34dddb * public/images/brand/default-og.jpg
+0866a98641 * public/images/brand/favicon/apple-touch-icon.png
+c58814f7fa * public/images/brand/favicon/icon-192
+```
+
+## 使用 Git LFS 後的體驗
+
+目前整個網頁東東大型檔案都是透過 GitHub LFS 託管的，大幅的簡化了我的工作流程與提高效率。
+
+早期這個網站建置時會需要設置額外的 CMS 伺服器，或是使用 Cloudinary 這類三方資產託管服務才能把圖片帶入文章中，但現在只要把圖片放到 Git 儲存庫中就能直接使用，對網頁東東這個單純由開發者來經營的網站來說是優雅精簡的流程（GitHub 就像是我的 Git-Based CMS）。
+
+就算你的網站不是由開發者經營，仍可以透過 Git LFS 來管理大型檔案，像是些許的 Open Graph 圖片、字體檔案……把資源都集中管理在同個地方也是非常方便。
+
+## 使用 Git LFS 須注意的事項
+
+### Git LFS 服務不是無限免費的
+
+可以查看 [bill for Git Large File Storage](https://docs.github.com/en/billing/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage) 以及 [Viewing your Git Large File Storage usage](https://docs.github.com/en/billing/managing-billing-for-git-large-file-storage/viewing-your-git-large-file-storage-usage) 或提供 LFS 的廠商服務價格細節了解更多。
+
+就網頁東東整個部落格為例，大大小小的影片、圖片、字體……至今共 `251` 個 LFS 檔案也才使用了 `43.2 MB` 的空間額度，當然也是因為有多事先留意並壓縮這些檔案，但必須說每個月 1 GB 免費額度已經足夠很多情境免費用到爛了。
+
+![GitHub LFS 使用額度](./cost.webp '網頁東東部落格 Git LFS 儲存使用額度')
+
+### CI/CD 流程上須留意
+
+![GitHub LFS 流量使用額度](./cost-bandwidth.webp '網頁東東部落格 Git LFS 流量使用額度')
+
+因為 Git LFS 會將大型檔案儲存在額外的伺服器上，所以在 CI/CD 流程上會需要額外的設定來下載這些 LFS 檔案，這點[在我的部落格中也有實踐](https://github.com/riceball-tw/web-dong-blog/blob/b2e8eb9de34653370707baab1e15933caa816029/.github/workflows/pages-deployment.yml#L50)，並且還有[額外設置快取來避免重複的取得相同的 LFS 檔案](https://github.com/riceball-tw/web-dong-blog/blob/b2e8eb9de34653370707baab1e15933caa816029/.github/workflows/pages-deployment.yml#L41)。
+
+## 總結
+
+會寫這篇文章也是因為先前團隊並沒有導入 Git LFS 的習慣，一些大型的網頁資產仍是直接儲存在 Git 儲存庫當中，隨著架構更新以及導入 Monorepo 的架構，可以預期專案大小會直線上升，也促使我希望能夠在初期就導入 Git LFS 來預防 Git 儲存庫炸裂的問題。
+
+我認為這項技術特別適合在某些領域中使用，像是：前端或遊戲開發這類需要與大量二進制檔案互動的領域。
+
+## 延伸閱讀
+
+- [Git LFS - ATLASSIAN](https://www.atlassian.com/git/tutorials/git-lfs)
+- [Configuring Git Large File Storage - GitHub Docs](https://docs.github.com/en/repositories/working-with-files/managing-large-files/configuring-git-large-file-storage)
