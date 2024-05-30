@@ -26,16 +26,18 @@ const ImageWrapper = title ? 'figure' : 'div';
   gridColumn: '1 / -1',
   zIndex: 1,
 }}>
-<div data-post-image-wrapper class="flex flex-col relative w-fit h-fit mx-auto justify-center text-center before:content-[''] before:bg-primary-100 dark:before:bg-primary-900 before:animate-pulse before:-z-10  before:inset-0 before:absolute before:rounded-lg">
-  {
-    isExternalImage(imageInput) ? (
-      <Image class="rounded-lg" inferSize src={imageInput} {alt} />
-    ) : (
-      <Image class="rounded-lg" src={imageInput} {alt} />
-    )
-  }
-  <Icon data-post-image-icon class="-z-10 top-1/2 left-1/2 absolute -translate-y-1/2 -translate-x-1/2 animate-pulse" size={64} name="material-symbols:imagesmode-outline-rounded"></Icon>
-  {title && <figcaption class="text-center absolute -bottom-6 left-1/2 -translate-x-1/2 translate-y-full">{title}</figcaption>}
+<div class="flex flex-col w-fit h-fit mx-auto justify-center text-center before:content-[''] before:bg-primary-100 dark:before:bg-primary-900 ">
+  <div data-post-image-wrapper class="relative before:animate-pulse before:-z-10  before:inset-0 before:absolute before:rounded-lg">
+    {
+      isExternalImage(imageInput) ? (
+        <Image class="rounded-lg mx-auto" inferSize src={imageInput} {alt} />
+      ) : (
+        <Image class="rounded-lg mx-auto" src={imageInput} {alt} />
+      )
+    }
+    <Icon data-post-image-icon class="-z-10 top-1/2 left-1/2 absolute -translate-y-1/2 -translate-x-1/2 animate-pulse" size={64} name="material-symbols:imagesmode-outline-rounded"></Icon>
+  </div>
+  {title && <figcaption class="text-center">{title}</figcaption>}
 </div>
 </ImageWrapper>
 <script>
