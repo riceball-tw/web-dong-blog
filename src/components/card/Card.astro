@@ -46,9 +46,16 @@ const borderRadius = '8px'
 <style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor, borderRadius }}>
 
   .card {
-    --border-width: 1px;
+    --border-width: 2px;
     --inner-border-radius: calc(var(--borderRadius) - var(--border-width));
+    background-color: color-mix(in srgb, var(--cardDefaultBorderColor), black 5%);
+
+  }
+
+  html.dark .card {
+    --border-width: 1px;
     background-color: var(--cardDefaultBorderColor);
+
   }
   
   .card:hover::before {
