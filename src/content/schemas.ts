@@ -38,6 +38,7 @@ export const postSchema = z.object({
   title: z.string(),
   titleTC: z.string().max(60),
   excerpt: z.string().min(110).max(160),
+  series: z.string().optional(),
   category: z.string().default('unsorted'),
   tags: z.array(z.string()).default(['unsorted']),
   themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),

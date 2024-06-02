@@ -13,20 +13,32 @@ import Video from '@/components/post/Video.astro'
 import PostTableOfContent from '@/components/post/PostTableOfContent.astro';
 import { Icon } from 'astro-icon/components'
 import globalConfig from '@/globalConfig.ts';
+import PostSeries from '@/components/post/PostSeries.astro'
 
 export interface Props {
   post: CollectionEntry<'post'>;
+  postsInSeries: CollectionEntry<'post'>[];
 }
+
+
 
 export async function getStaticPaths() {
+  function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
+    return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
+  }
   const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
-  return publishedPosts.map((post) => ({
+  const dateSortedPublishedPosts = publishedPosts.sort(
+    (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+  )
+  return dateSortedPublishedPosts.map((post) => {
+    const postsInSeries = getTargetSeriesPosts(dateSortedPublishedPosts, post.data.series);
+    return ({
     params: { slug: post.slug },
-    props: { post },
-  }));
+    props: { post, postsInSeries },
+  })});
 }
 
-const { post } = Astro.props;
+const { post, postsInSeries } = Astro.props;
 const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
 const { slug } = post;
 const { Content, headings } = await post.render();
@@ -51,7 +63,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
     <article
       data-pagefind-body
       data-article
-      class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert md:prose-xl lg:grid"
+      class="article-grid lg:px-auto prose mb-16 block w-full max-w-none px-8 dark:prose-invert md:prose-xl lg:grid gap-x-4"
     >
       <header class="not-prose col-start-2 mb-16">
         {
@@ -76,12 +88,9 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
           </div>
         </div>
       </header>
-      <aside style="top: var(--mainNav-height)" class="sticky col-start-3 row-start-2 ml-4 hidden xl:block">
+      <aside style="top: var(--mainNav-height)" class="sticky col-start-3 row-start-2 hidden xl:block">
         <div class="absolute top-0 divide-y divide-primary-200 dark:divide-primary-800">
-         
-
           <PostTableOfContent {headings} />
-
           <!-- Post Date Info -->
           <div class="inline-flex w-full flex-col gap-2 p-4">
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
@@ -116,6 +125,12 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         </div>
       </aside>
       <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
+      {
+        postsInSeries.length ? 
+         <PostSeries currentPost={post} 
+         postsInSeries={postsInSeries} />
+       : ''
+       }
       <Utteranc />
     </article>
   </main>
