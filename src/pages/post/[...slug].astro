@@ -126,7 +126,7 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
       </aside>
       <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
       {
-        postsInSeries ? 
+        postsInSeries.length ? 
          <PostSeries currentPost={post} 
          postsInSeries={postsInSeries} />
        : ''
