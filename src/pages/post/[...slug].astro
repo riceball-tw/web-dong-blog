@@ -39,7 +39,7 @@ export async function getStaticPaths() {
 }
 
 const { post, postsInSeries } = Astro.props;
-const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category,series, lastModifiedDate } = post.data;
+const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
 const { slug } = post;
 const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
@@ -125,7 +125,6 @@ const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
         </div>
       </aside>
       <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
-      {postsInSeries}
       {
         postsInSeries ? 
          <PostSeries currentPost={post} 
