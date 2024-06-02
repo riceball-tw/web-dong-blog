@@ -33,7 +33,7 @@ const colors = {
 };
 
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './astro.config.mjs'],
   darkMode: 'class',
   important: true,
   theme: {
@@ -65,9 +65,15 @@ export default {
       typography: ({ theme }: PluginUtils) => ({
         xl: {
           css: {
+            '*': {
+              gridColumn: '2',
+            },
             img: {
               marginTop: theme('spacing.0'),
               marginBottom: theme('spacing.0'),
+            },
+            'h2:first-of-type': {
+              marginTop: 0,
             },
           },
         },
@@ -116,6 +122,9 @@ export default {
             'blockquote p:last-of-type::after': true,
             'code::before': false,
             'code::after': false,
+            'h2:first-of-type': {
+              marginTop: 0,
+            },
             video: {
               borderRadius: theme('borderRadius.lg'),
             },

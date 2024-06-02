@@ -24,16 +24,18 @@ export default defineConfig({
       [
         rehypeAutolinkHeadings,
         {
-          behavior: 'prepend',
+          behavior: 'append',
           properties: {
-            class: 'autolink-header',
+            class:
+              'rehype-auto-link opacity-40 lg:opacity-0 hover:opacity-100 static lg:absolute top-0 -left-4 -translate-x-full transition-opacity',
             ariaHidden: true,
             tabIndex: -1,
           },
           content: [
             s(
-              'svg.heading-link',
+              'svg',
               {
+                class: 'inline-block static transform-none lg:transform top-1/2 size-4 md:size-6 ml-2',
                 xmlns: 'http://www.w3.org/2000/svg',
                 width: 24,
                 height: 24,
