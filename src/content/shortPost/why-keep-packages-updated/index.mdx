@@ -1,0 +1,19 @@
+---
+titleTC: '為什麼要保持套件版本更新？'
+publishDate: 2024-06-05
+category: '開發'
+social:
+  threads: 'https://www.threads.net/@webdong.dev/post/C71eqp0B0PR'
+---
+
+我們總是將升級維護的工作安排到最低的優先級，這是合情合理的決定，畢竟開發產品的核心目標是滿足用戶需求而不是讓開發者們開心，但這之間的關係是相輔相成的，當停滯更新技術，未來升級將花費更多成本面對更大的挑戰。
+
+- 版本越來越舊直到改不動……
+- 舊技術越來越沒人想了解、開發社群逐漸遠離……
+- 安全性問題……
+
+於是近期我特地將公司的新架構專案添加了定期自動更新套件版本的 CI，因為舊專案疏於更新導致吃了非常多苦頭，這麼做至少時時刻刻都能提醒團隊這件事。
+
+開發者應與時俱進，這不跟產品長期目標相違背，試試看關注這一點，嘗試用一些工具來解決這個問題吧！ 像是 GitHub Dependabot、Renovate。
+
+聽說 Angular 社群對於更新有不錯的自動化更新方案（ng update），而 Nx 為了管理 Monorepo 架構也推出了 nx migrate，更多記錄於[部落格中](https://www.webdong.dev/post/nx-migrate-to-solve-upgrade-problem/)
