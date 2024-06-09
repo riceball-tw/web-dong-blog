@@ -139,6 +139,9 @@ devDependencies:
   eslint-plugin-astro:
     specifier: ^0.21.1
     version: 0.21.1(eslint@8.2.0)
+  eslint-plugin-cypress:
+    specifier: ^3.3.0
+    version: 3.3.0(eslint@8.2.0)
   eslint-plugin-import:
     specifier: ^2.27.5
     version: 2.29.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.2.0)
@@ -4034,6 +4037,15 @@ packages:
       postcss-selector-parser: 6.0.15
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /eslint-plugin-cypress@3.3.0(eslint@8.2.0):
+    resolution: {integrity: sha512-HPHMPzYBIshzJM8wqgKSKHG2p/8R0Gbg4Pb3tcdC9WrmkuqxiKxSKbjunUrajhV5l7gCIFrh1P7C7GuBqH6YuQ==}
+    peerDependencies:
+      eslint: '>=7'
+    dependencies:
+      eslint: 8.2.0
+      globals: 13.24.0
     dev: true
 
   /eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0)(eslint-import-resolver-typescript@3.6.1)(eslint@8.2.0):

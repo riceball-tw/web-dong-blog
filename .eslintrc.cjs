@@ -11,6 +11,7 @@ module.exports = {
     'airbnb-base',
     'plugin:astro/recommended',
     'plugin:astro/jsx-a11y-recommended',
+    'plugin:cypress/recommended',
     'prettier',
   ],
   // ...
@@ -22,7 +23,7 @@ module.exports = {
       },
     },
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'cypress'],
   parser: '@typescript-eslint/parser',
   overrides: [
     {

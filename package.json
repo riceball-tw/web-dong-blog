@@ -62,6 +62,7 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-astro": "^0.21.1",
+    "eslint-plugin-cypress": "^3.3.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.0",
     "eslint-plugin-prettier": "^4.2.1",
