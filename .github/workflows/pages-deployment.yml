@@ -27,17 +27,6 @@ jobs:
         with:
           version: 8
           run_install: false
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-ss
       - name: Create LFS file list
         run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
       - name: LFS Cache
@@ -49,14 +38,15 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Install packages
-        run: pnpm install --frozen-lockfile
+      - name: Build / Cypress E2E test
+        uses: cypress-io/github-action@v6
+        with:
+          build: pnpm build
+          start: pnpm preview
       - name: Lint
         run: pnpm lint
       - name: Typecheck
         run: pnpm typecheck
-      - name: Build
-        run: pnpm build
       - name: Lighthouse
         run: pnpm lhci autorun
       - name: Publish
