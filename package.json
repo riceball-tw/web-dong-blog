@@ -13,7 +13,9 @@
     "typecheck": "astro check",
     "lint": "eslint --ext .jsx,.tsx,.js,.ts,.astro src",
     "prettier": "prettier -w src",
-    "lighthouse": "lhci autorun"
+    "lighthouse": "lhci autorun",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",
