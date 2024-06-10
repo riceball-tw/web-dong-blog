@@ -33,6 +33,7 @@
 
     /* Scale */
     --mainNav-height: 80px;
+    --mainNav-device-gap: 16px;
 
     /* Brand */
     --color-brand: #352fcf;
