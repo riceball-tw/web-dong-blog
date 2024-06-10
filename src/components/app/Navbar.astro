@@ -1,104 +1,88 @@
 ---
-import Clickable from '@/components/app/Clickable.astro';
 import Logo from '@/components/app/Logo.astro';
 import Logomark from '@/components/app/Logomark.astro';
+import { Icon } from 'astro-icon/components'
 
 const mainNav = [
   {
+    iconName: 'material-symbols:info-outline-rounded',
     name: '關於',
-    url: '/about/',
+    url: 'about',
     isShownOnMobile: true,
   },
   {
+    iconName: 'material-symbols:article-outline-rounded',
     name: '文章',
-    url: '/post/',
+    url: 'post',
     isShownOnMobile: true,
   },
   {
+    iconName: 'material-symbols:service-toolbox-outline-rounded',
     name: '工具',
-    url: '/toolbox/',
+    url: 'toolbox',
     isShownOnMobile: true,
   },
   {
+    iconName: 'material-symbols:quick-phrases-rounded',
     name: '短文',
-    url: '/short/',
+    url: 'short',
     isShownOnMobile: true,
     subText: 'New',
   },
 
 ];
+const {pathname} = new URL(Astro.request.url);
+const currentPath = pathname.slice(1);
 ---
 
 <nav
-  style="height: var(--mainNav-height)"
-  class="before:backdrop-hack fixed bottom-0 left-0 z-50 w-full px-4 before:backdrop-blur-xl md:top-0"
+  style="padding-bottom: env(safe-area-inset-bottom);"
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full md:px-4 px-0 before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
 >
-  <div
-    class="border-b-none flex h-full items-center justify-between border-t border-secondary/40 dark:border-secondary-light/40 md:border-b md:border-t-0"
-  >
-    <div class="flex w-full items-center gap-2 md:gap-4">
-      <a
-        data-astro-prefetch
-        title="網頁東東首頁"
-        href="/"
-        class="inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
-      >
-        <Logo />
-        <Logomark class="hidden md:inline" />
-      </a>
-      <ul class="flex w-full justify-around font-medium md:justify-start">
-        {
-          mainNav.map((navbarLink) => (
-            <li class={`relative ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'}`}>
-              <a data-astro-prefetch href={navbarLink.url} class="p-2 md:p-4 ">
-                {navbarLink.name}
-                {navbarLink.subText && (
-                  <div class="text-secondary dark:text-secondary-light absolute -top-1 right-0 -translate-y-1/2 translate-x-1/2 transform-gpu text-xs tracking-widest">
-                    {navbarLink.subText}
-                  </div>
-                )}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <Clickable>
-      <button
-        data-theme-toggle
-        aria-label="網頁外觀樣式切換 Theme Toggle"
-        type="button"
-        class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex aspect-square w-16 items-center justify-center rounded-lg text-sm"
-      >
-        <!-- Dark Icon -->
-        <svg
-          width="16"
-          height="16"
-          class="hidden dark:block"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1005 1005"
-          ><path
-            d="M502.5 0C225 0 0 225 0 502.5S225 1005 502.5 1005 1005 780 1005 502.5c0-25.7-2.2-51.4-5.6-75.9-54.7 76.5-144 126.2-245.7 126.2-166.4 0-301.5-135.1-301.5-301.5 0-101.1 49.7-191 126.2-245.7C553.9 2.2 528.2 0 502.5 0h0z"
-          ></path></svg
+<div class="flex justify-center md:justify-start md:border-b border-secondary/40 dark:border-secondary-light/40 gap-2">
+<a
+data-astro-prefetch
+title="網頁東東首頁"
+href="/"
+class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
+>
+  <Logo class="hidden md:block" />
+  <Logomark />
+</a>
+  <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-surface-lowest px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
+      {
+        mainNav.map((navbarLink) => {
+          const isNavItemActive = currentPath.includes(navbarLink.url)
+          return (
+          <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
+            <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
+              <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
+              <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
+            </a>
+          </li>
+        )})
+      }
+      <li class="ml-auto inline-block">
+        <button
+          data-theme-toggle
+          aria-label="網頁外觀樣式切換 Theme Toggle"
+          type="button"
+          class="p-2 inline-flex flex-col gap-0.5 md:p-4 "
         >
-
-        <!-- Light Icon -->
-        <svg
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="dark:hidden"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1005 1005"
-          ><path
-            d="M502.5 274.1c-126.1 0-228.4 102.3-228.4 228.4s102.3 228.4 228.4 228.4 228.4-102.3 228.4-228.4-102.3-228.4-228.4-228.4h0zM45.7 548.2H137c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H45.7C20.6 456.8 0 477.4 0 502.5s20.6 45.7 45.7 45.7zm822.3 0h91.4c25.1 0 45.7-20.6 45.7-45.7s-20.6-45.7-45.7-45.7H868c-25.1 0-45.7 20.6-45.7 45.7s20.5 45.7 45.7 45.7zM456.8 45.7V137c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V45.7c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.6-45.7 45.7zm0 822.3v91.4c0 25.1 20.6 45.7 45.7 45.7s45.7-20.6 45.7-45.7V868c0-25.1-20.6-45.7-45.7-45.7s-45.7 20.5-45.7 45.7zM228 163.5c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.4-17.8 17.8-47.1 0-64.4L228 163.5zm565 565.1c-17.8-17.8-47.1-17.8-64.4 0-17.8 17.8-17.8 47.1 0 64.4l48.4 48.4c17.8 17.8 47.1 17.8 64.4 0 17.8-17.8 17.8-47.1 0-64.4L793 728.6zM841.5 228c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L728.6 212c-17.8 17.8-17.8 47.1 0 64.4 17.8 17.4 47.1 17.8 64.4 0l48.5-48.4zM276.4 793c17.8-17.8 17.8-47.1 0-64.4-17.8-17.8-47.1-17.8-64.4 0L163.5 777c-17.8 17.8-17.8 47.1 0 64.4s47.1 17.8 64.4 0l48.5-48.4z"
-          ></path></svg
-        >
-      </button>
-    </Clickable>
-    <slot />
+          <div class="size-6 flex justify-center items-center w-full">
+            <div class="size-4 hidden bg-secondary-light dark:block mx-auto rounded-full border border-white/20"></div>
+            <div class="size-4 bg-secondary dark:hidden mx-auto rounded-full  border-black/20"></div>
+          </div>
+          <span class="text-sm md:hidden hidden">樣式</span>
+        </button>
+      </li>
+    </ul>
+    {
+      Astro.slots.has('default') &&
+      <div class="bg-surface-lowest rounded-full px-4 flex justify-center items-center md:bg-transparent md:border-none shadow-lg md:shadow-none">
+        <slot/>
+      </div>
+    }
   </div>
 </nav>
 
@@ -114,3 +98,17 @@ const mainNav = [
   }
   setupThemeToggler(themeToggleButton);
 </script>
+
+<style>
+.active-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  filter: blur(1px);
+  background: linear-gradient(90deg,transparent,var(--color-brand),transparent);
+  transform: translate(-50%);
+}
+</style>

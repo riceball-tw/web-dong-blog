@@ -11,7 +11,7 @@ interface Social {
 const { copyright, socials } = globalConfig.brand;
 ---
 
-<footer class="mb-[var(--mainNav-height)] flex flex-wrap items-center justify-between sm:mb-0">
+<footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] flex flex-wrap items-center justify-between md:mb-0">
   <!-- Copyrihgt -->
   <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
     <a class="hover:underline" href={copyright.url}>
