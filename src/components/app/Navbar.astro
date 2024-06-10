@@ -32,13 +32,13 @@ const mainNav = [
 
 ];
 const {pathname} = new URL(Astro.request.url);
-const currentPath = pathname.slice(1); // remove the first "/"
+const currentPath = pathname.slice(1);
 ---
 
 <nav
-  class="gap-2 fixed md:bottom-auto top-auto md:top-0  bottom-4 z-50 w-full  md:px-4 px-0 before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0  bottom-4 z-50 w-full md:px-4 px-0 before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
 >
-<div class="flex justify-center md:justify-start md:border-b border-secondary/40 dark:border-secondary-light/40">
+<div class="flex justify-center md:justify-start md:border-b border-secondary/40 dark:border-secondary-light/40 gap-2">
 <a
 data-astro-prefetch
 title="網頁東東首頁"
@@ -48,16 +48,18 @@ class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg f
   <Logo class="hidden md:block" />
   <Logomark />
 </a>
-  <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-4 justify-center bg-surface-lowest  px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full">
+  <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-surface-lowest px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
       {
-        mainNav.map((navbarLink) => (
-          <li class={`transition-opacity ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${currentPath.includes(navbarLink.url) ? 'opacity-100' : 'opacity-80 hover:opacity-100'}`}>
-            <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative p-2 inline-flex flex-col gap-0.5 md:p-4 ">
+        mainNav.map((navbarLink) => {
+          const isNavItemActive = currentPath.includes(navbarLink.url)
+          return (
+          <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
+            <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
               <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
               <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
             </a>
           </li>
-        ))
+        )})
       }
       <li class="ml-auto inline-block">
         <button
@@ -76,7 +78,7 @@ class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg f
     </ul>
     {
       Astro.slots.has('default') &&
-      <div class="border-secondary/40 dark:border-secondary-light/40 border bg-surface-lowest rounded-full px-4 flex justify-center items-center md:bg-transparent md:border-none md:shadow-none">
+      <div class="bg-surface-lowest rounded-full px-4 flex justify-center items-center md:bg-transparent md:border-none shadow-lg md:shadow-none">
         <slot/>
       </div>
     }
@@ -95,3 +97,17 @@ class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg f
   }
   setupThemeToggler(themeToggleButton);
 </script>
+
+<style>
+.active-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  filter: blur(1px);
+  background: linear-gradient(90deg,transparent,var(--color-brand),transparent);
+  transform: translate(-50%);
+}
+</style>
