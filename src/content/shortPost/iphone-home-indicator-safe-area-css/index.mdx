@@ -1,0 +1,19 @@
+---
+titleTC: 'iOS Home Indicator 安全區域 CSS 處理'
+publishDate: 2024-06-12
+category: '前端'
+social:
+  threads: 'https://www.threads.net/@webdong.dev/post/C8F44hVSr6-'
+---
+
+重設計部落格導覽列體驗時有特別留意 iPhone 的 Home Indicator 會遮擋住導覽列（圖一，左舊右新），因此在新設計中設置了安全區域標示，讓網站使用 CSS env() + calc() 來讓導覽列計算實際安全顯示區域。
+
+1. 添加頁面 Meta 屬性 `<meta name="viewport" content="viewport-fit=cover" />`
+2. 使用 [env(safe-area-inset-bottom)](https://developer.mozilla.org/en-US/docs/Web/CSS/env) 變數搭配 [`calc`](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) 計算導覽列安全底部距離
+
+現在 Home Indicator 已經不會擋到緊貼畫面的元素了 👍🏻（圖一，左 Chrome 右 Safari）
+
+![Webdong 新舊網站於 iPhone 上的比較圖](./webdong-shot-on-iphone.webp)
+![Webdong 新舊網站於 iPhone 上的比較圖](./webdong-shot-on-iphone-2.webp)
+
+[env()](https://developer.mozilla.org/en-US/docs/Web/CSS/env) 最初由 iOS 瀏覽器提供，允許開發人員將網頁內容放置在視窗的安全區域內，以確保即使在非矩形螢幕上，內容也能正確顯示。
