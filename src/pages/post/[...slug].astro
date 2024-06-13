@@ -69,15 +69,15 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
       <header class="not-prose mb-16 col-start-2">
         {
           icon && (
-            <div data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
+            <div data-cy="post-icon-container" data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
               <Icon class="text-black" name={icon.name} size={32} />
             </div>
           )
         }
         <div class="relative mx-auto">
           <div class="text-surface-inverse">
-            <div data-pagefind-weight="2" class="mb-2">{title}</div>
-            <h1 data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">
+            <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{title}</div>
+            <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">
               {titleTC}
             </h1>
           </div>
