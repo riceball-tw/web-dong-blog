@@ -20,13 +20,11 @@ export interface Props {
   postsInSeries: CollectionEntry<'post'>[];
 }
 
-
-
 export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
     return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
   }
-  const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+  const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
   const dateSortedPublishedPosts = publishedPosts.sort(
     (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
   )

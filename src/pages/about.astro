@@ -8,7 +8,7 @@ import { getCollection } from 'astro:content';
 import Logo from '@/components/app/Logo.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 const toolboxSites = await getCollection('toolbox');
 
 const problems = [

@@ -15,7 +15,7 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+  const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
   const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())];
   return tags.flatMap((tag) => [{ params: { slug: tag }, props: { publishedPosts, tags } }]);
 }

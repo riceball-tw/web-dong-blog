@@ -1,7 +1,9 @@
 import { getCollection } from 'astro:content';
 
 async function getPosts() {
-  const avaliablePosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+  const avaliablePosts = await getCollection('post', (post) =>
+    import.meta.env.MODE === 'production' ? !post.data.isDraft : true,
+  );
   return avaliablePosts.map((post) => ({
     slug: post.slug,
     title: post.data.title,

@@ -8,7 +8,7 @@ import CardGallery from '@/components/card/CardGallery.astro';
 import uniqolor from 'uniqolor';
 import Pill from '@/components/app/Pill.astro';
 
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 
 const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())].sort((a, b) =>
   a.localeCompare(b, 'en', { sensitivity: 'base' }),
