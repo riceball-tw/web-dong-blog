@@ -5,7 +5,7 @@ import Card from '@/components/card/Card.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import { getCollection } from 'astro:content';
 
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 
 const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())].sort((a, b) =>
   a.localeCompare(b, 'en', { sensitivity: 'base' }),

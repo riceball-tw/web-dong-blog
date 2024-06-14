@@ -7,7 +7,7 @@ import PostCard from '@/components/card/PostCard.astro';
 import Pill from '@/components/app/Pill.astro';
 import { Icon } from 'astro-icon/components'
 
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.PROD ? !post.data.isDraft : true));
+const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 const categories = [...new Set(publishedPosts.map((post) => post.data.category))];
 const tags = [...new Set(publishedPosts.flatMap((post) => post.data.tags))];
 const dateSortedPublishedPosts = publishedPosts.sort(

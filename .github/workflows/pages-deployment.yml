@@ -41,7 +41,7 @@ jobs:
       - name: Build / Cypress E2E test
         uses: cypress-io/github-action@v6
         with:
-          build: pnpm build
+          build: pnpm build:staging
           start: pnpm preview
       - name: Lint
         run: pnpm lint
