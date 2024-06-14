@@ -38,11 +38,11 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Install packages
-        run: pnpm install --frozen-lockfile
       - name: Build for Production (main) branch
         if: github.ref == 'refs/heads/main'
-        run: pnpm build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
       - name: Build for Non-production (main) branch
         if: github.ref != 'refs/heads/main'
         uses: cypress-io/github-action@v6
