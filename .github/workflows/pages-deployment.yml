@@ -43,7 +43,7 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm build
-      - name: Build for Non-production (main) branch
+      - name: Build for Non-production (other) branch
         if: github.ref != 'refs/heads/main'
         uses: cypress-io/github-action@v6
         with:
