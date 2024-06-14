@@ -40,10 +40,7 @@ jobs:
         run: git lfs pull
       - name: Build for Production (main) branch
         if: github.ref == 'refs/heads/main'
-        uses: cypress-io/github-action@v6
-        with:
-          build: pnpm build
-          start: pnpm preview
+        run: pnpm build
       - name: Build for Non-production (main) branch
         if: github.ref != 'refs/heads/main'
         uses: cypress-io/github-action@v6
