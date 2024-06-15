@@ -38,7 +38,13 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Build / Cypress E2E test
+      - name: Build for Production (main) branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+      - name: Build for Non-production (other) branch
+        if: github.ref != 'refs/heads/main'
         uses: cypress-io/github-action@v6
         with:
           build: pnpm build:staging
