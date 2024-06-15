@@ -10,7 +10,7 @@ const { tags, tagHrefs } = Astro.props;
   {
     tagHrefs ? tagHrefs.map((href, index) => (
       <li data-cy="tag">
-        <a data-astro-prefetch class="p-1 inline-block capitalize opacity-60 hover:opacity-100" {href}>
+        <a data-cy="tag-link" data-astro-prefetch class="p-1 inline-block capitalize opacity-60 hover:opacity-100" {href}>
           <span>#</span> <span data-pagefind-filter="tag">{tags[index]}</span>
         </a>
       </li>
