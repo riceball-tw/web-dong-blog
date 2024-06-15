@@ -2,12 +2,16 @@
   "extends": "astro/tsconfigs/strictest",
   "compilerOptions": {
     "strict": true,
-    "baseUrl": ".",
+    "baseUrl": "D:/USER/Desktop/astro-blog",
     "paths": {
-      "@/*": ["src/*"],
-      "@public/*": ["public/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ]
     },
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "jsxImportSource": "react"
   }
 }
