@@ -10,7 +10,7 @@ describe('Post is effective', () => {
     cy.dataCy('category').should('not.be.empty');
     cy.dataCy('tag-link').each(($link) => {
       cy.wrap($link).should('not.be.empty');
-      cy.request($link.attr('href')).its('status').should('eq', 200);
+      cy.request('GET', $link.attr('href')).its('status').should('eq', 200);
     });
   });
 
@@ -25,7 +25,7 @@ describe('Post is effective', () => {
         'h2 .rehype-auto-link, h3 .rehype-auto-link, h4 .rehype-auto-link, h5 .rehype-auto-link, h6 .rehype-auto-link',
       )
       .each(($link) => {
-        cy.request($link.attr('href')).its('status').should('eq', 200);
+        cy.request('GET', $link.attr('href')).its('status').should('eq', 200);
       });
   });
 });
