@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 import type { PluginUtils } from 'tailwindcss/types/config';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import TailwindShadcnConfig from './tailwind-shadcn-config.ts';
 
 const colors = {
   inherit: 'inherit',
@@ -22,7 +23,7 @@ const colors = {
     900: 'rgb(var(--primary-color-900) / <alpha-value>)',
     1000: 'rgb(var(--primary-color-1000) / <alpha-value>)',
   },
-  secondary: {
+  secondaryOld: {
     light: 'rgb(var(--secondary-color-light) / <alpha-value>)',
     DEFAULT: 'rgb(var(--secondary-color) / <alpha-value>)',
   },
@@ -33,6 +34,7 @@ const colors = {
 };
 
 export default {
+  presets: [TailwindShadcnConfig],
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './astro.config.mjs'],
   darkMode: 'class',
   important: true,

@@ -8,12 +8,12 @@ export interface Props extends HTMLAttributes<'div'> {
 }
 
 const { themeColor, class: className, ...attrs } = Astro.props;
-const cardDefaultBorderColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondary-color) / 0.2)';
-const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondary-color) / 0.6)';
-const cardFillColor = themeColor ? hexToRgba(themeColor, 1) : 'rgba(var(--secondary-color) / 1)';
-const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondary-color) / 0.05)';
-const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondary-color) / 0.1)';
-const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondary-color) / 0.2)';
+const cardDefaultBorderColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondaryOld-color) / 0.2)';
+const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.6) : 'rgba(var(--secondaryOld-color) / 0.6)';
+const cardFillColor = themeColor ? hexToRgba(themeColor, 1) : 'rgba(var(--secondaryOld-color) / 1)';
+const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondaryOld-color) / 0.05)';
+const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'rgba(var(--secondaryOld-color) / 0.1)';
+const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'rgba(var(--secondaryOld-color) / 0.2)';
 const cardAnimationCurve = 'ease-[cubic-bezier(0.30,0.70,0.40,0.10)]'
 const cardActiveDuraction = 'active:duration-[34ms]'
 const borderRadius = '8px'

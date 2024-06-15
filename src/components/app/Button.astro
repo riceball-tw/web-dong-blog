@@ -5,9 +5,9 @@ import type { Polymorphic, HTMLTag } from "astro/types";
 
 const {as: Tag = `${Astro.props.href ? 'a' : 'button'}` as any, href, theme, size, ...rest } = Astro.props;
 const themeClassList = {
-  solid: 'bg-secondary dark:bg-secondary-light text-primary-50 dark:text-primary-1000 border-transparent',
-  outline: 'border-secondary dark:border-secondary-light text-primary-600 dark:text-secondary-light',
-  secondary: 'bg-secondary dark:bg-secondary-light dark:text-primary-1000 text-primary-50',
+  solid: 'bg-secondaryOld dark:bg-secondaryOld-light text-primary-50 dark:text-primary-1000 border-transparent',
+  outline: 'border-secondaryOld dark:border-secondaryOld-light text-primary-600 dark:text-secondaryOld-light',
+  secondaryOld: 'bg-secondaryOld dark:bg-secondaryOld-light dark:text-primary-1000 text-primary-50',
   link: 'border-0 underline',
 };
 
@@ -24,7 +24,7 @@ type Props<T extends HTMLTag = HTMLTag> = Polymorphic<{ as: T,href?: string,
 const themeClass = theme ? themeClassList[theme] : themeClassList.solid;
 const sizeClass = size ? sizeClassList[size] : sizeClassList.md;
 const defaultButtonStyle =
-  'rounded-full opacity-90 hover:opacity-100 transition-opacity border tracking-wider font-medium focus:outline-none focus:ring-4  focus:ring-secondary/60 dark:focus:ring-secondary-light/60 whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
+  'rounded-full opacity-90 hover:opacity-100 transition-opacity border tracking-wider font-medium focus:outline-none focus:ring-4  focus:ring-secondaryOld/60 dark:focus:ring-secondaryOld-light/60 whitespace-nowrap disabled:opacity-40 disabled:cursor-not-allowed';
 
   
 ---
