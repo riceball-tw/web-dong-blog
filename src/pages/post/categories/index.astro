@@ -24,7 +24,7 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
           <ul>
             <li class="text-3xl">
               <Card>
-                <a data-astro-prefetch href={`/post/categories/${tag}/`}>{tag}</a>
+                <a data-cy="category-link" data-astro-prefetch href={`/post/categories/${tag}/`}>{tag}</a>
               </Card>
             </li>
           </ul>
