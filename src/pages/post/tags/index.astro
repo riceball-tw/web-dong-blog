@@ -22,7 +22,7 @@ const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].s
           <ul>
             <li class="text-3xl">
               <Card>
-                <a data-astro-prefetch href={`/post/tags/${tag}/`}>{tag}</a>
+                <a data-cy="tag-link" data-astro-prefetch href={`/post/tags/${tag}/`}>{tag}</a>
               </Card>
             </li>
           </ul>
