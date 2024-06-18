@@ -116,8 +116,8 @@ dependencies:
 
 devDependencies:
   '@iconify-json/devicon-plain':
-    specifier: ^1.1.36
-    version: 1.1.36
+    specifier: ^1.1.42
+    version: 1.1.42
   '@iconify-json/material-symbols':
     specifier: ^1.1.78
     version: 1.1.78
@@ -1617,8 +1617,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iconify-json/devicon-plain@1.1.36:
-    resolution: {integrity: sha512-YYC6Cih8VG9hWdvXZxvdanA5nEEpFS/QsKnYy1hXu892etOXUM0Xdqjf+jsRmJDsj2zO5TeU0JNEYepg87f2ag==}
+  /@iconify-json/devicon-plain@1.1.42:
+    resolution: {integrity: sha512-NGCuw6BHn8lpjbVVa4XvYnprhWZ6IWkr6O19b69ySpDyi8QF3lh/Pe5As7C6eAG1KsblxQFqwcztgILOOmZqAA==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
