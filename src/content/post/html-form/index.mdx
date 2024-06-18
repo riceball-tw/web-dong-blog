@@ -104,7 +104,7 @@ form.addEventListener('submit', (event) => {
 A. 舉例來說可以為輸入框添加文字提示，使用 `placeholder` 屬性：
 
 <form>
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="input 標籤範例……" />
+  <input style="color: black;" type="text" placeholder="input 標籤範例……" />
 </form>
 
 ```html
@@ -114,7 +114,7 @@ A. 舉例來說可以為輸入框添加文字提示，使用 `placeholder` 屬�
 B. 或是讓輸入框預先填入預設值，使用 `value` 屬性：
 
 <form>
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" value="我是預設文字" />
+  <input style="color: black;" type="text" value="我是預設文字" />
 </form>
 
 ```html
@@ -124,7 +124,7 @@ B. 或是讓輸入框預先填入預設值，使用 `value` 屬性：
 C. 或是限定必須要填寫才能提交，使用 `required` 屬性：
 
 <form class="flex gap-4">
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="嘗試不輸入就直接提交" required />
+  <input style="color: black;" type="text" placeholder="嘗試不輸入就直接提交" required />
   <button type="submit" class="underline">
     提交按鈕
   </button>
@@ -137,7 +137,7 @@ C. 或是限定必須要填寫才能提交，使用 `required` 屬性：
 D. 或是使用 `disabled` 來禁用其功能：
 
 <form class="flex gap-4">
-  <input class="bg-primary-100 dark:bg-primary-900" type="text" placeholder="禁止輸入" disabled />
+  <input style="color: black;" type="text" placeholder="禁止輸入" disabled />
   <button type="submit" class="underline" disabled>
     提交按鈕（禁止提交）
   </button>
@@ -152,19 +152,19 @@ D. 或是使用 `disabled` 來禁用其功能：
 <form class="flex flex-col gap-4">
   <label class="flex gap-4">
     <span>電子信箱</span>
-    <input  class="bg-primary-100 dark:bg-primary-900" type="email" placeholder="請輸入電子信箱"/>
+    <input style="color: black;" type="email" placeholder="請輸入電子信箱"/>
   </label>
   <label class="flex gap-4">
     <span>年齡</span>
-    <input class="bg-primary-100 dark:bg-primary-900" type="number" min="1" placeholder="請輸入年齡"/>
+    <input style="color: black;" type="number" min="1" placeholder="請輸入年齡"/>
   </label>
   <label class="flex gap-4">
     <span>密碼</span>
-    <input  class="bg-primary-100 dark:bg-primary-900" type="password" placeholder="請輸入密碼"/>
+    <input style="color: black;" type="password" placeholder="請輸入密碼"/>
   </label>
   <label class="flex gap-4">
     <span>檔案</span>
-    <input  class="bg-primary-100 dark:bg-primary-900" type="file" placeholder="請選擇檔案"/>
+    <input style="color: black; background-color: white" type="file" placeholder="請選擇檔案"/>
   </label>
   <label style="width: fit-content" class="flex gap-4">
     <input type="checkbox" name="termsOfUse" value="agree"/>
@@ -192,7 +192,7 @@ D. 或是使用 `disabled` 來禁用其功能：
 `<textarea>` 用於接收多行文字，可以透過 `rows` 與 `cols` 屬性來設定預設的行數與列數，也可以透過 `placeholder` 與 `value` 屬性來設定預設文字與預設值。
 
 <form class="flex flex-col gap-4">
-  <textarea class="bg-primary-100 dark:bg-primary-900" rows="5" cols="50" placeholder="請輸入文字"></textarea>
+  <textarea style="color:black; background-color: white" rows="5" cols="50" placeholder="請輸入文字"></textarea>
   <button type="submit" class="underline">
     提交按鈕
   </button>

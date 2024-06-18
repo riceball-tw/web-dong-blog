@@ -28,10 +28,10 @@ export function WatchExampleThree() {
   parentRender += 1;
 
   return (
-    <form className="text-white">
+    <form className="text-foreground">
       <div className="flex flex-wrap gap-2">
-        <input className="w-full text-primary-800" {...register('firstName')} placeholder="firstName" />
-        <input className="w-full text-primary-800" {...register('lastName')} placeholder="lastName" />
+        <input className="w-full text-black" {...register('firstName')} placeholder="firstName" />
+        <input className="w-full text-black" {...register('lastName')} placeholder="lastName" />
       </div>
       <p>父元件渲染次數: {parentRender}</p>
       <FirstNameWatched control={control} />

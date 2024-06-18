@@ -10,12 +10,12 @@ const { currentPost, postsInSeries } = Astro.props
 
 <details open class="p-4 not-prose" data-pagefind-ignore="all">
   <summary class="p-3 font-bold">{currentPost.data.series}</summary> 
-  <ul style="max-height: 50vh" class="overflow-auto border-l border-secondary/40 dark:border-secondary-light/40">
+  <ul style="max-height: 50vh" class="overflow-auto border-l border-primary">
   {postsInSeries.map(({data, slug}) => {
    const isCurrentPost = currentPost.slug === slug
    return (
       <li>
-        <a class={`hover:underline hover:opacity-100 p-2 pl-4 inline-block ${isCurrentPost ? 'opacity-100 text-secondary dark:text-secondary-light' : 'opacity-40'}`} href={`/post/${slug}`}>{data.titleTC}</a>
+        <a class={`hover:underline hover:opacity-100 p-2 pl-4 inline-block ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} href={`/post/${slug}`}>{data.titleTC}</a>
       </li>
     )
   })}

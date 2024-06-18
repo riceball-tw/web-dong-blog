@@ -9,7 +9,7 @@ const renderedBlockquote = await Astro.slots.render('default');
 ---
 
 <blockquote
-  class="not-italic text-lg text-center bg-primary-100 border-primary-200 dark:bg-primary-900 border dark:border-primary-700 p-8 rounded-3xl rounded-tl-none hover:bg-primary-50 hover:border-primary-100 dark:hover:bg-primary-800 dark:hover:border-primary-600 transition-colors"
+  class="not-italic text-lg text-center bg-blockquote/10 text-blockquote-foreground border border-border p-8 rounded-3xl rounded-tl-none transition-colors"
   set:html={sanitizeHtml(renderedBlockquote, {
     allowedTags: ['code', 'blockquote', 'a', 'em', 'strong', 'kbd', 'cite'],
   })}

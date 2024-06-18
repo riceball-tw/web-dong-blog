@@ -9,13 +9,13 @@ export function WatchExampleTwo() {
 
   return (
     <>
-      <div className="text-white">
+      <div className="text-foreground">
         <div>
           渲染次數：
           {renderCount}
         </div>
         <input
-          className="w-full text-primary-800"
+          className="w-full text-black"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
