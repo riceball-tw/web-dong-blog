@@ -49,7 +49,7 @@
     "sanitize-html": "^2.11.0",
     "sharp": "^0.31.3",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.3.3",
+    "tailwindcss": "^3.4.4",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-fluid-type": "^2.0.3",
     "typescript": "^5.4.3",
