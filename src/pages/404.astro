@@ -1,7 +1,6 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
-import Button from '@/components/app/Button.astro';
-import Clickable from '@/components/app/Clickable.astro';
+import { Button } from '@/components/atoms/button/index.ts'
 
 const title = '404 頁面';
 const description = '這個網頁並不存在';
@@ -14,12 +13,16 @@ const description = '這個網頁並不存在';
     </h1>
     <p class="text-lg">您所搜尋的頁面並不存在</p>
     <div class="my-8 mt-12 flex gap-4">
-      <Clickable>
-        <Button data-cy="home-link" size="lg" theme="outline" href="/">回首頁</Button>
-      </Clickable>
-      <Clickable>
-        <Button data-cy="post-link" size="lg" href="/post">所有文章</Button>
-      </Clickable>
+      <a data-cy="home-link" href="/">
+        <Button as="span" size="lg">
+          回首頁
+        </Button>
+      </a>
+      <a data-cy="post-link" href="/post">
+        <Button variant="outline" as="span" size="lg">
+          所有文章
+        </Button>
+      </a>
     </div>
   </section>
 </BlogBase>

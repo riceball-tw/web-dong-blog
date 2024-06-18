@@ -3,7 +3,6 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import Card from '@/components/card/Card.astro';
-import Button from '@/components/app/Button.astro';
 import { getCollection } from 'astro:content';
 import Logo from '@/components/app/Logo.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
@@ -74,7 +73,7 @@ const problems = [
 <BlogBase title={'關於'}>
   <Hero>
     <span slot="headline" style="max-width: 1200px;" class="inline-block">
-      是什麼原因導致網頁建構上<span class="text-secondaryOld dark:text-secondaryOld-light">
+      是什麼原因導致網頁建構上<span class="text-primary">
         遭遇瓶頸
         <span style="width: 1.3em; height: 1em" class="relative inline-block animate-bounce">
           <svg
@@ -116,7 +115,7 @@ const problems = [
       </CardGallery>
       <Card class="relative overflow-hidden">
         <div
-          class="from-primary-50/30 before:absolute before:left-0 before:top-0 before:block before:h-2/3 before:w-full before:bg-gradient-to-b before:content-[''] dark:from-primary-1000"
+          class="from-primary/20 before:absolute before:left-0 before:top-0 before:block before:h-2/3 before:w-full before:bg-gradient-to-b before:content-['']"
         >
           <div class="relative z-10">
             <h2 class="mb-4 text-xl font-medium">「網頁東東」專門解決你對「網頁東東」的疑惑</h2>
@@ -167,7 +166,6 @@ const problems = [
               placeholder="東東報規劃中……"
               disabled
             />
-            <Button as='button' disabled>訂閱電子報</Button>
           </div>
         </div>
       </Card>

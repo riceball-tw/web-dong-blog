@@ -11,10 +11,10 @@ export function WatchExampleOne() {
 
   return (
     // eslint-disable-next-line no-console
-    <form className="text-white" onSubmit={handleSubmit((data) => console.log(data))}>
+    <form className="text-foreground" onSubmit={handleSubmit((data) => console.log(data))}>
       <label>
         <span className="mr-2 inline-block">付款方式：</span>
-        <select className="text-primary-800" {...register('paymentMethod')}>
+        <select className="text-black" {...register('paymentMethod')}>
           <option value="cashOnDelivery">貨到付款</option>
           <option value="creditCard">信用卡</option>
         </select>
@@ -24,17 +24,17 @@ export function WatchExampleOne() {
           <div className="flex flex-wrap gap-2">
             <label>
               信用卡卡號
-              <input className="block w-full text-primary-800" {...register('creditCardNumber')} />
+              <input className="block w-full text-black" {...register('creditCardNumber')} />
             </label>
             <label>
               安全碼
-              <input className="block w-full text-primary-800" {...register('creditCardSafeCode')} />
+              <input className="block w-full text-black" {...register('creditCardSafeCode')} />
             </label>
           </div>
           <label>有效期限</label>
           <div className="flex gap-2">
             {/* Year */}
-            <select className="text-primary-800">
+            <select className="text-black">
               <option selected disabled value="">
                 ---
               </option>
@@ -45,7 +45,7 @@ export function WatchExampleOne() {
             </select>
 
             {/* Month */}
-            <select className="text-primary-800">
+            <select className="text-black">
               <option selected disabled value="--">
                 --
               </option>

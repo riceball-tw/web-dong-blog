@@ -28,7 +28,7 @@ const { themeColor } = Astro.props;
     <slot name="head" />
   </head>
   <body
-    class="bg-surface-lowest text-surface-inverse selection:bg-highlight selection:text-brand-background"
+    class="bg-background text-foreground selection:bg-primary selection:text-primary-foreground"
   >
     <slot />
     <GodRay {themeColor}/>

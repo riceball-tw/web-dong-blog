@@ -34,7 +34,7 @@ const { shorts, currentSlug } = Astro.props
 
           {/* Content */}
           {
-            isActiveShort ? <div class="prose dark:prose-invert md:prose-2xl"><slot /></div> : ''
+            isActiveShort ? <div class="prose md:prose-2xl"><slot /></div> : ''
           }
           {/* Social */}
           {short.data?.social ? <div class={`pt-4 ${(isActiveShort) ? '' : 'hidden'}`}>
