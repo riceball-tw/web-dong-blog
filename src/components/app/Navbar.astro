@@ -52,7 +52,8 @@ class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg f
   <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-navbar text-navbar-foreground px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
       {
         mainNav.map((navbarLink) => {
-          const isNavItemActive = currentPath.includes(navbarLink.url)
+          const firstRoutePath = currentPath.split('/')[0];
+          const isNavItemActive = firstRoutePath?.includes(navbarLink.url)
           return (
           <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
             <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
