@@ -18,7 +18,7 @@ const dateSortedPublishedPosts = publishedPosts.sort(
 <BlogBase title={'所有文章'} description={`所有文章共 ${dateSortedPublishedPosts.length} 篇`}>
   <Hero>
     <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
-      <a href="/post/categories/">
+      <a data-cy="categories-link" href="/post/categories/">
         <Badge>
           <span class="flex gap-2 items-center">
             <Icon 
@@ -30,7 +30,7 @@ const dateSortedPublishedPosts = publishedPosts.sort(
           </span>
         </Badge>
       </a>
-      <a href="/post/tags/">
+      <a data-cy="tags-link" href="/post/tags/">
         <Badge>
           <span class="flex gap-2 items-center">
             <Icon 
