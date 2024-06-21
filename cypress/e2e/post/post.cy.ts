@@ -28,4 +28,24 @@ describe('Post is effective', () => {
         cy.request('GET', $link.attr('href')).its('status').should('eq', 200);
       });
   });
+
+  it('Series recommendation should visible and working', () => {
+    cy.dataCy('series-summary').should('not.be.empty');
+    cy.dataCy('post-title')
+      .invoke('text')
+      .then((postTitle) => {
+        cy.wrap(postTitle).as('postTitle');
+      });
+
+    cy.dataCy('series-active')
+      .should('have.length', 1)
+      .invoke('text')
+      .then((activeSeriesTitle) => {
+        cy.wrap(activeSeriesTitle).as('activeSeriesTitle');
+      });
+
+    Promise.all([cy.get('@postTitle'), cy.get('@activeSeriesTitle')]).then(([postTitle, activeSeriesTitle]) => {
+      expect(postTitle).to.equal(activeSeriesTitle);
+    });
+  });
 });
