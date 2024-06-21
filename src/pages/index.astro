@@ -73,7 +73,7 @@ const currentTime = new Date()
     <script is:inline src="/pagefind/pagefind-ui.js"></script>
   </slot>
   <Hero>
-    <a slot="beforeHeadline" class="mx-auto inline-block" href={globalConfig.setting.projectUpdateBadgeUrl}>
+    <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={globalConfig.setting.projectUpdateBadgeUrl}>
       <Badge>{`最近更新時間：${currentTime}`}</Badge>
     </a>
     <span slot="headline" style="max-width: 1400px;" class="inline-block">
