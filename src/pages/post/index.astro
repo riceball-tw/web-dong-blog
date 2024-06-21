@@ -4,8 +4,8 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
-import Pill from '@/components/app/Pill.astro';
 import { Icon } from 'astro-icon/components'
+import { Badge } from '@/components/atoms/badge/index.ts'
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 const categories = [...new Set(publishedPosts.map((post) => post.data.category))];
@@ -17,27 +17,31 @@ const dateSortedPublishedPosts = publishedPosts.sort(
 
 <BlogBase title={'所有文章'} description={`所有文章共 ${dateSortedPublishedPosts.length} 篇`}>
   <Hero>
-    <div slot="badge" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
-      <Pill>
-        <a class="flex gap-2 items-center" href="/post/categories/">
-          <Icon 
-          class=""
-          name="material-symbols:category-outline-rounded"
-          size={24}
-          ></Icon>
-            查看 { categories.length } 種類別
-        </a>
-      </Pill>
-      <Pill>
-        <a class="flex gap-2 items-center" href="/post/tags/">
-          <Icon 
-          class=""
-          name="material-symbols:label-important-outline-rounded"
-          size={24}
-          ></Icon>
-          查看 { tags.length } 種標籤
-        </a>
-      </Pill>
+    <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
+      <a data-cy="categories-link" href="/post/categories/">
+        <Badge>
+          <span class="flex gap-2 items-center">
+            <Icon 
+            class=""
+            name="material-symbols:category-outline-rounded"
+            size={24}
+            ></Icon>
+              查看 { categories.length } 種類別
+          </span>
+        </Badge>
+      </a>
+      <a data-cy="tags-link" href="/post/tags/">
+        <Badge>
+          <span class="flex gap-2 items-center">
+            <Icon 
+            class=""
+            name="material-symbols:label-important-outline-rounded"
+            size={24}
+            ></Icon>
+            查看 { tags.length } 種標籤
+          </span>
+        </Badge>
+      </a>
     </div>
     <Fragment slot="headline">
       所有文章共 {dateSortedPublishedPosts.length} 篇
