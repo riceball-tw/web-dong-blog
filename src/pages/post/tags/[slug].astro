@@ -5,8 +5,8 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
-import Pill from '@/components/app/Pill.astro';
 import { Icon } from 'astro-icon/components'
+import { Badge } from '@/components/atoms/badge/index.ts'
 
 export interface Props {
   posts: CollectionEntry<'post'>;
@@ -28,8 +28,8 @@ const avaliableCurrentTagPosts = publishedPosts
 
 <BlogBase title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
   <Hero>
-    <div slot="badge" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
-      <Pill>
+    <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
+      <Badge>
         <a class="flex gap-2 items-center" href="/post/tags/">
           <Icon 
           class=""
@@ -38,7 +38,7 @@ const avaliableCurrentTagPosts = publishedPosts
           ></Icon>
           查看 { tags.length } 種標籤
         </a>
-      </Pill>
+      </Badge>
     </div>
     <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
   </Hero>

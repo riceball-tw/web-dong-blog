@@ -1,5 +1,5 @@
 ---
-import Pill from '@/components/app/Pill.astro';
+import { Badge } from '@/components/atoms/badge/index.ts'
 import Card from '@/components/card/Card.astro';
 
 const { youtubeChannels } = Astro.props;
@@ -37,18 +37,18 @@ const uniqueCategories = youtubeChannels
 
 <ul class="mb-8 flex flex-wrap gap-4 whitespace-nowrap" data-category-container>
   <li>
-    <Pill>
+    <Badge>
       <button disabled class="disabled:opacity-60" data-category-filter="all" type="button">全部</button>
-    </Pill>
+    </Badge>
   </li>
   {
     uniqueCategories.map((category: string) => (
         <li>
-          <Pill>
+          <Badge>
             <button class="disabled:opacity-60" data-category-filter={category} type="button">
               {category}
             </button>
-          </Pill>
+          </Badge>
         </li>
       ))
   }
