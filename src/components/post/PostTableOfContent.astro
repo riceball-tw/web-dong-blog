@@ -34,21 +34,10 @@ const { headings } = Astro.props
   }
 </div>
 
-<style>
-.toc-link {
-  opacity: 0.6;
-}
-
-.toc-link--active {
-  opacity: 1;
-}
-
-.toc-link--active a {
-  opacity: 1;
-}
-</style>
-
 <script>
+  const linkClass = 'opacity-60'
+  const activeLinkClass = 'opacity-100'
+
   function generateTOC() {
     const headings = document.querySelectorAll('[data-article] h2, h3');
     const tocHeadings = document.querySelectorAll('[data-toc] a');
@@ -56,9 +45,11 @@ const { headings } = Astro.props
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           tocHeadings.forEach((heading) => {
-            heading.classList.remove('toc-link--active');
+            heading.classList.remove(activeLinkClass);
+            heading.classList.add(linkClass);
             if (entry.target.textContent === heading?.textContent?.trim()) {
-              heading.classList.toggle('toc-link--active');
+              heading.classList.add(activeLinkClass);
+              heading.classList.remove(linkClass);
             }
           });
         }
