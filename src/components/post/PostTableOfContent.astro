@@ -20,7 +20,7 @@ const { headings } = Astro.props
           {headings.map(({ depth, slug: headingSlug, text }) => (
             <li>
               <a
-                class={`toc-link block ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                class={`block transition-opacity ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
                 href={`#${headingSlug}`}
                 aria-label={`移動到 ${text} 標題區塊`}
               >
