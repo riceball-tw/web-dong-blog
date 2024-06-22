@@ -48,7 +48,7 @@ const { headings } = Astro.props
 
   .toc-active-link {
     opacity: 1;
-    border-left: theme(borderWidth.2) solid theme(colors.border);
+    border-left: theme(borderWidth.2) solid theme(colors.primary.DEFAULT);
   }
 
   .toc-manual-active-link {
@@ -78,13 +78,16 @@ const { headings } = Astro.props
     }, observerOptions);
   }
 
-  const avaliableHeadings = document.querySelectorAll<HTMLHeadingElement>('[data-article] h2, h3');
+  function tocInit() {
+    const avaliableHeadings = document.querySelectorAll<HTMLHeadingElement>('[data-article] h2, h3');
   avaliableHeadings.forEach(heading => {
     setTocObserver().observe(heading)
   });
+  }
 
-  const toc = document.querySelector('[data-toc]');
-  toc?.addEventListener('click', (event) => {
+  function manualActiveLinkInit() {
+    const toc = document.querySelector('[data-toc]');
+    toc?.addEventListener('click', (event) => {
     const targetLink = event.target as HTMLAnchorElement;
     const isNotTocLink = targetLink.tagName !== 'A';
     if (isNotTocLink) return
@@ -97,5 +100,8 @@ const { headings } = Astro.props
       targetLink.classList.remove('toc-manual-active-link');
     }, 1000);
   })
+  }
 
+  tocInit()
+  manualActiveLinkInit()
 </script>
