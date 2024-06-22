@@ -10,6 +10,8 @@
     /* Scale */
     --mainNav-height: 80px;
     --mainNav-device-gap: 16px;
+    --accordion-summary-height: theme(spacing.16);
+    --accordion-max-height: 600px;
   }
 
   /* Overwrite pagefind default style > https://pagefind.app/docs/ui-usage/ */

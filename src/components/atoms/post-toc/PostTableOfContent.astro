@@ -1,4 +1,5 @@
 ---
+import Accordion from '@/components/atoms/accordion/Accordion.astro'
 
 interface Heading {
   depth: number;
@@ -12,33 +13,34 @@ interface Props {
 
 const { headings } = Astro.props
 ---
- <div data-pagefind-ignore="all" class="p-4">
-  {
-    Boolean(headings.length) && (
-      <div>
-        <ul data-toc class="toc border-l border-border m-0 list-none p-0">
-          {headings.map(({ depth, slug: headingSlug, text }) => {
-            const nestedHeadingClass = 'text-sm pl-8'
-            const headingClass = 'pl-4'
-            const depthClass = `${depth > 2 ? nestedHeadingClass : headingClass}`
-            return (
-            <li class="p-0 m-0">
-              <a
-                data-toc-link
-                class={`block py-2 no-underline hover:underline hover:opacity-100 transition-opacity ${depthClass}`}
-                href={`#${headingSlug}`}
-                aria-label={`移動到 ${text} 標題區塊`}
-              >
-                {text}
-              </a>
-            </li>
-          )
-          })}
-        </ul>
-      </div>
-    )
-  }
-</div>
+
+{
+  Boolean(headings.length) && (
+    <div data-pagefind-ignore="all">
+      <Accordion summary='目錄'>
+            <ul data-toc class="toc border-l border-border m-0 list-none p-0">
+              {headings.map(({ depth, slug: headingSlug, text }) => {
+                const nestedHeadingClass = 'text-sm pl-8'
+                const headingClass = 'pl-4'
+                const depthClass = `${depth > 2 ? nestedHeadingClass : headingClass}`
+                return (
+                <li class="p-0 m-0">
+                  <a
+                    data-toc-link
+                    class={`block py-2 no-underline hover:underline hover:opacity-100 transition-opacity ${depthClass}`}
+                    href={`#${headingSlug}`}
+                    aria-label={`移動到 ${text} 標題區塊`}
+                  >
+                    {text}
+                  </a>
+                </li>
+              )
+              })}
+            </ul>
+      </Accordion>
+    </div>
+  )
+}
 
 <style>
   .toc-link {
