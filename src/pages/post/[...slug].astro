@@ -89,40 +89,41 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
    
       <aside 
       style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block">
-        <div class="absolute top-0 divide-y divide-border">
-          <PostTableOfContent {headings} />
-          <!-- Post Date Info -->
-          <div class="inline-flex w-full flex-col gap-2 p-4">
-            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              發布日期：
-              <time data-pagefind-sort="date">
-                {
-                  publishDate
-                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                    .replace(/\//g, '-')
-                }
-              </time>
-            </div>
-            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              <span>最後更新：</span>
-              <a
-                data-pagefind-ignore="all"
-                href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
-                class=""
-              >
-                <span>
-                {
-                  lastModifiedDate ?
-                  lastModifiedDate
-                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                    .replace(/\//g, '-')
-                    : '查看更新紀錄'
-                }
-                </span>
-              </a>
-            </div>
+      
+      <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
+        <PostTableOfContent {headings} />
+        <!-- Post Date Info -->
+        <div class="inline-flex w-full flex-col gap-2 p-4">
+          <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+            發布日期：
+            <time data-pagefind-sort="date">
+              {
+                publishDate
+                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                  .replace(/\//g, '-')
+              }
+            </time>
+          </div>
+          <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+            <span>最後更新：</span>
+            <a
+              data-pagefind-ignore="all"
+              href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
+              class=""
+            >
+              <span>
+              {
+                lastModifiedDate ?
+                lastModifiedDate
+                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                  .replace(/\//g, '-')
+                  : '查看更新紀錄'
+              }
+              </span>
+            </a>
           </div>
         </div>
+      </div>
       </aside>
       <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
       {
