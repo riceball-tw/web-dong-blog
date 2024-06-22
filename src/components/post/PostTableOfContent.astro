@@ -15,51 +15,87 @@ const { headings } = Astro.props
  <div data-pagefind-ignore="all" class="p-4">
   {
     Boolean(headings.length) && (
-      <div class="">
-        <ul data-toc class="toc m-0 list-none p-0">
-          {headings.map(({ depth, slug: headingSlug, text }) => (
-            <li>
+      <div>
+        <ul data-toc class="toc border-l border-border m-0 list-none p-0">
+          {headings.map(({ depth, slug: headingSlug, text }) => {
+            const nestedHeadingClass = 'text-sm pl-8'
+            const headingClass = 'pl-4'
+            const depthClass = `${depth > 2 ? nestedHeadingClass : headingClass}`
+            return (
+            <li class="p-0 m-0">
               <a
-                class={`block transition-opacity ${depth <= 2 ? 'mt-3' : 'mt-2 pl-3 text-sm'}`}
+                data-toc-link
+                class={`block py-2 no-underline hover:underline hover:opacity-100 transition-opacity ${depthClass}`}
                 href={`#${headingSlug}`}
                 aria-label={`移動到 ${text} 標題區塊`}
               >
                 {text}
               </a>
             </li>
-          ))}
+          )
+          })}
         </ul>
       </div>
     )
   }
 </div>
 
-<script>
-  const linkClass = 'opacity-60'
-  const activeLinkClass = 'opacity-100'
+<style>
+  .toc-link {
+    opacity: 0.6;
+    border-left: theme(borderWidth.2) solid transparent;
+  }
 
-  function generateTOC() {
-    const headings = document.querySelectorAll('[data-article] h2, h3');
-    const tocHeadings = document.querySelectorAll('[data-toc] a');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
+  .toc-active-link {
+    opacity: 1;
+    border-left: theme(borderWidth.2) solid theme(colors.border);
+  }
+
+  .toc-manual-active-link {
+    opacity: 1;
+    border-left: theme(borderWidth.2) solid theme(colors.primary.DEFAULT);
+  }
+</style>
+
+<script>
+  function setTocObserver() {
+    const tocLinks = document.querySelectorAll('[data-toc-link]');
+    const observerOptions = { threshold: 1, rootMargin: '-5% 0% -5% 0%'}
+    return new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          tocHeadings.forEach((heading) => {
-            heading.classList.remove(activeLinkClass);
-            heading.classList.add(linkClass);
-            if (entry.target.textContent === heading?.textContent?.trim()) {
-              heading.classList.add(activeLinkClass);
-              heading.classList.remove(linkClass);
+          tocLinks.forEach((link) => {
+            const isHeadingAndTocLinkContentMatched = entry.target.textContent === link?.textContent?.trim()
+            link.classList.remove('toc-active-link');
+            link.classList.add('toc-link');
+            if (isHeadingAndTocLinkContentMatched) {
+              link.classList.add('toc-active-link');
+              link.classList.remove('toc-link');
             }
           });
         }
       });
-    });
-
-    return { headings, observer };
+    }, observerOptions);
   }
 
-  generateTOC().headings.forEach((heading) => {
-    generateTOC().observer.observe(heading);
+  const avaliableHeadings = document.querySelectorAll<HTMLHeadingElement>('[data-article] h2, h3');
+  avaliableHeadings.forEach(heading => {
+    setTocObserver().observe(heading)
   });
+
+  const toc = document.querySelector('[data-toc]');
+  toc?.addEventListener('click', (event) => {
+    const targetLink = event.target as HTMLAnchorElement;
+    const isNotTocLink = targetLink.tagName !== 'A';
+    if (isNotTocLink) return
+    const tocLinks = document.querySelector('.toc-manual-active-link');
+    if (tocLinks) {
+      tocLinks.classList.remove('toc-manual-active-link');
+    }
+    targetLink.classList.add('toc-manual-active-link');
+    setTimeout(() => {
+      targetLink.classList.remove('toc-manual-active-link');
+    }, 1000);
+  })
+
 </script>
