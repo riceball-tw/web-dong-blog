@@ -10,6 +10,16 @@
     /* Scale */
     --mainNav-height: 80px;
     --mainNav-device-gap: 16px;
+    --accordion-summary-height: theme(spacing.16);
+    --accordion-max-height: 600px;
+
+    /* Settings */
+    color-scheme: light;
+  }
+
+  .dark {
+    /* Settings */
+    color-scheme: dark;
   }
 
   /* Overwrite pagefind default style > https://pagefind.app/docs/ui-usage/ */
@@ -136,7 +146,7 @@
 
 @layer components {
   *:is(h1, h2, h3, h4, h5, h6) {
-    scroll-margin-top: var(--mainNav-height);
+    scroll-margin-top: calc(var(--mainNav-height) + 5dvh);
     position: relative;
   }
   mark {

@@ -1,0 +1,110 @@
+---
+import Accordion from '@/components/atoms/accordion/Accordion.astro'
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props
+---
+
+{
+  Boolean(headings.length) && (
+    <div data-cy="toc" data-pagefind-ignore="all">
+      <Accordion summary='目錄'>
+            <ul data-cy="toc-list" data-toc class="toc border-l border-border m-0 list-none p-0">
+              {headings.map(({ depth, slug: headingSlug, text }) => {
+                const nestedHeadingClass = 'text-sm px-8'
+                const headingClass = 'px-4'
+                const depthClass = `${depth > 2 ? nestedHeadingClass : headingClass}`
+                return (
+                <li class="p-0 m-0">
+                  <a
+                    data-cy="toc-link"
+                    data-toc-link
+                    class={`block py-2 no-underline hover:underline hover:opacity-100 transition-opacity ${depthClass}`}
+                    href={`#${headingSlug}`}
+                    aria-label={`移動到 ${text} 標題區塊`}
+                  >
+                    {text}
+                  </a>
+                </li>
+              )
+              })}
+            </ul>
+      </Accordion>
+    </div>
+  )
+}
+
+<style>
+  .toc-link {
+    opacity: 0.6;
+    border-left: theme(borderWidth.2) solid transparent;
+  }
+
+  .toc-active-link {
+    opacity: 1;
+    border-left: theme(borderWidth.2) solid theme(colors.primary.DEFAULT);
+  }
+
+  .toc-manual-active-link {
+    opacity: 1;
+    border-left: theme(borderWidth.2) solid theme(colors.primary.DEFAULT);
+  }
+</style>
+
+<script>
+  function setTocObserver() {
+    const tocLinks = document.querySelectorAll('[data-toc-link]');
+    const observerOptions = { threshold: 1, rootMargin: '-5% 0% -5% 0%'}
+    return new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach((link) => {
+            const isHeadingAndTocLinkContentMatched = entry.target.textContent === link?.textContent?.trim()
+            link.classList.remove('toc-active-link');
+            link.classList.add('toc-link');
+            if (isHeadingAndTocLinkContentMatched) {
+              link.classList.add('toc-active-link');
+              link.classList.remove('toc-link');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+  }
+
+  function tocInit() {
+    const avaliableHeadings = document.querySelectorAll<HTMLHeadingElement>('[data-article] h2, h3');
+  avaliableHeadings.forEach(heading => {
+    setTocObserver().observe(heading)
+  });
+  }
+
+  function manualActiveLinkInit() {
+    const toc = document.querySelector('[data-toc]');
+    toc?.addEventListener('click', (event) => {
+    const targetLink = event.target as HTMLAnchorElement;
+    const isNotTocLink = targetLink.tagName !== 'A';
+    if (isNotTocLink) return
+    const tocLinks = document.querySelector('.toc-manual-active-link');
+    if (tocLinks) {
+      tocLinks.classList.remove('toc-manual-active-link');
+    }
+    targetLink.classList.add('toc-manual-active-link');
+    setTimeout(() => {
+      targetLink.classList.remove('toc-manual-active-link');
+    }, 1000);
+  })
+  }
+
+  tocInit()
+  manualActiveLinkInit()
+</script>
