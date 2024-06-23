@@ -20,8 +20,8 @@ const { headings } = Astro.props
       <Accordion summary='目錄'>
             <ul data-cy="toc-list" data-toc class="toc border-l border-border m-0 list-none p-0">
               {headings.map(({ depth, slug: headingSlug, text }) => {
-                const nestedHeadingClass = 'text-sm pl-8'
-                const headingClass = 'pl-4'
+                const nestedHeadingClass = 'text-sm px-8'
+                const headingClass = 'px-4'
                 const depthClass = `${depth > 2 ? nestedHeadingClass : headingClass}`
                 return (
                 <li class="p-0 m-0">
