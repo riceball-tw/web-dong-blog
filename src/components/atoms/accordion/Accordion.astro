@@ -9,13 +9,13 @@ const prefixedSummary = `summary-${summary}`
 <input checked class="accordion-input" type="checkbox" name={prefixedSummary} id={prefixedSummary} />
 <details class="accordion" open>
   <summary class="accordion-summary">
-    <label class="accordion-label px-4 group" for={prefixedSummary}>
+    <label data-cy="accordion-toggle" class="accordion-label px-4 group" for={prefixedSummary}>
       <span class="hover:underline group-hover:underline">
         { summary }
       </span>
     </label>
   </summary>
-    <div data-accordion-content style="height: calc(100% - var(--accordion-summary-height))" class="overflow-y-auto">
+    <div data-cy="accordion-content" data-accordion-content style="height: calc(100% - var(--accordion-summary-height))" class="overflow-y-auto">
     <slot/>
   </div>
 </details>
