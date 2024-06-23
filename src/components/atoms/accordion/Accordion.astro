@@ -15,7 +15,7 @@ const prefixedSummary = `summary-${summary}`
       </span>
     </label>
   </summary>
-    <div data-cy="accordion-content" data-accordion-content style="height: calc(100% - var(--accordion-summary-height))" class="overflow-y-auto">
+    <div data-cy="accordion-content" data-accordion-content style="height: calc(100% - var(--accordion-summary-height))" class="accordion-content overflow-y-auto">
     <slot/>
   </div>
 </details>
@@ -75,5 +75,9 @@ const prefixedSummary = `summary-${summary}`
     align-items: center;
     margin-right: theme(spacing.2);
     transition: rotate 100ms ease-out;
+  }
+
+  .accordion-content {
+    scrollbar-width: thin
   }
 </style>
