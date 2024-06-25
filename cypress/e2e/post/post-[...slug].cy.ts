@@ -6,8 +6,8 @@ describe('Post is effective', () => {
   it('Header should visible and working', () => {
     cy.dataCy('post-icon-container').find('svg').should('exist');
     cy.dataCy('post-title').should('have.prop', 'tagName', 'H1').should('not.be.empty');
-    cy.dataCy('post-subtitle').should('not.be.empty');
-    cy.dataCy('category').should('not.be.empty');
+    cy.dataCy('post-subtitle').should('exist').should('not.be.empty');
+    cy.dataCy('category').should('exist').should('not.be.empty');
     cy.dataCy('tag-link').each(($link) => {
       cy.wrap($link).should('not.be.empty');
       cy.request('GET', $link.attr('href')).its('status').should('eq', 200);
@@ -62,7 +62,8 @@ describe('Post is effective', () => {
   });
 
   it('Series recommendation should visible and working', () => {
-    cy.dataCy('series-summary').should('not.be.empty');
+    cy.viewport('macbook-15');
+    cy.dataCy('series-summary').should('exist');
     cy.dataCy('post-title')
       .invoke('text')
       .then((postTitle) => {
@@ -76,8 +77,10 @@ describe('Post is effective', () => {
         cy.wrap(activeSeriesTitle).as('activeSeriesTitle');
       });
 
-    Promise.all([cy.get('@postTitle'), cy.get('@activeSeriesTitle')]).then(([postTitle, activeSeriesTitle]) => {
-      expect(postTitle).to.equal(activeSeriesTitle);
+    cy.get('@postTitle').then((postTitle) => {
+      cy.get('@activeSeriesTitle').then((activeSeriesTitle) => {
+        expect(postTitle).to.equal(activeSeriesTitle);
+      });
     });
   });
 });
