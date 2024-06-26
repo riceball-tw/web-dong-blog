@@ -92,6 +92,12 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
       
       <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
         <PostTableOfContent {headings} />
+        {
+          postsInSeries.length ? 
+            <PostSeries currentPost={post} 
+            postsInSeries={postsInSeries} />
+         : ''
+         }
         <!-- Post Date Info -->
         <div class="inline-flex w-full flex-col gap-2 p-4">
           <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
@@ -126,14 +132,6 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
       </div>
       </aside>
       <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
-      {
-        postsInSeries.length ? 
-         <div class="col-start-2">
-          <PostSeries currentPost={post} 
-          postsInSeries={postsInSeries} />
-         </div>
-       : ''
-       }
       <Utteranc />
     </article>
   </main>
