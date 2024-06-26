@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Accordion from '@/components/atoms/accordion/Accordion.astro'
+import { Icon } from 'astro-icon/components';
 
 export interface Props {
   currentPost: CollectionEntry<'post'>;
@@ -11,13 +12,18 @@ const { currentPost, postsInSeries } = Astro.props
 
 <div data-cy="series-summary" data-pagefind-ignore="all">
 
-<Accordion isOpened={false} summary={`${currentPost.data.series}`}>
-  <ul>
+<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series}系列`}>
+  <ul class='pb-4'>
   {postsInSeries.map(({data, slug}) => {
    const isCurrentPost = currentPost.slug === slug
    return (
       <li>
-        <a class={`hover:underline no-underline hover:opacity-100 inline-block ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`}  data-cy={`${isCurrentPost ? "series-active" : ''}`}  href={`/post/${slug}`}>{data.titleTC}</a>
+        <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} href={`/post/${slug}`}>
+        {isCurrentPost && <span>
+          <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
+        </span>}
+          <span data-cy={`${isCurrentPost ? "series-active" : ''}`}>{data.titleTC}</span>
+        </a>
       </li>
     )
   })}
