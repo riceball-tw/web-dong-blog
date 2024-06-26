@@ -12,7 +12,7 @@ const { summary, iconName } = Astro.props
 <details style="max-width: 400px;" class="w-full" open>
   <summary class="flex items-center gap-4 rounded py-4 px-4 font-medium tracking-wider cursor-pointer hover:bg-primary/10 border border-transparent hover:border-primary/20 transition-colors">
     <div class="border border-primary/30 bg-primary/20 rounded p-2">
-      <Icon size={24} name={iconName} title="" />
+      <Icon size={24} name={iconName} title={`${summary} 圖示`} />
     </div>
     { summary }
   </summary>
