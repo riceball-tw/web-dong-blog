@@ -35,6 +35,14 @@ export default {
       // variable colors with <alpha-value> not working with theme function on plugins
       // https://github.com/tailwindlabs/tailwindcss/issues/9143#issuecomment-1579382345
       typography: ({ theme }: PluginUtils) => ({
+        '2xl': {
+          css: {
+            img: {
+              marginTop: theme('spacing.0'),
+              marginBottom: theme('spacing.0'),
+            },
+          },
+        },
         xl: {
           css: {
             '*': {
