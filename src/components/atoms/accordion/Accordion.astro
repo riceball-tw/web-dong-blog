@@ -1,83 +1,22 @@
 ---
+import { Icon } from 'astro-icon/components'
+
 interface Props {
   summary: string;
+  iconName: string;
+  isOpened?: boolean;
 }
-const { summary } = Astro.props
-const prefixedSummary = `summary-${summary}`
+const { summary, iconName } = Astro.props
 ---
 
-<input checked class="accordion-input" type="checkbox" name={prefixedSummary} id={prefixedSummary} />
-<details class="accordion" open>
-  <summary class="accordion-summary">
-    <label data-cy="accordion-toggle" class="accordion-label px-4 group" for={prefixedSummary}>
-      <span class="hover:underline group-hover:underline">
-        { summary }
-      </span>
-    </label>
+<details style="max-width: 400px;" class="w-full" open>
+  <summary class="flex items-center gap-4 rounded py-4 px-4 font-medium tracking-wider cursor-pointer hover:bg-primary/10 border border-transparent hover:border-primary/20 transition-colors">
+    <div class="border border-primary/30 bg-primary/20 rounded p-2">
+      <Icon size={24} name={iconName} title={`${summary} 圖示`} />
+    </div>
+    { summary }
   </summary>
-    <div data-cy="accordion-content" data-accordion-content style="height: calc(100% - var(--accordion-summary-height))" class="accordion-content overflow-y-auto">
+    <div data-cy="accordion-content" style="max-height: 500px; scrollbar-width: thin;" class="overflow-y-auto">
     <slot/>
   </div>
 </details>
-
-
-<style>
-  .accordion-input {
-    display: none;
-  }
-
-  /* Two approaches to animate <details> element:
-    1) Use adjacent sibling combinator (+)
-    2) Use :has() pseudo-class, support might be limited
-  */
-  .accordion-input:checked + .accordion,
-  .accordion:has(.accordion-input:checked) {
-    max-height: var(--accordion-max-height);
-  }
-
-  .accordion-input:checked + .accordion .accordion-label::before,
-  .accordion:has(.accordion-input:checked) .accordion-label::before {
-    rotate: 90deg;
-    transition: rotate 100ms ease-out;
-  }
-
-  /* The key is to start <details> element in the "open" state...
-    ...and animate its max-height value by toggling a checkbox. */
-  .accordion {
-    height: var(--accordion-max-height); /* Make children elements able to get accordion height */
-    max-height: var(--accordion-summary-height);
-    overflow: hidden;
-    transition: max-height 200ms ease-out;
-  }
-
-  .accordion-summary {
-    display: block;
-  }
-
-  /* <label> element to check the checkbox */
-  .accordion-label {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: var(--accordion-summary-height); /* This height value must be equal to max-height value of <details> element  */
-    letter-spacing: theme(letterSpacing.wider);
-  }
-
-  .accordion-label:hover {
-    cursor: pointer;
-  }
-
-  .accordion-label::before {
-    content: "⏵";
-    font-size: 1.5rem;
-    height: var(--accordion-summary-height);
-    display: flex;
-    align-items: center;
-    margin-right: theme(spacing.2);
-    transition: rotate 100ms ease-out;
-  }
-
-  .accordion-content {
-    scrollbar-width: thin
-  }
-</style>
