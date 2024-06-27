@@ -20,8 +20,8 @@ const { shorts, currentSlug } = Astro.props
       return (
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
         {/* Index */}
-        <div class={`${isActiveShort ? 'font-bold' : ''}`}>#{shorts.length - index}</div>
-        <div>
+        <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shorts.length - index}</div>
+        <div class="w-full">
           {/* Title */}
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : 'opacity-60'}
