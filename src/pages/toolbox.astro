@@ -5,7 +5,7 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Footer from '@/components/app/Footer.astro';
 import Navbar from '@/components/app/Navbar.astro';
-import YoutubeChannels from '@/components/toolbox/YoutubeChannels.astro';
+import YoutubeChannels from '@/components/molecules/youtube-channels/YoutubeChannels.astro';
 
 const toolboxSites = await getCollection('toolbox');
 const categorizedSites = toolboxSites.reduce((categorizedData: Record<string, any[]>, site) => {
