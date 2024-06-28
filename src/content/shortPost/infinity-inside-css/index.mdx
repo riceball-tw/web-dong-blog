@@ -1,0 +1,18 @@
+---
+titleTC: 'CSS 屬性的最大值'
+publishDate: 2024-06-28
+category: 'CSS'
+social:
+  threads: 'https://www.threads.net/@webdong.dev/post/C8w1ECghRDJ'
+---
+
+之前讀到 CSS 中最大 z-index 值是 2147483647 是因為是 32 位元 signed integer 能表示的最大值，但這個數字有夠醜，有沒有其他方式表示「最大」？
+
+還真的有，CSS 存在 infinity 常數可用於表達無限，不過只能用於 calc() 當中。
+
+[Playing with Infinity in CSS - codersblock](https://codersblock.com/blog/playing-with-infinity-in-css/) 描述如果把 CSS infinity 放到不同屬性上會發生什麼事：
+
+總結有什麼實用的案例嗎？基本沒有 😐
+
+- 超圓的圓角
+- 將元素設置到畫面超遠的地方讓用戶看不到但螢幕閱讀器讀得到（好懷念的 Hack）
