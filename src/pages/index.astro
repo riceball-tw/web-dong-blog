@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import Hero from '@/components/app/Hero.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
 import uniqolor from 'uniqolor';
@@ -90,7 +90,7 @@ const currentTime = new Date()
       <CardGallery minCardWidth={700}>
         {
           categoriesLists.map((categoriesList) => (
-            <Card themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
+            <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
               <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
                 <h2
                   class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
@@ -127,7 +127,7 @@ const currentTime = new Date()
                     ),
                 )}
               </ul>
-            </Card>
+            </SpotlightCard>
           ))
         }
       </CardGallery>

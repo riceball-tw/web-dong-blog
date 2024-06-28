@@ -2,7 +2,7 @@
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import PostCard from '@/components/card/PostCard.astro';
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import { getCollection } from 'astro:content';
 import Logo from '@/components/app/Logo.astro';
 import CardGallery from '@/components/card/CardGallery.astro';
@@ -113,7 +113,7 @@ const problems = [
           problems.map((problem) => <PostCard post={problem} />)
         }
       </CardGallery>
-      <Card class="relative overflow-hidden">
+      <SpotlightCard class="relative overflow-hidden">
         <div
           class="from-primary/20 before:absolute before:left-0 before:top-0 before:block before:h-2/3 before:w-full before:bg-gradient-to-b before:content-['']"
         >
@@ -130,26 +130,26 @@ const problems = [
             height="800"
           />
         </div>
-      </Card>
+      </SpotlightCard>
     </section>
     <section class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-3">
       <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Card>
+        <SpotlightCard>
           <div class="h-full flex justify-center items-center">
             <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
             ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
             >
           </div>
-        </Card>
-        <Card>
+        </SpotlightCard>
+        <SpotlightCard>
           <div class="h-full flex justify-center items-center">
             <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
               ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
             >
           </div>
-        </Card>
+        </SpotlightCard>
       </div>
-      <Card>
+      <SpotlightCard>
         <div class="col-start-2">
           <div class="mb-8">
             <h2 class="mb-4 text-xl font-medium">準備籌畫推出「東東報」</h2>
@@ -168,7 +168,7 @@ const problems = [
             />
           </div>
         </div>
-      </Card>
+      </SpotlightCard>
     </section>
   </div>
 </BlogBase>

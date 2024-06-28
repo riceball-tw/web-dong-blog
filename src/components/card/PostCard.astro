@@ -1,6 +1,6 @@
 ---
 import type { CategoryList as CategoryListType, TagsList , PostPage } from '@/types'
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
 import { Icon } from 'astro-icon/components'
@@ -25,7 +25,7 @@ export interface Props {
 const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
 ---
 
-<Card themeColor={themeColor}>
+<SpotlightCard themeColor={themeColor}>
   <article class={`flex h-full flex-col justify-between gap-8  ${icon ? 'pt-8' : ''}`}>
     {
       icon && (
@@ -70,4 +70,4 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
       </div>
     </div>
   </article>
-</Card>
+</SpotlightCard>
