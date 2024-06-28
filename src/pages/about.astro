@@ -4,7 +4,7 @@ import Hero from '@/components/app/Hero.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import { getCollection } from 'astro:content';
-import Logo from '@/components/app/Logo.astro';
+import Logo from '@/components/atoms/logo/Logo.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
