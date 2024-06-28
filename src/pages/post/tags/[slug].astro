@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
-import CardGallery from '@/components/card/CardGallery.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import PostCard from '@/components/card/PostCard.astro';
 import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
@@ -43,7 +43,7 @@ const avaliableCurrentTagPosts = publishedPosts
     <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
   </Hero>
   <section class="px-4">
-    <CardGallery>
+    <SpotlightCardsGallery>
       {
         avaliableCurrentTagPosts.map((post) => {
           const { data } = post 
@@ -59,6 +59,6 @@ const avaliableCurrentTagPosts = publishedPosts
           )
         })
       }
-    </CardGallery>
+    </SpotlightCardsGallery>
   </section>
 </BlogBase>

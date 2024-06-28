@@ -4,7 +4,7 @@ import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import Hero from '@/components/app/Hero.astro';
-import CardGallery from '@/components/card/CardGallery.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import uniqolor from 'uniqolor';
 import { Badge } from '@/components/atoms/badge/index.ts'
 
@@ -87,7 +87,7 @@ const currentTime = new Date()
   <section>
     <h2 class="sr-only">文章種類</h2>
     <div class="flex flex-wrap gap-4 px-4">
-      <CardGallery minCardWidth={700}>
+      <SpotlightCardsGallery minCardWidth={700}>
         {
           categoriesLists.map((categoriesList) => (
             <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
@@ -130,7 +130,7 @@ const currentTime = new Date()
             </SpotlightCard>
           ))
         }
-      </CardGallery>
+      </SpotlightCardsGallery>
     </div>
   </section>
 </BlogBase>

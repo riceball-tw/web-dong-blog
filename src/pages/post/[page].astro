@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content';
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import PostCard from '@/components/card/PostCard.astro';
-import CardGallery from '@/components/card/CardGallery.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 
 export const getStaticPaths= (async ({ paginate }) => {
@@ -24,7 +24,7 @@ const { page } = Astro.props;
     <Fragment slot="headline">第 {page.currentPage} 頁</Fragment>
   </Hero>
   <section class="px-4">
-    <CardGallery>
+    <SpotlightCardsGallery>
       {
         page.data.map((post) => {
           const { slug, data } = post 
@@ -40,6 +40,6 @@ const { page } = Astro.props;
           )
         })
       }
-    </CardGallery>
+    </SpotlightCardsGallery>
   </section>
 </BlogBase>
