@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
-import ShortList from '@/components/short/ShortsList.astro'
+import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
 import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
 
@@ -30,8 +30,8 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
 ---
 <BlogBase title={titleTC} description={createExcerpt(shortPost.body)} thumbnail={{ src: `/short/${shortPost.slug}`, alt: `${titleTC}` }}>
   <main style={leaveSpaceforLastShortStyle} class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
-    <ShortList shorts={shorts} currentSlug={shortPost.slug}>
+    <ShortpostList shorts={shorts} currentSlug={shortPost.slug}>
       <Content components={{ img: PostImage }}  />
-    </ShortList>
+    </ShortpostList>
   </main>
 </BlogBase>
