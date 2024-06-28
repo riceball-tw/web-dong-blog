@@ -1,7 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import PostCard from '@/components/card/PostCard.astro';
+import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Footer from '@/components/app/Footer.astro';
 import Navbar from '@/components/app/Navbar.astro';
@@ -279,7 +279,7 @@ const youtubeChannels = await getYoutubeChannels(youtubeChannelInfos);
 
                   return (
                     <SpotlightCardsGallery>
-                      {group.map((site) => <PostCard post={site} />)}
+                      {group.map((site) => <SpotlightPostCard post={site} />)}
                     </SpotlightCardsGallery>
                   );
                 })}

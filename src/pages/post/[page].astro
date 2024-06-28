@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro'
 import { getCollection } from 'astro:content';
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
-import PostCard from '@/components/card/PostCard.astro';
+import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 
@@ -29,7 +29,7 @@ const { page } = Astro.props;
         page.data.map((post) => {
           const { slug, data } = post 
           return (
-          <PostCard
+          <SpotlightPostCard
             post={{
               categoryHref: `/post/categories/${post.data.category}/`,
               tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),

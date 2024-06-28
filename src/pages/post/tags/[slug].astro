@@ -4,7 +4,7 @@ import type { CollectionEntry } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import PostCard from '@/components/card/PostCard.astro';
+import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
 
@@ -48,7 +48,7 @@ const avaliableCurrentTagPosts = publishedPosts
         avaliableCurrentTagPosts.map((post) => {
           const { data } = post 
           return (
-          <PostCard
+          <SpotlightPostCard
             post={{
               categoryHref: `/post/categories/${post.data.category}/`,
               tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
