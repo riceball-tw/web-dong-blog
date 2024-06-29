@@ -9,7 +9,8 @@ tags: ['渲染']
 publishDate: 2023-06-01
 ---
 
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 
 export const metrics = [
   {
@@ -46,7 +47,7 @@ export const metrics = [
     title: '首次輸入延遲',
     subTitle: 'FID',
     description: '測量網頁要花多久時間去回應用戶的互動',
-    link: '/post/all-the-performance-metrics-you-need-to-know/#fid---首次輸入延遲-',
+    link: '/post/all-the-performance-metrics-you-need-to-know/#fid---首次輸入延遲已被-inp-取代-',
   },
 ];
 
@@ -93,33 +94,33 @@ export const developerExperiences = [
 
 為了創造良好的使用者體驗，就必須使用客觀的指標數值來衡量網頁體驗並修補潛在的缺點，Google 提出的[網頁核心指標](https://web.dev/learn-core-web-vitals/)與[相關的指標](https://web.dev/metrics/)就是很好的方式：
 
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<SpotlightCardsGallery class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
   {metrics.map((metric) => (
-    <a target="_blank" class="no-underline" href={metric.link}>
-      <Card>
+    <a target="_blank" class="col-auto no-underline" href={metric.link}>
+      <SpotlightCard class="h-full">
         <span class="p-2 text-sm">{metric.subTitle}</span>
         <h3 id={metric.subTitle.toLowerCase()} class="m-0 my-4 text-xl">
           {metric.title}
         </h3>
         <p class="text-base">{metric.description}</p>
-      </Card>
+      </SpotlightCard>
     </a>
   ))}
-</div>
+</SpotlightCardsGallery>
 
 ### 良好 DX 的依據
 
 為了創造良好的開發者體驗，確保開發時的效率與品質，以下是一些可以引領開發者更好開發的架構特質：
 
-<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<SpotlightCardsGallery class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
   {developerExperiences.map((advantage) => (
-    <Card>
+    <SpotlightCard class="col-auto">
       <span class="p-2">{advantage.subTitle}</span>
       <h3 class="m-0 my-4 text-xl">{advantage.title}</h3>
       <p class="text-base">{advantage.description}</p>
-    </Card>
+    </SpotlightCard>
   ))}
-</div>
+</SpotlightCardsGallery>
 
 接著參照以上的指標與特性就可以開始比較不同的網頁渲染模式之間的差異與特點了。
 

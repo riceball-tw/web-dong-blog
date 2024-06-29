@@ -1,8 +1,8 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
-import Card from '@/components/card/Card.astro';
-import CardGallery from '@/components/card/CardGallery.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import { getCollection } from 'astro:content';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
@@ -16,18 +16,18 @@ const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].s
     <Fragment slot="headline">所有標籤共 {tags.length} 項</Fragment>
   </Hero>
   <div class="mx-4">
-    <CardGallery>
+    <SpotlightCardsGallery>
       {
         tags.map((tag) => (
           <ul>
             <li class="text-3xl">
-              <Card>
+              <SpotlightCard>
                 <a data-cy="tag-link" data-astro-prefetch href={`/post/tags/${tag}/`}>{tag}</a>
-              </Card>
+              </SpotlightCard>
             </li>
           </ul>
         ))
       }
-    </CardGallery>
+    </SpotlightCardsGallery>
   </div>
 </BlogBase>
