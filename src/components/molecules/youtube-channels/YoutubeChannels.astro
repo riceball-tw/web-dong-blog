@@ -1,6 +1,6 @@
 ---
 import { Badge } from '@/components/atoms/badge/index.ts'
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 
 const { youtubeChannels } = Astro.props;
 const uniqueCategories = youtubeChannels
@@ -82,7 +82,7 @@ const uniqueCategories = youtubeChannels
             style="min-width:250px"
             class="invisible absolute left-full top-0 z-10  hidden group-hover:visible md:block"
           >
-            <Card class="bg-card text-card-foreground">
+            <SpotlightCard class="bg-card text-card-foreground">
               <a href={channel.url}>
                 <h3 class="mb-2 min-w-max text-lg font-bold">{channel.brandingSettings.channel.title}</h3>
               </a>
@@ -91,7 +91,7 @@ const uniqueCategories = youtubeChannels
                   channel.brandingSettings.channel.keywords ||
                   '沒有留下任何介紹'}
               </p>
-            </Card>
+            </SpotlightCard>
           </div>
         </li>
       );

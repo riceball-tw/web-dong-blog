@@ -1,5 +1,5 @@
 ---
-import Card from '@/components/card/Card.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 
 export interface Props {
   type: 'error' | 'warning' | 'info' | 'success';
@@ -35,14 +35,14 @@ const { icon } = infoType[type];
 ---
 
 <aside class="infobox">
-  <Card themeColor={themeColor}>
+  <SpotlightCard themeColor={themeColor}>
     <div class="flex flex-wrap items-center justify-center gap-4 md:flex-nowrap">
       <div set:html={icon} />
       <div>
         <slot />
       </div>
     </div>
-  </Card>
+  </SpotlightCard>
 </aside>
 
 <style>

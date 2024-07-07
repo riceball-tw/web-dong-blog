@@ -1,8 +1,8 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
-import Card from '@/components/card/Card.astro';
-import CardGallery from '@/components/card/CardGallery.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import { getCollection } from 'astro:content';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
@@ -18,18 +18,18 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
   </Hero>
 
   <div class="mx-4">
-    <CardGallery>
+    <SpotlightCardsGallery>
       {
         categories.map((tag) => (
           <ul>
             <li class="text-3xl">
-              <Card>
+              <SpotlightCard>
                 <a data-cy="category-link" data-astro-prefetch href={`/post/categories/${tag}/`}>{tag}</a>
-              </Card>
+              </SpotlightCard>
             </li>
           </ul>
         ))
       }
-    </CardGallery>
+    </SpotlightCardsGallery>
   </div>
 </BlogBase>
