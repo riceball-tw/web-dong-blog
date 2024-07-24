@@ -38,7 +38,11 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Install dependencies
+      - name: Install dependencies (non-Dependabot)
+        if: false
+        run: pnpm install --frozen-lockfile
+      - name: Install dependencies (Dependabot)
+        if: true
         run: pnpm install
       - name: Build and Test
         uses: cypress-io/github-action@v6
