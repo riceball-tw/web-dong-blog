@@ -38,17 +38,13 @@ jobs:
             ${{ runner.os }}-lfs-
       - name: Git LFS Pull
         run: git lfs pull
-      - name: Build for Production (main) branch
-        if: github.ref == 'refs/heads/main'
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm build
-      - name: Build for Non-production (other) branch
-        if: github.ref != 'refs/heads/main'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build and Test
         uses: cypress-io/github-action@v6
         with:
-          build: pnpm build:staging
-          start: pnpm preview
+          build: pnpm run ${{ github.ref == 'refs/heads/main' && 'build' || 'build:staging' }}
+          start: ${{ github.ref != 'refs/heads/main' && 'pnpm preview' || '' }}
       - name: Lint
         run: pnpm lint
       - name: Typecheck
