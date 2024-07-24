@@ -39,17 +39,16 @@ jobs:
       - name: Git LFS Pull
         run: git lfs pull
       - name: Install dependencies (non-Dependabot)
-        if: github.actor != 'dependabot[bot]'
+        if: false
         run: pnpm install --frozen-lockfile
       - name: Install dependencies (Dependabot)
-        if: github.actor == 'dependabot[bot]'
+        if: true
         run: pnpm install --no-frozen-lockfile
       - name: Build and Test
         uses: cypress-io/github-action@v6
         with:
           build: pnpm run ${{ github.ref == 'refs/heads/main' && 'build' || 'build:staging' }}
           start: ${{ github.ref != 'refs/heads/main' && 'pnpm preview' || '' }}
-
       - name: Lint
         run: pnpm lint
       - name: Typecheck
