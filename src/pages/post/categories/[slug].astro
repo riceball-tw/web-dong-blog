@@ -7,6 +7,7 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
+import Container from '@/components/atoms/container/Container.astro';
 
 export interface Props {
   posts: CollectionEntry<'post'>;
@@ -45,7 +46,7 @@ const avaliableCurrentCategoryPosts = publishedPosts
       搜尋文章分類：<span>{slug}</span>
     </Fragment>
   </Hero>
-  <section class="px-4">
+  <Container>
     <SpotlightCardsGallery>
       {
         avaliableCurrentCategoryPosts.map((post) => {
@@ -63,5 +64,5 @@ const avaliableCurrentCategoryPosts = publishedPosts
         })
       }
     </SpotlightCardsGallery>
-  </section>
+  </Container>
 </BlogBase>

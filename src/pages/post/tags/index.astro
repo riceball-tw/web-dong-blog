@@ -4,6 +4,7 @@ import Hero from '@/components/app/Hero.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import { getCollection } from 'astro:content';
+import Container from '@/components/atoms/container/Container.astro';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].sort((a, b) =>
@@ -15,7 +16,7 @@ const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].s
   <Hero>
     <Fragment slot="headline">所有標籤共 {tags.length} 項</Fragment>
   </Hero>
-  <div class="mx-4">
+  <Container>
     <SpotlightCardsGallery>
       {
         tags.map((tag) => (
@@ -29,5 +30,5 @@ const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].s
         ))
       }
     </SpotlightCardsGallery>
-  </div>
+  </Container>
 </BlogBase>

@@ -2,6 +2,7 @@
 import globalConfig from '@/globalConfig.ts';
 import Clickable from '@/components/app/Clickable.astro';
 import { Icon } from 'astro-icon/components'
+import Container from '@/components/atoms/container/Container.astro';
 
 interface Social {
   name: string;
@@ -11,37 +12,39 @@ interface Social {
 const { copyright, socials } = globalConfig.brand;
 ---
 
-<footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] flex flex-wrap items-center justify-between md:mb-0">
-  <!-- Copyrihgt -->
-  <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
-    <a class="hover:underline" href={copyright.url}>
-      {copyright.title}
-    </a>
-  </div>
-  <div class="mr-4 flex items-center md:mr-0">
-    <ul class="flex items-center">
-      {
-        socials.map((social: Social) => (
-          <li class="flex-1">
-            <Clickable>
-              <a class="inline-block p-4" href={social.url}>
-                <Icon size={16} name={social.iconName} title={social.name} />
-              </a>
-            </Clickable>
-          </li>
-        ))
-      }
+<Container>
+  <footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] flex flex-wrap items-center justify-between md:mb-0">
+    <!-- Copyrihgt -->
+    <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
+      <a class="hover:underline" href={copyright.url}>
+        {copyright.title}
+      </a>
+    </div>
+    <div class="mr-4 flex items-center md:mr-0">
+      <ul class="flex items-center">
+        {
+          socials.map((social: Social) => (
+            <li class="flex-1">
+              <Clickable>
+                <a class="inline-block p-4" href={social.url}>
+                  <Icon size={16} name={social.iconName} title={social.name} />
+                </a>
+              </Clickable>
+            </li>
+          ))
+        }
 
-      <li class="flex-1">
-        <Clickable>
-          <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
-            <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
-          </button>
-        </Clickable>
-      </li>
-    </ul>
-  </div>
-</footer>
+        <li class="flex-1">
+          <Clickable>
+            <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
+              <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
+            </button>
+          </Clickable>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</Container>
 
 <script is:inline>
   document.querySelector('[data-share-btn]').addEventListener('click', () => {

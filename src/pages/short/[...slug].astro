@@ -4,6 +4,7 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
 import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
+import Container from '@/components/atoms/container/Container.astro';
 
 export async function getStaticPaths() {
   const shorts = await getCollection('shortPost');
@@ -29,9 +30,11 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   .substring(0, maxLength)
 ---
 <BlogBase title={titleTC} description={createExcerpt(shortPost.body)} thumbnail={{ src: `/short/${shortPost.slug}`, alt: `${titleTC}` }}>
-  <main style={leaveSpaceforLastShortStyle} class="mt-0 px-4 pt-8 sm:mt-[var(--mainNav-height)]">
-    <ShortpostList shorts={shorts} currentSlug={shortPost.slug}>
-      <Content components={{ img: PostImage }}  />
-    </ShortpostList>
-  </main>
+  <Container>
+    <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
+      <ShortpostList shorts={shorts} currentSlug={shortPost.slug}>
+        <Content components={{ img: PostImage }}  />
+      </ShortpostList>
+    </main>
+  </Container>
 </BlogBase>
