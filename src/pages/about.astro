@@ -5,6 +5,7 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import { getCollection } from 'astro:content';
 import Logo from '@/components/atoms/logo/Logo.astro';
+import Container from '@/components/atoms/container/Container.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
@@ -106,8 +107,9 @@ const problems = [
     >
   </Hero>
 
-  <div class="flex flex-col gap-4">
-    <section class="mx-8 grid grid-cols-1 gap-x-0 gap-y-4 md:grid-cols-3 md:gap-x-4 md:gap-y-0">
+  <Container>
+  <div class="flex flex-col gap-2 md:gap-4">
+    <section class="grid grid-cols-1 gap-x-0 gap-y-2 md:grid-cols-3 md:gap-x-4 md:gap-y-0">
       <SpotlightCardsGallery class={'col-span-2'}>
         {
           problems.map((problem) => <SpotlightPostCard post={problem} />)
@@ -132,43 +134,44 @@ const problems = [
         </div>
       </SpotlightCard>
     </section>
-    <section class="mx-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-      <div class="col-span-2 grid grid-cols-1 gap-4 md:grid-cols-2">
-        <SpotlightCard>
-          <div class="h-full flex justify-center items-center">
-            <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
-            ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
-            >
-          </div>
-        </SpotlightCard>
-        <SpotlightCard>
-          <div class="h-full flex justify-center items-center">
-            <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
-              ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
-            >
-          </div>
-        </SpotlightCard>
-      </div>
-      <SpotlightCard>
-        <div class="col-start-2">
-          <div class="mb-8">
-            <h2 class="mb-4 text-xl font-medium">準備籌畫推出「東東報」</h2>
-            <p class="max-w-prose">
-              這是一個伴隨讀者一起成長的長期計畫，如果您有任何問題，歡迎在文章中留言或來信。您也可以先訂閱
-              <a class="underline" href="/rss.xml">RSS</a>，不定期發布最新消息。
-            </p>
-          </div>
-
-          <div class="flex flex-wrap gap-4">
-            <input
-              type="text"
-              class="rounded-full border-2 border-current bg-transparent p-4 disabled:cursor-not-allowed disabled:opacity-40 w-full"
-              placeholder="東東報規劃中……"
-              disabled
-            />
-          </div>
+    <section class="md:grid flex flex-col gap-2 md:gap-4 md:grid-cols-3">
+        <div class="col-span-2 grid grid-cols-1 gap-2 md:gap-4 md:grid-cols-2">
+          <SpotlightCard>
+            <div class="h-full flex justify-center items-center">
+              <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/post/"
+              ><span class="text-4xl font-bold">{publishedPosts.length - 1}+</span> 篇部落格文章</a
+              >
+            </div>
+          </SpotlightCard>
+          <SpotlightCard>
+            <div class="h-full flex justify-center items-center">
+              <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
+                ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
+              >
+            </div>
+          </SpotlightCard>
         </div>
-      </SpotlightCard>
+        <SpotlightCard>
+          <div class="col-start-2">
+            <div class="mb-8">
+              <h2 class="mb-4 text-xl font-medium">準備籌畫推出「東東報」</h2>
+              <p class="max-w-prose">
+                這是一個伴隨讀者一起成長的長期計畫，如果您有任何問題，歡迎在文章中留言或來信。您也可以先訂閱
+                <a class="underline" href="/rss.xml">RSS</a>，不定期發布最新消息。
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 md:gap-4">
+              <input
+                type="text"
+                class="rounded-full border-2 border-current bg-transparent p-4 disabled:cursor-not-allowed disabled:opacity-40 w-full"
+                placeholder="東東報規劃中……"
+                disabled
+              />
+            </div>
+          </div>
+        </SpotlightCard>
     </section>
   </div>
+</Container>
 </BlogBase>

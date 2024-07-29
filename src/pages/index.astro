@@ -6,6 +6,7 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import uniqolor from 'uniqolor';
+import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
@@ -86,51 +87,53 @@ const currentTime = new Date()
 
   <section>
     <h2 class="sr-only">文章種類</h2>
-    <div class="flex flex-wrap gap-4 px-4">
-      <SpotlightCardsGallery minCardWidth={700}>
-        {
-          categoriesLists.map((categoriesList) => (
-            <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
-              <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
-                <h2
-                  class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
-                >
-                  <a data-astro-prefetch href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
-                </h2>
-                <span class="opacity-60 transition-opacity group-hover:opacity-100">
-                  {categoriesList.posts.length} 篇文章
-                </span>
-              </div>
+    <Container>
+      <div class="flex flex-wrap gap-4">
+        <SpotlightCardsGallery minCardWidth={700}>
+          {
+            categoriesLists.map((categoriesList) => (
+              <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
+                <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
+                  <h2
+                    class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
+                  >
+                    <a data-astro-prefetch href={`/post/categories/${categoriesList.type}/`}>{categoriesList.type}</a>
+                  </h2>
+                  <span class="opacity-60 transition-opacity group-hover:opacity-100">
+                    {categoriesList.posts.length} 篇文章
+                  </span>
+                </div>
 
-              <ul class="flex flex-col gap-4">
-                {categoriesList.posts.map(
-                  (post, index) =>
-                    index + 1 < 4 && (
-                      <li class="group/list inline-flex gap-12">
-                        {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
-                        <time
-                          style="margin-top: 0.3em"
-                          class="inline-block whitespace-nowrap opacity-80 group-hover/list:opacity-100 "
-                        >
-                          {post.data.publishDate
-                            .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
-                            .replace(/\//g, '-')}
-                        </time>
-                        <a
-                          data-astro-prefetch
-                          class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                          href={`/post/${post.slug}/`}
-                        >
-                          {post.data.titleTC}
-                        </a>
-                      </li>
-                    ),
-                )}
-              </ul>
-            </SpotlightCard>
-          ))
-        }
-      </SpotlightCardsGallery>
-    </div>
+                <ul class="flex flex-col gap-4">
+                  {categoriesList.posts.map(
+                    (post, index) =>
+                      index + 1 < 4 && (
+                        <li class="group/list inline-flex gap-12">
+                          {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
+                          <time
+                            style="margin-top: 0.3em"
+                            class="inline-block whitespace-nowrap opacity-80 group-hover/list:opacity-100 "
+                          >
+                            {post.data.publishDate
+                              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
+                              .replace(/\//g, '-')}
+                          </time>
+                          <a
+                            data-astro-prefetch
+                            class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
+                            href={`/post/${post.slug}/`}
+                          >
+                            {post.data.titleTC}
+                          </a>
+                        </li>
+                      ),
+                  )}
+                </ul>
+              </SpotlightCard>
+            ))
+          }
+        </SpotlightCardsGallery>
+      </div>
+    </Container>
   </section>
 </BlogBase>

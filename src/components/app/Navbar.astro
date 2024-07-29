@@ -2,6 +2,7 @@
 import Logo from '@/components/atoms/logo/Logo.astro';
 import Logomark from '@/components/atoms/logomark/Logomark.astro';
 import { Icon } from 'astro-icon/components'
+import Container from '@/components/atoms/container/Container.astro';
 
 const mainNav = [
   {
@@ -37,55 +38,57 @@ const currentPath = pathname.slice(1);
 
 <nav
   style="padding-bottom: env(safe-area-inset-bottom);"
-  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full md:px-4 px-0 before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
 >
-<div class="flex justify-center md:justify-start md:border-b border-border gap-2">
-<a
-data-astro-prefetch
-title="網頁東東首頁"
-href="/"
-class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
->
-  <Logo class="hidden md:block" />
-  <Logomark />
-</a>
-  <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-navbar text-navbar-foreground px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
-      {
-        mainNav.map((navbarLink) => {
-          const firstRoutePath = currentPath.split('/')[0];
-          const isNavItemActive = firstRoutePath?.includes(navbarLink.url)
-          return (
-          <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
-            <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
-              <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
-              <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
-            </a>
-          </li>
-        )})
-      }
-      <li class="ml-auto inline-block">
-        <button
-          data-cy="theme-toggle"
-          data-theme-toggle
-          aria-label="網頁外觀樣式切換 Theme Toggle"
-          type="button"
-          class="p-2 inline-flex flex-col gap-0.5 md:p-4 "
+  <Container>
+    <div class="flex justify-center md:justify-start md:border-b border-border gap-2">
+        <a
+        data-astro-prefetch
+        title="網頁東東首頁"
+        href="/"
+        class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
         >
-          <div class="size-6 flex justify-center items-center w-full">
-            <div class="size-4 hidden bg-primary dark:block mx-auto rounded-full border border-white/20"></div>
-            <div class="size-4 bg-primary dark:hidden mx-auto rounded-full  border-black/20"></div>
+          <Logo class="hidden md:block" />
+          <Logomark />
+        </a>
+        <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-navbar text-navbar-foreground px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
+            {
+              mainNav.map((navbarLink) => {
+                const firstRoutePath = currentPath.split('/')[0];
+                const isNavItemActive = firstRoutePath?.includes(navbarLink.url)
+                return (
+                <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
+                  <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
+                    <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
+                    <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
+                  </a>
+                </li>
+              )})
+            }
+            <li class="ml-auto inline-block">
+              <button
+                data-cy="theme-toggle"
+                data-theme-toggle
+                aria-label="網頁外觀樣式切換 Theme Toggle"
+                type="button"
+                class="p-2 inline-flex flex-col gap-0.5 md:p-4 "
+              >
+                <div class="size-6 flex justify-center items-center w-full">
+                  <div class="size-4 hidden bg-primary dark:block mx-auto rounded-full border border-white/20"></div>
+                  <div class="size-4 bg-primary dark:hidden mx-auto rounded-full  border-black/20"></div>
+                </div>
+                <span class="text-sm md:hidden hidden">樣式</span>
+              </button>
+            </li>
+        </ul>
+        {
+          Astro.slots.has('default') &&
+          <div class="bg-navbar text-navbar-foreground rounded-full px-4 flex justify-center items-center md:bg-transparent md:border-none shadow-lg md:shadow-none">
+            <slot/>
           </div>
-          <span class="text-sm md:hidden hidden">樣式</span>
-        </button>
-      </li>
-    </ul>
-    {
-      Astro.slots.has('default') &&
-      <div class="bg-navbar text-navbar-foreground rounded-full px-4 flex justify-center items-center md:bg-transparent md:border-none shadow-lg md:shadow-none">
-        <slot/>
-      </div>
-    }
-  </div>
+        }
+    </div>
+  </Container>
 </nav>
 
 <script>
