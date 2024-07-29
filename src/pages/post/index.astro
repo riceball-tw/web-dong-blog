@@ -6,6 +6,7 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
+import Container from '@/components/atoms/container/Container.astro';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
 const categories = [...new Set(publishedPosts.map((post) => post.data.category))];
@@ -48,24 +49,26 @@ const dateSortedPublishedPosts = publishedPosts.sort(
     </Fragment>
 
   </Hero>
-  <section class="px-4">
-    <h2 class="sr-only">所有文章列表</h2>
-    <SpotlightCardsGallery>
-      {
-        dateSortedPublishedPosts.map((post) => {
-          const { data } = post
-          return (
-          <SpotlightPostCard
-          post={{
-              categoryHref: `/post/categories/${post.data.category}/`,
-              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
-              slug: post.slug,
-              ...data
-            }}
-          />
-        )
-        })
-      }
-    </SpotlightCardsGallery>
-  </section>
+  <Container>
+    <section>
+      <h2 class="sr-only">所有文章列表</h2>
+      <SpotlightCardsGallery>
+        {
+          dateSortedPublishedPosts.map((post) => {
+            const { data } = post
+            return (
+            <SpotlightPostCard
+            post={{
+                categoryHref: `/post/categories/${post.data.category}/`,
+                tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+                slug: post.slug,
+                ...data
+              }}
+            />
+          )
+          })
+        }
+      </SpotlightCardsGallery>
+    </section>
+  </Container>
 </BlogBase>

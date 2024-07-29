@@ -3,6 +3,7 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
+import Container from '@/components/atoms/container/Container.astro';
 import { getCollection } from 'astro:content';
 
 const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
@@ -17,7 +18,7 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
     <Fragment slot="headline">所有類別共 {categories.length} 項</Fragment>
   </Hero>
 
-  <div class="mx-4">
+  <Container>
     <SpotlightCardsGallery>
       {
         categories.map((tag) => (
@@ -31,5 +32,5 @@ const categories = [...new Set(publishedPosts.map((post) => post.data.category).
         ))
       }
     </SpotlightCardsGallery>
-  </div>
+  </Container>
 </BlogBase>

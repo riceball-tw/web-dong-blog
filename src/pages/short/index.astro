@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
+import Container from '@/components/atoms/container/Container.astro';
 
 const shorts = await getCollection('shortPost');
 const dateSortedPublishedShorts = shorts.sort(
@@ -17,9 +18,11 @@ const dateSortedPublishedShorts = shorts.sort(
     </Fragment>
   </Hero>
   
-  <section class="px-4">
-    <h2 class="sr-only">所有短文列表</h2>
-    <ShortpostList shorts={dateSortedPublishedShorts}>
-    </ShortpostList>
-  </section>
+  <Container>
+    <section>
+      <h2 class="sr-only">所有短文列表</h2>
+      <ShortpostList shorts={dateSortedPublishedShorts}>
+      </ShortpostList>
+    </section>
+  </Container>
 </BlogBase>

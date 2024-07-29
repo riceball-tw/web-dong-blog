@@ -6,6 +6,7 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import Footer from '@/components/app/Footer.astro';
 import Navbar from '@/components/app/Navbar.astro';
 import YoutubeChannels from '@/components/molecules/youtube-channels/YoutubeChannels.astro';
+import Container from '@/components/atoms/container/Container.astro';
 
 const toolboxSites = await getCollection('toolbox');
 const categorizedSites = toolboxSites.reduce((categorizedData: Record<string, any[]>, site) => {
@@ -249,23 +250,28 @@ const youtubeChannels = await getYoutubeChannels(youtubeChannelInfos);
     </aside>
     <main class="flex w-full min-w-0 flex-col gap-4">
       <div class="mt-0 md:mt-[var(--mainNav-height)]">
-        <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
-          <h1 class="mx-auto text-center text-3xl font-bold md:text-5xl">
-            網路上有許多<span class="text-primary">新奇有趣的網站</span>，<span
-              class="text-primary">網頁工具箱</span
-            >將協助您輕鬆探索各種多元資源 👀
-          </h1>
-        </section>
-        <section class="flex flex-col px-4">
+        <Container>
+          <section class="mx-auto my-16 flex" style="max-width: 1450px;">
+            <h1 class="mx-auto text-center text-3xl font-bold md:text-5xl">
+              網路上有許多<span class="text-primary">新奇有趣的網站</span>，<span
+                class="text-primary">網頁工具箱</span
+              >將協助您輕鬆探索各種多元資源 👀
+            </h1>
+          </section>
+        </Container>
+        <Container>
+          <section class="flex flex-col">
           <h2 id="開發設計相關頻道" class="py-8 text-xl font-bold tracking-widest before:mr-2 md:pb-16">
             <a href="#開發設計相關頻道">開發設計相關頻道</a>
           </h2>
 
           <YoutubeChannels youtubeChannels={youtubeChannels} />
-        </section>
+          </section>
+        </Container>
         {
           Object.entries(categorizedSites).map((siteCategories) => (
-              <section class=" flex flex-col px-4">
+            <Container>
+              <section class=" flex flex-col">
                 {siteCategories.map((group) => {
                   if (typeof group === 'string')
                     return (
@@ -284,15 +290,18 @@ const youtubeChannels = await getYoutubeChannels(youtubeChannelInfos);
                   );
                 })}
               </section>
+            </Container>
             ))
         }
-        <section class="mx-auto my-16 flex px-4" style="max-width: 1450px;">
-          <h2 style="max-width: 900px" class="mx-auto text-center text-3xl font-bold md:text-5xl">
-            你有<span class="text-primary">想推薦</span>或<span
-              class="text-primary">想修正</span
-            >的內容嗎？ 歡迎<a class="underline" href="https://github.com/riceball-tw/astro-blog">發個 PR</a>或告知我 🙌
-          </h2>
-        </section>
+        <Container>
+          <section class="mx-auto py-16 flex" style="max-width: 1450px;">
+            <h2 style="max-width: 900px" class="mx-auto text-center text-3xl font-bold md:text-5xl">
+              你有<span class="text-primary">想推薦</span>或<span
+                class="text-primary">想修正</span
+              >的內容嗎？ 歡迎<a class="underline" href="https://github.com/riceball-tw/astro-blog">發個 PR</a>或告知我 🙌
+            </h2>
+          </section>
+        </Container>
       </div>
     </main>
   </div>

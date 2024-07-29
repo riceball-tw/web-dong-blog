@@ -14,6 +14,7 @@ import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.a
 import { Icon } from 'astro-icon/components'
 import globalConfig from '@/globalConfig.ts';
 import PostSeries from '@/components/post/PostSeries.astro'
+import Container from '@/components/atoms/container/Container.astro';
 
 export interface Props {
   post: CollectionEntry<'post'>;
@@ -58,81 +59,83 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
       url: author.data?.social?.url,
     }}
   />
-  <main class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
-    <article
-      data-pagefind-body
-      data-article
-      data-cy="post-content"
-      class=`article-grid [grid-template-columns:1fr_min(65ch,_100%)_1fr] lg:px-auto prose mb-16 block w-full max-w-none px-8 md:prose-xl lg:grid ${rehypeAutoLinkStyle}`
-    >
-      <header class="not-prose mb-16 col-start-2">
-        {
-          icon && (
-            <div data-cy="post-icon-container" data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
-              <Icon class="text-black" name={icon.name} size={32} />
+  <Container>
+    <main class="mt-0 pt-8 px-2 sm:mt-[var(--mainNav-height)]">
+      <article
+        data-pagefind-body
+        data-article
+        data-cy="post-content"
+        class=`article-grid [grid-template-columns:1fr_min(65ch,_100%)_1fr] lg:px-auto prose mb-16 block w-full max-w-none md:prose-xl lg:grid ${rehypeAutoLinkStyle}`
+      >
+        <header class="not-prose mb-16 col-start-2">
+          {
+            icon && (
+              <div data-cy="post-icon-container" data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
+                <Icon class="text-black" name={icon.name} size={32} />
+              </div>
+            )
+          }
+          <div class="relative mx-auto">
+            <div>
+              <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{title}</div>
+              <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
             </div>
-          )
-        }
-        <div class="relative mx-auto">
-          <div>
-            <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{title}</div>
-            <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
+            <div class="flex justify-between">
+              <div class="flex md:block">
+                <CategoryList categoryHref={`/post/categories/${category}/`} {category} />
+                <TagsList {tagHrefs} {tags} />
+              </div>
+            </div>
           </div>
-          <div class="flex justify-between">
-            <div class="flex md:block">
-              <CategoryList categoryHref={`/post/categories/${category}/`} {category} />
-              <TagsList {tagHrefs} {tags} />
+        </header>
+    
+        <aside 
+        style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
+        
+        <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
+          <PostTableOfContent {headings} />
+          {
+            postsInSeries.length ? 
+              <PostSeries currentPost={post} 
+              postsInSeries={postsInSeries} />
+          : ''
+          }
+          <!-- Post Date Info -->
+          <div class="inline-flex w-full flex-col gap-2 p-4">
+            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+              發布日期：
+              <time data-pagefind-sort="date">
+                {
+                  publishDate
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                }
+              </time>
+            </div>
+            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+              <span>最後更新：</span>
+              <a
+                data-pagefind-ignore="all"
+                href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
+                class=""
+              >
+                <span>
+                {
+                  lastModifiedDate ?
+                  lastModifiedDate
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                    : '查看更新紀錄'
+                }
+                </span>
+              </a>
             </div>
           </div>
         </div>
-      </header>
-   
-      <aside 
-      style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
-      
-      <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
-        <PostTableOfContent {headings} />
-        {
-          postsInSeries.length ? 
-            <PostSeries currentPost={post} 
-            postsInSeries={postsInSeries} />
-         : ''
-         }
-        <!-- Post Date Info -->
-        <div class="inline-flex w-full flex-col gap-2 p-4">
-          <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-            發布日期：
-            <time data-pagefind-sort="date">
-              {
-                publishDate
-                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                  .replace(/\//g, '-')
-              }
-            </time>
-          </div>
-          <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-            <span>最後更新：</span>
-            <a
-              data-pagefind-ignore="all"
-              href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
-              class=""
-            >
-              <span>
-              {
-                lastModifiedDate ?
-                lastModifiedDate
-                  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-                  .replace(/\//g, '-')
-                  : '查看更新紀錄'
-              }
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-      </aside>
-      <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
-      <Utteranc />
-    </article>
-  </main>
+        </aside>
+        <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
+        <Utteranc />
+      </article>
+    </main>
+  </Container>
 </BlogBase>
