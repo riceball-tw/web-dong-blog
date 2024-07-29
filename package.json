@@ -61,7 +61,7 @@
     "@iconify-json/material-symbols": "^1.1.78",
     "@iconify-json/simple-icons": "^1.1.99",
     "@lhci/cli": "^0.13.0",
-    "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/typography": "^0.5.13",
     "@types/markdown-it": "^14.1.1",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
