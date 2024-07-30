@@ -1,0 +1,55 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:oil-barrel-outline-rounded', title: '桶子符號' }
+title: 'What is Barrel File?'
+titleTC: '什麼是桶文件（Barrel File）模式？'
+excerpt: '會想調查這個主題是因為目前所在的團隊大量地使用到這樣的模式，但 Vite 並不會在開發中進行 Tree Shake 就導致每一次開發環境都有大量的無用代碼被打包進去，嚴重影響到開發體驗。因此研究一下這種方法的理念與優缺點以架構更好的專案。'
+category: '模式'
+tags: ['桶文件']
+publishDate: 2024-07-30
+---
+
+## 前言
+
+近期在管理 Monorepo 當中的檔案時才發現一個有趣的輸出管理模式：桶文件（Barrel File），因此研究一下這種方法的理念與優缺點以架構更好的專案。
+
+## 什麼是桶文件（Barrel File）模式？
+
+桶文件在 TypeScript 或 JavaScript 當中是指群組化多個輸出的模組於單一檔案當中，方便有個統一的接口去引入。
+
+舉例來說有三個模組（`moduleA.js`、`moduleB.js`、`moduleC.js`），想要運用桶文件的方式統一管理它們，就可以額外創建一個 `index.js` 並在裡面引入這三個模組，然後再將 `index.js` 當作這三個模組的接口。
+
+```javascript
+// foobar/index.js
+export { default as moduleA } from './moduleA.js';
+export { default as moduleB } from './moduleB.js';
+export { default as moduleC } from './moduleC.js';
+```
+
+如是你便可以透過引入單一檔案來一次性取得這三個模組：
+
+```javascript
+import { value1, value2, value3 } from './foobar';
+```
+
+這樣的模式好處顯而易見，可以有效的管理模組的輸出，增進模組引入的閱讀性，打造乾淨一致的介面供外部使用，特別是在 Icon 庫或元件庫都很常見到這樣的模式。
+
+## 潛在問題
+
+- **開發體驗疑慮**：桶文件可能會讓開發者沒辦法清楚的直接看見模組的來源，特別是在大型專案有多層次的桶文件時。並不是所有開發環境都支援輕鬆跳轉到引入檔案的來源，多層次的輸出引入可能造成困擾。
+- **建構與分析開銷**：如果使用的 bundler 不支援或沒有正確設定 [Tree Shake](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking)（移除沒用到的代碼），所有的沒有真正用到的模組仍會被打包進去，增加大量的無用代碼。就算有支援的 bundler 也會需要分析桶文件的結構，才能正確的移除沒用到的模組。
+- **測試與 Linter 開銷**：測試會如果每次訪問透過桶文件訪問模組會需要加載每個模組，增加測試的時間。import 檢測相關的 Linter 也會因為桶文件而增加檢測的複雜度。
+
+## 總結
+
+有的人認為桶文件是個 Anti-Pattern 沒有任何好處，但也有人認為這麼做可以更好的組織模組、統一接口並增進可讀性。
+
+我的想法是如果你的 Bundler 是強大支援 Tree Shake 並且團隊成員都認可這種模式，那麼桶文件是個可行的選項。舉例：Vercel 有寫一篇文章描述 Next 如何克服桶文件造成的問題：[How we optimized package imports in Next.js - Vercel](https://vercel.com/blog/how-we-optimized-package-imports-in-next-js)
+
+會想調查這個主題是因為目前所在的團隊大量地使用到這樣的模式，但 [Vite 並不會在開發中進行 Tree Shake](https://github.com/vitejs/vite/issues/8237#issuecomment-1285887097) 就導致每一次開發環境都有大量的無用代碼被打包進去，嚴重影響到開發體驗。
+
+## 延伸閱讀
+
+- [Barrel files in JavaScript - flaming.codes](https://flaming.codes/en/posts/barrel-files-in-javascript/)
+- [Why you should avoid Barrel Files in JavaScript Modules? - Bart](https://laniewski.me/blog/pitfalls-of-barrel-files-in-javascript-modules/)
+- [Please Stop Using Barrel Files - TkDodo's blog](https://tkdodo.eu/blog/please-stop-using-barrel-files)
