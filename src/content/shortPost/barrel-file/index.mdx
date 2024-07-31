@@ -1,0 +1,16 @@
+---
+titleTC: 什麼是桶文件（Barrel File）模式？
+publishDate: 2024-07-30
+category: '模式'
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C-DQPWZhSde
+---
+
+![Barrel File 範例](barrel-file-example.webp)
+
+簡單來說就是創一個檔案，把所有模組都引入再輸出。
+
+會想調查這個主題是因為目前所在的團隊大量地使用到這樣的模式，但 Vite 並不會在開發中進行 Tree Shake（移除沒用到的代碼）導致每一次開發環境都有大量的無用代碼被打包進去，嚴重影響到開發體驗。
+
+有的人認為桶文件是個 Anti-Pattern 沒有任何好處，但也有人認為這麼做可以更好的組織模組、統一接口並增進可讀性。
+更多細節分析可以參考新寫的文章：[什麼是桶文件（Barrel File）模式？](https://www.webdong.dev/post/what-is-barrel-file/)
