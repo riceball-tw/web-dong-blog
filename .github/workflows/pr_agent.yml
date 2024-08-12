@@ -20,3 +20,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONFIG.MODEL: 'gpt-4o-mini'
           CONFIG.MODEL_TURBO: 'gpt-4o-mini'
+          CONFIG.FALLBACK_MODELS: 'gpt-3.5-turbo'
