@@ -1,15 +1,14 @@
 ---
 import Base from '@/layouts/Base.astro';
-import { getCollection } from 'astro:content';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Footer from '@/components/app/Footer.astro';
 import Navbar from '@/components/app/Navbar.astro';
 import YoutubeChannels from '@/components/molecules/youtube-channels/YoutubeChannels.astro';
 import Container from '@/components/atoms/container/Container.astro';
+import { toolboxs } from '@/utils/getToolboxs.ts';
 
-const toolboxSites = await getCollection('toolbox');
-const categorizedSites = toolboxSites.reduce((categorizedData: Record<string, any[]>, site) => {
+const categorizedSites = toolboxs.reduce((categorizedData: Record<string, any[]>, site) => {
   const { data } = site;
   const { category } = data;
   return {

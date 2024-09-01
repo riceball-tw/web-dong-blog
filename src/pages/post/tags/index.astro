@@ -3,23 +3,18 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import { getCollection } from 'astro:content';
 import Container from '@/components/atoms/container/Container.astro';
-
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
-const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())].sort((a, b) =>
-  a.localeCompare(b, 'en', { sensitivity: 'base' }),
-);
+import { sortedPostTags } from '@/utils/getPosts.ts';
 ---
 
-<BlogBase title={`文章標籤分類`} description={`所有標籤共${tags.length}項`}>
+<BlogBase title={`文章標籤分類`} description={`所有標籤共${sortedPostTags.length}項`}>
   <Hero>
-    <Fragment slot="headline">所有標籤共 {tags.length} 項</Fragment>
+    <Fragment slot="headline">所有標籤共 {sortedPostTags.length} 項</Fragment>
   </Hero>
   <Container>
     <SpotlightCardsGallery>
       {
-        tags.map((tag) => (
+        sortedPostTags.map((tag) => (
           <ul>
             <li class="text-3xl">
               <SpotlightCard>

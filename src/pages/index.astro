@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
@@ -8,13 +7,9 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import uniqolor from 'uniqolor';
 import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
+import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
-
-const categories = [...new Set(publishedPosts.map((post) => post.data.category).flat())].sort((a, b) =>
-  a.localeCompare(b, 'en', { sensitivity: 'base' }),
-);
-const categoriesLists = categories.map((category) => ({
+const categoriesLists = sortedPostCategoryies.map((category) => ({
   type: category,
   posts: publishedPosts
     .filter((post) => post.data.category === category)

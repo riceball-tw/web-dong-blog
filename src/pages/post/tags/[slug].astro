@@ -1,6 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
@@ -8,21 +6,14 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
-
-export interface Props {
-  posts: CollectionEntry<'post'>;
-  publishedPosts: CollectionEntry<'post'>[];
-  tags: string[]
-}
+import { sortedPostTags, publishedPosts } from '@/utils/getPosts.ts'
 
 export async function getStaticPaths() {
-  const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
-  const tags = [...new Set(publishedPosts.map((post) => post.data.tags).flat())];
-  return tags.flatMap((tag) => [{ params: { slug: tag }, props: { publishedPosts, tags } }]);
+  return sortedPostTags.flatMap((tag) => [{ params: { slug: tag }, props: { posts: publishedPosts, tags: sortedPostTags } }]);
 }
 const { slug } = Astro.params;
-const { publishedPosts, tags } = Astro.props;
-const avaliableCurrentTagPosts = publishedPosts
+const { posts, tags } = Astro.props;
+const avaliableCurrentTagPosts = posts
   .filter((post) => post.data.tags.includes(slug as string))
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
