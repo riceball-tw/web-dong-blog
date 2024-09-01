@@ -1,0 +1,162 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:file-copy-outline-rounded', title: '文件符號' }
+title: 'FizzBuzz'
+titleTC: '來解 FizzBuzz 吧！附詳細解題思路'
+excerpt: '這次我透過一步一步拆解解題路徑來描述如何解題。從基本解到分離資料與邏輯、保持 immutable 以及邊緣案例還有文件編寫都有涵蓋。打印出 1 到 100 的數字、假如數字是 3 的倍數，則打印 Fizz、假如數字是 5 的倍數，則打印 Buzz、假如數字是 3 和 5 的公倍數，則打印 FizzBuzz。'
+category: '實作'
+tags: ['簡單題']
+publishDate: 2024-09-01
+---
+
+## 前言
+
+FizzBuzz 大概是最廣為人知的程式設計題目之一，它的題目是這樣的：
+
+- 打印出 `1` 到 `100` 的數字
+  - 假如數字是 `3` 的倍數，則打印 `Fizz`
+  - 假如數字是 `5` 的倍數，則打印 `Buzz`
+  - 假如數字是 `3` 和 `5` 的公倍數，則打印 `FizzBuzz`
+
+## 解題
+
+### 基本解
+
+最直接的解法即是製作一個函式會打印 `1 ~ 100` 的數字，並依照規則判斷是否要打印 `Fizz`、`Buzz` 或 `FizzBuzz`。但明顯這樣的做法會將所有數值都寫死在程式當中，未來要擴充條件時就需要修改程式碼，尚不夠靈活。
+
+```js
+function fizzBuzz(max) {
+  for (let i = 1; i <= max; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      console.log('FizzBuzz');
+    } else if (i % 3 === 0) {
+      console.log('Fizz');
+    } else if (i % 5 === 0) {
+      console.log('Buzz');
+    } else {
+      console.log(i);
+    }
+  }
+}
+
+fizzBuzz(100);
+```
+
+### 分離資料與邏輯
+
+既然可以預期規則都是 `某數字` 要打印 `某結果` 那麼或許可以使用物件來紀錄這些 Key-Value 結構的資料：
+
+```js
+function fizzBuzz(max) {
+  const map = {
+    3: 'Fizz',
+    5: 'Buzz',
+    15: 'FizzBuzz',
+  };
+
+  for (let i = 1; i <= max; i++) {
+    if (i % Object.keys(map)[0] === 0 && i % Object.keys(map)[1] === 0) {
+      console.log(Object.values(map)[2]);
+    } else if (i % Object.keys(map)[0] === 0) {
+      console.log(Object.values(map)[0]);
+    } else if (i % Object.keys(map)[1] === 0) {
+      console.log(Object.values(map)[1]);
+    } else {
+      console.log(i);
+    }
+  }
+}
+```
+
+資料是抽離出來了，但邏輯還是依賴指定 `map` 物件當中的特定內容，讓我們再寫個迴圈自動的將 `map` 物件的內容取出來，讓資料來驅動邏輯：
+
+```js
+function fizzBuzz(max) {
+  const map = {
+    3: 'Fizz',
+    5: 'Buzz',
+  };
+
+  for (let i = 1; i <= max; i++) {
+    let output = '';
+    for (const key in map) {
+      if (i % key === 0) {
+        output += map[key];
+      }
+    }
+    console.log(output || i);
+  }
+}
+```
+
+### 保持數值不變（Immutable）
+
+以上解方可以觀察到目前定義了 `i` 以及 `output` 兩個變數並且於程式中持續的變動其內容，**在某些程式開發風格當中會被視為應當避免的習慣**，我們可以嘗試看看將複寫變數的部分改為[純粹函式](https://www.webdong.dev/post/why-pure-function/)。
+
+```js
+numberReplacer(100, {
+  3: 'Fizz',
+  5: 'Buzz',
+}).forEach((value) => console.log(value));
+
+function numberReplacer(max, replacementMap) {
+  return Array.from({ length: max }, (_, index) => {
+    const currentNumber = index + 1;
+    const replacement = Object.entries(replacementMap).reduce(
+      (acc, [divisor, replaceWord]) => (currentNumber % divisor === 0 ? acc + replaceWord : acc),
+      '',
+    );
+    return replacement || currentNumber;
+  });
+}
+```
+
+### 補齊文件與檢查邊界案例
+
+JavaScript 是動態型別語言，因此其他人在使用這個函式時可能不清楚具體參數的需求，這裡透過 JSDoc 來補齊文件以及添加 Runtime 型別檢測，也可以考慮使用 TypeScript 來檢測型別：
+
+```js
+/**
+ * 生成一陣列，將 `1` 到 `max` 之間的數字取代為指定字串
+ *
+ * @param {number} max - 最大數值
+ * @param {Object<number, string>} replacementMap - key 為除數，value 為取代字串
+ * @returns {Array<string | number>} - 取代後的數值
+ * @throws {TypeError} 如 `max` 不是正整數
+ * @throws {TypeError} `replacementMap` 內的 key 必須是正整數
+ * @throws {TypeError} 如 `replacementMap` 不是物件
+ * @example
+ * numberReplacer(15, { 3: 'Fizz', 5: 'Buzz' });
+ * // Returns [1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz']
+ */
+function numberReplacer(max, replacementMap) {
+  if (!Number.isInteger(max) || max <= 0) {
+    throw new TypeError('max 必須是正整數');
+  }
+
+  if (typeof replacementMap !== 'object' || replacementMap === null) {
+    throw new TypeError('replacementMap 必須是物件');
+  }
+
+  return Array.from({ length: max }, (_, index) => {
+    const currentNumber = index + 1;
+    const replacement = Object.entries(replacementMap).reduce((acc, [divisor, replaceWord]) => {
+      if (!Number.isInteger(Number(divisor)) || Number(divisor) <= 0) {
+        throw new TypeError('replacementMap 內的 key 必須是正整數');
+      }
+
+      return currentNumber % Number(divisor) === 0 ? acc + replaceWord : acc;
+    }, '');
+    return replacement || currentNumber;
+  });
+}
+
+numberReplacer(100, {
+  3: 'Fizz',
+  5: 'Buzz',
+}).forEach((value) => console.log(value));
+```
+
+## 延伸閱讀
+
+- [FizzBuzz: One Simple Interview Question - Tom Scott](https://www.youtube.com/watch?v=QPZ0pIK_wsc)
