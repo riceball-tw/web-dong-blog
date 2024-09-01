@@ -3,13 +3,11 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
-import { getCollection } from 'astro:content';
 import Logo from '@/components/atoms/logo/Logo.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-
-const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
-const toolboxSites = await getCollection('toolbox');
+import { publishedPosts } from '@/utils/getPosts.ts';
+import { toolboxs } from '@/utils/getToolboxs.ts';
 
 const problems = [
   {
@@ -146,7 +144,7 @@ const problems = [
           <SpotlightCard>
             <div class="h-full flex justify-center items-center">
               <a data-astro-prefetch class="inline-flex flex-col transition-opacity hover:opacity-80" href="/toolbox/"
-                ><span class="text-4xl font-bold">{toolboxSites.length - 1}+</span> 則網站資源</a
+                ><span class="text-4xl font-bold">{toolboxs.length - 1}+</span> 則網站資源</a
               >
             </div>
           </SpotlightCard>

@@ -1,6 +1,6 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
-import { getCollection, getEntry} from 'astro:content';
+import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import TagsList from '@/components/post/TagsList.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
@@ -15,20 +15,12 @@ import { Icon } from 'astro-icon/components'
 import globalConfig from '@/globalConfig.ts';
 import PostSeries from '@/components/post/PostSeries.astro'
 import Container from '@/components/atoms/container/Container.astro';
-
-export interface Props {
-  post: CollectionEntry<'post'>;
-  postsInSeries: CollectionEntry<'post'>[];
-}
+import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
 
 export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
     return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
   }
-  const publishedPosts = await getCollection('post', (post) => (import.meta.env.MODE === "production" ? !post.data.isDraft : true));
-  const dateSortedPublishedPosts = publishedPosts.sort(
-    (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
-  )
   return dateSortedPublishedPosts.map((post) => {
     const postsInSeries = getTargetSeriesPosts(dateSortedPublishedPosts, post.data.series);
     return ({

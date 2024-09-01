@@ -1,8 +1,9 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
 import fs from 'fs';
 import path from 'path';
 import { ImageResponse } from '@vercel/og';
 import globalConfig from '@/globalConfig.ts';
+import { publishedPosts } from '@/utils/getPosts.ts';
 
 interface Props {
   params: { slug: string };
@@ -100,8 +101,7 @@ export async function GET({ props }: Props) {
 
 // to generate an image for each blog posts in a collection
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('post');
-  return blogPosts.map((post) => ({
+  return publishedPosts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
