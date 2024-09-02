@@ -157,6 +157,26 @@ numberReplacer(100, {
 }).forEach((value) => console.log(value));
 ```
 
+### 藉由局部應用來簡化 `numberReplacer`
+
+你可能會想說：老天！只是要印個 `FizzBuzz` 為什麼每次都要透過 `numberReplacer` 來計算？有沒有辦法單純創個函式只傳入最大值就好？就像一開始一樣？讓我們用局部應用函式來透過創造抽象達成簡化：
+
+```js
+const createFizzBuzz = (max) => {
+  return numberReplacer(max, {
+    3: 'Fizz',
+    5: 'Buzz',
+  });
+};
+const fizzBuzz100 = createFizzBuzz(100);
+fizzBuzz100.forEach((value) => console.log(value));
+
+const fizzBuzz15 = createFizzBuzz(15);
+fizzBuzz15.forEach((value) => console.log(value));
+```
+
+在這次解題過程中我貫徹 [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) 原則，並且透過不斷的重構來提升程式碼的可讀性與可維護性，但也可以思考真的有必要製造更多抽象嗎？過早的最佳化是萬惡之源，或許 [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)。
+
 ## 延伸閱讀
 
 - [FizzBuzz: One Simple Interview Question - Tom Scott](https://www.youtube.com/watch?v=QPZ0pIK_wsc)
