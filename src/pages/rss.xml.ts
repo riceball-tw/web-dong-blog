@@ -2,6 +2,11 @@ import rss from '@astrojs/rss';
 import globalConfig from '@/globalConfig.ts';
 import type { APIContext } from 'astro';
 import { publishedPosts } from '@/utils/getPosts.ts';
+import { shorts } from '@/utils/getShortposts.ts';
+import sanitizeHtml from 'sanitize-html';
+import MarkdownIt from 'markdown-it';
+
+const parser = new MarkdownIt();
 
 const { brand } = globalConfig;
 
@@ -11,16 +16,32 @@ export const GET = async (context: APIContext) => {
     title: brand.nameTC,
     description: brand.description,
     site: context.site || '',
-    items: publishedPosts.map((post) => {
-      const { slug } = post;
-      const { titleTC, excerpt, publishDate, category, tags } = post.data;
-      return {
-        title: titleTC,
-        description: excerpt,
-        pubDate: publishDate,
-        link: `post/${slug}`,
-        categories: [category, ...tags],
-      };
+    items: [...publishedPosts, ...shorts].map((collectionItem) => {
+      const { slug } = collectionItem;
+      if (collectionItem.collection === 'shortPost') {
+        const { body } = collectionItem;
+        const { titleTC, publishDate, category } = collectionItem.data;
+        return {
+          title: titleTC,
+          content: sanitizeHtml(parser.render(body)),
+          pubDate: publishDate,
+          link: `short/${slug}/#${slug}`,
+          categories: [category],
+        };
+      }
+
+      if (collectionItem.collection === 'post') {
+        const { titleTC, excerpt, publishDate, category, tags } = collectionItem.data;
+        return {
+          title: titleTC,
+          description: excerpt,
+          pubDate: publishDate,
+          link: `post/${slug}`,
+          categories: [category, ...tags],
+        };
+      }
+
+      return {};
     }),
   });
 
