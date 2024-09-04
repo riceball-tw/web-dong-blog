@@ -50,6 +50,7 @@ export const postSchema = z.object({
 export const shortPostSchema = z.object({
   titleTC: z.string().max(60),
   publishDate: z.date(),
+  category: z.string().default('unsorted'),
   social: z
     .object({
       threads: z.string().optional(),
