@@ -11,12 +11,16 @@ export const GET = async (context: APIContext) => {
     title: brand.nameTC,
     description: brand.description,
     site: context.site || '',
-    items: publishedPosts.map((post) => ({
-      title: post.data.titleTC,
-      description: post.data.excerpt,
-      pubDate: post.data.publishDate,
-      link: `post/${post.slug}`,
-    })),
+    items: publishedPosts.map((post) => {
+      const { slug } = post;
+      const { titleTC, excerpt, publishDate } = post.data;
+      return {
+        title: titleTC,
+        description: excerpt,
+        pubDate: publishDate,
+        link: `post/${slug}`,
+      };
+    }),
   });
 
   return new Response(rssContent.body);
