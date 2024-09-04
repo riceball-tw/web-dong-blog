@@ -13,12 +13,13 @@ export const GET = async (context: APIContext) => {
     site: context.site || '',
     items: publishedPosts.map((post) => {
       const { slug } = post;
-      const { titleTC, excerpt, publishDate } = post.data;
+      const { titleTC, excerpt, publishDate, category, tags } = post.data;
       return {
         title: titleTC,
         description: excerpt,
         pubDate: publishDate,
         link: `post/${slug}`,
+        categories: [category, ...tags],
       };
     }),
   });
