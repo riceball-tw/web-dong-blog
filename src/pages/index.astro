@@ -2,6 +2,7 @@
 import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import Pagefind from '@/components/app/index/Pagefind.astro'
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import uniqolor from 'uniqolor';
@@ -20,49 +21,6 @@ const currentTime = new Date()
   .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
   .replace(/\//g, '-');
 ---
-
-<script>
-  function initPagefind() {
-    const pagefindElement = document.getElementById('pagefind-search');
-    if (pagefindElement?.dataset.initialized) return;
-    pagefindElement?.setAttribute("data-initialized", 'true')
-    // External Code, Skip lint
-    // https://pagefind.app/docs/ui-usage/
-    // @ts-ignore-next-line
-    // eslint-disable-next-line no-new, no-undef
-    new PagefindUI({
-      element: "#pagefind-search",
-      translations: {
-        placeholder: "搜尋網頁東東所有文章……"
-      },
-      showSubResults: true,
-      showImages: false,
-      resetStyles: false,
-      excerptLength: 60,
-      sort: { date: "desc" },
-    });
-  }
-
-  initPagefind()
-</script>
-
-<style is:inline>
-  #pagefind-search .pagefind-ui__search-input::placeholder {
-    opacity: 0.6;
-    color: var(--pagefind-ui-placeholder);
-    font-weight: normal;
-  }
-  #pagefind-search .pagefind-ui__search-input:focus {
-    outline: none;
-    background-color: var(--pagefind-ui-input-active)
-  }
-
-  #pagefind-search .pagefind-ui__form::before {
-    background-color: var(--pagefind-ui-border);
-  }
-
-</style>
-
 <BlogBase>
   <slot name="head">
     <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
@@ -77,7 +35,7 @@ const currentTime = new Date()
       class="text-primary">設計與架構網頁</span
       >
     </span>
-    <div class="container mx-auto text-left mt-0 md:mt-8" id="pagefind-search"></div>
+    <Pagefind/>
   </Hero>
 
   <section>
