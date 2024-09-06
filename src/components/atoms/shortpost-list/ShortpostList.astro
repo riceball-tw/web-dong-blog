@@ -9,6 +9,7 @@ export type Props = {
 } 
 
 const { shorts, currentSlug } = Astro.props
+const activeShortIndex = shorts.findIndex((short) => short.slug === currentSlug)
 
 ---
 <ul class="space-y-4 md:space-y-8">
@@ -17,6 +18,13 @@ const { shorts, currentSlug } = Astro.props
       const isActiveShort = short.slug === currentSlug
       const isNoActiveShort = !currentSlug
       const HeadingComponent = isActiveShort ? 'h1' : 'h2'
+
+      const maxOpacity = 95;
+      const minOpacity = 40;
+      const distanceToCurrentShort = Math.abs(activeShortIndex - index);
+      const harmonicFactor = 2 / (distanceToCurrentShort + 1);
+      const headingOpacity = Math.min(Math.max(harmonicFactor * maxOpacity, minOpacity), 100);
+
       return (
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
         {/* Index */}
@@ -24,10 +32,11 @@ const { shorts, currentSlug } = Astro.props
         <div class="w-full">
           {/* Title */}
           <a class={`hover:opacity-100 
-            ${isActiveShort ? 'opacity-100 mb-4 inline-block' : 'opacity-60'}
+            ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}
             ${isNoActiveShort || !isActiveShort ? '' : 'font-bold'}
             `}  href={`/short/${short.slug}/#${short.slug}`}>
-            <HeadingComponent style='scroll-margin: calc(var(--mainNav-height) + 1rem)' id={short.slug}>
+              
+            <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={short.slug}>
               <span>{short.data.titleTC}</span>
             </HeadingComponent>
           </a>
