@@ -18,7 +18,7 @@ const { currentPost, postsInSeries } = Astro.props
    const isCurrentPost = currentPost.slug === slug
    return (
       <li>
-        <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} href={`/post/${slug}`}>
+        <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} href={`/post/${slug}/`}>
         {isCurrentPost && <span>
           <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
         </span>}
