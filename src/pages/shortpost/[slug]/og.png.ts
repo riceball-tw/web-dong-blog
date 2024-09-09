@@ -3,16 +3,16 @@ import fs from 'fs';
 import path from 'path';
 import { ImageResponse } from '@vercel/og';
 import globalConfig from '@/globalConfig.ts';
-import { shorts } from '@/utils/getShortposts.ts';
+import { shortposts } from '@/utils/getShortposts.ts';
 
 interface Props {
   params: { slug: string };
-  props: { shortPost: CollectionEntry<'shortPost'> };
+  props: { shortpost: CollectionEntry<'shortpost'> };
 }
 
 export async function GET({ props }: Props) {
-  const { shortPost } = props;
-  const { themeColor } = shortPost.data;
+  const { shortpost } = props;
+  const { themeColor } = shortpost.data;
   const NotoSansBold = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Bold.ttf'));
   const NotoSansRegular = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Regular.ttf'));
   // TODO: Hardcoded shortPost image, waiting to switch to iconify icon
@@ -51,14 +51,14 @@ export async function GET({ props }: Props) {
                 type: 'p',
                 props: {
                   style: { fontSize: 64, lineHeight: 1 },
-                  children: shortPost.data.titleTC,
+                  children: shortpost.data.titleTC,
                 },
               },
               {
                 type: 'p',
                 props: {
                   style: { fontSize: 32, fontFamily: 'Noto Sans TC Regular' },
-                  children: shortPost.data.publishDate
+                  children: shortpost.data.publishDate
                     .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
                     .replace(/\//g, '-'),
                 },
@@ -103,8 +103,8 @@ export async function GET({ props }: Props) {
 
 // to generate an image for each blog shortPosts in a collection
 export async function getStaticPaths() {
-  return shorts.map((shortPost) => ({
-    params: { slug: shortPost.slug },
-    props: { shortPost },
+  return shortposts.map((shortpost) => ({
+    params: { slug: shortpost.slug },
+    props: { shortpost },
   }));
 }

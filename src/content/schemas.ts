@@ -47,7 +47,7 @@ export const postSchema = z.object({
   permalink: z.string().optional(),
 });
 
-export const shortPostSchema = z.object({
+export const shortpostSchema = z.object({
   titleTC: z.string().max(60),
   publishDate: z.date(),
   category: z.string().default('unsorted'),

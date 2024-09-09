@@ -26,7 +26,7 @@ const mainNav = [
   {
     iconName: 'material-symbols:quick-phrases-rounded',
     name: '短文',
-    url: 'short',
+    url: 'shortpost',
     isShownOnMobile: true,
     subText: 'New',
   },
@@ -55,7 +55,7 @@ const currentPath = pathname.slice(1);
             {
               mainNav.map((navbarLink) => {
                 const firstRoutePath = currentPath.split('/')[0];
-                const isNavItemActive = firstRoutePath?.includes(navbarLink.url)
+                const isNavItemActive = firstRoutePath === navbarLink.url
                 return (
                 <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
                   <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">

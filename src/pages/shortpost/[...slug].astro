@@ -4,17 +4,17 @@ import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro
 import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedShorts } from '@/utils/getShortposts.ts';
+import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
 
 export async function getStaticPaths() {
-  return dateSortedPublishedShorts.map((short) => ({
-    params: { slug: short.slug },
-    props: { short, shorts: dateSortedPublishedShorts },
+  return dateSortedPublishedShortposts.map((shortpost) => ({
+    params: { slug: shortpost.slug },
+    props: { shortpost, shortposts: dateSortedPublishedShortposts },
   }));
 }
-const { short: shortPost, shorts } = Astro.props;
-const { titleTC } = shortPost.data;
-const { Content } = await shortPost.render();
+const { shortpost, shortposts } = Astro.props;
+const { titleTC } = shortpost.data;
+const { Content } = await shortpost.render();
 const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`
 // How to Create Excerpts With Astro
 // https://www.paulie.dev/posts/2023/09/how-to-create-excerpts-with-astro/#creating-the-substring
@@ -25,10 +25,10 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   .join(' ')
   .substring(0, maxLength)
 ---
-<BlogBase title={titleTC} description={createExcerpt(shortPost.body)} thumbnail={{ src: `/short/${shortPost.slug}`, alt: `${titleTC}` }}>
+<BlogBase title={titleTC} description={createExcerpt(shortpost.body)} thumbnail={{ src: `/shortpost/${shortpost.slug}`, alt: `${titleTC}` }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
-      <ShortpostList shorts={shorts} currentSlug={shortPost.slug}>
+      <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
         <Content components={{ img: PostImage }}  />
       </ShortpostList>
     </main>

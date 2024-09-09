@@ -1,43 +1,42 @@
 ---
-import type { ShortPage } from '@/types'
+import type { ShortpostPage } from '@/types'
 import { Icon } from 'astro-icon/components'
 
-type Short = ShortPage
 export type Props = {
-  shorts: Short[]
+  shortposts: ShortpostPage[]
   currentSlug?: string
 } 
 
-const { shorts, currentSlug } = Astro.props
-const activeShortIndex = shorts.findIndex((short) => short.slug === currentSlug)
+const { shortposts, currentSlug } = Astro.props
+const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
 
 ---
 <ul class="space-y-4 md:space-y-8">
   {
-    shorts.map((short, index) => {
-      const isActiveShort = short.slug === currentSlug
+    shortposts.map((shortpost, index) => {
+      const isActiveShort = shortpost.slug === currentSlug
       const isNoActiveShort = !currentSlug
       const HeadingComponent = isActiveShort ? 'h1' : 'h2'
 
       const maxOpacity = 95;
       const minOpacity = 40;
-      const distanceToCurrentShort = Math.abs(activeShortIndex - index);
+      const distanceToCurrentShort = Math.abs(activeShortpostIndexs - index);
       const harmonicFactor = 2 / (distanceToCurrentShort + 1);
       const headingOpacity = Math.min(Math.max(harmonicFactor * maxOpacity, minOpacity), 100);
 
       return (
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
         {/* Index */}
-        <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shorts.length - index}</div>
+        <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shortposts.length - index}</div>
         <div class="w-full">
           {/* Title */}
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}
             ${isNoActiveShort || !isActiveShort ? '' : 'font-bold'}
-            `}  href={`/short/${short.slug}/#${short.slug}`}>
+            `}  href={`/shortpost/${shortpost.slug}/#${shortpost.slug}`}>
               
-            <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={short.slug}>
-              <span>{short.data.titleTC}</span>
+            <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={shortpost.slug}>
+              <span>{shortpost.data.titleTC}</span>
             </HeadingComponent>
           </a>
 
@@ -46,10 +45,10 @@ const activeShortIndex = shorts.findIndex((short) => short.slug === currentSlug)
             isActiveShort ? <div class="prose md:prose-2xl"><slot /></div> : ''
           }
           {/* Social */}
-          {short.data?.social ? <div class={`pt-4 ${(isActiveShort) ? '' : 'hidden'}`}>
+          {shortpost.data?.social ? <div class={`pt-4 ${(isActiveShort) ? '' : 'hidden'}`}>
             {
-              short.data?.social?.threads ? 
-            <a href={short.data.social.threads}>
+              shortpost.data?.social?.threads ? 
+            <a href={shortpost.data.social.threads}>
               <Icon name="simple-icons:threads"></Icon>
             </a>
             : ''

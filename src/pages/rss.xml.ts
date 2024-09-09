@@ -2,7 +2,7 @@ import rss from '@astrojs/rss';
 import globalConfig from '@/globalConfig.ts';
 import type { APIContext } from 'astro';
 import { publishedPosts } from '@/utils/getPosts.ts';
-import { shorts } from '@/utils/getShortposts.ts';
+import { shortposts } from '@/utils/getShortposts.ts';
 import sanitizeHtml from 'sanitize-html';
 import MarkdownIt from 'markdown-it';
 
@@ -16,16 +16,16 @@ export const GET = async (context: APIContext) => {
     title: brand.nameTC,
     description: brand.description,
     site: context.site || '',
-    items: [...publishedPosts, ...shorts].map((collectionItem) => {
+    items: [...publishedPosts, ...shortposts].map((collectionItem) => {
       const { slug } = collectionItem;
-      if (collectionItem.collection === 'shortPost') {
+      if (collectionItem.collection === 'shortpost') {
         const { body } = collectionItem;
         const { titleTC, publishDate, category } = collectionItem.data;
         return {
           title: titleTC,
           content: sanitizeHtml(parser.render(body)),
           pubDate: publishDate,
-          link: `short/${slug}/#${slug}`,
+          link: `shortpost/${slug}/#${slug}`,
           categories: [category],
         };
       }
