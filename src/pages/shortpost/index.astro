@@ -3,20 +3,20 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedShorts } from '@/utils/getShortposts.ts';
+import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
 ---
 
-<BlogBase title={'所有短篇文章'} description={`所有短篇共 ${dateSortedPublishedShorts.length} 篇`}>
+<BlogBase title={'所有短篇文章'} description={`所有短篇共 ${dateSortedPublishedShortposts.length} 篇`}>
   <Hero>
     <Fragment slot="headline">
-      所有短文共 {dateSortedPublishedShorts.length} 篇
+      所有短文共 {dateSortedPublishedShortposts.length} 篇
     </Fragment>
   </Hero>
   
   <Container>
     <section>
       <h2 class="sr-only">所有短文列表</h2>
-      <ShortpostList shorts={dateSortedPublishedShorts}>
+      <ShortpostList shortposts={dateSortedPublishedShortposts}>
       </ShortpostList>
     </section>
   </Container>

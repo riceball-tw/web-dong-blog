@@ -25,7 +25,7 @@ export const GET = async (context: APIContext) => {
           title: titleTC,
           content: sanitizeHtml(parser.render(body)),
           pubDate: publishDate,
-          link: `short/${slug}/#${slug}`,
+          link: `shortpost/${slug}/#${slug}`,
           categories: [category],
         };
       }
