@@ -19,6 +19,10 @@ const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 export default defineConfig({
   site: 'https://www.webdong.dev',
   prefetch: true,
+  redirects: {
+    '/short': '/shortpost',
+    '/short/[...slug]': '/shortpost/[...slug]',
+  },
   markdown: {
     rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
       behavior: 'append',
