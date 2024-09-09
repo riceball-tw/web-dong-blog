@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { ImageResponse } from '@vercel/og';
 import globalConfig from '@/globalConfig.ts';
-import { shorts } from '@/utils/getShortposts.ts';
+import { shortposts } from '@/utils/getShortposts.ts';
 
 interface Props {
   params: { slug: string };
@@ -103,8 +103,8 @@ export async function GET({ props }: Props) {
 
 // to generate an image for each blog shortPosts in a collection
 export async function getStaticPaths() {
-  return shorts.map((shortPost) => ({
-    params: { slug: shortPost.slug },
-    props: { shortPost },
+  return shortposts.map((shortpost) => ({
+    params: { slug: shortpost.slug },
+    props: { shortpost },
   }));
 }
