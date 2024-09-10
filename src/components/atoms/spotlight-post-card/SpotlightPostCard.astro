@@ -43,7 +43,7 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
         {slug && !url && <a data-astro-prefetch href={`/post/${slug}/`}>{titleTC}</a>}
         {!url && !slug && titleTC}
       </h2>
-      <p class="line-clamp-3 max-w-prose tracking-wide">{excerpt}</p>
+      <p class="line-clamp-3 text-sm">{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
       {
