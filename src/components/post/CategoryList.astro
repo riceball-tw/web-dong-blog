@@ -9,11 +9,11 @@ const CategoryElement = categoryHref ? 'a' : 'div';
 
 <CategoryElement
   data-astro-prefetch
-  class="p-1.5 relative mr-4 whitespace-nowrap capitalize opacity-60 hover:opacity-100"
+  class="p-1.5 relative flex gap-1 mr-4 whitespace-nowrap capitalize opacity-60 hover:opacity-100"
   {...categoryHref && {
     href: categoryHref,
   }}
 >
-<span>@</span>
-<span data-cy="category" data-pagefind-filter="category">{category}</span>
+  <span>@</span>
+  <span data-cy="category" data-pagefind-filter="category">{category}</span>
 </CategoryElement>

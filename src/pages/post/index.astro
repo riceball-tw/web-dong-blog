@@ -14,25 +14,17 @@ import { dateSortedPublishedPosts, sortedPostCategoryies, sortedPostTags } from 
     <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
       <a data-cy="categories-link" href="/post/categories/">
         <Badge>
-          <span class="flex gap-2 items-center">
-            <Icon 
-            class=""
-            name="material-symbols:category-outline-rounded"
-            size={24}
-            ></Icon>
-              查看 { sortedPostCategoryies.length } 種類別
+          <span class="flex items-center gap-2">
+            <span class="text-base mb-0.5 font-bold">@</span>
+            <span>查看 { sortedPostCategoryies.length } 種類別</span>
           </span>
         </Badge>
       </a>
       <a data-cy="tags-link" href="/post/tags/">
         <Badge>
-          <span class="flex gap-2 items-center">
-            <Icon 
-            class=""
-            name="material-symbols:label-important-outline-rounded"
-            size={24}
-            ></Icon>
-            查看 { sortedPostTags.length } 種標籤
+          <span class="flex items-center gap-2">
+            <span class="text-base font-bold">#</span>
+            <span>查看 { sortedPostTags.length } 種標籤</span>
           </span>
         </Badge>
       </a>
