@@ -3,7 +3,6 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
-import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
@@ -24,12 +23,10 @@ const avaliableCurrentCategoryPosts = posts
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
         <a data-cy="categories-link" class="flex gap-2 items-center" href="/post/categories/">
-          <Icon 
-          class=""
-          name="material-symbols:category-outline-rounded"
-          size={24}
-          ></Icon>
-            查看 { categories.length } 種類別
+            <span class="flex items-center gap-2">
+              <span class="text-base mb-0.5 font-bold">@</span>
+              <span>查看 { categories.length } 種類別</span>
+            </span>
         </a>
       </Badge>
     </div>

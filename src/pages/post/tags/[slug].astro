@@ -3,7 +3,6 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
-import { Icon } from 'astro-icon/components'
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostTags, publishedPosts } from '@/utils/getPosts.ts'
@@ -23,12 +22,10 @@ const avaliableCurrentTagPosts = posts
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
         <a data-cy="tags-link" class="flex gap-2 items-center" href="/post/tags/">
-          <Icon 
-          class=""
-          name="material-symbols:label-important-outline-rounded"
-          size={24}
-          ></Icon>
-          查看 { tags.length } 種標籤
+          <span class="flex items-center gap-2">
+            <span class="text-base font-bold">#</span>
+            <span>查看 { tags.length } 種標籤</span>
+          </span>
         </a>
       </Badge>
     </div>
