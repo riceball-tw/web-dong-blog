@@ -1,0 +1,96 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:grid-view-outline-rounded', title: '網格符號' }
+title: 'Real use case of CSS Grid: extended sidebar'
+titleTC: 'CSS Grid 真實案例：凸出的側欄'
+excerpt: '實際網頁很少遇到特殊的視覺會需要動用到 CSS Grid 的情況，而我近期在製作一些比較特殊視覺的網頁布局，事後感覺特別適合作為一個 CSS Grid 的啟發教材，於是寫下了本篇文章幫助透過真實世界案例更深刻了解 CSS Grid。'
+category: '實作'
+tags: ['grid', 'subgrid']
+publishDate: 2024-09-15
+---
+
+## 前言
+
+實際網頁很少遇到特殊的視覺會需要動用到 CSS Grid 的情況，而我近期在製作一些比較特殊視覺的網頁布局，事後感覺特別適合作為一個 CSS Grid 的啟發教材，於是寫下了本篇文章幫助**透過真實世界案例更深刻了解 CSS Grid**。
+
+## 問題
+
+根據示意圖製作 2 種大小的 RWD 頁面。
+
+![問題示意圖](problem-demo.webp '問題示意圖')
+
+## 解題
+
+會發現該布局並沒辦法用傳統一維版面的方式達成，因為在兩種大小中他們需要隸屬的容器也不同。
+
+舉例 `d` 來說，它應該要是一起裝在 `c` 的父容器當中，但在大裝置尺寸下又要對齊 `b` 的頂部，明顯這樣的需求在傳統的 CSS 布局下是很難達成的，不管是用負數 `margin` 推移還是 `position: absolute` 、 `transform` 都會搞得一團亂很難維護，甚至要動用到 JavaScript 來計算位置 😐。
+
+這時候就可以**依靠 CSS Grid 來定義二維的版面布局**，並且指派子元素到對應的區塊中，通常我會用 [CSS Grid Generator](https://grid.layoutit.com/) 這類工具網站來設置好布局。具體來說可以先拉出網格的外貌：
+
+```css
+.grid {
+  --max-width-main: 800px; /* main 區塊最大寬度 */
+  --width-sidebar: 400px; /* 側欄寬度 */
+  --height-topbar: 40px; /* topbar 高度 */
+
+  display: grid;
+  grid-template-columns:
+    1fr /* 左側隨意伸 */
+    minmax(0, var(--max-width-main)) var(--width-sidebar) /* main 區塊自動伸縮並設置最大寬限制 + sidebar */
+    1fr; /* 右側隨意伸 */
+  grid-template-rows: var(--height-topbar) 1fr; /* 一層 topbar、一層隨意  */
+}
+```
+
+接著只需要把每個區塊綁上對應的位置即可，這裡可以發現用到一個很新穎的語法： [subgrid](https://caniuse.com/css-subgrid)，簡單來說就是讓子元素的網格可以繼承父元素的網格，這樣就不用再重新定義網格了。
+
+```css
+.header-area {
+  grid-area: 1 / 1 / 3 / 5;
+  display: grid;
+  grid-template-columns: subgrid;
+}
+
+.topbar-area {
+  height: var(--height-topbar);
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-area: 1 / 2 / 3 / 4;
+}
+
+.intro-area {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-area: 3 / 2 / 4 / 3;
+}
+.main-area {
+  grid-area: 3 / 2 / 4 / 3;
+}
+.sidebar-area {
+  grid-area: 2 / 3 / 4 / 4;
+}
+```
+
+在實際的專案中為了兼顧舊瀏覽器支援，我是在 `header` 區塊中再重新定義相同的網格，以方便與其他元素對齊，並不會差異太大，就是相同的網格會重複定義一次。
+
+## 總結
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="gONJMRx"
+  data-pen-title="Untitled"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/gONJMRx">extended-sidebar-subgrid</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+雖然理論上很少會遇到這種特殊的視覺，甚至就我所知現代的 UI 設計軟體甚至也沒有對應的手段去製作這方面的稿件，只能透過繪製兩個版本的平面稿件來傳達。這是個寶貴的經驗充分的展現了 CSS 網格獨一無二的優勢。
