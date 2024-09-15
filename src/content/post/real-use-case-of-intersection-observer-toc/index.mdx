@@ -1,0 +1,225 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:eye-tracking-outline-rounded', title: '眼睛監視符號' }
+title: 'Real use case of intersection observer: Table of Contents'
+titleTC: 'Intersection Observer 真實案例：自動更新目錄'
+excerpt: '近期製作到內容大綱（Table of Contents）相關的功能，發現是一個很適合使用 Intersection Observer 的案例，透過監聽特定元素來自動更新目錄的狀態。在早期可能會需要透過 getBoundingClientRect 之類的方法來計算元素有沒有離開視窗，現在這樣的需求就變得更加容易實現。'
+category: '實作'
+tags: ['toc', 'Intersection Observer']
+publishDate: 2024-09-16
+---
+
+## 前言
+
+近期製作到內容大綱（Table of Contents）相關的功能，發現是一個很適合使用 Intersection Observer 的案例，透過監聽特定元素來自動更新目錄的狀態。
+
+在早期可能會需要透過 `getBoundingClientRect` 之類的方法來計算元素有沒有離開視窗，但隨著專門偵測元素是否進入視窗的 API 出現，這樣的需求就變得更加容易實現。
+
+## 問題
+
+請製作可以根據特定元素內的標題生成目錄清單的功能，並且清單會根據滑動位置適當的顯示激活樣式：
+
+- 可自動根據目前文章中的內容生成對應的目錄連結清單並顯示在側欄
+- 當使用者滾動到對應區塊時，自動更新目錄激活的狀態
+- 當使用者點擊目錄連結時，滾動到對應的位置
+
+```html
+<main>
+  <div>
+    <h1>TOC DEMO</h1>
+    <div>
+      <section>
+        <h2>Title One</h2>
+        <p>...</p>
+      </section>
+      <section>
+        <h2>Title Two</h2>
+        <p>...</p>
+      </section>
+      <section>
+        <h2>Title Three</h2>
+        <p>...</p>
+      </section>
+      <section>
+        <h2>Title Four</h2>
+        <p>...</p>
+      </section>
+    </div>
+  </div>
+  <aside>
+    <ul></ul>
+  </aside>
+</main>
+```
+
+## 解題
+
+由於自動更新目錄是非常常見的 UI ，每個人多少都用過所以規格上就不會特別詳細的描述，但實際探究下去會發現這個題目可以挖出非常多的細節，舉例像是：
+
+- 有多個嵌套標題區塊的關係如何處理？
+- 激活的狀態只能有一個嗎？如只能一個但有多個區塊都在激活狀態該如何擇一最相關的區塊激活？
+- 滾動到對應區塊的定義是什麼？離開區塊的定義是什麼？（完整或一半區塊離開或進入畫面？）
+- 連結點擊後如何滾動到對應的位置？對應的位置又是什麼？
+
+以上意料外的問題將會直接影響到使用體驗，會出現**程式執行沒有錯誤，但體驗來說不優的情況**，舉例來說：點擊了目錄連結後，滾動到非預期的位置，或是目錄激活的不是使用上預期的狀態。由於目錄將會是動態生成的也導致邊緣案例很難被發現，因此先探討目錄預期的行為再下手實作會更好，我先將題目定義為：
+
+- 預期只需偵測一層標題區塊
+- 激活的狀態只能有一個，最先激活的標題為主（滑動到 `區塊 1` 接著滑動到 `區塊 2` ，但因為 `區塊 1` 先激活所以仍顯示 `區塊 1` 為激活）
+- 滾動到對應區塊的定義是區塊完全進入和離開畫面
+- 連結點擊後滾動到對應的位置是區塊頂部與視窗頂部 + `1rem` 的留白
+
+### 第一步：生成目錄
+
+首先可以先替目錄相關的元素綁定標記（這裡我使用 `data` 屬性），以方便後續 JS 用 `querySelector` 找到對應的元素進行操作。
+
+```html
+<main>
+  <div>
+    <h1>TOC DEMO</h1>
+    <div>
+      <section data-toc-section>
+        <h2>Title One</h2>
+        <p>...</p>
+      </section>
+      <!-- ... -->
+    </div>
+  </div>
+  <aside>
+    <ul data-toc></ul>
+  </aside>
+</main>
+```
+
+再來就是創建 `generateToc` 函式，預期會拿到要注入目錄的目標 toc 元素以及要偵測的區塊。
+
+```js
+const tocElement = document.querySelector('[data-toc]');
+const targetSectionElements = document.querySelectorAll('[data-toc-section]');
+
+function generateToc(tocElement, sectionElements) {
+  sectionElements.forEach(function (section, index) {
+    // 替每個區塊添加對應 id
+    const sectionId = 'toc' + (index + 1);
+    section.setAttribute('id', sectionId);
+
+    // 創建「目錄連結元素」根據現有區塊
+    const tocLink = document.createElement('a');
+    tocLink.setAttribute('href', '#' + sectionId);
+    tocLink.setAttribute('data-id', sectionId);
+    tocLink.textContent = section.querySelector('h2').textContent;
+
+    // 創建「目錄項目元素」
+    const tocItem = document.createElement('li');
+    tocItem.appendChild(tocLink);
+
+    // 注入「目錄元素」到 「toc 元素」
+    tocElement.appendChild(tocItem);
+  });
+}
+```
+
+這樣就會得到一個自動偵測當前文章內容並生成對應目錄的功能，並且運用 `<a>` 標籤搭配 `#` 跳轉的特性，可以在點擊連結時 `target` 跳轉到特定的 `id` 上。
+
+### 第二步：添加跳轉區塊動畫時與視窗間的預留空間
+
+跳轉動畫可以簡單的透過 CSS `scroll-behavior` 屬性來實現，也可以額外觀察用戶偏好有無開啟動畫減弱，以適當的關閉跳轉動畫。
+
+```css
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+```
+
+雖然透過 `#` 跳轉可以讓頁面自動跳到對應的區塊，但這樣會讓區塊頂部與視窗頂部貼齊。要調整跳轉的位置可以考慮使用 CSS [scroll-margin-top](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-margin-top) 屬性，可以設置滑動目標與視窗頂部保持一定的距離。
+
+```css
+.section {
+  scroll-margin-top: 1rem;
+}
+```
+
+特別是在網頁有 `fixed` 布局的導覽列情況下甚至會讓區塊被導覽列遮蓋為了得到具體應該預留多少空間，最好將頁面中上方 `Fixed` 元素的高度透過 CSS 變數來記錄（通常是導覽列），並且也要留意多尺寸下的變化，如果導覽列，有收合展開的狀態，那麼甚至會需要撰寫 JS 去改寫這部分數值。
+
+### 第三步：監聽區塊進入與離開畫面並適當的激活項目
+
+在生成 TOC 後可以開始替每一個區塊添加 Intersection Observer，`initIntersectionObserverForToc` **透過監聽區塊進入與離開畫面的事件來更新目錄的激活狀態**，這裡嘗試玩玩看 [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 來監聽激活區塊的變化並且呼叫對應的函式 `updateActiveTocItem` 來實時根據激活狀態更新 DOM。
+
+```js
+let activeTocIds = new Proxy([], {
+  set(target, property, value) {
+    target[property] = value;
+    updateActiveTocItem();
+    return true;
+  },
+});
+
+function initIntersectionObserverForToc(sectionElements) {
+  sectionElements.forEach((section) =>
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const targetSectionId = entry.target.getAttribute('id');
+        if (entry.isIntersecting) {
+          activeTocIds.push(targetSectionId);
+        } else {
+          const targetSectionIdIndex = activeTocIds.indexOf(targetSectionId);
+          const isTargetSectionId = targetSectionIdIndex !== -1;
+          if (isTargetSectionId) {
+            activeTocIds.splice(targetSectionIdIndex, 1);
+          }
+        }
+      });
+    }).observe(section),
+  );
+}
+
+function updateActiveTocItem() {
+  document.querySelectorAll('[data-toc] a').forEach((tocItem) => {
+    tocItem.classList.remove('active');
+  });
+
+  if (activeTocIds.length > 0) {
+    const firstActiveId = activeTocIds[0];
+    document.querySelectorAll('[data-toc] a').forEach((tocItem) => {
+      if (tocItem.getAttribute('href') === `#${firstActiveId}`) {
+        tocItem.classList.add('active');
+      }
+    });
+  }
+}
+```
+
+## 總結
+
+總結來說一個良好的 TOC 應該要能：
+
+1. 點擊連結滑動到適當的位置
+2. 激活樣式能反映當前滑動位置
+
+如果你的 TOC 在設計上希望只有一個激活項目，那麼很有可能會碰上一些技術上難以克服的體驗問題，需要定義更多的判斷來完善體驗，例如：滑到最後一個區塊時到達頁面底部，無法再滑動，因此底部的區塊永遠無法被激活（牽扯回如果有多個激活什麼才是對用戶最相關的區塊？）
+
+其實我認為到這個程度已經算是一個不錯的 TOC 了，可以再根據自己的需求修改添加自己的定義。
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="vYqwxpa"
+  data-pen-title="Real use case of intersection observer: Table of Contents"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen{' '}
+    <a href="https://codepen.io/riecball/pen/vYqwxpa">Real use case of intersection observer: Table of Contents</a> by
+    Riceball (<a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
