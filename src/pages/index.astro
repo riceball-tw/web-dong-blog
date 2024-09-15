@@ -30,11 +30,33 @@ const currentTime = new Date()
     <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={globalConfig.setting.projectUpdateBadgeUrl}>
       <Badge>{`最近更新時間：${currentTime}`}</Badge>
     </a>
-    <span slot="headline" style="max-width: 1400px;" class="inline-block">
-      網頁東東用最<span class="text-primary">親切簡單</span>的方式描述如何<span
-      class="text-primary">設計與架構網頁</span
-      >
-    </span>
+    <div slot="headline" style="max-width: 1600px;">
+      <span>網頁東東用最</span>
+      <span class="text-primary">親切簡單</span>
+      <span>的方式描述如何</span>
+      <div class="text-primary inline-flex items-center gap-2">
+        <span >
+          <span class="relative inline-flex">
+
+          <span id="draggable" style="--selection: hsl(var(--primary))" class="inline-flex border border-[--selection] whitespace-nowrap cursor-move">
+            設計
+            <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+          </span>
+
+        </span>
+          與
+          <span class="cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>'] after:ml-2" contenteditable>開發</span>
+          網頁
+        </span>
+      </div>
+    </div>
     <Pagefind/>
   </Hero>
 
@@ -90,3 +112,35 @@ const currentTime = new Date()
     </Container>
   </section>
 </BlogBase>
+
+
+<script is:inline>
+const draggable = document.getElementById('draggable');
+
+let posX = 0;
+let posY = 0;
+let mouseX = 0;
+let mouseY = 0;
+
+function moveElement(e) {
+  mouseX = e.clientX - posX;
+  mouseY = e.clientY - posY;
+  draggable.style.left = `${mouseX}px`;
+  draggable.style.top = `${mouseY}px`;
+}
+
+function mouseDown(e) {
+  e.preventDefault();
+  e.target.style.position = 'absolute';
+  posX = e.clientX - draggable.offsetLeft;
+  posY = e.clientY - draggable.offsetTop;
+  window.addEventListener('mousemove', moveElement, false);
+}
+
+function mouseUp() {
+  window.removeEventListener('mousemove', moveElement, false);
+}
+
+draggable.addEventListener('mousedown', mouseDown, false);
+window.addEventListener('mouseup', mouseUp, false);
+</script>
