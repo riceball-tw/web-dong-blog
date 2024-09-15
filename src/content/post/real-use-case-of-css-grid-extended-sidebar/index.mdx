@@ -23,7 +23,7 @@ publishDate: 2024-09-15
 
 會發現該布局並沒辦法用傳統一維版面的方式達成，因為在兩種大小中他們需要隸屬的容器也不同。
 
-舉例 `d` 來說，它應該要是一起裝在 `c` 的父容器當中，但在大裝置尺寸下又要對齊 `b` 的頂部，明顯這樣的需求在傳統的 CSS 布局下是很難達成的，不管是用負數 `margin` 推移還是 `position: absolute` 、 `transform` 都會搞得一團亂很難維護，甚至要動用到 JavaScript 來計算位置 😐。
+舉例 `sidebar` 來說，它應該要是一起裝在 `main` 的父容器當中，但在大裝置尺寸下又要對齊 `intro` 的頂部，明顯這樣的需求在傳統的 CSS 布局下是很難達成的，不管是用負數 `margin` 推移還是 `position: absolute` 、 `transform` 都會搞得一團亂很難維護，甚至要動用到 JavaScript 來計算位置 😐。
 
 這時候就可以**依靠 CSS Grid 來定義二維的版面布局**，並且指派子元素到對應的區塊中，通常我會用 [CSS Grid Generator](https://grid.layoutit.com/) 這類工具網站來設置好布局。具體來說可以先拉出網格的外貌：
 
