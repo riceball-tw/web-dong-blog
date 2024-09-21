@@ -8,6 +8,7 @@ series: '視區偵測'
 category: '實作'
 tags: ['toc', 'Intersection Observer']
 publishDate: 2024-09-16
+lastModifiedDate: 2024-09-21
 ---
 
 ## 前言
@@ -18,7 +19,9 @@ publishDate: 2024-09-16
 
 ## 問題
 
-請製作可以根據特定元素內的標題生成目錄清單的功能，並且清單會根據滑動位置適當的顯示激活樣式：
+![問題示意圖](problem-demo-1.webp '問題示意圖')
+
+製作一個可以根據特定元素內的標題生成目錄清單的功能，並且清單會根據滑動位置適當的顯示激活樣式：
 
 - 可自動根據目前文章中的內容生成對應的目錄連結清單並顯示在側欄
 - 當使用者滾動到對應區塊時，自動更新目錄激活的狀態
@@ -145,7 +148,21 @@ html {
 }
 ```
 
-特別是在網頁有 `fixed` 布局的導覽列情況下甚至會讓區塊被導覽列遮蓋為了得到具體應該預留多少空間，最好將頁面中上方 `Fixed` 元素的高度透過 CSS 變數來記錄（通常是導覽列），並且也要留意多尺寸下的變化，如果導覽列有收合展開的狀態，那麼甚至會需要撰寫 JS 去改寫這部分數值。
+需特別留意網頁在有 `fixed` 布局的導覽列情況下可能會擋住區塊，這時候就需要預留更多的空間，以避免跳轉後區塊被導覽列遮蓋。
+
+通常我會將頁面上方 `fixed` 元素的高度透過 CSS 變數來記錄（通常是導覽列）。
+
+```css
+:root {
+  --nav-height: 80px;
+}
+
+.section {
+  scroll-margin-top: calc(var(--nav-height) + 1rem);
+}
+```
+
+並且也要留意多種尺寸下的變化（例如不同尺寸下導覽列的高有改變），如果導覽列有收合展開的狀態，那麼甚至會需要撰寫 JS 去改寫各區塊的 `scroll-margin-top` 數值。
 
 ### 第三步：監聽區塊進入與離開畫面並適當的激活項目
 
@@ -155,11 +172,16 @@ html {
 let activeTocIds = new Proxy([], {
   set(target, property, value) {
     target[property] = value;
-    updateActiveTocItem();
+    updateActiveTocItem(); // 每次激活列表變動時呼叫 updateActiveTocItem 更新目錄 DOM
     return true;
   },
 });
 
+/**
+ * 偵測區塊進入或離開畫面
+ * 1. 視區內，將區塊 id 添加到 activeTocIds
+ * 2. 視區外，將區塊 id 從 activeTocIds 移除
+ */
 function initIntersectionObserverForToc(sectionElements) {
   sectionElements.forEach((section) =>
     new IntersectionObserver((entries) => {
@@ -179,6 +201,9 @@ function initIntersectionObserverForToc(sectionElements) {
   );
 }
 
+/**
+ * 更新目錄 DOM 激活狀態
+ */
 function updateActiveTocItem() {
   document.querySelectorAll('[data-toc] a').forEach((tocItem) => {
     tocItem.classList.remove('active');
@@ -224,3 +249,10 @@ function updateActiveTocItem() {
   </span>
 </p>
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+## 延伸閱讀
+
+如果對於偵測元素是否進入視窗感興趣可以參考以下文章，使用不同方式偵測，並且也有詳細的互動教學：
+
+- [Check if an element is visible in the viewport - Phuoc Nguyen](https://phuoc.ng/collection/intersection-observer-with-react/check-if-an-element-is-visible-in-the-viewport/)
+- [An introduction to the IntersectionObserver API - Phuoc Nguyen](https://phuoc.ng/collection/intersection-observer-with-react/an-introduction-to-the-intersection-observer-api/)
