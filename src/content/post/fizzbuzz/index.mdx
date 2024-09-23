@@ -7,6 +7,7 @@ excerpt: '這次我透過一步一步拆解解題路徑來描述如何解題。�
 category: '實作'
 tags: ['簡單題']
 publishDate: 2024-09-01
+lastModifiedDate: 2024-09-23
 ---
 
 ## 前言
@@ -113,18 +114,18 @@ function numberReplacer(max, replacementMap) {
 
 ### 補齊文件與檢查邊界案例
 
-JavaScript 是動態型別語言，因此其他人在使用這個函式時可能不清楚具體參數的需求，這裡透過 JSDoc 來補齊文件以及添加 Runtime 型別檢測，也可以考慮使用 TypeScript 來檢測型別：
+JavaScript 是動態型別語言，因此其他人在使用這個函式時可能不清楚具體參數的需求，這裡透過 JSDoc 來補齊文件，也可以考慮使用 TypeScript 來檢測型別或於 Runtime 進行型別檢測：
 
 ```js
 /**
- * 生成一陣列，將 `1` 到 `max` 之間的數字取代為指定字串
+ * 生成一陣列，將 1 到 max 之間的數字取代為指定字串
  *
  * @param {number} max - 最大數值
  * @param {Object<number, string>} replacementMap - key 為除數，value 為取代字串
  * @returns {Array<string | number>} - 取代後的數值
- * @throws {TypeError} 如 `max` 不是正整數
- * @throws {TypeError} `replacementMap` 內的 key 必須是正整數
- * @throws {TypeError} 如 `replacementMap` 不是物件
+ * @throws {TypeError} 如 max 不是正整數
+ * @throws {TypeError} 如 replacementMap 不是非空物件
+ * @throws {TypeError} 如 replacementMap 內的 key 不是是正整數
  * @example
  * numberReplacer(15, { 3: 'Fizz', 5: 'Buzz' });
  * // Returns [1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz']
@@ -135,26 +136,30 @@ function numberReplacer(max, replacementMap) {
   }
 
   if (typeof replacementMap !== 'object' || replacementMap === null) {
-    throw new TypeError('replacementMap 必須是物件');
+    throw new TypeError('replacementMap 必須是非空物件');
   }
 
   return Array.from({ length: max }, (_, index) => {
     const currentNumber = index + 1;
     const replacement = Object.entries(replacementMap).reduce((acc, [divisor, replaceWord]) => {
-      if (!Number.isInteger(Number(divisor)) || Number(divisor) <= 0) {
+      const numDivisor = Number(divisor);
+      if (!Number.isInteger(numDivisor) || numDivisor <= 0) {
         throw new TypeError('replacementMap 內的 key 必須是正整數');
       }
-
-      return currentNumber % Number(divisor) === 0 ? acc + replaceWord : acc;
+      return currentNumber % numDivisor === 0 ? acc + replaceWord : acc;
     }, '');
     return replacement || currentNumber;
   });
 }
 
-numberReplacer(100, {
-  3: 'Fizz',
-  5: 'Buzz',
-}).forEach((value) => console.log(value));
+try {
+  numberReplacer(100, {
+    3: 'Fizz',
+    5: 'Buzz',
+  }).forEach((value) => console.log(value));
+} catch (error) {
+  console.error(error.message);
+}
 ```
 
 ### 藉由局部應用來簡化 `numberReplacer`
