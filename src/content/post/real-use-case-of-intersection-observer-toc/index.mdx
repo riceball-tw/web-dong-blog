@@ -8,7 +8,7 @@ series: '視區偵測'
 category: '實作'
 tags: ['toc', 'Intersection Observer']
 publishDate: 2024-09-16
-lastModifiedDate: 2024-09-21
+lastModifiedDate: 2024-09-24
 ---
 
 ## 前言
@@ -220,6 +220,52 @@ function updateActiveTocItem() {
 }
 ```
 
+### 第四步：更精細的激活區塊偵測
+
+目前邏輯是：當有多個區塊被激活，最先被激活的區塊優先顯示被激活，畢竟只能顯示一個激活狀態。
+
+如果遇到的情境應該是滑動入 `A` 又入 `B`，但滑了一陣子 `B` 還是存在於畫面中所以一直佔著激活狀態。這麼做激活顯示雖然是正確的但可能激活到比較不相關的項目。真的要取一個最相關的區塊激活應該就要算區塊在畫面中的佔比，根據到達畫面特定比例觸發 Observer 的設定可以使用 [`threshold`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API#threshold) 設定，簡單來說就是一個陣列從 `0 ~ 1`，當到達特定比例就會觸發 observer 的回呼函式：
+
+接著讓我們添加上該設定，並且創建新函式 `updateActiveTocWithRatio` 來更新目錄的激活狀態。
+
+```js
+const targetSectionId = entry.target.getAttribute('id');
+
+new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (isSectionVisible) {
+        // 更新每個區塊的可見度佔比到 activeTocIds
+        updateActiveTocWithRatio(targetSectionId, entry.intersectionRatio);
+      } else {
+        // ...
+      }
+    });
+  },
+  {
+    threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1], // 設定 0% 到 100% 的 threshold
+  },
+).observe(section);
+```
+
+現在每次區塊進入畫面並且到達特定的 `threshold` 時就會觸發以下函式，我們可以判斷是否已經存在於 `activeTocIds` 中，如果存在就更新佔比，不存在就新增一個新的區塊紀錄，並且讓畫面佔比高的區塊優先顯示激活狀態。
+
+```js
+function updateActiveTocWithRatio(sectionId, ratio) {
+  const existingItemIndex = activeTocIds.findIndex((item) => item.id === sectionId);
+  // 1. 已存在區塊紀錄 = 更新該區塊的佔比
+  // 2. 不存在區塊紀錄 = 新增該區塊紀錄
+  if (existingItemIndex === -1) {
+    activeTocIds.push({ id: sectionId, ratio });
+  } else {
+    activeTocIds[existingItemIndex].ratio = ratio;
+  }
+  // 將佔比最高的區塊放到最前面
+  activeTocIds.sort((a, b) => b.ratio - a.ratio);
+  updateActiveTocItem();
+}
+```
+
 ## 總結
 
 總結來說一個良好的 TOC 應該要能：
@@ -235,7 +281,7 @@ function updateActiveTocItem() {
   class="codepen"
   data-height="300"
   data-default-tab="result"
-  data-slug-hash="vYqwxpa"
+  data-slug-hash="MWNWVbb"
   data-pen-title="Real use case of intersection observer: Table of Contents"
   data-preview="true"
   data-editable="true"
@@ -244,12 +290,11 @@ function updateActiveTocItem() {
 >
   <span>
     See the Pen{' '}
-    <a href="https://codepen.io/riecball/pen/vYqwxpa">Real use case of intersection observer: Table of Contents</a> by
+    <a href="https://codepen.io/riecball/pen/MWNWVbb">Real use case of intersection observer: Table of Contents</a> by
     Riceball (<a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
   </span>
 </p>
 <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-
 ## 延伸閱讀
 
 如果對於偵測元素是否進入視窗感興趣可以參考以下文章，使用不同方式偵測，並且也有詳細的互動教學：
