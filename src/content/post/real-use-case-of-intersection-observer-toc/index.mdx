@@ -6,16 +6,26 @@ titleTC: 'Intersection Observer 真實案例：自動更新目錄'
 excerpt: '近期製作到內容大綱（Table of Contents）相關的功能，發現是一個很適合使用 Intersection Observer 的案例，透過監聽特定元素來自動更新目錄的狀態。在早期可能會需要透過 getBoundingClientRect 之類的方法來計算元素有沒有離開視窗，現在這樣的需求就變得更加容易實現。'
 series: '視區偵測'
 category: '實作'
-tags: ['toc', 'Intersection Observer']
+tags: ['toc', 'Intersection Observer', 'getBoundingClientRect']
 publishDate: 2024-09-16
-lastModifiedDate: 2024-09-27
+lastModifiedDate: 2024-09-30
 ---
 
 ## 前言
 
 近期製作到內容大綱（Table of Contents）相關的功能，發現是一個很適合使用 Intersection Observer 的案例，透過監聽特定元素來自動更新目錄的狀態。
 
-在早期可能會需要透過 `getBoundingClientRect` 之類的方法來計算元素有沒有離開視窗，但隨著專門偵測元素是否進入視窗的 API 出現，這樣的需求就變得更加容易實現。
+在早期可能會需要透過監聽網頁滑動事件並且透過 `getBoundingClientRect` 方法來計算元素有沒有離開視窗，但隨著專門偵測元素是否進入視窗的 API 出現，這樣的需求就變得更加容易實現。
+
+如果你對於新舊做法比較有興趣可以參考這篇文章：[Use Intersection Observer instead of Scroll Events - Jonathan Lau](https://blog.jonathanlau.io/posts/use-intersection-observer-instead/#performance-impact)，有詳細且的比較介紹。
+
+| 特徵         | Intersection Observer                            | Scroll 事件監聽 + `getBoundingClientRect`              |
+| ------------ | ------------------------------------------------ | ------------------------------------------------------ |
+| **主執行序** | 執行於主執行序之外，不會阻礙其他事項             | 執行於主執行序，會阻礙其他事項                         |
+| **效能開支** | 有效跟蹤元素是否可見，只在必要時執行             | 每次滾動時檢查元素位置，有可能會耗費更多資源           |
+| **易用程度** | 專門用於檢查元素是否進入視角，具備強大簡單的介面 | 更底層索取個別元素在畫面中的資訊，可能計算需更複雜繁瑣 |
+
+這也是為什麼我解題的方向會偏好從已經推出一段時間相對成熟的 Intersection Observer 開始實作，不過後續也碰上了一些意料之外的問題。
 
 ## 問題
 
@@ -318,29 +328,130 @@ const targetSectionIdIndex = activeTocs.findIndex((toc) => toc.id === targetSect
 
 ### 當區塊超大時會導致更新失效，仍顯示舊的激活項目
 
-一個極端案例，發現區塊內容超過畫面時無法觸發 Observer 更新，原因可以參考討論：[How should larger-than-viewport-dimension targets be handled](https://github.com/w3c/IntersectionObserver/issues/124)。
+一個極端案例特別容易發生在快速滑動的情況，原因是因為如果區塊內容超過畫面時將無法觸發 Observer 更新，原因可以參考討論：[How should larger-than-viewport-dimension targets be handled](https://github.com/w3c/IntersectionObserver/issues/124)。
 
-對於 Intersection Observer 的理解與看過的範例一直以來都是很簡單的小元素在畫面中，並且可以設置 `threshold` 去判斷元素出現在畫面中一定的比例後觸發回呼函式，但沒有想過**如果元素大於畫面時會發生什麼事情**，滑到中途就可能沒辦法再增加占比？畢竟視角的尺寸是有限的。
+對於 Intersection Observer 的理解與看過的範例一直以來都是很簡單的小元素在畫面中，並且可以設置 `threshold` 去判斷元素出現在畫面中一定的比例後觸發回呼函式，但卻沒有想過**如果元素大於畫面時會發生什麼事情**，滑到中途就可能沒辦法再增加占比？畢竟視角的尺寸是有限的。
 
-模擬一下會發現當區塊內容超過畫面時這個區塊的 Observer 偵測會整個毀滅失靈 😅 ，這也是為什麼遇到特別大的區塊不會被激活，而是一直卡在先前的激活狀態。除了一些特定場景的變通方式外能行的只有幾種選項：
+模擬一下會發現 **當區塊內容超過視角時，這個區塊的 Observer 偵測會只在進入與離開時觸發，過渡並不會觸發回呼** ，也就會出現「大於視角區塊的前一區塊」最終離開時數值剛好觸發時高過「大於視角區塊」就會讓整個區塊卡在上一個結果，離開時才能更新 😅。
 
-- 把大區塊拆成小區塊偵測，只要得知大區塊是否進出畫面就能計算出是否激活，如是超過視角範圍的大區塊在上下添加 Observer 並計算大區塊在畫面中的比例 (如果區塊內容不確定感覺會很頭疼)
-- 監聽滑動事件與 `getBoundingClientReact` 計算區塊是否進入畫面
+![大於視角的區塊只會進入與離開時觸發，時機不一樣可能就會被其他區塊離開時的 ratio 給蓋過](ratio-demo.webp '大於視角的區塊只會進入與離開時觸發，時機不一樣可能就會被其他區塊離開時的 ratio 給蓋過')
+
+這是 Intersection Observer 的預期行為：「超過視角的區塊就是沒辦法得出正確的比例只能在進入與離開時觸發」。我可以改每次滑動時查看區塊元素的資料並計算出區塊已顯示的比例：
+
+```ts
+if (tocElement) {
+  generateToc(tocElement, targetSectionElements);
+  window.addEventListener('scroll', updateVisibleSections);
+  window.addEventListener('resize', updateVisibleSections);
+  updateVisibleSections();
+}
+```
+
+```ts
+function updateVisibleSections() {
+  const windowHeight = window.innerHeight;
+
+  targetSectionElements.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const sectionId = section.getAttribute('id');
+    if (!sectionId) return;
+
+    // 視窗中可見高度 = 取區塊底部相對於視窗頂部的距離，至多是視窗高度 - 取區塊頂部相對於視窗頂部的距離，至少是 0
+    const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+    // 視窗中可見高度 / 元素高度 = 元素出現比例
+    const elementInViewportRatio = visibleHeight / rect.height;
+
+    if (elementInViewportRatio > 0) {
+      updateActiveTocWithRatio(sectionId, elementInViewportRatio);
+    } else {
+      const targetSectionIdIndex = activeTocs.findIndex((toc) => toc.id === sectionId);
+      if (targetSectionIdIndex !== -1) {
+        activeTocs.splice(targetSectionIdIndex, 1);
+      }
+    }
+  });
+
+  updateActiveTocItem();
+}
+```
+
+最終可以留意替觸發事件添加[節流](/post/learn-debounce-and-throttle/#節流-throttle)與記得移除事件監聽器，這樣就可以避免不必要的計算提高效能。
 
 ### 思考：區塊顯示的比例不代表最相關的區塊
+
+![每個區塊根據大小計算出來的比例不等值](ratio-calc.webp '每個區塊根據大小計算出來的比例不等值')
 
 Intersection Observer 的 `threshold` 只在元素顯示特定比例時觸發，那麼每個區塊之間的比例等值嗎？舉例來說如果 `A` 區塊 `10px` 經過它 `10%` 只需要 `1px` 的滑動，但 `B` 區塊 `1000px` 經過它 `10%` 則需要 `100px` 的滑動。
 
 這麼說 `A` `B` 區塊在畫面中需要出現不一樣的程度才能被激活（`1px`、`100px`），但使用者應該是 **認元素在視角的比例** 解讀相關性才對，舉例視角 `1000px` 那麼顯示了超過視角 `10%` 的區塊才算是相關的區塊也就是 `100px`，在這樣的場合下 `A` 就是過早激活。
 
-這麼說我們應該用 **元素在視角的比例** 來做為激活的依據嗎？明顯也沒辦法！ 因為有的元素本身就是非常小，這樣的元素按照比例計算永遠不會被激活。或許可行的做法：
+這麼說我們應該完全用 **元素在視角的比例** 來做為激活的依據嗎？明顯也沒辦法！ 因為有的元素本身就是非常小，這樣的元素按照比例計算永遠不會被激活。最終我的計算方式是這樣：
 
 1. 在進入畫面時依照元素在視角的比例激活
 2. 完全進入在視角內時替該元素設置最高層級的激活狀態
 3. 最後新增之最高層級的激活狀態優先激活
 4. 離開畫面時取消最高層級激活狀態並且依照元素在視角的比例激活
 
-這些運算勢必要用到更底層的 API 來計算元素在視角的比例，還要考量到畫面縮放、維護性、效率……等問題。
+其實只需要在 `updateVisibleSections` 增添一點邏輯即可：
+
+```ts {11, 13-18}
+function updateVisibleSections() {
+  const windowHeight = window.innerHeight;
+
+  targetSectionElements.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const sectionId = section.getAttribute('id');
+    if (!sectionId) return;
+
+    const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+    const elementInViewportRatio = visibleHeight / windowHeight;
+    const elementDisplayedRatio = visibleHeight / rect.height;
+
+    if (elementInViewportRatio > 0) {
+      if (elementDisplayedRatio === 1) {
+        updateActiveTocWithRatio(sectionId, 1);
+      } else {
+        updateActiveTocWithRatio(sectionId, elementInViewportRatio);
+      }
+    } else {
+      const targetSectionIdIndex = activeTocs.findIndex((toc) => toc.id === sectionId);
+      if (targetSectionIdIndex !== -1) {
+        activeTocs.splice(targetSectionIdIndex, 1);
+      }
+    }
+  });
+  updateActiveTocItem();
+}
+```
+
+最後新增之最高層級的激活狀態優先激活可以透過記錄一個觸發更新的 Timestamp 來判斷，並且更新整理比例的邏輯，如果比例一樣時就根據註冊的時間先後來決定激活狀態。
+
+```ts {4, 11-14}
+function updateActiveTocWithRatio(sectionId: string, ratio: number) {
+  const existingItemIndex = activeTocs.findIndex((item) => item.id === sectionId);
+  if (existingItemIndex === -1) {
+    activeTocs.push({ id: sectionId, ratio, timeStamp: Date.now() });
+  } else {
+    activeTocs[existingItemIndex].ratio = ratio;
+  }
+
+  activeTocs.sort((a, b) => {
+    if (a.ratio === b.ratio) {
+      return b.timeStamp - a.timeStamp;
+    }
+    return b.ratio - a.ratio;
+  });
+
+  updateActiveTocItem();
+}
+```
+
+<p class="codepen" data-height="300" data-default-tab="result" data-slug-hash="gOVawBp" data-pen-title="final - Real use case of intersection observer: Table of Contents" data-preview="true" data-editable="true" data-user="riecball" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/riecball/pen/gOVawBp">
+  final - Real use case of intersection observer: Table of Contents</a> by Riceball (<a href="https://codepen.io/riecball">@riecball</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
 
 ## 總結
 
