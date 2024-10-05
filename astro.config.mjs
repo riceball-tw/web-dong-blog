@@ -11,12 +11,17 @@ import { s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
+import paraglide from '@inlang/paraglide-astro';
 import globalConfig from './src/globalConfig.ts';
 
 const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 
 // https://astro.build/config
 export default defineConfig({
+  i18n: {
+    defaultLocale: 'zh-tw',
+    locales: ['zh-cn', 'zh-tw', 'en'],
+  },
   site: 'https://www.webdong.dev',
   prefetch: true,
   redirects: {
@@ -106,5 +111,9 @@ export default defineConfig({
         }),
     icon(),
     vue(),
+    paraglide({
+      project: './project.inlang',
+      outdir: './src/paraglide',
+    }),
   ],
 });
