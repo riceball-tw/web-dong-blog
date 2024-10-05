@@ -6,7 +6,7 @@ export interface Props extends TagsList {}
 const { tags, tagHrefs } = Astro.props;
 ---
 
-{tags && <ul data-cy="tags" class="flex gap-4 whitespace-nowrap">
+{tags && <ul data-cy="tags" class="flex flex-wrap gap-x-4 whitespace-nowrap">
   {
     tagHrefs ? tagHrefs.map((href, index) => (
       <li data-cy="tag">
