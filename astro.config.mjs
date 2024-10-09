@@ -13,14 +13,18 @@ import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
 import globalConfig from './src/globalConfig.ts';
+import { languages, prefixDefaultLocale, defaultLocale } from './src/utils/i18n.ts';
 
 const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 
 // https://astro.build/config
 export default defineConfig({
   i18n: {
-    defaultLocale: 'zh-tw',
-    locales: ['zh-cn', 'zh-tw', 'en'],
+    defaultLocale,
+    locales: Object.keys(languages),
+    routing: {
+      prefixDefaultLocale,
+    },
   },
   site: 'https://www.webdong.dev',
   prefetch: true,
