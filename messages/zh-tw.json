@@ -1,5 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "你好世界",
-  "greeting": "你好 {name}"
+  "house_kind_samuel_fry": "您所搜尋的頁面並不存在",
+  "whole_gross_goat_hope": "回首頁",
+  "day_lazy_swan_laugh": "所有文章",
+  "dizzy_minor_samuel_embrace": "這個網頁並不存在"
 }
