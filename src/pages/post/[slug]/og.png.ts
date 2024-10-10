@@ -2,8 +2,9 @@ import { type CollectionEntry } from 'astro:content';
 import fs from 'fs';
 import path from 'path';
 import { ImageResponse } from '@vercel/og';
-import globalConfig from '@/globalConfig.ts';
 import { publishedPosts } from '@/utils/getPosts.ts';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { defaultLocale } from '@/utils/i18n.ts';
 
 interface Props {
   params: { slug: string };
@@ -12,11 +13,11 @@ interface Props {
 
 export async function GET({ props }: Props) {
   const { post } = props;
-  const { themeColor } = post.data;
   const NotoSansBold = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Bold.ttf'));
   const NotoSansRegular = fs.readFileSync(path.resolve('./fonts/NotoSansTC-Regular.ttf'));
   // TODO: Hardcoded post image, waiting to switch to iconify icon
   const logoImageBase64 = fs.readFileSync(`./public/images/icons/document.svg`).toString('base64');
+  const { themeColor } = (await currentLocaleWebsiteConfig(defaultLocale)).data.brand;
 
   // Astro doesn't support tsx endpoints so usign React-element objects
   const html = {
@@ -32,7 +33,7 @@ export async function GET({ props }: Props) {
               backgroundImage: `url('data:image/svg+xml;base64,${logoImageBase64}')`,
               backgroundSize: '96px 96px',
               backgroundRepeat: 'no-repeat',
-              backgroundColor: themeColor,
+              backgroundColor: post.data.themeColor,
             },
           },
         },
@@ -66,7 +67,7 @@ export async function GET({ props }: Props) {
         },
       ],
       style: {
-        backgroundColor: globalConfig.brand.themeColor,
+        backgroundColor: themeColor,
         color: 'white',
         width: '100%',
         height: '100%',

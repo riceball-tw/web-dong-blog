@@ -1,14 +1,15 @@
 ---
 import { SEO } from 'astro-seo';
-import globalConfig from '@/globalConfig.ts';
 import type { GlobalHead } from '@/types';
-import { languageTags, defaultLocale, prefixDefaultLocale } from '@/utils/i18n.ts';
+import { languageTags, prefixDefaultLocale } from '@/utils/i18n.ts';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export interface Props extends GlobalHead {}
 
 const { title, description, thumbnail } = Astro.props;
-const { brand } = globalConfig;
-const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
+const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data;
+const seoTitle = `${title || brand.slogan } - ${ brand.name }`;
 const seoDescription = description || brand.description;
 const seoImage = {
   src: thumbnail?.src

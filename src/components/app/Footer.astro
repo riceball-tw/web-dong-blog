@@ -1,15 +1,16 @@
 ---
-import globalConfig from '@/globalConfig.ts';
 import Clickable from '@/components/app/Clickable.astro';
 import { Icon } from 'astro-icon/components'
 import Container from '@/components/atoms/container/Container.astro';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 interface Social {
   name: string;
   iconName: string;
   url: string;
 }
-const { copyright, socials } = globalConfig.brand;
+const { copyright, socials } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.brand;
 ---
 
 <Container>

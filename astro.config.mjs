@@ -12,10 +12,7 @@ import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
-import globalConfig from './src/globalConfig.ts';
 import { languages, prefixDefaultLocale, defaultLocale } from './src/utils/i18n.ts';
-
-const allEditorTheme = Object.values(globalConfig.setting.editorTheme);
 
 // https://astro.build/config
 export default defineConfig({
@@ -93,7 +90,7 @@ export default defineConfig({
       },
     }),
     expressiveCode({
-      themes: allEditorTheme,
+      themes: ['github-light', 'github-dark'],
       styleOverrides: {
         codeFontSize: '1rem',
       },
