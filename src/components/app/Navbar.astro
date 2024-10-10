@@ -6,9 +6,9 @@ import Container from '@/components/atoms/container/Container.astro';
 
 const mainNav = [
   {
-    iconName: 'material-symbols:info-outline-rounded',
-    name: '關於',
-    url: 'about',
+    iconName: 'material-symbols:home-outline-rounded',
+    name: '首頁',
+    url: '',
     isShownOnMobile: true,
   },
   {
@@ -58,7 +58,7 @@ const currentPath = pathname.slice(1);
                 const isNavItemActive = firstRoutePath === navbarLink.url
                 return (
                 <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
-                  <a data-astro-prefetch href={`/${navbarLink.url}/`} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
+                  <a data-astro-prefetch href={navbarLink.url ? `/${navbarLink.url}/` : '/'} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
                     <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
                     <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
                   </a>
