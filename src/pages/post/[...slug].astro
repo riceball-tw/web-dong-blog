@@ -12,10 +12,11 @@ import Info from '@/components/post/Info.astro'
 import Video from '@/components/post/Video.astro'
 import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.astro';
 import { Icon } from 'astro-icon/components'
-import globalConfig from '@/globalConfig.ts';
 import PostSeries from '@/components/post/PostSeries.astro'
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
@@ -36,6 +37,7 @@ const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
 const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
+const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 ---
 
 <BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${titleTC}` }}>
@@ -108,7 +110,7 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
               <span>最後更新：</span>
               <a
                 data-pagefind-ignore="all"
-                href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
+                href={`${postLastModifiedDateUrl}/${post.slug}.mdx`}
                 class=""
               >
                 <span>

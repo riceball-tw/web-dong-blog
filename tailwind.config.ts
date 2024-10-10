@@ -29,6 +29,9 @@ export default {
         DEFAULT: 'hsl(var(--blockquote))',
         foreground: 'hsl(var(--blockquote-foreground))',
       },
+      'primary-active': {
+        DEFAULT: 'hsl(var(--primary-active))',
+      },
       highlight: 'hsl(var(--highlight))',
     },
     extend: {

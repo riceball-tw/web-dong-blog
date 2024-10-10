@@ -20,7 +20,7 @@ const { themeColor } = Astro.props;
 
 
 
-<html class="scroll-smooth motion-reduce:scroll-auto" lang="zh-Hant-TW">
+<html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
   <head>
     <ThemeInit />
     <DefaultHead { ...Astro.props}/>

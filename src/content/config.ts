@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { toolboxSchema, postSchema, shortpostSchema, characterSchema } from '@/content/schemas.ts';
+import { toolboxSchema, postSchema, shortpostSchema, characterSchema, websiteSchema } from '@/content/schemas.ts';
 
 // eslint-disable-next-line import/prefer-default-export
 export const collections = {
@@ -12,6 +12,10 @@ export const collections = {
   toolbox: defineCollection({
     type: 'data',
     schema: toolboxSchema,
+  }),
+  website: defineCollection({
+    type: 'data',
+    schema: websiteSchema,
   }),
   character: defineCollection({
     type: 'data',

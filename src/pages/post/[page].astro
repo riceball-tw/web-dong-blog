@@ -1,16 +1,12 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
 
-export const getStaticPaths= (async ({ paginate }) => {
-  const { paginationSize } = globalConfig.setting;
-  return paginate(dateSortedPublishedPosts, { pageSize: paginationSize });
-}) satisfies GetStaticPaths
+export const getStaticPaths= (async ({ paginate }) => paginate(dateSortedPublishedPosts, { pageSize: 15 })) satisfies GetStaticPaths
 
 const { page } = Astro.props;
 ---

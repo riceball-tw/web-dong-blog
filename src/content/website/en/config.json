@@ -1,0 +1,40 @@
+{
+  "setting": {
+    "projectUpdateBadgeUrl": "https://github.com/riceball-tw/astro-blog/commits/main",
+    "postLastModifiedDateUrl": "https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post"
+  },
+  "brand": {
+    "name": "WebDong",
+    "slogan": "A friendly and simple description of how to build a web page",
+    "description": "What causes bottlenecks in web page construction? And how to break through? Webpage Dongdong describes how to design and structure webpages in the most friendly and simple way, focusing on images and practical operations, accumulating teaching experience and reducing the cost of learning new things each time.",
+    "themeColor": "#0d0a28",
+    "thumbnail": {
+      "width": 1200,
+      "height": 630,
+      "src": "/images/brand/default-og.jpg",
+      "alt": "WebdDong Website Banner"
+    },
+    "copyright": {
+      "title": "CC BY-NC 4.0",
+      "url": "https://creativecommons.org/licenses/by-nc/4.0/deed.zh_TW"
+    },
+    "socials": [
+      {
+        "name": "Thread",
+        "iconName": "simple-icons:threads",
+        "url": "https://www.threads.net/@webdong.dev"
+      },
+      {
+        "name": "GitHub",
+        "iconName": "simple-icons:github",
+        "url": "https://github.com/riceball-tw"
+      },
+      {
+        "name": "RSS",
+        "iconName": "simple-icons:rss",
+        "imgUrl": "/images/global/social/rss.svg",
+        "url": "/rss.xml"
+      }
+    ]
+  }
+}

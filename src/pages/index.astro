@@ -1,5 +1,4 @@
 ---
-import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import Pagefind from '@/components/app/index/Pagefind.astro'
@@ -9,7 +8,10 @@ import uniqolor from 'uniqolor';
 import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
+const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
   type: category,
   posts: publishedPosts
@@ -27,7 +29,7 @@ const currentTime = new Date()
     <script is:inline src="/pagefind/pagefind-ui.js"></script>
   </slot>
   <Hero>
-    <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={globalConfig.setting.projectUpdateBadgeUrl}>
+    <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={projectUpdateBadgeUrl}>
       <Badge>{`最近更新時間：${currentTime}`}</Badge>
     </a>
     <div slot="headline" style="max-width: 1600px;">
