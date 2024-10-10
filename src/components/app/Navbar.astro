@@ -3,37 +3,46 @@ import Logo from '@/components/atoms/logo/Logo.astro';
 import Logomark from '@/components/atoms/logomark/Logomark.astro';
 import { Icon } from 'astro-icon/components'
 import Container from '@/components/atoms/container/Container.astro';
+import { defaultLocale } from '@/utils/i18n.ts';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import * as m from "@/paraglide/messages";
 
 const mainNav = [
   {
     iconName: 'material-symbols:home-outline-rounded',
-    name: '首頁',
+    name: 'home',
     url: '',
     isShownOnMobile: true,
   },
   {
     iconName: 'material-symbols:article-outline-rounded',
-    name: '文章',
+    name: 'post',
     url: 'post',
     isShownOnMobile: true,
   },
   {
     iconName: 'material-symbols:service-toolbox-outline-rounded',
-    name: '工具',
+    name: 'toolbox',
     url: 'toolbox',
     isShownOnMobile: true,
   },
   {
     iconName: 'material-symbols:quick-phrases-rounded',
-    name: '短文',
+    name: 'shortpost',
     url: 'shortpost',
     isShownOnMobile: true,
     subText: 'New',
   },
-
-];
+] as const
 const {pathname} = new URL(Astro.request.url);
 const currentPath = pathname.slice(1);
+
+const linkI18n = {
+	home: m.proud_left_kestrel_pride,
+	post: m.many_knotty_badger_drop,
+	toolbox: m.funny_best_cougar_reap,
+	shortpost: m.left_honest_larva_care,
+} as const
 ---
 
 <nav
@@ -44,8 +53,8 @@ const currentPath = pathname.slice(1);
     <div class="flex justify-center md:justify-start md:border-b border-border gap-2">
         <a
         data-astro-prefetch
-        title="網頁東東首頁"
-        href="/"
+        title={m.funny_small_coyote_chop()}
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}
         class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
         >
           <Logo class="hidden md:block" />
@@ -56,11 +65,15 @@ const currentPath = pathname.slice(1);
               mainNav.map((navbarLink) => {
                 const firstRoutePath = currentPath.split('/')[0];
                 const isNavItemActive = firstRoutePath === navbarLink.url
+                const currentLinkI18n = linkI18n[navbarLink.name]();
+
                 return (
                 <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
-                  <a data-astro-prefetch href={navbarLink.url ? `/${navbarLink.url}/` : '/'} class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
-                    <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
-                    <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
+                  <a data-astro-prefetch
+                  href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, navbarLink.url)}
+                  class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
+                    <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={currentLinkI18n} size={24} />
+                    <span class="text-sm whitespace-nowrap">{currentLinkI18n}</span>
                   </a>
                 </li>
               )})
@@ -69,7 +82,7 @@ const currentPath = pathname.slice(1);
               <button
                 data-cy="theme-toggle"
                 data-theme-toggle
-                aria-label="網頁外觀樣式切換 Theme Toggle"
+                aria-label={m.last_zany_florian_rest()}
                 type="button"
                 class="p-2 inline-flex flex-col gap-0.5 md:p-4 "
               >
@@ -77,7 +90,6 @@ const currentPath = pathname.slice(1);
                   <div class="size-4 hidden bg-primary dark:block mx-auto rounded-full border border-white/20"></div>
                   <div class="size-4 bg-primary dark:hidden mx-auto rounded-full  border-black/20"></div>
                 </div>
-                <span class="text-sm md:hidden hidden">樣式</span>
               </button>
             </li>
         </ul>
