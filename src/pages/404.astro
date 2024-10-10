@@ -2,12 +2,11 @@
 import BlogBase from '@/layouts/BlogBase.astro';
 import { Button } from '@/components/atoms/button/index.ts'
 import * as m from "@/paraglide/messages";
-import { type LanguageKey, defaultLocale } from '@/utils/i18n.ts';
+import { defaultLocale } from '@/utils/i18n.ts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const title = '404';
 const description = m.dizzy_minor_samuel_embrace();
-const currentLocale = Astro.currentLocale as LanguageKey
 ---
 
 <BlogBase title={title} description={description}>
@@ -15,17 +14,16 @@ const currentLocale = Astro.currentLocale as LanguageKey
     <h1 class="text-3xl">
       <div class="mb-8 text-8xl font-semibold">404</div>
     </h1>
-    <!-- !No iead why m function in 404 page would not work, so i specify the languageTag -->
-    <p class="text-lg">{m.house_kind_samuel_fry({}, {languageTag: currentLocale})}</p>
+    <p class="text-lg">{m.house_kind_samuel_fry()}</p>
     <div class="my-8 mt-12 flex gap-4">
       <a data-cy="home-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}>
         <Button as="span" size="lg">
-          {m.whole_gross_goat_hope({}, {languageTag: currentLocale})}
+          {m.whole_gross_goat_hope()}
         </Button>
       </a>
       <a data-cy="post-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post')}>
         <Button variant="outline" as="span" size="lg">
-          {m.day_lazy_swan_laugh({}, {languageTag: currentLocale})}
+          {m.day_lazy_swan_laugh()}
         </Button>
       </a>
     </div>
