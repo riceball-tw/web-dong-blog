@@ -1,5 +1,4 @@
 ---
-import LanguagePicker from '@/components/atoms/language-picker/LanguagePicker.astro';
 import Logo from '@/components/atoms/logo/Logo.astro';
 import Logomark from '@/components/atoms/logomark/Logomark.astro';
 import { Icon } from 'astro-icon/components'
@@ -66,7 +65,6 @@ const currentPath = pathname.slice(1);
                 </li>
               )})
             }
-            <LanguagePicker/>
             <li class="ml-auto inline-block">
               <button
                 data-cy="theme-toggle"
