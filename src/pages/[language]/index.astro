@@ -9,7 +9,7 @@ import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { type LanguageKey } from '@/utils/i18n.ts';
+import { localeParams, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 
 const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
@@ -25,6 +25,10 @@ const currentTime = new Date()
   .replace(/\//g, '-');
 
 const {currentLocale} = Astro
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 <BlogBase>
   <slot name="head">
