@@ -63,8 +63,8 @@ const linkI18n = {
         <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-navbar text-navbar-foreground px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
             {
               mainNav.map((navbarLink) => {
-                const firstRoutePath = currentPath.split('/')[0];
-                const isNavItemActive = firstRoutePath === navbarLink.url
+                const firstRoutePathWithoutLocale = currentPath.split('/')[0] === Astro.currentLocale ? currentPath.split('/')[1] : currentPath.split('/')[0];
+                const isNavItemActive = firstRoutePathWithoutLocale === navbarLink.url
                 const currentLinkI18n = linkI18n[navbarLink.name]();
 
                 return (
