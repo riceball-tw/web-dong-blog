@@ -21,7 +21,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
       const HeadingComponent = isActiveShort ? 'h1' : 'h2'
 
       const maxOpacity = 95;
-      const minOpacity = 40;
+      const minOpacity = 50;
       const distanceToCurrentShort = Math.abs(activeShortpostIndexs - index);
       const harmonicFactor = 2 / (distanceToCurrentShort + 1);
       const headingOpacity = Math.min(Math.max(harmonicFactor * maxOpacity, minOpacity), 100);
