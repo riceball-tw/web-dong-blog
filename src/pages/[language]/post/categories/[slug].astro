@@ -6,12 +6,15 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
-import { translateCategory, type LanguageKey , defaultLocale } from '@/utils/i18n.ts';
+import { translateCategory, type LanguageKey, languages, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
-  return sortedPostCategoryies.flatMap((category) => [{ params: { slug: category }, props: { posts: publishedPosts, categories: sortedPostCategoryies } }]);
+  return sortedPostCategoryies.flatMap((category) => Object.keys(languages).map((language) => ({
+      params: { slug: category, language },
+      props: { posts: publishedPosts, categories: sortedPostCategoryies }
+    })));
 }
 
 const { slug } = Astro.params;

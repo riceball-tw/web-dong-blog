@@ -5,6 +5,11 @@ import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
 import * as m from "@/paraglide/messages";
+import { localeParams } from '@/utils/i18n.ts';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 
 <BlogBase title={m.sea_same_gopher_burn()} description={m.round_even_leopard_drip({number: dateSortedPublishedShortposts.length})}>

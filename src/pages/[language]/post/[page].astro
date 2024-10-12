@@ -5,15 +5,18 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { languages, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
-export const getStaticPaths= (async ({ paginate }) => paginate(dateSortedPublishedPosts, { pageSize: 15 })) satisfies GetStaticPaths
+
+export const getStaticPaths = (async ({ paginate }) => Object.keys(languages)
+.flatMap(language => paginate(dateSortedPublishedPosts, 
+{ pageSize: 15, params: { language } })
+)) satisfies GetStaticPaths
 
 const { page } = Astro.props;
 ---
-
 
 <BlogBase title={m.shy_sunny_fish_win({page: page.currentPage})} description={m.tangy_empty_rabbit_boost()}>
   <Hero>

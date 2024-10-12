@@ -6,9 +6,13 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedPublishedPosts, sortedPostCategoryies, sortedPostTags } from '@/utils/getPosts.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { localeParams, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 
 <BlogBase title={m.still_mad_javelina_propel()} description={m.tired_game_husky_sew({number: dateSortedPublishedPosts.length}) }>

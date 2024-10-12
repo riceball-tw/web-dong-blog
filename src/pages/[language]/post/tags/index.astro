@@ -5,9 +5,13 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostTags } from '@/utils/getPosts.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { localeParams, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 
 <BlogBase title={m.kind_curly_javelina_aim()} description={m.sea_loud_osprey_reap({number: sortedPostTags.length})}>

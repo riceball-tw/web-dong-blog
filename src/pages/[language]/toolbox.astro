@@ -7,6 +7,7 @@ import Navbar from '@/components/app/Navbar.astro';
 import YoutubeChannels from '@/components/molecules/youtube-channels/YoutubeChannels.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import { toolboxs } from '@/utils/getToolboxs.ts';
+import { localeParams } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 
 const categorizedSites = toolboxs.reduce((categorizedData: Record<string, any[]>, site) => {
@@ -173,6 +174,10 @@ const youtubeChannelInfos = [
 ]
 
 const youtubeChannels = await getYoutubeChannels(youtubeChannelInfos);
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 
 <script>

@@ -4,24 +4,30 @@ import Hero from '@/components/app/Hero.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Container from '@/components/atoms/container/Container.astro';
-import { sortedPostTags } from '@/utils/getPosts.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { localeParams, defaultLocale, translateCategory, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
 ---
 
-<BlogBase title={m.kind_curly_javelina_aim()} description={m.sea_loud_osprey_reap({number: sortedPostTags.length})}>
+<BlogBase title={m.salty_kind_crossbill_support()} description={m.swift_sweet_tiger_gasp()}>
   <Hero>
-    <Fragment slot="headline">{m.sea_loud_osprey_reap({number: sortedPostTags.length})}</Fragment>
+    <Fragment slot="headline">{m.that_cuddly_oryx_play({number: sortedPostCategoryies.length})}</Fragment>
   </Hero>
+
   <Container>
     <SpotlightCardsGallery>
       {
-        sortedPostTags.map((tag) => (
+        sortedPostCategoryies.map((tag) => (
           <ul>
             <li class="text-3xl">
               <SpotlightCard>
-                <a data-cy="tag-link" data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)}>{tag}</a>
+                <a data-cy="category-link" data-astro-prefetch 
+                href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${tag}/`)}>{translateCategory(tag, Astro.currentLocale as LanguageKey)}</a>
               </SpotlightCard>
             </li>
           </ul>
