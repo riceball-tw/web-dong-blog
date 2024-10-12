@@ -9,8 +9,9 @@ import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { localeParams, translateCategory, type LanguageKey } from '@/utils/i18n.ts';
+import { localeParams, translateCategory, type LanguageKey , defaultLocale} from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
@@ -81,7 +82,7 @@ export async function getStaticPaths() {
                   <h2
                     class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                   >
-                    <a data-astro-prefetch href={`/post/categories/${categoriesList.type}/`}>{translateCategory(categoriesList.type, Astro.currentLocale as LanguageKey)}</a>
+                    <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${categoriesList.type}/`)}>{translateCategory(categoriesList.type, Astro.currentLocale as LanguageKey)}</a>
                   </h2>
                   <span class="opacity-60 transition-opacity group-hover:opacity-100">
                     {categoriesList.posts.length} 
@@ -108,7 +109,7 @@ export async function getStaticPaths() {
                           <a
                             data-astro-prefetch
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                            href={`/post/${post.slug}/`}
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
                           >
                             {post.data.titleTC}
                           </a>

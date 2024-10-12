@@ -109,7 +109,7 @@ export async function getStaticPaths() {
                           <a
                             data-astro-prefetch
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                            href={`/post/${post.slug}/`}
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
                           >
                             {post.data.titleTC}
                           </a>
