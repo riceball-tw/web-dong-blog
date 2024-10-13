@@ -12,7 +12,7 @@ import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
-import { languages, prefixDefaultLocale, defaultLocale } from './src/utils/i18n.ts';
+import { languages, prefixDefaultLocale, defaultLocale, baseUrl } from './src/utils/i18n.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,7 +23,7 @@ export default defineConfig({
       prefixDefaultLocale,
     },
   },
-  site: 'https://www.webdong.dev',
+  site: baseUrl,
   prefetch: true,
   redirects: {
     '/short': '/shortpost',

@@ -3,7 +3,7 @@ import { languages, changeLanguage, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 
 ---
-<button title={m.clear_helpful_toad_accept()} class="p-4 rounded-full" popovertarget="i18n-menu" type="button">
+<button data-cy="change-language" title={m.clear_helpful_toad_accept()} class="p-4 rounded-full" popovertarget="i18n-menu" type="button">
   <!-- i18n icon -->
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M17.9 17.39c-.26-.8-1.01-1.39-1.9-1.39h-1v-3a1 1 0 0 0-1-1H8v-2h2a1 1 0 0 0 1-1V7h2a2 2 0 0 0 2-2v-.41a7.984 7.984 0 0 1 2.9 12.8M11 19.93c-3.95-.49-7-3.85-7-7.93c0-.62.08-1.22.21-1.79L9 15v1a2 2 0 0 0 2 2m1-16A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>
 </button>
@@ -22,7 +22,7 @@ import * as m from "@/paraglide/messages";
 
         return (
         <li>
-          {isCurrentLocale ? <span class={`${linkStyle} ${stateStyle}`}>{name}</span> : <a class={`${linkStyle} ${stateStyle}`} href={changeLanguage(key as LanguageKey, Astro.url.pathname)}>{name}</a>
+          {isCurrentLocale ? <span data-cy="current-language" class={`${linkStyle} ${stateStyle}`}>{name}</span> : <a data-cy="avaliable-language" class={`${linkStyle} ${stateStyle}`} href={changeLanguage(key as LanguageKey, Astro.url.pathname)}>{name}</a>
           }
         </li>
       )
