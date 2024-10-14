@@ -21,7 +21,7 @@ const seoImage = {
 };
 
 function getPathnameWithoutLocale(pathname: string) {
-  return pathname.replace(`/${Astro.currentLocale}`, '');
+  return pathname.replace(`/${Astro.currentLocale}`, '').replace(/\/?$/, '/');
 }
 ---
 

@@ -19,7 +19,7 @@ Object.keys(languages).forEach((locale) => {
 
       // <link rel="alternate" hreflang="x" href="y"> should exist and correct
       cy.get(`link[rel="alternate"][hreflang="x-default"]`).should('have.attr', 'href', `${baseUrl}/`);
-      cy.get(`link[rel="alternate"][hreflang="${locale}"]`).should('have.attr', 'href', `${baseUrl}/${locale}`);
+      cy.get(`link[rel="alternate"][hreflang="${locale}"]`).should('have.attr', 'href', `${baseUrl}/${locale}/`);
     });
 
     it(`Current locale should be able to switch to other language`, () => {
