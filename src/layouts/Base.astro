@@ -5,10 +5,13 @@ import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
 import DefaultHead from '@/components/app/head/DefaultHead.astro'
 import ThemeInit from '@/components/app/head/ThemeInit.astro'
 import GodRay from '@/components/atoms/godray/GodRay.astro'
+import { setLanguageTag } from "@/paraglide/runtime";
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export interface Props extends BaseLayout {}
 
 const { themeColor } = Astro.props;
+setLanguageTag(Astro.currentLocale as LanguageKey)
 ---
 
 <script>
@@ -20,7 +23,7 @@ const { themeColor } = Astro.props;
 
 
 
-<html class="scroll-smooth motion-reduce:scroll-auto" lang="zh-Hant-TW">
+<html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
   <head>
     <ThemeInit />
     <DefaultHead { ...Astro.props}/>

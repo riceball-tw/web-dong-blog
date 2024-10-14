@@ -6,10 +6,14 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostTags, publishedPosts } from '@/utils/getPosts.ts'
+import { defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
   return sortedPostTags.flatMap((tag) => [{ params: { slug: tag }, props: { posts: publishedPosts, tags: sortedPostTags } }]);
 }
+
 const { slug } = Astro.params;
 const { posts, tags } = Astro.props;
 const avaliableCurrentTagPosts = posts
@@ -17,19 +21,19 @@ const avaliableCurrentTagPosts = posts
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
-<BlogBase title={`搜尋文章標籤：${slug}`} description={`搜尋文章標籤`}>
+<BlogBase title={m.late_nice_flea_gasp()+slug} description={m.glad_sound_nils_create()}>
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
-        <a data-cy="tags-link" class="flex gap-2 items-center" href="/post/tags/">
+        <a data-cy="tags-link" class="flex gap-2 items-center" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/`)}>
           <span class="flex items-center gap-2">
             <span class="text-base font-bold">#</span>
-            <span>查看 { tags.length } 種標籤</span>
+            <span>{m.mushy_swift_beaver_earn({number: tags.length})}</span>
           </span>
         </a>
       </Badge>
     </div>
-    <Fragment slot="headline">搜尋文章標籤：{slug}</Fragment>
+    <Fragment slot="headline">{m.late_nice_flea_gasp()+slug}</Fragment>
   </Hero>
   <Container>
     <SpotlightCardsGallery>
@@ -39,8 +43,8 @@ const avaliableCurrentTagPosts = posts
           return (
           <SpotlightPostCard
             post={{
-              categoryHref: `/post/categories/${post.data.category}/`,
-              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
               slug: post.slug,
               ...data,
             }}

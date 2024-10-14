@@ -1,5 +1,6 @@
 ---
 import Accordion from '@/components/atoms/accordion/Accordion.astro'
+import * as m from "@/paraglide/messages";
 
 interface Heading {
   depth: number;
@@ -17,7 +18,7 @@ const { headings } = Astro.props
 {
   Boolean(headings.length) && (
     <div data-cy="toc" data-pagefind-ignore="all">
-      <Accordion iconName="material-symbols:event-list-outline-rounded" summary='目錄'>
+      <Accordion iconName="material-symbols:event-list-outline-rounded" summary={m.novel_smart_ape_link()}>
             <ul data-cy="toc-list" data-toc class="toc pb-4 border-border m-0 list-none">
               {headings.map(({ depth, slug: headingSlug, text }) => {
                 const nestedHeadingClass = 'text-sm px-8'
@@ -30,7 +31,7 @@ const { headings } = Astro.props
                     data-toc-link
                     class={`block py-2 no-underline hover:underline hover:opacity-100 transition-opacity ${depthClass}`}
                     href={`#${headingSlug}`}
-                    aria-label={`移動到 ${text} 標題區塊`}
+                    aria-label={m.game_drab_thrush_fulfill({text})}
                   >
                     {text}
                   </a>

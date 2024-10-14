@@ -12,10 +12,13 @@ import Info from '@/components/post/Info.astro'
 import Video from '@/components/post/Video.astro'
 import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.astro';
 import { Icon } from 'astro-icon/components'
-import globalConfig from '@/globalConfig.ts';
 import PostSeries from '@/components/post/PostSeries.astro'
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey, defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
@@ -34,8 +37,9 @@ const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category, 
 const { slug } = post;
 const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
-const tagHrefs = tags.map((tag) => `/post/tags/${tag}/`);
+const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
 const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
+const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 ---
 
 <BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${titleTC}` }}>
@@ -74,7 +78,7 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
             </div>
             <div class="flex justify-between">
               <div class="flex md:block">
-                <CategoryList categoryHref={`/post/categories/${category}/`} {category} />
+                <CategoryList categoryHref={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${category}/`)} {category} />
                 <TagsList {tagHrefs} {tags} />
               </div>
             </div>
@@ -95,7 +99,7 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
           <!-- Post Date Info -->
           <div class="inline-flex w-full flex-col gap-2 p-4">
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              發布日期：
+              {m.zesty_gaudy_scallop_imagine()}
               <time data-pagefind-sort="date">
                 {
                   publishDate
@@ -105,10 +109,10 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
               </time>
             </div>
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              <span>最後更新：</span>
+              <span>{m.extra_ago_ladybug_animate()}</span>
               <a
                 data-pagefind-ignore="all"
-                href={`${globalConfig.setting.postLastModifiedDateUrl}/${post.slug}.mdx`}
+                href={`${postLastModifiedDateUrl}/${post.slug}.mdx`}
                 class=""
               >
                 <span>
@@ -117,7 +121,7 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
                   lastModifiedDate
                     .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
                     .replace(/\//g, '-')
-                    : '查看更新紀錄'
+                    : m.strong_best_tapir_pop()
                 }
                 </span>
               </a>

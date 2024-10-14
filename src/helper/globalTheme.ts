@@ -1,5 +1,3 @@
-import globalConfig from '@/globalConfig.ts';
-
 /**
  * Checks System preference and LocalStorage if the global theme is set to dark.
  * @returns whether the global theme is set to dark.
@@ -31,7 +29,10 @@ export function getCurrentGlobalTheme(globalTheme?: string): string {
 export function setGlobalTheme(newTheme: string, oldTheme?: string) {
   localStorage.theme = newTheme;
   const HTMLElement = document.documentElement;
-  const editorThemeMap = globalConfig.setting.editorTheme;
+  const editorThemeMap = {
+    light: 'github-light',
+    dark: 'github-dark',
+  };
   if (oldTheme) {
     HTMLElement.classList.remove(oldTheme);
   }

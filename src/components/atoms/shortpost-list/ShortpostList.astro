@@ -1,6 +1,8 @@
 ---
 import type { ShortpostPage } from '@/types'
 import { Icon } from 'astro-icon/components'
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale } from '@/utils/i18n.ts';
 
 export type Props = {
   shortposts: ShortpostPage[]
@@ -33,7 +35,9 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}
             ${isNoActiveShort || !isActiveShort ? '' : 'font-bold'}
-            `}  href={`/shortpost/${shortpost.slug}/#${shortpost.slug}`}>
+            `} 
+            
+            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/shortpost/${shortpost.slug}/#${shortpost.slug}`)}>
               
             <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={shortpost.slug}>
               <span>{shortpost.data.titleTC}</span>

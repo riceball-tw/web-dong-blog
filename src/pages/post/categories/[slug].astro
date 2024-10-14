@@ -6,6 +6,9 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { translateCategory, type LanguageKey , defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
   return sortedPostCategoryies.flatMap((category) => [{ params: { slug: category }, props: { posts: publishedPosts, categories: sortedPostCategoryies } }]);
@@ -16,22 +19,24 @@ const { posts, categories } = Astro.props;
 const avaliableCurrentCategoryPosts = posts
   .filter((post) => post.data.category === slug)
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+  
 ---
 
-<BlogBase title={`搜尋文章分類：${slug}`} description={`搜尋文章分類`}>
+<BlogBase title={`${m.grassy_smart_sheep_tickle()}${slug}`} description={`m.fluffy_active_earthworm_feel()`}>
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
-        <a data-cy="categories-link" class="flex gap-2 items-center" href="/post/categories/">
+        <a data-cy="categories-link" class="flex gap-2 items-center" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/`)}>
             <span class="flex items-center gap-2">
               <span class="text-base mb-0.5 font-bold">@</span>
-              <span>查看 { categories.length } 種類別</span>
+              <span>{m.left_tame_zebra_fade({number: categories.length})}
+              </span>
             </span>
         </a>
       </Badge>
     </div>
     <Fragment slot="headline">
-      搜尋文章分類：<span>{slug}</span>
+      {m.grassy_smart_sheep_tickle()}<span>{translateCategory(slug, Astro.currentLocale as LanguageKey)}</span>
     </Fragment>
   </Hero>
   <Container>
@@ -42,8 +47,8 @@ const avaliableCurrentCategoryPosts = posts
           return (
             <SpotlightPostCard
               post={{
-                categoryHref: `/post/categories/${post.data.category}/`,
-                tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+                categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+                tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
                 slug: post.slug,
                 ...data,
               }}

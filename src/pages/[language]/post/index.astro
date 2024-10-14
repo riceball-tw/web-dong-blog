@@ -1,0 +1,65 @@
+---
+import BlogBase from '@/layouts/BlogBase.astro';
+import Hero from '@/components/app/Hero.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
+import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
+import { Badge } from '@/components/atoms/badge/index.ts'
+import Container from '@/components/atoms/container/Container.astro';
+import { dateSortedPublishedPosts, sortedPostCategoryies, sortedPostTags } from '@/utils/getPosts.ts';
+import { localeParams, defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
+---
+
+<BlogBase title={m.still_mad_javelina_propel()} description={m.tired_game_husky_sew({number: dateSortedPublishedPosts.length}) }>
+  <Hero>
+    <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
+      <a data-cy="categories-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/categories')}>
+        <Badge>
+          <span class="flex items-center gap-2">
+            <span class="text-base mb-0.5 font-bold">@</span>
+            <span>{m.left_tame_zebra_fade({number: sortedPostCategoryies.length})}</span>
+          </span>
+        </Badge>
+      </a>
+      <a data-cy="tags-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/tags')}>
+        <Badge>
+          <span class="flex items-center gap-2">
+            <span class="text-base font-bold">#</span>
+            <span>{m.mushy_swift_beaver_earn({number: sortedPostTags.length})}</span>
+          </span>
+        </Badge>
+      </a>
+    </div>
+    <Fragment slot="headline">
+      {m.tired_game_husky_sew({number: dateSortedPublishedPosts.length})}
+    </Fragment>
+
+  </Hero>
+  <Container>
+    <section>
+      <h2 class="sr-only">{m.born_full_liger_create()}</h2>
+      <SpotlightCardsGallery>
+        {
+          dateSortedPublishedPosts.map((post) => {
+            const { data } = post
+            return (
+            <SpotlightPostCard
+            post={{
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
+                slug: post.slug,
+                ...data
+              }}
+            />
+          )
+          })
+        }
+      </SpotlightCardsGallery>
+    </section>
+  </Container>
+</BlogBase>

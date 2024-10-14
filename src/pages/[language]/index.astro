@@ -1,0 +1,159 @@
+---
+import BlogBase from '@/layouts/BlogBase.astro';
+import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import Pagefind from '@/components/app/index/Pagefind.astro'
+import Hero from '@/components/app/Hero.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
+import uniqolor from 'uniqolor';
+import Container from '@/components/atoms/container/Container.astro';
+import { Badge } from '@/components/atoms/badge/index.ts'
+import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { localeParams, translateCategory, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
+const categoriesLists = sortedPostCategoryies.map((category) => ({
+  type: category,
+  posts: publishedPosts
+    .filter((post) => post.data.category === category)
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
+}));
+
+const currentTime = new Date()
+  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  .replace(/\//g, '-');
+
+const {currentLocale} = Astro
+
+export async function getStaticPaths() {
+  return localeParams;
+};
+---
+<BlogBase>
+  <slot name="head">
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+    <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  </slot>
+  <Hero>
+    <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={projectUpdateBadgeUrl}>
+      <Badge>{`${m.north_tense_hedgehog_inspire()} ${currentTime}`}</Badge>
+    </a>
+    <div slot="headline" style={`max-width: ${currentLocale === 'en' ? '2000' : '1600'}px`}>
+      <span>{m.vivid_quick_giraffe_read()}</span>
+      <span class="text-primary">{m.each_main_toucan_dine()}</span>
+      <span>{m.same_tasty_swallow_cuddle()}</span>
+      <div class="text-primary inline-flex items-center gap-2">
+        <span >
+          <span class="relative inline-flex">
+
+          <span id="draggable" style="--selection: hsl(var(--primary))" class="inline-flex border border-[--selection] whitespace-nowrap cursor-move">
+            {m.nice_equal_wallaby_slide()}
+            <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+          </span>
+
+        </span>
+          {m.equal_stock_newt_aid()}
+          <span class="cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>'] after:ml-2" contenteditable>{m.watery_pink_hamster_relish()}</span>
+          {m.inner_petty_giraffe_drip()}
+        </span>
+      </div>
+    </div>
+    <Pagefind placeholderText={m.awake_quiet_ape_emerge()}/>
+  </Hero>
+
+  <section>
+    <h2 class="sr-only">{m.tame_mealy_moose_nudge()}</h2>
+    <Container>
+      <div class="flex flex-wrap gap-4">
+        <SpotlightCardsGallery minCardWidth={700}>
+          {
+            categoriesLists.map((categoriesList) => (
+              <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
+                <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
+                  <h2
+                    class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
+                  >
+                    <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${categoriesList.type}/`)}>{translateCategory(categoriesList.type, Astro.currentLocale as LanguageKey)}</a>
+                  </h2>
+                  <span class="opacity-60 transition-opacity group-hover:opacity-100">
+                    {categoriesList.posts.length} 
+                    {
+                     categoriesList.posts.length > 1 ? m.suave_close_fireant_play() : m.busy_misty_skunk_praise()
+                    }
+                  </span>
+                </div>
+
+                <ul class="flex flex-col gap-4">
+                  {categoriesList.posts.map(
+                    (post, index) =>
+                      index + 1 < 4 && (
+                        <li class="group/list inline-flex gap-12">
+                          {/* Different fontsize cause differnt textbox whitespace... In order to align 2 text I manually add margin to it */}
+                          <time
+                            style="margin-top: 0.3em"
+                            class="inline-block whitespace-nowrap opacity-80 group-hover/list:opacity-100 "
+                          >
+                            {post.data.publishDate
+                              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit' })
+                              .replace(/\//g, '-')}
+                          </time>
+                          <a
+                            data-astro-prefetch
+                            class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
+                          >
+                            {post.data.titleTC}
+                          </a>
+                        </li>
+                      ),
+                  )}
+                </ul>
+              </SpotlightCard>
+            ))
+          }
+        </SpotlightCardsGallery>
+      </div>
+    </Container>
+  </section>
+</BlogBase>
+
+
+<script is:inline>
+const draggable = document.getElementById('draggable');
+
+let posX = 0;
+let posY = 0;
+let mouseX = 0;
+let mouseY = 0;
+
+function moveElement(e) {
+  mouseX = e.clientX - posX;
+  mouseY = e.clientY - posY;
+  draggable.style.left = `${mouseX}px`;
+  draggable.style.top = `${mouseY}px`;
+}
+
+function mouseDown(e) {
+  e.preventDefault();
+  e.target.style.position = 'absolute';
+  posX = e.clientX - draggable.offsetLeft;
+  posY = e.clientY - draggable.offsetTop;
+  window.addEventListener('mousemove', moveElement, false);
+}
+
+function mouseUp() {
+  window.removeEventListener('mousemove', moveElement, false);
+}
+
+draggable.addEventListener('mousedown', mouseDown, false);
+window.addEventListener('mouseup', mouseUp, false);
+</script>

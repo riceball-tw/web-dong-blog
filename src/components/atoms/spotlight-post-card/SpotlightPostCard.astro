@@ -4,6 +4,8 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import CategoryList from '@/components/post/CategoryList.astro';
 import TagList from '@/components/post/TagsList.astro';
 import { Icon } from 'astro-icon/components'
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale } from '@/utils/i18n.ts';
 
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
 type CustomCard = Partial<Pick<PostPage, "slug">> & CategoryListType & TagsList & {
@@ -40,7 +42,7 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
     <div>
       <h2 class="mb-4 text-lg font-medium">
         {url && <a href={url}>{titleTC}</a>}
-        {slug && !url && <a data-astro-prefetch href={`/post/${slug}/`}>{titleTC}</a>}
+        {slug && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${slug}/`)}>{titleTC}</a>}
         {!url && !slug && titleTC}
       </h2>
       <p class="line-clamp-3 text-sm">{excerpt}</p>

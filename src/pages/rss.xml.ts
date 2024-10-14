@@ -1,20 +1,20 @@
 import rss from '@astrojs/rss';
-import globalConfig from '@/globalConfig.ts';
 import type { APIContext } from 'astro';
 import { publishedPosts } from '@/utils/getPosts.ts';
 import { shortposts } from '@/utils/getShortposts.ts';
 import sanitizeHtml from 'sanitize-html';
 import MarkdownIt from 'markdown-it';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { defaultLocale } from '@/utils/i18n.ts';
 
 const parser = new MarkdownIt();
-
-const { brand } = globalConfig;
+const { name, description } = (await currentLocaleWebsiteConfig(defaultLocale)).data.brand;
 
 // eslint-disable-next-line import/prefer-default-export
 export const GET = async (context: APIContext) => {
   const rssContent = await rss({
-    title: brand.nameTC,
-    description: brand.description,
+    title: name,
+    description,
     site: context.site || '',
     items: [...publishedPosts, ...shortposts].map((collectionItem) => {
       const { slug } = collectionItem;

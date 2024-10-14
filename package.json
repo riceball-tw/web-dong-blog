@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && astro build && pagefind --site dist",
     "build:staging": "astro build --mode staging && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
@@ -16,7 +16,8 @@
     "prettier": "prettier -w src",
     "lighthouse": "lhci autorun",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide"
   },
   "dependencies": {
     "@astrojs/check": "^0.8.2",
@@ -27,6 +28,7 @@
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.5.0",
+    "@inlang/paraglide-astro": "^0.2.2",
     "@monaco-editor/react": "^4.6.0",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
@@ -60,6 +62,7 @@
     "@iconify-json/devicon-plain": "^1.1.36",
     "@iconify-json/material-symbols": "^1.1.78",
     "@iconify-json/simple-icons": "^1.1.99",
+    "@inlang/paraglide-js": "1.11.2",
     "@lhci/cli": "^0.13.0",
     "@tailwindcss/typography": "^0.5.8",
     "@types/markdown-it": "^14.1.1",

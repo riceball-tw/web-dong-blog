@@ -1,0 +1,44 @@
+---
+import type { GetStaticPaths } from 'astro'
+import BlogBase from '@/layouts/BlogBase.astro';
+import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
+import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
+import Hero from '@/components/app/Hero.astro';
+import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { languages, defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+
+export const getStaticPaths = (async ({ paginate }) => Object.keys(languages)
+.flatMap(language => paginate(dateSortedPublishedPosts, 
+{ pageSize: 15, params: { language } })
+)) satisfies GetStaticPaths
+
+const { page } = Astro.props;
+---
+
+<BlogBase title={m.shy_sunny_fish_win({page: page.currentPage})} description={m.tangy_empty_rabbit_boost()}>
+  <Hero>
+    <Fragment slot="headline">{m.slow_weak_camel_engage({page: page.currentPage})} </Fragment>
+  </Hero>
+  <section class="px-4">
+    <SpotlightCardsGallery>
+      {
+        page.data.map((post) => {
+          const { slug, data } = post 
+          return (
+          <SpotlightPostCard
+            post={{
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
+              slug,
+              ...data,
+            }}
+          />
+          )
+        })
+      }
+    </SpotlightCardsGallery>
+  </section>
+</BlogBase>
