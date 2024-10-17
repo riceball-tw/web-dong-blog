@@ -1,0 +1,15 @@
+---
+titleTC: Editor.js 打造類似 Notion 的區塊編輯器體驗
+publishDate: 2024-10-17
+category: 前端
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBObFgJBHg-
+---
+
+近期碰到製作類似 Notion 內容編輯器介面的功能，使用者可以用來編寫文章或植入特定客製化的組件。
+
+[Editor.js](https://www.threads.net/@webdong.dev/post/DBObFgJBHg-) 相較於傳統的所見及所得編輯器透過編輯 Markdown 或 HTML ，它採用自訂的 JSON 格式來存儲資料，雖帶來很大的彈性但也因為不是通用的格式所以會需要額外轉換才能使用在其他地方。
+
+開發下來踩中了蠻多坑，像是整個生態圈並沒有到特別熱絡成熟，一些基本的功能 (復原/ 取消復原 / 區塊抓取滑動 / 文字顏色) 都依賴社群套件且已經持續數年，仍有許多問題未解。
+
+可以預期插件裝上去後還時常會需要自己修修補補，不過開源專案中好像沒有更合適的選項了，適合需要高度客製化的文字編輯器場景。
