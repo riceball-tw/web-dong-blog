@@ -1,0 +1,19 @@
+---
+titleTC: 為什麼瀏覽器 Tab 按下去會顯示藍藍的外框？
+publishDate: 2024-10-22
+category: UX
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBbY7DMBAfR
+---
+
+近期設計反映前端一些互動元素聚焦時都會出現規格外的不明藍色外框，希望可以取消掉，不過移除前我認為有必要討論一下細節原因。
+
+藍色的外框具體名稱叫做聚焦標示 Focus Indicators，也有人叫做 Focus Ring 或 Focus Outline，用途是讓用戶更容易找到網頁中聚焦中的內容，通常給視力不良或使用鍵盤預覽網頁的用戶提供更明確的指示。
+
+瀏覽器與各大樣式庫通常內建了這套樣式模式來確保網頁的適用性，也是為什麼預設元素互動時會有藍色外框的原因。當然這套標準並不是絕對，還是可以取捨網站用戶的客群需求並適當調整樣式，但可以確定的是越是講究適用性需求的設計越講究樣式的基本功能可以被正確識別。
+
+最終和設計折中達成共識移除突兀的 Focus Ring 並強化邊框對比度 👍
+
+![聚焦標示範例](focus-indicator.webp)
+
+[無障礙網頁內容指引 WCAG 有更深刻的聚焦狀態的外貌定義](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)
