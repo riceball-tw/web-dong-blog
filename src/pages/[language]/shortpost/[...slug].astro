@@ -4,13 +4,13 @@ import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro
 import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
-import { languages } from '@/utils/i18n.ts';
+import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
+import { languages, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
 
 export async function getStaticPaths() {
-  return dateSortedPublishedShortposts.flatMap((shortpost) => Object.keys(languages).map((language) => ({
-    params: { slug: shortpost.slug, language },
-    props: { shortpost, shortposts: dateSortedPublishedShortposts }
+  return Object.keys(languages).flatMap((language) => dateSortedLocaleRelatedShortposts(language as LanguageKey).map((shortpost) => ({
+    params: { slug: stripLanguageCode(shortpost.slug), language },
+    props: { shortpost, shortposts: dateSortedLocaleRelatedShortposts(language as LanguageKey) }
   })));
 }
 

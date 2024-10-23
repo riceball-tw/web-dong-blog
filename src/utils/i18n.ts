@@ -34,7 +34,11 @@ export const localeParams = Object.keys(languages).map((language) => ({
   params: { language },
 }));
 
-function removeLanguagePrefix(path: string, languagePrefixes: string[]): string {
+export function stripLanguageCode(str: string) {
+  return str.replace(/^[a-z]{2}(-[a-z]{2})?\//i, '');
+}
+
+export function removeLanguagePrefix(path: string, languagePrefixes: string[]): string {
   const prefixRegex = new RegExp(`^/(${languagePrefixes.join('|')})`);
   return path.replace(prefixRegex, '').replace(/^\/+/, '');
 }

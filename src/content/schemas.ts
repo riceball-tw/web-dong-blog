@@ -48,7 +48,7 @@ export const postSchema = z.object({
 });
 
 export const shortpostSchema = z.object({
-  titleTC: z.string().max(60),
+  titleTC: z.string(),
   publishDate: z.date(),
   category: z.string().default('unsorted'),
   social: z
