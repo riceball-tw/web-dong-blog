@@ -6,6 +6,11 @@ export const languages = {
   'zh-tw': '繁體中文',
 } as const;
 
+export const languageFallback = {
+  'zh-cn': 'zh-tw',
+  en: 'zh-tw',
+} as const;
+
 // https://en.wikipedia.org/wiki/IETF_language_tag
 // IETF language tag
 export const languageTags = {
