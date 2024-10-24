@@ -1,6 +1,9 @@
 ci:
   collect:
-    numberOfRuns: 3
+    numberOfRuns: 1
+    startServerCommand: astro preview
+    url:
+      - http://localhost:4321/
 
   assert:
     preset: 'lighthouse:no-pwa'
