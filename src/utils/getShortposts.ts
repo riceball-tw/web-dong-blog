@@ -15,8 +15,7 @@ function getLanguageCode(str: string) {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const dateSortedLocaleRelatedShortposts = (currentLocale: LanguageKey) => {
-  return shortposts
+export const dateSortedLocaleRelatedShortposts = (currentLocale: LanguageKey) =>
+  shortposts
     .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
     .filter((post) => getLanguageCode(post.slug) === currentLocale);
-};
