@@ -4,6 +4,10 @@ ci:
     startServerCommand: astro preview
     url:
       - http://localhost:4321/
+      - http://localhost:4321/post
+      - http://localhost:4321/post/learn-debounce-and-throttle/ # Complex post demo
+      - http://localhost:4321/toolbox
+      - http://localhost:4321/shortpost
 
   assert:
     preset: 'lighthouse:no-pwa'
