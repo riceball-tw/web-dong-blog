@@ -15,7 +15,7 @@ setLanguageTag(Astro.currentLocale as LanguageKey)
 ---
 
 <script>
-  import { getCurrentGlobalTheme, setGlobalTheme } from '@/helper/globalTheme.ts';
+  import { getCurrentGlobalTheme, setGlobalTheme } from '@/utils/globalTheme.ts';
 
   const localStorageTheme = localStorage.theme
   setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
