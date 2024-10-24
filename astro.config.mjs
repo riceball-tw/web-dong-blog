@@ -12,14 +12,13 @@ import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
-import { languages, prefixDefaultLocale, defaultLocale, baseUrl, languageFallback } from './src/utils/i18n.ts';
+import { languages, prefixDefaultLocale, defaultLocale, baseUrl } from './src/utils/i18n.ts';
 
 // https://astro.build/config
 export default defineConfig({
   i18n: {
     defaultLocale,
     locales: Object.keys(languages),
-    fallback: languageFallback,
     routing: {
       prefixDefaultLocale,
     },
