@@ -4,7 +4,7 @@ import path from 'path';
 import { ImageResponse } from '@vercel/og';
 import { shortposts } from '@/utils/getShortposts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 
 interface Props {
   params: { slug: string };
@@ -105,7 +105,7 @@ export async function GET({ props }: Props) {
 // to generate an image for each blog shortPosts in a collection
 export async function getStaticPaths() {
   return shortposts.map((shortpost) => ({
-    params: { slug: shortpost.slug },
+    params: { slug: stripLanguageCode(shortpost.slug) },
     props: { shortpost },
   }));
 }
