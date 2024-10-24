@@ -3,20 +3,24 @@ import BlogBase from '@/layouts/BlogBase.astro';
 import Hero from '@/components/app/Hero.astro';
 import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
+import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
+import * as m from "@/paraglide/messages";
+import { type LanguageKey } from '@/utils/i18n.ts';
+
+const shortposts = dateSortedLocaleRelatedShortposts(Astro.currentLocale as LanguageKey);
 ---
 
-<BlogBase title={'所有短篇文章'} description={`所有短篇共 ${dateSortedPublishedShortposts.length} 篇`}>
+<BlogBase title={m.sea_same_gopher_burn()} description={m.round_even_leopard_drip({number: shortposts.length})}>
   <Hero>
     <Fragment slot="headline">
-      所有短文共 {dateSortedPublishedShortposts.length} 篇
+      {m.round_even_leopard_drip({number: shortposts.length})}
     </Fragment>
   </Hero>
   
   <Container>
     <section>
-      <h2 class="sr-only">所有短文列表</h2>
-      <ShortpostList shortposts={dateSortedPublishedShortposts}>
+      <h2 class="sr-only">{m.spicy_quiet_ibex_clasp()}</h2>
+      <ShortpostList shortposts={shortposts}>
       </ShortpostList>
     </section>
   </Container>

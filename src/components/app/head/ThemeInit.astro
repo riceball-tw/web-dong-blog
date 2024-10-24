@@ -1,8 +1,10 @@
 ---
-import globalConfig from '@/globalConfig.ts';
 import { getCurrentGlobalTheme } from '@/helper/globalTheme.ts';
 
-const { editorTheme } = globalConfig.setting 
+const editorTheme = {
+  light: 'github-light',
+  dark: 'github-dark',
+}
 const getCurrentGlobalThemeSerialized = getCurrentGlobalTheme.toString();
 ---
 <script define:vars={{ editorTheme, getCurrentGlobalThemeSerialized }}>

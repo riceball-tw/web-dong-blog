@@ -4,12 +4,13 @@ import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro
 import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedShortposts } from '@/utils/getShortposts.ts';
+import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
+import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 
 export async function getStaticPaths() {
-  return dateSortedPublishedShortposts.map((shortpost) => ({
-    params: { slug: shortpost.slug },
-    props: { shortpost, shortposts: dateSortedPublishedShortposts },
+  return dateSortedLocaleRelatedShortposts(defaultLocale).map((shortpost) => ({
+    params: { slug: stripLanguageCode(shortpost.slug) },
+    props: { shortpost, shortposts: dateSortedLocaleRelatedShortposts(defaultLocale) },
   }));
 }
 const { shortpost, shortposts } = Astro.props;

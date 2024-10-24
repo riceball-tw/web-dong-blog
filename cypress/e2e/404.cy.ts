@@ -8,6 +8,6 @@ describe('404 Page is effective', () => {
     // Post link
     cy.visit('/404', { failOnStatusCode: false });
     cy.dataCy('post-link').click();
-    cy.url().should('eq', `${Cypress.config().baseUrl}/post`);
+    cy.url().should('eq', `${Cypress.config().baseUrl}/post/`);
   });
 });

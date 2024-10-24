@@ -48,7 +48,7 @@ export const postSchema = z.object({
 });
 
 export const shortpostSchema = z.object({
-  titleTC: z.string().max(60),
+  titleTC: z.string(),
   publishDate: z.date(),
   category: z.string().default('unsorted'),
   social: z
@@ -57,6 +57,38 @@ export const shortpostSchema = z.object({
     })
     .optional(),
   themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
+});
+
+// Website Global Configurations
+export const websiteSchema = z.object({
+  setting: z.object({
+    projectUpdateBadgeUrl: z.string(),
+    postLastModifiedDateUrl: z.string(),
+  }),
+  brand: z.object({
+    name: z.string(),
+    slogan: z.string(),
+    description: z.string(),
+    themeColor: z.string(),
+    thumbnail: z.object({
+      width: z.number(),
+      height: z.number(),
+      src: z.string(),
+      alt: z.string(),
+    }),
+    copyright: z.object({
+      title: z.string(),
+      url: z.string(),
+    }),
+    socials: z.array(
+      z.object({
+        name: z.string(),
+        iconName: z.string(),
+        url: z.string(),
+        imgUrl: z.string().optional(),
+      }),
+    ),
+  }),
 });
 
 export const characterSchema = z.object({

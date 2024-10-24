@@ -1,0 +1,140 @@
+---
+import BlogBase from '@/layouts/BlogBase.astro';
+import { getEntry } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import TagsList from '@/components/post/TagsList.astro';
+import CategoryList from '@/components/post/CategoryList.astro';
+import Utteranc from '@/components/app/Utteranc.astro';
+import PostJSONLD from '@/components/app/head/PostJSONLD.astro';
+import PostImage from '@/components/post/PostImage.astro';
+import PostBlockquote from '@/components/post/PostBlockquote.astro';
+import Info from '@/components/post/Info.astro'
+import Video from '@/components/post/Video.astro'
+import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.astro';
+import { Icon } from 'astro-icon/components'
+import PostSeries from '@/components/post/PostSeries.astro'
+import Container from '@/components/atoms/container/Container.astro';
+import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey, languages, defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export async function getStaticPaths() {
+  function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
+    return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
+  }
+  return Object.keys(languages).flatMap(language =>
+    dateSortedPublishedPosts.map((post) => {
+      const postsInSeries = getTargetSeriesPosts(dateSortedPublishedPosts, post.data.series);
+      return {
+        params: { language, slug: post.slug },
+        props: { post, postsInSeries },
+      };
+    })
+  )
+}
+
+const { post, postsInSeries } = Astro.props;
+const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
+const { slug } = post;
+const { Content, headings } = await post.render();
+const author = post.data.author && (await getEntry('character', post.data.author?.id));
+const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
+const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
+const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
+---
+
+<BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${titleTC}` }}>
+  <PostJSONLD
+    slot="head"
+    headline={post.data.titleTC}
+    description={post.data.excerpt}
+    publishDate={post.data.publishDate}
+    keywords={post.data.tags}
+    articleSection={post.data.category}
+    author={author && {
+      nameTC: author.data.nameTC,
+      url: author.data?.social?.url,
+    }}
+  />
+  <Container>
+    <main class="mt-0 pt-8 px-2 sm:mt-[var(--mainNav-height)]">
+      <article
+        data-pagefind-body
+        data-article
+        data-cy="post-content"
+        class=`article-grid [grid-template-columns:1fr_min(65ch,_100%)_1fr] lg:px-auto prose mb-16 block w-full max-w-none md:prose-xl lg:grid ${rehypeAutoLinkStyle}`
+      >
+        <header class="not-prose mb-16 col-start-2">
+          {
+            icon && (
+              <div data-cy="post-icon-container" data-pagefind-ignore="all" class="mb-8 size-16 flex justify-center items-center rounded-lg" style={`background-color: ${themeColor}`}>
+                <Icon class="text-black" name={icon.name} size={32} />
+              </div>
+            )
+          }
+          <div class="relative mx-auto">
+            <div>
+              <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{title}</div>
+              <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
+            </div>
+            <div class="flex justify-between">
+              <div class="flex md:block">
+                <CategoryList categoryHref={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${category}/`)} {category} />
+                <TagsList {tagHrefs} {tags} />
+              </div>
+            </div>
+          </div>
+        </header>
+    
+        <aside 
+        style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
+        
+        <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
+          <PostTableOfContent {headings} />
+          {
+            postsInSeries.length ? 
+              <PostSeries currentPost={post} 
+              postsInSeries={postsInSeries} />
+          : ''
+          }
+          <!-- Post Date Info -->
+          <div class="inline-flex w-full flex-col gap-2 p-4">
+            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+              {m.zesty_gaudy_scallop_imagine()}
+              <time data-pagefind-sort="date">
+                {
+                  publishDate
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                }
+              </time>
+            </div>
+            <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
+              <span>{m.extra_ago_ladybug_animate()}</span>
+              <a
+                data-pagefind-ignore="all"
+                href={`${postLastModifiedDateUrl}/${post.slug}.mdx`}
+                class=""
+              >
+                <span>
+                {
+                  lastModifiedDate ?
+                  lastModifiedDate
+                    .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                    .replace(/\//g, '-')
+                    : m.strong_best_tapir_pop()
+                }
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        </aside>
+        <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
+        <Utteranc />
+      </article>
+    </main>
+  </Container>
+</BlogBase>

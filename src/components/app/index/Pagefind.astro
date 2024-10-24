@@ -1,31 +1,9 @@
 ---
-
+export interface Props {
+  placeholderText: string;
+}
+const { placeholderText } = Astro.props;
 ---
-
-<script>
-  function initPagefind() {
-    const pagefindElement = document.getElementById('pagefind-search');
-    if (pagefindElement?.dataset.initialized) return;
-    pagefindElement?.setAttribute("data-initialized", 'true')
-    // External Code, Skip lint
-    // https://pagefind.app/docs/ui-usage/
-    // @ts-ignore-next-line
-    // eslint-disable-next-line no-new, no-undef
-    new PagefindUI({
-      element: "#pagefind-search",
-      translations: {
-        placeholder: "搜尋網頁東東所有文章……"
-      },
-      showSubResults: true,
-      showImages: false,
-      resetStyles: false,
-      excerptLength: 60,
-      sort: { date: "desc" },
-    });
-  }
-
-  initPagefind()
-</script>
 
 <style is:inline>
   #pagefind-search .pagefind-ui__search-input::placeholder {
@@ -45,3 +23,28 @@
 </style>
 
 <div class="min-h-16 container mx-auto text-left mt-0 md:mt-8" id="pagefind-search"></div>
+
+<script define:vars={{placeholderText}}>
+  function initPagefind() {
+    const pagefindElement = document.getElementById('pagefind-search');
+    if (pagefindElement?.dataset.initialized) return;
+    pagefindElement?.setAttribute("data-initialized", 'true')
+    // External Code, Skip lint
+    // https://pagefind.app/docs/ui-usage/
+    // @ts-ignore-next-line
+    // eslint-disable-next-line no-new, no-undef
+    new PagefindUI({
+      element: "#pagefind-search",
+      translations: {
+        placeholder: placeholderText
+      },
+      showSubResults: true,
+      showImages: false,
+      resetStyles: false,
+      excerptLength: 60,
+      sort: { date: "desc" },
+    });
+  }
+
+  initPagefind()
+</script>

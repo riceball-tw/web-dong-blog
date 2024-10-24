@@ -5,11 +5,14 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { defaultLocale, translateCategory, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 ---
 
-<BlogBase title={`所有類別`} description={`所有文章的類別`}>
+<BlogBase title={m.salty_kind_crossbill_support()} description={m.swift_sweet_tiger_gasp()}>
   <Hero>
-    <Fragment slot="headline">所有類別共 {sortedPostCategoryies.length} 項</Fragment>
+    <Fragment slot="headline">{m.that_cuddly_oryx_play({number: sortedPostCategoryies.length})}</Fragment>
   </Hero>
 
   <Container>
@@ -19,7 +22,8 @@ import { sortedPostCategoryies } from '@/utils/getPosts.ts';
           <ul>
             <li class="text-3xl">
               <SpotlightCard>
-                <a data-cy="category-link" data-astro-prefetch href={`/post/categories/${tag}/`}>{tag}</a>
+                <a data-cy="category-link" data-astro-prefetch 
+                href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${tag}/`)}>{translateCategory(tag, Astro.currentLocale as LanguageKey)}</a>
               </SpotlightCard>
             </li>
           </ul>

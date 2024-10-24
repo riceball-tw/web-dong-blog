@@ -5,11 +5,14 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostTags } from '@/utils/getPosts.ts';
+import { defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
 ---
 
-<BlogBase title={`文章標籤分類`} description={`所有標籤共${sortedPostTags.length}項`}>
+<BlogBase title={m.kind_curly_javelina_aim()} description={m.sea_loud_osprey_reap({number: sortedPostTags.length})}>
   <Hero>
-    <Fragment slot="headline">所有標籤共 {sortedPostTags.length} 項</Fragment>
+    <Fragment slot="headline">{m.sea_loud_osprey_reap({number: sortedPostTags.length})}</Fragment>
   </Hero>
   <Container>
     <SpotlightCardsGallery>
@@ -18,7 +21,7 @@ import { sortedPostTags } from '@/utils/getPosts.ts';
           <ul>
             <li class="text-3xl">
               <SpotlightCard>
-                <a data-cy="tag-link" data-astro-prefetch href={`/post/tags/${tag}/`}>{tag}</a>
+                <a data-cy="tag-link" data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)}>{tag}</a>
               </SpotlightCard>
             </li>
           </ul>

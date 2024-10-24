@@ -1,0 +1,31 @@
+---
+import BlogBase from '@/layouts/BlogBase.astro';
+import Hero from '@/components/app/Hero.astro';
+import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
+import Container from '@/components/atoms/container/Container.astro';
+import * as m from "@/paraglide/messages";
+import { localeParams } from '@/utils/i18n.ts';
+import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
+
+export async function getStaticPaths() {
+  return localeParams;
+};
+const shortposts = dateSortedLocaleRelatedShortposts(Astro.currentLocale as LanguageKey);
+---
+
+<BlogBase title={m.sea_same_gopher_burn()} description={m.round_even_leopard_drip({number: shortposts.length})}>
+  <Hero>
+    <Fragment slot="headline">
+      {m.round_even_leopard_drip({number: shortposts.length})}
+    </Fragment>
+  </Hero>
+  
+  <Container>
+    <section>
+      <h2 class="sr-only">{m.spicy_quiet_ibex_clasp()}</h2>
+      <ShortpostList shortposts={shortposts}>
+      </ShortpostList>
+    </section>
+  </Container>
+</BlogBase>

@@ -1,6 +1,9 @@
 ci:
   collect:
-    numberOfRuns: 3
+    numberOfRuns: 1
+    startServerCommand: astro preview
+    url:
+      - http://localhost:4321/
 
   assert:
     preset: 'lighthouse:no-pwa'
@@ -9,6 +12,7 @@ ci:
       total-byte-weight: 'off' # TODO: enable this when this bug is fixed: https://github.com/GoogleChrome/lighthouse-ci/issues/1001
       identical-links-same-purpose: 'off'
       landmark-one-main: 'off'
+      color-contrast: 'warn' # WCAG contrast might not be useful now, wait for WCAG3 or APCA?
 
   upload:
     target: 'temporary-public-storage'

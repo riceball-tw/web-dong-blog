@@ -1,13 +1,15 @@
 ---
 import { SEO } from 'astro-seo';
-import globalConfig from '@/globalConfig.ts';
 import type { GlobalHead } from '@/types';
+import { languageTags, prefixDefaultLocale } from '@/utils/i18n.ts';
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export interface Props extends GlobalHead {}
 
 const { title, description, thumbnail } = Astro.props;
-const { brand } = globalConfig;
-const seoTitle = `${title || brand.slogan} - ${brand.nameTC}`;
+const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data;
+const seoTitle = `${title || brand.slogan } - ${ brand.name }`;
 const seoDescription = description || brand.description;
 const seoImage = {
   src: thumbnail?.src
@@ -17,6 +19,10 @@ const seoImage = {
   height: thumbnail?.height ?? brand.thumbnail.height,
   alt: thumbnail?.alt ?? brand.thumbnail.alt,
 };
+
+function getPathnameWithoutLocale(pathname: string) {
+  return pathname.replace(`/${Astro.currentLocale}`, '').replace(/\/?$/, '/');
+}
 ---
 
 <SEO
@@ -56,6 +62,25 @@ const seoImage = {
             href: '/sitemap-index.xml',
             type: 'application/xml',
           },
+          // Default Language Alternates
+          {
+            rel: "alternate",
+            hreflang: "x-default",
+            href: new URL(
+            getPathnameWithoutLocale(Astro.url.pathname) ,
+              Astro.site
+            ).toString()
+          },
+          // Language Alternates
+          ...Object.keys(languageTags).map(tag => ({
+            rel: "alternate",
+            hreflang: tag,
+            href: new URL(!prefixDefaultLocale 
+                ? tag + getPathnameWithoutLocale(Astro.url.pathname) 
+                : Astro.url.pathname,
+              Astro.site
+            ).toString()
+          })),
           // RSS Autodiscovery
           // https://www.rssboard.org/rss-autodiscovery
           {

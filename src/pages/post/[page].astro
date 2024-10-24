@@ -1,23 +1,23 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import globalConfig from '@/globalConfig.ts';
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Hero from '@/components/app/Hero.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
 
-export const getStaticPaths= (async ({ paginate }) => {
-  const { paginationSize } = globalConfig.setting;
-  return paginate(dateSortedPublishedPosts, { pageSize: paginationSize });
-}) satisfies GetStaticPaths
+export const getStaticPaths= (async ({ paginate }) => paginate(dateSortedPublishedPosts, { pageSize: 15 })) satisfies GetStaticPaths
 
 const { page } = Astro.props;
 ---
 
-<BlogBase title={`文章第 ${page.currentPage} 頁`} description={'文章頁籤'}>
+
+<BlogBase title={m.shy_sunny_fish_win({page: page.currentPage})} description={m.tangy_empty_rabbit_boost()}>
   <Hero>
-    <Fragment slot="headline">第 {page.currentPage} 頁</Fragment>
+    <Fragment slot="headline">{m.slow_weak_camel_engage({page: page.currentPage})} </Fragment>
   </Hero>
   <section class="px-4">
     <SpotlightCardsGallery>
@@ -27,8 +27,8 @@ const { page } = Astro.props;
           return (
           <SpotlightPostCard
             post={{
-              categoryHref: `/post/categories/${post.data.category}/`,
-              tagHrefs: post.data.tags.map((tag) => `/post/tags/${tag}/`),
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
               slug,
               ...data,
             }}
