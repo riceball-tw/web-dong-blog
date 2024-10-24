@@ -1,5 +1,5 @@
 import { getCollection } from 'astro:content';
-import { type LanguageKey } from '@/utils/i18n';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export const shortposts = await getCollection('shortpost');
 
