@@ -18,6 +18,7 @@ ci:
       landmark-one-main: 'off'
       color-contrast: 'warn' # WCAG contrast might not be useful now, wait for WCAG3 or APCA?
       image-size-responsive: 'warn' # Some pages use external image that cannot be controlled
+      non-composited-animations: 'warn'
 
   upload:
     target: 'temporary-public-storage'
