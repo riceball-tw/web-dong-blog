@@ -1,0 +1,16 @@
+---
+titleTC: How to Directly Modify Project Dependency Package Source Code (node_modules)?
+publishDate: 2024-10-24
+category: Development
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBeDEGyBkHk
+---
+
+During development, there are times when the packages being used have some bugs or features that need to be added, and there isn't enough time to slowly submit requests and wait for package updates. In such situations, the usual approach is to fork the package, rewrite it, and then modify the dependency source.
+
+I always thought that forking and rewriting my own package was the only proper way to go, until I accidentally stumbled upon [patch-package](https://www.npmjs.com/package/patch-package) and, after reading the documentation carefully, discovered that pnpm and yarn2+ have long supported the ability to modify the source code of dependency packages.
+
+pnpm has some good [documentation and video examples](https://pnpm.io/cli/patch) describing how to patch specific packages.
+In simple terms, it creates a patches folder to store the modified packages and references the modified packages through patchedDependencies, which is a more elegant way to manage temporary fixes to packages.
+
+You can also take a look at [pnpm-patch-i](https://github.com/antfu/pnpm-patch-i).

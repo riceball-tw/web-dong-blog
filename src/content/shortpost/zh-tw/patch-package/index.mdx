@@ -1,0 +1,16 @@
+---
+titleTC: 如何直接修改專案依賴套件原始碼（node_modules）？
+publishDate: 2024-10-24
+category: 開發
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBeDEGyBkHk
+---
+
+開發時有時會遇到使用的套件存在一些 BUG 或功能需要補上，且沒有時間慢慢發請求等待套件更新，像這樣的情境通常就是 fork 套件改寫後修改依賴來源。
+
+我一直以為 fork 並改寫出自己的套件並接上是唯一妥善的方式，直到無意間翻到 [patch-package](https://www.npmjs.com/package/patch-package) 這個套件，並且在細讀文件後才發現原來 pnpm 與 yarn2+ 早就已經支援修改依賴套件原始碼的功能。
+
+pnpm 有不錯的[文件與影片範例](https://pnpm.io/cli/patch)描述如何 patch 特定套件。
+簡單來說會創建一個 patches 資料夾存放修改過的套件，並且透過 patchedDependencies 來引用被修改過的套件，算是一個更優雅的方式去管理臨時對套件的修補。
+
+pnpm 還可以參考看看 [pnpm-patch-i](https://github.com/antfu/pnpm-patch-i)。
