@@ -4,6 +4,10 @@ ci:
     startServerCommand: astro preview
     url:
       - http://localhost:4321/
+      - http://localhost:4321/post
+      - http://localhost:4321/post/rendering-pattern/ # Complex post demo
+      - http://localhost:4321/toolbox
+      - http://localhost:4321/shortpost
 
   assert:
     preset: 'lighthouse:no-pwa'
@@ -13,6 +17,8 @@ ci:
       identical-links-same-purpose: 'off'
       landmark-one-main: 'off'
       color-contrast: 'warn' # WCAG contrast might not be useful now, wait for WCAG3 or APCA?
+      image-size-responsive: 'warn' # Some pages use external image that cannot be controlled
+      non-composited-animations: 'warn'
 
   upload:
     target: 'temporary-public-storage'
