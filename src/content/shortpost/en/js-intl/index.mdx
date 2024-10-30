@@ -1,0 +1,17 @@
+---
+titleTC: Handling Currency, Units, and Time Conversions with Native JavaScript
+publishDate: 2024-05-09
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C6v6bx1BHLY
+---
+
+Recently, I rewrote a project that handles price displays, which required showing currency, thousand separators, and omitting decimal points... The old project's approach was to write individual functional functions and combine them to convert currency, which was quite cumbersome to use.
+
+So, I searched through the Vue i18n multilingual files I was using and found that it supports number conversion, which is fundamentally based on the native JavaScript [Intl](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl). The Intl object is a namespace for the ECMAScript Internationalization API, providing accurate string comparison, number formatting, and date-time formatting.
+
+![Intl Example](./intl-example.webp)
+
+However, one thing I found puzzling is why the locale zh-TW only converts to the symbol $? Who would think that $123,456... represents New Taiwan Dollars!
+
+- [Social Media Style Number Formatting in JS - Beyond Fireship](https://www.youtube.com/watch?v=FUngCjDzFDo)

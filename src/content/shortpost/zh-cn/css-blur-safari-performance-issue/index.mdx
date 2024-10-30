@@ -1,0 +1,19 @@
+---
+titleTC: CSS blur() 在 Safari 上要留意的效能问题
+publishDate: 2024-08-12
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C-ke5q2hHLh
+---
+
+CSS blur() 是一个很有趣的函数，用来替任何元素进行模糊化，并且数年前就已经被大多数浏览器所支持，近期也用它来制作一些精致特效的卡片。
+
+不过问题在于这些卡片在 Safari 上性能实在是太差了，原因是因为 Safari 使用 CPU 而非 GPU 渲染，因此加个无意义的 `translateZ()` 或 `translate3d()` 就可以让 GPU 介入用更高效的方式运算这些模糊元素。
+
+```css
+filter: blur(100px);
+transform: translate3d(0, 0, 0); // Safari hack to turn on GPU
+transform: translateZ(0); // Safari hack to turn on GPU
+```
+
+![blur() MDN 文件](blur-example.webp)

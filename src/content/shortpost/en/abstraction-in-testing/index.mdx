@@ -1,0 +1,17 @@
+---
+titleTC: The level of abstraction in test code should match that of the system being tested
+publishDate: 2024-10-28
+category: testing
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBqubX5hw5N
+---
+
+For example, when writing system-level tests today, you should not leave practical details (low abstraction) in the test cases (high abstraction). Doing so not only harms readability but also undermines the responsibility of the test document itself (to describe the expected behavior of the system).
+
+This idea applies to all levels of testing: system level, component level, unit level... As for how to conceptualize whether the tests have the correct level of abstraction?
+
+💭 Imagine sitting next to a person using the system being tested, think about how to explain the behavior you are testing to them, and then write the tests using similar language. You can practice with the diagram below.
+
+![Testing examples with mixed levels of abstraction](levels-of-abstraction-in-testing.webp)
+
+- [Levels of abstraction in testing](https://www.youtube.com/watch?v=G_0yKeh0Sf0)

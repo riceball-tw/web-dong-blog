@@ -1,0 +1,19 @@
+---
+titleTC: Why does a blue outline appear when pressing a browser tab?
+publishDate: 2024-10-22
+category: UX
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBbY7DMBAfR
+---
+
+Recently, the designer reported that some interactive elements on the website show a blue outline when focused, and hopes to remove it. However, before removing it, I think it is necessary to discuss the reason behind it.
+
+The blue outline is specifically called Focus Indicators, and it is also referred to as Focus Ring or Focus Outline. Its purpose is to help users easily locate the content that is currently focused on the webpage, usually providing clearer indications for users with visual impairments or those who navigate the webpage using a keyboard.
+
+Browsers and major style libraries typically have this style pattern built-in to ensure the usability of webpages, which is why there is a blue outline by default when elements are interacted with. Of course, this standard is not absolute; it can be adjusted according to the needs of the website's user, but it can be confirmed that designs that emphasize usability requirements pay more attention to ensuring that the basic functionality of styles can be correctly identified.
+
+Ultimately, a consensus was reached, to remove the weird Focus Ring and enhance the contrast of borders. 👍
+
+![Focus Indicator Example](focus-indicator.webp)
+
+[The Web Content Accessibility Guidelines (WCAG) provide a deeper definition of the appearance of focus states](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)

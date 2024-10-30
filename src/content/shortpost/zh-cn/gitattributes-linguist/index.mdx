@@ -1,0 +1,27 @@
+---
+titleTC: 在 .gitattributes 设置 Linguist 改变项目语言统计
+publishDate: 2024-06-26
+category: Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C8W-bQYBOav
+---
+
+[Linguist](https://github.com/github-linguist/linguist) 用于统计 GitHub 仓库中的语言比例。
+
+像是 [TypeScript 项目](https://github.com/microsoft/TypeScript/blob/main/.gitattributes)就特意将所有 `.js` 文件统计替换成 TypeScript，才会出现整个项目由 `99.9%` TypeScript 构成的统计结果。
+
+![TypeScript 语言统计](./typescript-language.webp)
+
+```bash
+*.js linguist-language=TypeScript
+```
+
+其他用途像是排除特定的文件或目录于统计中，可以帮助我们把不重要的信息排除，让真正的项目语言统计更加准确（在 GitHub 仓库显示上）。
+
+```bash
+# 排除特定文件
+*.md linguist-vendored
+
+# 排除特定目录
+docs/* linguist-vendored
+```

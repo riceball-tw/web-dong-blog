@@ -1,0 +1,18 @@
+---
+titleTC: CSS Property Maximum Value
+publishDate: 2024-06-28
+category: CSS
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C8w1ECghRDJ
+---
+
+Previously read that the maximum z-index value in CSS is 2147483647 because it is the maximum value that a 32-bit signed integer can represent, but this number is quite ugly. Is there another way to express "maximum"?
+
+There actually is. CSS has an infinity constant that can be used to express infinity, but it can only be used within calc().
+
+[Playing with Infinity in CSS - codersblock](https://codersblock.com/blog/playing-with-infinity-in-css/) describes what happens if you put CSS infinity on different properties:
+
+Are there any practical cases summarized? Basically none 😐
+
+- Super rounded corners
+- Setting an element far off the screen so that users can't see it, but screen readers can (nostalgic hack)

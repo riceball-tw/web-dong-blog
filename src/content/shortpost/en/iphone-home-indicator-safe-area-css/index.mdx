@@ -1,0 +1,19 @@
+---
+titleTC: iOS Home Indicator safe area
+publishDate: 2024-06-12
+category: CSS
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C8F44hVSr6-
+---
+
+When redesigning the blog navigation experience, I noticed that iPhone's Home Indicator, which covers the navigation bar (Figure 1, left old and right new). Therefore, in the new design, a safe area indicator was set up, allowing the website to use CSS env() + calc() to calculate the actual safe display area for the navigation bar.
+
+1. Add the page Meta attribute `<meta name="viewport" content="viewport-fit=cover" />`
+2. Use the [env(safe-area-inset-bottom)](https://developer.mozilla.org/en-US/docs/Web/CSS/env) variable combined with [`calc`](https://developer.mozilla.org/en-US/docs/Web/CSS/calc) to calculate the safe bottom distance for the navigation bar.
+
+Now the Home Indicator no longer covers elements that are on the edge of the screen 👍🏻 (Figure 1, left Chrome right Safari)
+
+![Comparison of old and new Webdong websites on iPhone](./webdong-shot-on-iphone.webp)
+![Comparison of old and new Webdong websites on iPhone](./webdong-shot-on-iphone-2.webp)
+
+[env()](https://developer.mozilla.org/en-US/docs/Web/CSS/env) was initially provided by iOS browsers, allowing developers to place web content within the safe area of the window to ensure that content displays correctly even on non-rectangular screens.

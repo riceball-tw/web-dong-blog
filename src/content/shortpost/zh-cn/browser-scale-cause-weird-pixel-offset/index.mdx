@@ -1,0 +1,16 @@
+---
+titleTC: 浏览器缩放与显示误差
+publishDate: 2024-10-05
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DAvSuEfB-O3
+---
+
+如果你像我一样使用 4k 屏幕那么应该很常会使用到浏览器的缩放功能，因为在同尺寸的屏幕塞入更多像素后一切界面都会变得更渺小细致，这也导致我留意到一个独特的问题：浏览器缩放造成 `1px` 显示误差。
+
+![Shadcn UI 1px 误差](one-px-offset.webp 'Shadcn UI 1px 误差')
+![Google Search Console](search-console.webp 'Google Search Console 怪异的 Checkbox')
+
+举例在 Shadcn UI 或是 Google Search Console 都有偶然观察到这样的问题。关系到浏览器如何处理**缩放后不满整数的像素**的情况，由于屏幕的最小显示单位是 `1px`，因此在最终显示时就会与预期相比出现差异。
+
+[偏向各家浏览器应该如何应对像素缩放这个无解的问题](https://stackoverflow.com/questions/32184316/html-border-thickness-on-zoom)，因此其实也没什么前端能尝试的。听说旧版本 Chrome 容易将 `1px` 线条在缩放后变成不显示，有一些[变通方法](https://muffinman.io/blog/fix-for-chrome-not-rendering-borders/)可以参考看看。

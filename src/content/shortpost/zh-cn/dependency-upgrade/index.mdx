@@ -1,0 +1,14 @@
+---
+titleTC: 你有多久没有升级专案的套件版本了呢？
+publishDate: 2024-04-13
+category: Development
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C5tIiSTBkEM
+---
+
+升级套件版本是避免漏洞最有效的手段，虽然是一件很重要的事但却很难被正式面对，升级套件通常带来这样的感受：
+
+- 好像没做出什么有意义的产出。
+- 痛苦的查阅文档了解新旧版本差异，解破坏性改动造成的问题。
+
+我自己的经验是在旧项目上由于长年的疏于更新，慢慢的整个项目变成一坨很难升级的代码，要改的东西太多了……就下次吧 😑 应该找方法减轻版本升级的痛点，像是如果代码放在 GitHub 上并且不排斥使用 GitHub Action 的话可以尝试看看 [Dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide) 无痛的导入自动化侦测套件更新的流程，也有看过某些项目使用 [Renovate](https://docs.renovatebot.com/)，或者是 NX 这样的 Smart Build Tool 也提供自动化更新的指令。

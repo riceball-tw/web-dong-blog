@@ -1,7 +1,7 @@
 ---
 titleTC: 如何直接修改项目依赖包原始代码（node_modules）？
 publishDate: 2024-10-24
-category: 开发
+category: NPM
 social:
   threads: https://www.threads.net/@webdong.dev/post/DBeDEGyBkHk
 ---
@@ -14,4 +14,3 @@ pnpm 有不错的[文档与视频范例](https://pnpm.io/cli/patch)描述如何 
 简单来说会创建一个 patches 文件夹存放修改过的包，并且通过 patchedDependencies 来引用被修改过的包，算是一个更优雅的方式去管理临时对包的修补。
 
 pnpm 还可以参考看看 [pnpm-patch-i](https://github.com/antfu/pnpm-patch-i)。
-

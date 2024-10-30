@@ -1,0 +1,21 @@
+---
+titleTC: 为什么会有 _ 在数字当中？
+publishDate: 2024-05-23
+category: Development
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C7WfMBXhHyK
+---
+
+其实是 JavaScript 在 ECMAScript 2021 中新增的一个特性，叫做「Numeric Separators」，可以让我们在数字之间加入 `_` 来增加可读性。
+
+```js
+const readableMiliion = 1_000_000;
+const regularMiliion = 1000000;
+const decimal = 1_000_000.220_720;
+const binary = 0b01010110_00111000;
+const hexa = 0x40_76_38_6a_73;
+```
+
+从 Node 12.5.0、Chrome 75、Firefox 70、Safari 13.1 都已经支持了，可以放心使用。延伸搜索了一下，发现蛮多程序语言皆有支持这样的特性。
+
+- [Numeric separators](https://v8.dev/features/numeric-separators)

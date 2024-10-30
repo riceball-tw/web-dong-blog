@@ -1,0 +1,14 @@
+---
+titleTC: How long has it been since you upgraded the package versions of your project?
+publishDate: 2024-04-13
+category: Development
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C5tIiSTBkEM
+---
+
+Upgrading package versions is the most effective way to avoid vulnerabilities. Although it is very important, it is often difficult to face formally. Upgrading packages usually brings the following feelings:
+
+- It feels like nothing meaningful has been produced.
+- The painful process of reviewing documentation to understand the differences between old and new versions, and resolving issues caused by breaking changes.
+
+In my experience, due to years of neglecting updates on an old project, the entire project gradually became a chunk of code that was very difficult to upgrade, with too many things to change... maybe next time 😑. We should find ways to alleviate the pain points of version upgrades, such as if the code is hosted on GitHub and you don't mind using GitHub Actions, you can try [Dependabot](https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide) for a painless introduction to automating the detection of package updates. I've also seen some projects use [Renovate](https://docs.renovatebot.com/), or tools like NX, which also provide commands for automated updates.
