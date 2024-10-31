@@ -5,19 +5,15 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Setup Environment
-        uses: ./.github/actions/setup
-
-      - name: Handle LFS
+      # 1. List all LFS files
+      # 2. Extract the first column (ID)
+      # 3. Sort the IDs
+      # 4. Save the IDs to a file named .lfs-assets-id
+      - name: List all LFS files and save their IDs to a file
         run: |
           git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
           git lfs pull
-
+      # Cache LFS
       - name: Cache LFS
         uses: actions/cache@v3
         with:
@@ -25,9 +21,6 @@ jobs:
           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
           restore-keys: |
             ${{ runner.os }}-lfs-
-
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
 
   lint:
     needs: prepare
@@ -97,6 +90,9 @@ jobs:
 
       - name: Setup Environment
         uses: ./.github/actions/setup
+
+      - name: Git LFS Pull
+        run: git lfs pull
 
       - name: Build and Test
         uses: cypress-io/github-action@v6
