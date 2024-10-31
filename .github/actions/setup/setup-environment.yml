@@ -1,0 +1,27 @@
+name: 'Setup Environment'
+description: 'Setup Node.js, pnpm and restore cache'
+outputs:
+  cache-hit:
+    description: 'Whether there was a cache hit for node_modules'
+    value: ${{ steps.cache.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: 9
+
+    - name: Restore Cache
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          .git/lfs/objects
+        key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}

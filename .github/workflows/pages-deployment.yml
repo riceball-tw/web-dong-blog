@@ -1,61 +1,144 @@
 name: Deploy Pipeline
-
 on: [push]
 
 jobs:
-  deploy:
+  prepare:
     runs-on: ubuntu-latest
-    env:
-      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-      YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
-      PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
-    permissions:
-      contents: read
-      deployments: write
-    name: Deploy to Cloudflare Pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-          run_install: false
-      - name: Create LFS file list
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
-      - name: LFS Cache
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Handle LFS
+        run: |
+          git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+          git lfs pull
+
+      - name: Cache LFS
         uses: actions/cache@v3
         with:
           path: .git/lfs/objects
           key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
           restore-keys: |
             ${{ runner.os }}-lfs-
-      - name: Git LFS Pull
-        run: git lfs pull
-      - name: Build for Production (main) branch
-        if: github.ref == 'refs/heads/main'
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm build
-      - name: Build for Non-production (other) branch
-        if: github.ref != 'refs/heads/main'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+  lint:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Run Lint
+        run: pnpm lint
+
+  typecheck:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Run Typecheck
+        run: pnpm typecheck
+
+  build-prod:
+    if: github.ref == 'refs/heads/main'
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
+      PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Build
+        run: pnpm build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+  build-staging:
+    if: github.ref != 'refs/heads/main'
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
+      PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Build and Test
         uses: cypress-io/github-action@v6
         with:
           build: pnpm build:staging
           start: pnpm preview
-      - name: Lint
-        run: pnpm lint
-      - name: Typecheck
-        run: pnpm typecheck
-      - name: Lighthouse
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+  lighthouse:
+    needs: [build-prod, build-staging]
+    runs-on: ubuntu-latest
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Run Lighthouse CI
         run: pnpm lhci autorun
-      - name: Publish
+
+  deploy:
+    needs: [lint, typecheck, lighthouse]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
