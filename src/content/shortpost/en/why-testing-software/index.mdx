@@ -1,0 +1,19 @@
+---
+titleTC: Why Should Software Be Tested?
+publishDate: 2024-07-23
+category: Testing
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C9urFF_hpXI
+---
+
+Writing tests is a good thing, right? It can automatically verify the behavior of the program and ensure its correctness, so you don't have to test manually every time.
+
+This was my initial thought, and then I dove in and wrote a lot of tests, spending a lot of time adding tests for every feature, only to find out... it didn't really make much difference.
+
+⚠ Tests are only valuable when executed
+
+The value of a program is reflected when it is executed and used, and the value of a test is also reflected in its ability to verify the correctness of a certain behavior of the program; even if the program's architecture is poor, it can still produce value because it works. Similarly, a test can be perfect, but if it doesn't verify any behavior, it has no value.
+
+The biggest mistake I made was simply writing a lot of tests without actively executing them. Letting the tests run and verifying the behavior of the program is where the value of testing lies; successful tests give you confidence, while failing tests help you catch bugs.
+
+The confidence here refers to being sure that the program behaves as expected, allowing you to structure the code with more confidence and ensure that changes won't affect the verified behaviors. The importance of integrating tests into the development process is as significant as the tests themselves; tests that don't run are merely case documents. Does anyone ever look at infrequently used and non-binding specification documents? No!

@@ -1,0 +1,16 @@
+---
+titleTC: 往返快取（bfcache）造成前后页面状态问题
+publishDate: 2024-07-31
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C-Fmq3Nhwar
+---
+
+近期观察到一个奇怪的网页 BUG，只有出现在点击上一页返回网页时才会出现，经过一番查证后发现是往返快取造成的问题。
+
+往返快取已经普及到各大浏览器，让返回先前访问过的页面几乎是瞬时的，缺点是会让用户使用到存放于本地快取中的旧网页。
+
+具体来说我遇到的问题是 SPA 在通过 bfcache 恢复页面后看起来是直接跳过 Nuxt 的 Middleware 到达对应页面，解决方法也非常简单：
+
+1. 通过 meta 标签取消页面被快取
+2. 判断如果有 bfcache 就刷新页面

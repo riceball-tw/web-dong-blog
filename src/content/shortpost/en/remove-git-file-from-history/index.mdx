@@ -1,0 +1,40 @@
+---
+titleTC: How to Completely Remove Sensitive Files from Git History?
+publishDate: 2024-05-22
+category: Development
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C7RdXjlhNnm
+---
+
+Sometimes, sensitive files that shouldn't have been pushed are accidentally pushed to Git, and how to completely remove them from the records is a problem. The following explains how to fix this using the environment variable `.env` as example.
+
+🐑 Step 1: Avoid mistake again
+
+First, add the file to `.gitignore` to avoid making the same mistake in the future.
+
+🌿 Step 2: Surface Cleaning
+
+Run `git rm -r --cached .env` to remove `.env` from Git, but this only removes it from the staging area and does not remove it from the history.
+
+- `r` Recursively delete files in the target folder
+- `--cached` Only remove from the staging area, will not delete the actual file
+- `.env` is the name of the file or folder to be deleted
+
+🧽 Step 3: Deep Cleaning
+
+Run `git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch .env" HEAD` to modify the history.
+
+- `r` Recursively delete files in the target folder
+- `f` Force delete the file without confirmation
+- `--cached` Only remove from the staging area, will not delete the actual file
+- `ignore-unmatch` Ignore errors if the file does not exist. This option ensures that the command will execute successfully even if the `.env` file does not exist in some commits
+- HEAD indicates that the filtering operation should be performed on the current latest commit and its ancestors
+
+✨ Step 4: Push Changes
+
+Use `git push --force` to forcefully overwrite the modified results to the remote.
+
+⚠ Note: Any sensitive information that has been made public should be considered leaked and should be replaced immediately. Therefore, directly replacing all sensitive information rather than modifying the records is the safest approach. Recently, there have been issues with accidentally pushing sensitive information to private repositories, making this method quite suitable for removal.
+
+- [git-rm](https://git-scm.com/docs/git-rm)
+- [git-filter-branch](https://git-scm.com/docs/git-filter-branch)

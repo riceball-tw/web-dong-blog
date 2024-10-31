@@ -1,0 +1,16 @@
+---
+titleTC: 'The bfcache Causes Issues Between Pages'
+publishDate: 2024-07-31
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C-Fmq3Nhwar
+---
+
+Recently, I observed a strange web bug that only occurs when clicking the back button to return to a webpage. After some investigation, I found that it was caused by the bfcache.
+
+The bfcache has become widespread across major browsers, allowing users to return to previously visited pages almost instantaneously. The downside is that it can lead users to interact with outdated pages stored in the local cache.
+
+Specifically, the issue I encountered was that when a SPA recovers a page through bfcache, it seems to skip Nuxt's Middleware and directly reaches the corresponding page. The solution is quite simple:
+
+1. Use a meta tag to disable caching for the page.
+2. Check if there is a bfcache and refresh the page if so.

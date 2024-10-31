@@ -1,0 +1,22 @@
+---
+titleTC: 举例 Radix、Headless UI，为什么无样式元件这么热门？
+publishDate: 2024-04-23
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C6GtAf9Bb2O
+---
+
+为了避免重复造轮子，使用包装好的 UI 来节省开发时间与精力是再正常不过的事，通常组件库包括了样式、逻辑、UX、适用性、设备兼容……等各方面的考量，我们可以很轻易地使用现成的 UI Pattern，专注于解决真正重要的商业问题，像是 Bootstrap、chakra、MUI 都是老牌常见的组件库。
+
+那么普通的组件库就能满足需求，无样式组件又在解决什么问题？
+
+客制化是最大的问题。普通组件库预设一定的风格样式，并且修改它们并不容易，近乎把设计抉择都交给第三方虽然很稳定但也缺少弹性，无样式组件出现便是主要于解决这个问题。Radix、Headless UI ……等无样式组件有趣的地方在于将样式的决定权归还给开发者，并打理在这之外 UI 会遇上的问题。
+
+在各种无样式组件上构建组件库可以参考看看 [Shadcn](https://ui.shadcn.com/)。
+
+我们常常低估一款 UI 制作所需要留意的细节与心力，[Next.js Conf 2021 Pedro Duarte](https://www.youtube.com/watch?v=lY-RQjWeweo) 提到光是 Radix 的 Dropdown Menu 就花费了极大的心力来制作：
+
+- 2000+ 小时
+- 6 个月
+- 50 次审核
+- 1000 以上 commit

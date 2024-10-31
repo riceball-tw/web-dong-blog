@@ -1,0 +1,17 @@
+---
+titleTC: 测试代码应该与被测试系统有相同程度的抽象
+publishDate: 2024-10-28
+category: testing
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DBqubX5hw5N
+---
+
+举例，今天在撰写系统层级的测试时就不应该把实践细节（低抽象）留在测试案例（高抽象）当中，这么做除了伤害可读性外也破坏了测试文件本身的职责（描述系统的预期行为）。
+
+该想法适用于所有层级的测试：系统层级、组件层级、单元层级……至于要如何对测试是否有正确程度的抽象有概念？
+
+💭 想像坐在正在使用测试中系统的人旁边，想像如何向他解释你正在测试的行为，然后使用类似的词语编写测试。可用下图练习看看。
+
+![不同程度抽象混杂的测试范例](levels-of-abstraction-in-testing.webp)
+
+- [Levels of abstraction in testing](https://www.youtube.com/watch?v=G_0yKeh0Sf0)

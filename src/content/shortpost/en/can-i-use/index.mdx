@@ -1,0 +1,18 @@
+---
+titleTC: Tracking Browser Version Support — Can I Use Website
+publishDate: 2024-05-13
+category: Frontend
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C66Jyr_hTRG
+---
+
+With the unification of various browser APIs, there are more and more tools available for building web pages in the frontend. But how can we know the support level of APIs across different browsers, potential issues, and global support percentages? You can try the [Can I Use](https://caniuse.com/) website, a [community-maintained](https://github.com/Fyrd/caniuse) browser support level search site.
+
+![Can I Use Website](./caniuse-overview.webp)
+
+Recently, I noticed this while creating a content of table. When clicking on a list item, the screen scrolls to the corresponding heading. In the past, I would have needed to use JS's `scrollTo()` to calculate how far to scroll based on the target element and the current position, but with a newer API `scrollIntoView()`, I just need to specify the heading to scroll to! It saves a lot of effort.
+
+When using some newer APIs, I always check this website to ensure that the target audience's versions are supported, and the team can supervise each other based on this website.
+
+![Can I Use Website](./caniuse-date-relative.webp)
+![Can I Use Website](./caniuse-detail-version.webp)

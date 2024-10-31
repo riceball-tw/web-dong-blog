@@ -1,9 +1,9 @@
 ---
-titleTC: '你會如何解這個下拉式選單樣式問題呢？'
+titleTC: 你會如何解這個下拉式選單樣式問題呢？
 publishDate: 2024-04-11
-category: '樣式'
+category: CSS
 social:
-  threads: 'https://www.threads.net/@webdong.dev/post/C5nxtScBfdX'
+  threads: https://www.threads.net/@webdong.dev/post/C5nxtScBfdX
 ---
 
 今日工作維護到一個陳年元件，它是一個按鈕並且點擊後會延伸出一個行動清單，由於歷史因素它的寬高只能是寫死的尺寸，目標是替清單展開時加上陰影，你會怎麼做？
@@ -15,4 +15,6 @@ social:
 1. 製作一個含按鈕的清單覆蓋住按鈕。
 2. 計算按鈕 +清單的寬高並製作一個空元素套上陰影藏在背後。
 
-最終選擇 1，我把一切改變按鈕的因素同樣寫在清單按鈕中……很不 DRY，為什麼不是 2？ 因為用 JS 去計算樣式是很可怕的事，最好不要這樣做。感謝同事告訴我有 CSS isolation 這個超偏門的屬性去達成一些元素排序的需求。
+最終選擇 1，我把一切改變按鈕的因素同樣寫在清單按鈕中……很不 DRY，為什麼不是 2？ 因為用 JS 去計算樣式是很可怕的事，最好不要這樣做。
+
+感謝同事告訴我有 CSS `isolation` 這個超偏門的屬性去達成一些元素排序的需求。

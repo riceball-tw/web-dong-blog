@@ -1,0 +1,15 @@
+---
+titleTC: How to manage large files in Git?
+publishDate: 2024-05-30
+category: Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C7jjbOjh9vQ
+---
+
+Git allows us to record changes to any file and easily revert to any version. However, when it comes to storing large files, Git can struggle because it was not designed for storing large files (images, videos, music, etc.) that are binary in nature.
+
+Imagine a 1MB image that has been modified 10 times; Git would store 10 versions of the image, which amounts to 10 MB in the repository! (Although this simplified explanation is not entirely accurate, as Git stores the differences between two versions rather than a complete copy of each version, the challenge of compressing differences between binary files remains.) This can lead to performance issues, wasted storage space, and excessive network resource consumption.
+
+Git LFS addresses this problem by storing the contents of large files on an external server instead of directly in the Git repository. By replacing the actual large files with pointers to the large files, the size of the Git repository does not increase, regardless of how large the files are or how many times they are modified.
+
+If you want to know more about how to use Git LFS, my personal experience with it, and any special considerations to keep in mind, you can refer to the new article: [How I use Git LFS to manage large Git files?](https://www.webdong.dev/post/how-i-use-git-lfs-to-manage-large-git-files/)
