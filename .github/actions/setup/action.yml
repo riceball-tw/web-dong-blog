@@ -16,3 +16,12 @@ runs:
       uses: pnpm/action-setup@v3
       with:
         version: 9
+
+    - name: Restore Cache
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          .git/lfs/objects
+        key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
