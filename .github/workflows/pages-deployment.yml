@@ -39,6 +39,9 @@ jobs:
       - name: Setup Environment
         uses: ./.github/actions/setup
 
+      - name: Run paraglide i18n compiler
+        run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
+
       - name: Run Lint
         run: pnpm lint
 
