@@ -87,8 +87,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Environment
-        uses: ./.github/actions/setup
+      - name: LFS Cache
+        uses: actions/cache@v3
+        with:
+          path: .git/lfs/objects
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+          restore-keys: |
+            ${{ runner.os }}-lfs-
+
+      - name: Git LFS Pull
+        run: git lfs pull
 
       - name: Build and Test
         uses: cypress-io/github-action@v6
@@ -110,22 +118,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: LFS Cache
-        uses: actions/cache@v3
-        with:
-          path: .git/lfs/objects
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            ${{ runner.os }}-lfs-
-      - name: Git LFS Pull
-        run: git lfs pull
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist
+
       - name: Run Lighthouse CI
-        run: npm run lhci autorun
+        run: pnpm lhci autorun
 
   deploy:
     needs: [lint, typecheck, lighthouse]
