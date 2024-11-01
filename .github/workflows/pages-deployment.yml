@@ -98,11 +98,22 @@ jobs:
       - name: Git LFS Pull
         run: git lfs pull
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
       - name: Build and Test
         uses: cypress-io/github-action@v6
         with:
-          build: npm run build:staging
-          start: npm run preview
+          build: pnpm build:staging
+          start: pnpm preview
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
