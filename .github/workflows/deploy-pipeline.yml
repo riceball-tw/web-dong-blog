@@ -45,6 +45,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
+          node-version-file: package.json
           cache: 'pnpm'
       # 1. List all LFS files
       # 2. Extract the first column (ID)
