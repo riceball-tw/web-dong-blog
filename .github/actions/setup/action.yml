@@ -12,6 +12,14 @@ runs:
       with:
         node-version: '20'
 
+    - name: Restore Cache
+      id: cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+        key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
+
     - name: Install pnpm
       uses: pnpm/action-setup@v3
       with:
