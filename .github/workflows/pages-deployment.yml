@@ -123,6 +123,12 @@ jobs:
 
   lighthouse:
     needs: [build-prod, build-staging]
+    # GitHub-actions OR operator for needs clause
+    # https://stackoverflow.com/questions/66343052/github-actions-or-operator-for-needs-clause
+    if: |
+      always()
+      && contains(needs.*.result, 'success')
+      && !contains(needs.*.result, 'failure')
     runs-on: ubuntu-latest
     env:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
