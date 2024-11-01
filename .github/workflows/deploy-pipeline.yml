@@ -69,3 +69,25 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: pnpm dev
+
+  build:
+    needs: [lint, typecheck, e2e]
+    runs-on: ubuntu-latest
+    env:
+      YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
+      PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Environment Setup
+        uses: ./.github/actions/setup
+
+      - name: Build
+        run: pnpm build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
