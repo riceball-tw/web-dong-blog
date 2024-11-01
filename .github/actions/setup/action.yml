@@ -1,0 +1,27 @@
+name: 'Setup Node & pnpm, Restore node_modules'
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: 9
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: package.json
+        cache: 'pnpm'
+
+    - name: Restore Cache
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+        key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
+
+    - name: Install packages
+      run: pnpm install --frozen-lockfile
+      shell: bash

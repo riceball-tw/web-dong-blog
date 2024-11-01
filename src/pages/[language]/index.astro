@@ -67,7 +67,7 @@ export async function getStaticPaths() {
         </span>
       </div>
     </div>
-    <Pagefind placeholderText={m.awake_quiet_ape_emerge()}/>
+    {import.meta.env.PROD && <Pagefind placeholderText={m.awake_quiet_ape_emerge()}/>}
   </Hero>
 
   <section>
