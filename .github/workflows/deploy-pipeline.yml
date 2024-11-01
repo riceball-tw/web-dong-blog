@@ -109,3 +109,21 @@ jobs:
         with:
           name: dist
           path: dist
+
+  lighthouse:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: dist
+
+      - name: Run Lighthouse CI
+        run: npm run lhci autorun
