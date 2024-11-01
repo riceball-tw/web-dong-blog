@@ -30,6 +30,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Environment
+        uses: ./.github/actions/setup
+
       - name: Run paraglide i18n compiler
         run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
 
@@ -127,6 +130,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Environment
+        uses: ./.github/actions/setup
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
