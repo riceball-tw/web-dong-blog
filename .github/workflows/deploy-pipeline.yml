@@ -129,7 +129,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Run Lighthouse CI
-        run: pnpm lightouse
+        run: pnpm lighthouse
 
   deploy:
     needs: lighthouse
