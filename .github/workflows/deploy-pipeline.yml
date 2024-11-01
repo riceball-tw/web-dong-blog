@@ -2,21 +2,21 @@ name: Deploy Pipeline
 on: [push]
 
 jobs:
+  # https://github.com/actions/checkout/issues/165#issuecomment-1639209867
   prepare:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       # 1. List all LFS files
       # 2. Extract the first column (ID)
       # 3. Sort the IDs
       # 4. Save the IDs to a file named .lfs-assets-id
-      - name: List all LFS files and save their IDs to a file
-        run: |
-          git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
-          git lfs pull
-      # Cache LFS
-      - name: Cache LFS
+      - name: Create LFS file list
+        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+
+      - name: LFS Cache
         uses: actions/cache@v3
         with:
           path: .git/lfs/objects
@@ -25,7 +25,6 @@ jobs:
             ${{ runner.os }}-lfs-
 
   lint:
-    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,7 +40,6 @@ jobs:
         run: pnpm lint
 
   typecheck:
-    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
