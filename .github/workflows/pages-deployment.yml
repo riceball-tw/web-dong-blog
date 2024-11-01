@@ -101,8 +101,8 @@ jobs:
       - name: Build and Test
         uses: cypress-io/github-action@v6
         with:
-          build: pnpm build:staging
-          start: pnpm preview
+          build: npm run build:staging
+          start: npm run preview
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
