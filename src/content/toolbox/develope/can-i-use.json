@@ -1,5 +1,5 @@
 {
-  "titleTC": "Can I use",
+  "headline": "Can I use",
   "url": "https://caniuse.com/",
   "excerpt": "專門檢查網頁技術兼容性與版本的網站，只需要搜尋關鍵字便能得到相關的解釋、版本資訊、全球覆蓋率、相關問題回報……等對開發決策極有幫助的資訊。",
   "category": "開發工具",
