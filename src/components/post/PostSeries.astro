@@ -25,7 +25,7 @@ const { currentPost, postsInSeries } = Astro.props
         {isCurrentPost && <span>
           <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
         </span>}
-          <span data-cy={`${isCurrentPost ? "series-active" : ''}`}>{data.titleTC}</span>
+          <span data-cy={`${isCurrentPost ? "series-active" : ''}`}>{data.headline}</span>
         </a>
       </li>
     )

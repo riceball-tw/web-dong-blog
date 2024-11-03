@@ -111,7 +111,7 @@ export async function getStaticPaths() {
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
                             href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
                           >
-                            {post.data.titleTC}
+                            {post.data.headline}
                           </a>
                         </li>
                       ),

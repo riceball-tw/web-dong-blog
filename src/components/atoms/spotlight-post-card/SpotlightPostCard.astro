@@ -11,7 +11,7 @@ type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & T
 type CustomCard = Partial<Pick<PostPage, "slug">> & CategoryListType & TagsList & {
   url?: string;
   publishDate?: Date;
-  titleTC: string;
+  headline: string;
   excerpt: string;
   icon: {
     name: string;
@@ -24,7 +24,7 @@ export interface Props {
   post: PostCard | CustomCard
 }
 
-const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
+const { icon, headline, excerpt, publishDate, themeColor,tagHrefs, tags, categoryHref, category, slug, url } = Astro.props.post;
 ---
 
 <SpotlightCard themeColor={themeColor}>
@@ -41,9 +41,9 @@ const { icon, titleTC, excerpt, publishDate, themeColor,tagHrefs, tags, category
     }
     <div>
       <h2 class="mb-4 text-lg font-medium">
-        {url && <a href={url}>{titleTC}</a>}
-        {slug && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${slug}/`)}>{titleTC}</a>}
-        {!url && !slug && titleTC}
+        {url && <a href={url}>{headline}</a>}
+        {slug && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${slug}/`)}>{headline}</a>}
+        {!url && !slug && headline}
       </h2>
       <p class="line-clamp-3 text-sm">{excerpt}</p>
     </div>
