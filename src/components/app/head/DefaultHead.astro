@@ -1,7 +1,7 @@
 ---
 import { SEO } from 'astro-seo';
 import type { GlobalHead } from '@/types';
-import { languageTags, prefixDefaultLocale } from '@/utils/i18n.ts';
+import { languageTags, regionTags, prefixDefaultLocale } from '@/utils/i18n.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 import { type LanguageKey } from '@/utils/i18n.ts';
 
@@ -71,7 +71,17 @@ function getPathnameWithoutLocale(pathname: string) {
               Astro.site
             ).toString()
           },
-          // Language Alternates
+
+          // Language Alternates - Region
+          ...Object.keys(regionTags).map(tag => ({
+            rel: "alternate",
+            hreflang: tag,
+            href: new URL(Astro.url.pathname,
+              Astro.site
+            ).toString()
+          })),
+
+          // Language Alternates - Countries
           ...Object.keys(languageTags).map(tag => ({
             rel: "alternate",
             hreflang: tag,
@@ -81,6 +91,7 @@ function getPathnameWithoutLocale(pathname: string) {
               Astro.site
             ).toString()
           })),
+
           // RSS Autodiscovery
           // https://www.rssboard.org/rss-autodiscovery
           {
