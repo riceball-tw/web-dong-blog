@@ -41,7 +41,10 @@ jobs:
         working-directory: ./gpt-markdown-translator
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
-        run: pnpm run translate
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          pnpm run translate
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
