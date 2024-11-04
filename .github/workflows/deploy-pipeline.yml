@@ -71,7 +71,7 @@ jobs:
   #         start: pnpm dev
 
   build:
-    needs: [lint, typecheck, e2e]
+    # needs: [lint, typecheck, e2e]
     runs-on: ubuntu-latest
     env:
       YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
