@@ -2,7 +2,8 @@ name: Automatic Translation Workflow
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
+    types: [opened, synchronize]
     paths:
       - 'src/content/shortpost/zh-tw/**'
 
