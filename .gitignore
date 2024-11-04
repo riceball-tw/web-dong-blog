@@ -26,3 +26,6 @@ public/pagefind
 
 # Lighthouse report
 .lighthouseci
+
+# CI Generated LFS Cached ID list
+.lfs-assets-id
