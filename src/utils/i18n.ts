@@ -19,6 +19,11 @@ export const languageTags = {
   'zh-tw': 'zh-Hant-TW',
 } as const;
 
+// To address Missing region-independant link for that language Problem, Here's a table storing existing region data
+export const regionTags = {
+  zh: 'zh-Hant-TW',
+} as const;
+
 export const defaultLocale = 'zh-tw';
 export const prefixDefaultLocale = false;
 
