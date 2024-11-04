@@ -5,13 +5,10 @@ on:
   push:
     paths:
       - 'src/content/shortpost/zh-tw/**'
-    # branches:
-    # - main
 
 jobs:
   translate:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -25,10 +22,6 @@ jobs:
         working-directory: ./gpt-markdown-translator
         run: pnpm install --frozen-lockfile
 
-      # 1. List all LFS files
-      # 2. Extract the first column (ID)
-      # 3. Sort the IDs
-      # 4. Save the IDs to a file named .lfs-assets-id
       - name: Create LFS file list
         run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
 
