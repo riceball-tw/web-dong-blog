@@ -12,7 +12,7 @@ import expressiveCode from 'astro-expressive-code';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
-import { languages, prefixDefaultLocale, defaultLocale, baseUrl } from './src/utils/i18n.ts';
+import { languages, prefixDefaultLocale, defaultLocale, languageTags, baseUrl } from './src/utils/i18n.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -98,7 +98,11 @@ export default defineConfig({
     mdx({
       drafts: false,
     }),
-    sitemap(),
+    // https://docs.astro.build/en/guides/integrations-guide/sitemap/
+    sitemap({
+      defaultLocale,
+      locales: languageTags,
+    }),
     react({
       include: ['**/react/*'],
     }),
