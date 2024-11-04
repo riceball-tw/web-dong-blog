@@ -73,13 +73,17 @@ function getPathnameWithoutLocale(pathname: string) {
           },
 
           // Language Alternates - Region
-          ...Object.keys(regionTags).map(tag => ({
+          ...(Object.keys(regionTags) as Array<keyof typeof regionTags>).map(tag => {
+            const regionMap = {
+              zh: 'zh-tw' 
+            }
+            return ({
             rel: "alternate",
             hreflang: tag,
-            href: new URL(Astro.url.pathname,
+            href: new URL(regionMap[tag] + getPathnameWithoutLocale(Astro.url.pathname),
               Astro.site
             ).toString()
-          })),
+          })}),
 
           // Language Alternates - Countries
           ...Object.keys(languageTags).map(tag => ({
