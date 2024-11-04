@@ -39,7 +39,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
             href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/shortpost/${stripLanguageCode(shortpost.slug)}/#${stripLanguageCode(shortpost.slug)}`).replace(/\/$/, '')}>
             
             <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.slug)}>
-              <span>{shortpost.data.titleTC}</span>
+              <span>{shortpost.data.headline}</span>
             </HeadingComponent>
           </a>
           {/* Content */}

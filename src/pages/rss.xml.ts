@@ -20,9 +20,9 @@ export const GET = async (context: APIContext) => {
       const { slug } = collectionItem;
       if (collectionItem.collection === 'shortpost') {
         const { body } = collectionItem;
-        const { titleTC, publishDate, category } = collectionItem.data;
+        const { headline, publishDate, category } = collectionItem.data;
         return {
-          title: titleTC,
+          title: headline,
           content: sanitizeHtml(parser.render(body)),
           pubDate: publishDate,
           link: `shortpost/${slug}/#${slug}`,
@@ -31,9 +31,9 @@ export const GET = async (context: APIContext) => {
       }
 
       if (collectionItem.collection === 'post') {
-        const { titleTC, excerpt, publishDate, category, tags } = collectionItem.data;
+        const { headline, excerpt, publishDate, category, tags } = collectionItem.data;
         return {
-          title: titleTC,
+          title: headline,
           description: excerpt,
           pubDate: publishDate,
           link: `post/${slug}`,

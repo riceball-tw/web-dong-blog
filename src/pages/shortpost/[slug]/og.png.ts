@@ -52,7 +52,7 @@ export async function GET({ props }: Props) {
                 type: 'p',
                 props: {
                   style: { fontSize: 64, lineHeight: 1 },
-                  children: shortpost.data.titleTC,
+                  children: shortpost.data.headline,
                 },
               },
               {

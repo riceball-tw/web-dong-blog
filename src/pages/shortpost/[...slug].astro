@@ -14,7 +14,7 @@ export async function getStaticPaths() {
   }));
 }
 const { shortpost, shortposts } = Astro.props;
-const { titleTC } = shortpost.data;
+const { headline } = shortpost.data;
 const { Content } = await shortpost.render();
 const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`
 // How to Create Excerpts With Astro
@@ -26,7 +26,7 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   .join(' ')
   .substring(0, maxLength)
 ---
-<BlogBase title={titleTC} description={createExcerpt(shortpost.body)} thumbnail={{ src: `/shortpost/${shortpost.slug}`, alt: `${titleTC}` }}>
+<BlogBase title={headline} description={createExcerpt(shortpost.body)} thumbnail={{ src: `/shortpost/${shortpost.slug}`, alt: `${headline}` }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
       <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>

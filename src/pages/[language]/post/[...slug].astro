@@ -36,7 +36,7 @@ export async function getStaticPaths() {
 }
 
 const { post, postsInSeries } = Astro.props;
-const { icon, title, titleTC, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
+const { icon, subHeadline, headline, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
 const { slug } = post;
 const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
@@ -45,10 +45,10 @@ const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:ho
 const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 ---
 
-<BlogBase title={titleTC} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${titleTC}` }}>
+<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${headline}` }}>
   <PostJSONLD
     slot="head"
-    headline={post.data.titleTC}
+    headline={post.data.headline}
     description={post.data.excerpt}
     publishDate={post.data.publishDate}
     keywords={post.data.tags}
@@ -76,8 +76,8 @@ const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.curr
           }
           <div class="relative mx-auto">
             <div>
-              <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{title}</div>
-              <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">{titleTC}</h1>
+              <div data-cy="post-subtitle" data-pagefind-weight="2" class="mb-2">{subHeadline}</div>
+              <h1 data-cy="post-title" data-pagefind-meta="title" data-pagefind-meta={`themeColor:${themeColor}`} class="mb-4 text-4xl font-black md:text-6xl">{headline}</h1>
             </div>
             <div class="flex justify-between">
               <div class="flex md:block">

@@ -52,14 +52,14 @@ export async function GET({ props }: Props) {
                 type: 'p',
                 props: {
                   style: { fontSize: 64, lineHeight: 1 },
-                  children: post.data.titleTC,
+                  children: post.data.headline,
                 },
               },
               {
                 type: 'p',
                 props: {
                   style: { fontSize: 32, fontFamily: 'Noto Sans TC Regular' },
-                  children: post.data.title,
+                  children: post.data.subHeadline,
                 },
               },
             ],
