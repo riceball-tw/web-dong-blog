@@ -1,0 +1,15 @@
+---
+headline: 用二維角度思考網頁布局
+publishDate: 2024-09-16
+category: CSS
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C_-oMjBB-NW
+---
+
+![问题示例图](problem-demo.webp)
+
+近期遇到一个需求是实现下图样貌的自适应网页，会发现该布局并没办法用传统一维版面的方式达成，因为在两种大小中它们需要隶属的容器也不同。
+
+举例 sidebar 来说，它应该要是一起装在 main 的父容器当中，但在大装置尺寸下又要对齐 intro 的顶部，明显这样的需求在传统的 CSS 布局下是很难达成的，不管是用负数 `margin` 推移还是 `absolute` 、 `transform` 都会搞得一团乱很难维护，甚至要动用到 JavaScript 来计算位置 😐。
+
+事后用 CSS Grid 和 Subgrid 解决后觉得是一个很好的案例，于是写成完整文章：[CSS Grid 真实案例：凸出的侧栏解析制作过程](https://www.webdong.dev/post/real-use-case-of-css-grid-extended-sidebar/)
