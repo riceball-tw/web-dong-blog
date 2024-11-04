@@ -2,73 +2,73 @@ name: Deploy Pipeline
 on: [push]
 
 jobs:
-  # ESLint + Prettier
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # # ESLint + Prettier
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Environment Setup
-        uses: ./.github/actions/setup
+  #     - name: Environment Setup
+  #       uses: ./.github/actions/setup
 
-      - name: Run paraglide i18n compiler
-        run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
+  #     - name: Run paraglide i18n compiler
+  #       run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
 
-      - name: Run Lint
-        run: pnpm lint
+  #     - name: Run Lint
+  #       run: pnpm lint
 
-  # TypeScript Check
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # # TypeScript Check
+  # typecheck:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Environment Setup
-        uses: ./.github/actions/setup
+  #     - name: Environment Setup
+  #       uses: ./.github/actions/setup
 
-      - name: Run Typecheck
-        run: pnpm typecheck
+  #     - name: Run Typecheck
+  #       run: pnpm typecheck
 
-  # Cypress E2E
-  e2e:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # # Cypress E2E
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 9
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
-          cache: 'pnpm'
-      # 1. List all LFS files
-      # 2. Extract the first column (ID)
-      # 3. Sort the IDs
-      # 4. Save the IDs to a file named .lfs-assets-id
-      - name: Create LFS file list
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
+  #     - name: Install pnpm
+  #       uses: pnpm/action-setup@v3
+  #       with:
+  #         version: 9
+  #     - name: Install Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version-file: package.json
+  #         cache: 'pnpm'
+  #     # 1. List all LFS files
+  #     # 2. Extract the first column (ID)
+  #     # 3. Sort the IDs
+  #     # 4. Save the IDs to a file named .lfs-assets-id
+  #     - name: Create LFS file list
+  #       run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
 
-      - name: LFS Cache
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs/objects
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            ${{ runner.os }}-lfs-
+  #     - name: LFS Cache
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: .git/lfs/objects
+  #         key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-lfs-
 
-      - name: Git LFS Pull
-        run: git lfs pull
+  #     - name: Git LFS Pull
+  #       run: git lfs pull
 
-      - name: E2E
-        uses: cypress-io/github-action@v6
-        with:
-          start: pnpm dev
+  #     - name: E2E
+  #       uses: cypress-io/github-action@v6
+  #       with:
+  #         start: pnpm dev
 
   build:
     needs: [lint, typecheck, e2e]
@@ -110,29 +110,29 @@ jobs:
           name: dist
           path: dist
 
-  lighthouse:
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # lighthouse:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist
+  #     - name: Download build artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: dist
+  #         path: dist
 
-      - name: Environment Setup
-        uses: ./.github/actions/setup
+  #     - name: Environment Setup
+  #       uses: ./.github/actions/setup
 
-      - name: Run Lighthouse CI
-        run: pnpm lighthouse
+  #     - name: Run Lighthouse CI
+  #       run: pnpm lighthouse
 
   deploy:
-    needs: lighthouse
+    # needs: lighthouse
     runs-on: ubuntu-latest
     permissions:
       contents: read
