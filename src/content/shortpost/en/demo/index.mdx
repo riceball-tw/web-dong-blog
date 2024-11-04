@@ -1,0 +1,15 @@
+---
+headline: Thinking About Web Layouts from a Two-Dimensional Perspective
+publishDate: 2024-09-16
+category: CSS
+social:
+  threads: https://www.threads.net/@webdong.dev/post/C_-oMjBB-NW
+---
+
+![Problem Example Image](problem-demo.webp)
+
+Recently, I encountered a requirement to implement a responsive webpage that looks like the one below. It became clear that this layout cannot be achieved using traditional one-dimensional layouts, as the containers they belong to differ between the two sizes.
+
+For example, the sidebar should be contained within the main parent container, but it also needs to align with the top of the intro on larger device sizes. Clearly, such a requirement is difficult to achieve with traditional CSS layouts. Whether using negative `margin` to push elements or `absolute`, `transform`, it can become chaotic and hard to maintain, and may even require JavaScript to calculate positions 😐.
+
+After resolving this with CSS Grid and Subgrid, I felt it was a great case study, so I wrote a complete article: [Real Use Case of CSS Grid: The Process of Creating an Extended Sidebar](https://www.webdong.dev/post/real-use-case-of-css-grid-extended-sidebar/)
