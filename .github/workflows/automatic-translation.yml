@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [opened, synchronize]
     paths:
-      - 'src/content/shortpost/zh-tw/**/*.{md,mdx}'
+      - 'src/content/shortpost/**'
 
 jobs:
   translate:
