@@ -3,7 +3,7 @@ isDraft: false
 icon: { name: 'material-symbols:partner-reports-rounded', title: '容器裝載驚嘆號符號' }
 subHeadline: 'Why Object.keys returns string[] in TypeScript'
 headline: '為什麼 TypeScript 中 Object.keys 返回 string[] 型別？'
-excerpt: 'TypeScript 存在一些不太直覺但背後卻有合理因素的問題要留意，像是無論傳入任何內容進 `Object.keys` 都仍會回傳 `string[]` 型別是其中之一，本文探討背後因素與提供不同方向的解套方法供不同情境使用。'
+excerpt: 'TypeScript 存在一些不太直覺但背後卻有合理因素的問題要留意，像是無論傳入任何物件進 `Object.keys` 都仍會回傳 `string[]` 型別是其中之一，本文探討背後因素與提供不同方向的解套方法供不同情境使用。'
 category: 'TypeScript'
 tags: ['Object.keys']
 publishDate: 2024-11-05
@@ -11,7 +11,7 @@ publishDate: 2024-11-05
 
 ## 前言
 
-TypeScript 存在一些不太直覺但背後卻有合理因素的問題要留意，像是無論傳入任何內容進 `Object.keys` 都仍會回傳 `string[]` 型別是其中之一，關連到 JavaScript 本身的特性與 TypeScript 使用結構型別系統的關係，本文探討背後因素與解套方法。
+TypeScript 存在一些不太直覺但背後卻有合理因素的問題要留意，像是無論傳入任何物件進 `Object.keys` 都仍會回傳 `string[]` 型別是其中之一，關連到 JavaScript 本身的特性與 TypeScript 使用結構型別系統的關係，本文探討背後因素與解套方法。
 
 ## `Object.keys` 只會返回 `string[]`？
 
@@ -60,7 +60,7 @@ const b2: B = a1;
 const a2: A = b1;
 ```
 
-以上鴨子型別範例代碼將發生錯誤：`Property 'bar' is missing in type 'B' but required in type 'A'.`，也就說 **X 型別可以符合 Y 型別且在這之外有額外型別也會被視為同型別** (`b2`範例)。
+以上鴨子型別範例代碼將發生錯誤：`Property 'bar' is missing in type 'B' but required in type 'A'.`，也就說 **如果一個型別包含了另一個型別所需的所有屬性，它可以被賦值給那個型別** (`b2`範例)。
 
 如果我們將 `Object.keys` 如願設計成 `keys<T extends object>(o: T): (keyof T)[]` 確切的返回物件 `Key` 的型別，那麼可以知道物件 **最少存在 `T` 當中的屬性**，但並不清楚是不是 **完全是** `T`，最多只能確保為 `string[]`，因此 TypeScript 才會如此設計回傳型別。
 
