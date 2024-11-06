@@ -62,7 +62,7 @@ const a2: A = b1;
 
 以上鴨子型別範例代碼將發生錯誤：`Property 'bar' is missing in type 'B' but required in type 'A'.`，也就說 **如果一個型別包含了另一個型別所需的所有屬性，它可以被賦值給那個型別** (`b2`範例)。
 
-如果我們將 `Object.keys` 如願設計成 `keys<T extends object>(o: T): (keyof T)[]` 確切的返回物件 `Key` 的型別，那麼可以知道物件 **最少存在 `T` 當中的屬性**，但並不清楚是不是 **完全是** `T`，最多只能確保為 `string[]`，因此 TypeScript 才會如此設計回傳型別。
+如果我們將 `Object.keys` 設計成 `keys<T extends object>(o: T): (keyof T)[]` 來返回物件的鍵類型，這種類型定義在編譯時可能看起來是正確的，但在運行時會產生問題。因為 JavaScript 物件的屬性可以被動態添加或刪除，物件在運行時的實際屬性可能與編譯時的類型定義 `T` 不符。因此，TypeScript 選擇返回 `string[]` 類型，這樣能更準確地反映 JavaScript 的動態特性。
 
 ## 解方一：映射型別
 
