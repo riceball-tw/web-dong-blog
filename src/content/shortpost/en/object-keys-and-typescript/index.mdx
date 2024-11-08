@@ -1,0 +1,20 @@
+---
+headline: Why does Object.keys in TypeScript return only string[] type for any object?
+publishDate: 2024-11-06
+category: TypeScript
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DCBzNe2hbLc
+---
+
+![Object.keys error example](object-keys-error.png)
+
+As indicated by the error message in the image, `person` needs to accept specific values for `key` rather than any `string`. So what is the reason behind the design of `Object.keys` returning a more lenient `string[]` type? It is obvious that all `key` types can be derived through `keyof`?
+
+Because JavaScript objects can "dynamically change their content at runtime."
+
+If `Object.keys` were designed to return `(keyof T)[]`, that type definition would not accurately reflect the changes that JavaScript objects may encounter at runtime. Since object properties can be dynamically modified, TypeScript chooses to use the more permissive `string[]` type to ensure safety.
+
+Conclusion: TypeScript respects the dynamic typing characteristics of JavaScript, which leads to Object.keys being able to guarantee a return type of at most `string[]`.
+
+Details of the analysis and references, along with three coping strategies, are written in the blog: [Why does Object.keys return an array of strings in TypeScript?](https://www.webdong.dev/post/why-object-keys-returns-array-of-strings-in-typescript/)
+
