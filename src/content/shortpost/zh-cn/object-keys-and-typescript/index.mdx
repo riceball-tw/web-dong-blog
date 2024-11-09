@@ -10,11 +10,10 @@ social:
 
 如图中错误信息得知 `person` 会需要接受特定值的 `key` 而非任意 `string`，那背后又是什么原因 `Object.keys` 被设计成返回更为松散的 `string[]` 类型呢？明明很明显可以通过 `keyof` 得出所有 `key` 的类型？
 
-因为 JavaScript 对象可以 “在运行时动态改变其内容”。
+因为 JavaScript 对象可以 「在运行时动态改变其内容」。
 
 如果将 `Object.keys` 设计成返回 `(keyof T)[]`，该类型定义无法准确反映 JavaScript 对象在运行时可能遭遇的变化，因为对象属性可以被动态修改，所以 TypeScript 选择使用更宽松的 `string[]` 类型来确保安全。
 
 结论： TypeScript 尊重 JavaScript 动态类型的特性，导致 Object.keys 最多只能确保返回 `string[]` 类型。
 
 分析细节与引用参考还有三种应对方式写在博客中：[为什么 TypeScript 中 Object.keys 返回 string[] 类型？](https://www.webdong.dev/post/why-object-keys-returns-array-of-strings-in-typescript/)
-
