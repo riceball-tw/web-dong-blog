@@ -1,0 +1,26 @@
+---
+headline: How to publish local website and server
+publishDate: 2024-11-09
+category: Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DCJxiD9B5l-
+---
+
+![local files chat screenshot](ai-is-taking-over.webp)
+
+![localhost:3000 chat screenshot](programmerhumor-io-frontend-memes-backend-memes.webp)
+
+First, let's look at these two memes:
+
+👉 Misunderstanding that other computers can directly connect to local files
+
+Make good use of static web hosting services, upload to GitHub Pages, Netlify, or Vercel, etc..., to generate a public URL, so others can view the website through that link.
+
+👉 Misunderstanding that other computers can directly connect to local server ports
+
+Use the internal IP address: On the same internal network (for example, on the same Wi-Fi), you can use the local IP address to access the server, allowing other devices on the same subnet to access it directly through this IP address.
+Expose the local server: If you want to access the local server from the external network, you can use tools like ngrok, LocalTunnel, or Cloudflare Tunnel to create a temporary URL that maps the local server to the external network.
+
+Frontend developers often need to test on different devices and browser environments, and the commonly used [VSCode editor actually has built-in Microsoft dev tunnels](https://code.visualstudio.com/docs/editor/port-forwarding), allowing you to quickly put the development server online for testing with just a few clicks.
+
+Even [Nuxt has built-in support for Cloudflare Quick Tunnels](https://www.youtube.com/watch?v=b4nXOFTXI_c)

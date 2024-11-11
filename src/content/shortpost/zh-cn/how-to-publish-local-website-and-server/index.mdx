@@ -1,0 +1,26 @@
+---
+headline: 怎么让外网连结本地网站与伺服器？
+publishDate: 2024-11-09
+category: Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DCJxiD9B5l-
+---
+
+![本地电脑档案位址对话截图](ai-is-taking-over.webp)
+
+![localhost:3000 对话截图](programmerhumor-io-frontend-memes-backend-memes.webp)
+
+先看这两个 Meme 怎么解：
+
+👉 误以为其他电脑可以直接连接本地档案
+
+善用静态网页托管服务，上传到 GitHub Pages、Netlify 或 Vercel ……等服务生成一个公共 URL，其他人便能透过该连结来查看网站。
+
+👉 误以为其他电脑可以直接连接本地伺服器端口
+
+使用内网 IP 地址：在同一个内部网路（例如在同一个 Wi-Fi）下，可以使用本地 IP 位址来访问伺服器，这样其他同网段的装置可以直接通过这个 IP 位址进行访问。
+公开本地伺服器：如果希望在外网访问本地伺服器，可以使用一些工具如 ngrok、LocalTunnel 或者 Cloudflare Tunnel 创建一个暂时网址，将本地伺服器映射到外网。
+
+前端时常要在不同装置与浏览器环境上测试，而常用的[VSCode 编辑器其实就有内建 Microsoft dev tunnels](https://code.visualstudio.com/docs/editor/port-forwarding)，可以迅速几个按钮把开发伺服器放上网测试。
+
+甚至 [Nuxt 有内建支援 Cloudflare Quick Tunnels](https://www.youtube.com/watch?v=b4nXOFTXI_c)
