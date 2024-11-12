@@ -88,6 +88,7 @@ export function translateCategory(categoryKey: string, currentLocale?: LanguageK
       'Web Performance': '网站性能',
       Cybersecurity: '网络安全',
       'Non-Technical Discussion': '非技术讨论',
+      Accessibility: '无障碍'
     },
     'zh-tw': {
       Share: '分享',
@@ -99,6 +100,7 @@ export function translateCategory(categoryKey: string, currentLocale?: LanguageK
       'Web Performance': '網站效能',
       Cybersecurity: '網路安全',
       'Non-Technical Discussion': '非技術討論',
+      Accessibility: '無障礙'
     },
   };
   return (currentLocale && categoryTranslationMap[currentLocale]?.[categoryKey]) || categoryKey;

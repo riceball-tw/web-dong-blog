@@ -1,0 +1,172 @@
+---
+isDraft: false
+icon: { name: 'material-symbols:accessible-forward-rounded', title: '無障礙符號' }
+subHeadline: 'Accessibility and Webpage'
+headline: 前端需要知道的無障礙網頁
+excerpt: '近期看到 Web Dev Simplified 推出的教學促使我趕緊打開這篇文章記錄其中提到的網頁無障礙需要留意的地方，並且補充上一些我自己實驗有幫助的資訊。無障礙一直是我想重視但實際開發時優先順序總是排在最後的要求，差勁的無障礙對某些使用者來說會嚴重影響到網頁互動的體驗，身為前端讓網頁保持良好的無障礙是基本責任。'
+category: 'Accessibility'
+tags: ['ARIA']
+publishDate: 2024-11-12
+---
+
+## 前言
+
+近期看到 Web Dev Simplified 推出的 [The Only Accessibility Video You Will Ever Need](https://www.youtube.com/watch?v=2oiBKSjOOFE&list=WL) 促使我趕緊打開這篇文章記錄其中提到的網頁無障礙需要留意的地方，並且補充上一些我自己實驗有幫助的資訊。
+
+**無障礙一直是我想重視但實際開發時優先順序總是排在最後的要求**，差勁的無障礙對某些使用者來說會嚴重影響到網頁互動的體驗，身為前端讓網頁保持良好的無障礙是基本責任。
+
+## 什麼是無障礙網頁？
+
+> 網頁是否能夠被不同類型的用戶有效訪問使用。
+
+可以被不同身體機能用戶使用的網頁就是無障礙網頁，和無障礙設施同樣的概念，無障礙網頁的概念也應當被重視。舉例視障或鍵盤用戶在使用網站時可能會需要網站具備適當的視覺處理或其他輔助標示來確保網站資訊能夠正確的被傳遞與互動，以下是一些簡短的例子：
+
+- [為什麼瀏覽器 Tab 按下去會顯示藍藍的外框？ - Focus Indicators](https://www.webdong.dev/shortpost/focus-indicator/#focus-indicator)
+- [好奇不同種類色盲眼中的網站是長什麼樣子？](https://www.webdong.dev/shortpost/color-blind-website-preview/#color-blind-website-preview)
+
+## 什麼是 <abbr title="Accessible Rich Internet Applications">ARIA</abbr>？
+
+ARIA 是一系列 HTML 屬性用於 **額外標註資訊於網頁元素當中**，像是：`aria-label`、`aria-live`……等，幫助用戶透過無障礙輔助（Assistive Technologies）來完善體驗。
+
+語意化網頁本身已經具備無障礙體驗，在使用現代 HTML 建構網頁時也等同於提供更多資訊給用戶，開發者與其花費心力標示 ARIA 資料前 **應當先確保網頁語意化完善才更為重要**，ARIA 會因為作業系統、瀏覽器或輔助軟體的版本不同而不支援，但語意化網頁是基礎標準，可以提供網頁爬蟲、無障礙輔助或瀏覽器更多資訊增進體驗應當優先考量。
+
+## 瀏覽器無障礙檢測工具
+
+現代瀏覽器或多或少會提供工具讓開發者檢測網頁的無障礙資訊，除了常見的「網頁元素預覽面板」之外推薦開啟「Accessibility 面板」用於對畫面中元素的無障礙檢視。舉例最常見的 Chrome 為例可嘗試看看：
+
+1. `F12` 打開瀏覽器 DevTools
+2. `Ctrl + Shift + P` 或 `⌘ + Shift + P` 輸入執行指令 Show Accessibility
+3. `Accessibility Tree` > 勾選 Enable full-page accessibility tree
+
+![DevTool 搜尋 Show Accessibility 指令](command-in-devtool.webp 'DevTool 搜尋開啟無障礙面板')
+
+![DevTool Accessibility 面板](devtool-accessibility-panel.webp 'DevTool Accessibility 面板')
+
+無障礙面板差不多和常用的網頁元素預覽使用方式差不多，都是選取想關注的元素並且點擊就會於側欄顯示該元素的細節。如下圖展示了一個元素具備的與無障礙相關的屬性與資訊，用於理解網頁所額外傳遞的無障礙資訊非常有幫助：
+
+![元素無障礙細節預覽](aria-attr-and-computed-properties.webp '檢視特定元素的無障礙細節，優先級最高的輔助資訊會被採用')
+
+## 視覺相關無障礙
+
+### 明確告知網頁元素用途
+
+在製作網頁時我們時常低估自己對於情境的前後文理解，導致用戶沒辦法明確知道網頁元素的用途，舉例來說：
+
+> 很多時候不會需要一次把所有資料顯示出來，而是會製作一顆按鈕讓用戶了解「如果感興趣可以點這裡獲取更多相關的資料」。
+> 問題在於「更多」是含糊的詞彙。
+> 爬蟲（訪問網站的機器人）並不知道更多是什麼、使用螢幕閱讀器的人不知道更多是什麼、糟糕的 UI 也會讓人不清楚更多是什麼……將描述交由情境去判斷容易造成混淆與誤解。所以不要只告訴使用者是否「查看更多」、「確不確定」，明確把行動會造成的影響告知用戶是基本提升 UX 體驗的方式之一。
+
+詳細可參考看看之前短文：[不要告訴使用者「查看更多」](https://www.webdong.dev/shortpost/readmore-is-bad/#readmore-is-bad)。
+
+### 元素對比度
+
+先前研究過 [好奇不同種類色盲眼中的網站是長什麼樣子？](https://www.webdong.dev/shortpost/color-blind-website-preview/#color-blind-website-preview)，可以透過使用像是 [Colorblind Web Page Filter](https://www.toptal.com/designers/colorfilter) 三方的網頁去模擬生成視障用戶的網頁模擬。
+
+不過其實 Chrome [內建的顏色選取器](https://developer.chrome.com/docs/devtools/accessibility/contrast?hl=zh-tw)自帶顏色無障礙檢測功，根據元素的大小與顏色的對比程度劃分為 AA 與 AAA 等級，它們是 <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 對不同嚴格程度的無障礙要求，讓網站開發者可以依據需求選擇適合的等級來改善網站的適用性。
+
+目前 WCAG 2.x 在計算特定顏色情境上與人眼感知有落差，不過仍是業界常見標準，可以參考看看 <abbr title="Accessible Perceptual Contrast Algorithm">[APCA](https://github.com/Myndex/apca-w3?tab=readme-ov-file)</abbr> 算法。
+
+### 聚焦標示
+
+可以參考之前寫過的：[為什麼瀏覽器 Tab 按下去會顯示藍藍的外框？](https://www.webdong.dev/shortpost/focus-indicator/#focus-indicator)
+
+### aria-label
+
+在沒有明確文字內容或圖像的情況下，`aria-label` 能夠讓無障礙輔助以文字描述替代，提升使用體驗，例如：
+
+- **僅有圖示**：對於一些僅有圖示的元素並沒有文字描述，`aria-label` 可以補充告知該元素的作用，例如圖標按鈕。
+- **補充說明**：當元素的作用不明確時，使用 `aria-label` 能避免誤解。
+
+假設有一個搜尋按鈕，圖標為放大鏡，但沒有文字描述，可以使用 aria-label 如下：
+
+```html
+<button aria-label="搜尋">
+  <svg><!-- ... --></svg>
+</button>
+```
+
+應留意 `aria-label` 的文字應該簡潔明瞭，讓使用者能快速了解元素的功能，並且避免重複，若元素已經有可見的描述，例如按鈕上有文字，則通常無需額外使用 `aria-label`，以免造成冗餘。
+
+### aria-labelby
+
+與 `aria-label` 不同，`aria-labelledby` 不直接提供描述文字，而是**引用同頁面內的其他元素，並將這些元素的內容作為該元素的描述**。這種方式在需要使用多個元素提供描述時特別有用，例如：
+
+- **多重描述**：當一個元素需要來自多個元素的描述時，可以使用 `aria-labelledby` 指向多個標籤元素。
+- **共享描述**：例如，表單中的欄位可能都需要相同的標題或說明，透過 `aria-labelledby` 可以引用同一元素。
+- **增強可讀性**：在表格或列表中引用標題或描述，讓無障礙輔助可以更自然地呈現上下文資訊。
+
+假設有一個描述輸入欄位的標題和說明：
+
+```html
+<label id="nameLabel">姓名</label>
+<span id="nameDescription">請輸入您的全名。</span>
+<input type="text" aria-labelledby="nameLabel nameDescription" />
+```
+
+這樣無障礙輔助會將標題「姓名」與說明「請輸入您的全名」一起讀出，讓使用者清楚了解此欄位的用途和要求。再舉一個例子，假設有一個群組按鈕，並且群組的標題可以描述每一個按鈕：
+
+```html
+<h2 id="socialMediaOptions">選擇您的社交媒體平台</h2>
+<button aria-labelledby="socialMediaOptions">Facebook</button>
+<button aria-labelledby="socialMediaOptions">X</button>
+<button aria-labelledby="socialMediaOptions">Instagram</button>
+```
+
+每個按鈕都將首先讀出「選擇您的社交媒體平台」，然後再讀出按鈕內容（如「Facebook」），這樣更好的補充了每個按鈕的上下文資訊。
+
+此外應留意避 `aria-labelledby` 不應同時與 `aria-label` 一起使用，以免造成描述混亂，並且被引用的元素應有描述性文字，以便提供完整且清晰的資訊給無障礙輔助。
+
+### aria-live
+
+指定元素在內容變化時應如何向無障礙輔助進行提示，確保用戶不會錯過頁面上重要的變更，舉例：
+
+- `off`：預設值。內容變更時，不會向無障礙輔助發出任何通知。適用於非重要的內容更新。
+- `polite`：內容變更時會向無障礙輔助發出通知，但只有在用戶完成當前操作（例如停止閱讀）後，才會插入這些更新內容。適合用於需要提醒但不打斷用戶操作的情況。
+- `assertive`：內容變更時，立即打斷用戶的當前操作，並通知無障礙輔助更新的內容。適合用於重要緊急的通知，例如錯誤訊息或重要提示。
+
+假設有一個表單提交後會顯示成功或失敗的訊息，可以使用 `aria-live` 來通知無障礙輔助用戶：
+
+```html
+<div aria-live="assertive" id="statusMessage">
+  <!-- 提交結果的訊息會顯示在這裡 -->
+</div>
+```
+
+當表單提交後更新此 `<div>` 的內容時，無障礙輔助會立即朗讀更新的訊息。`aria-live` 可以用於提升動態網頁的無障礙體驗，尤其是對於需要即時更新或提示的內容。
+
+## 鍵盤操作相關無障礙
+
+### tabindex
+
+通常鍵盤使用者會使用 `Tab` 來切換網頁中焦點元素，通常就算不特別標示也有元素預設是可以被聚焦的像是：`<a>`、`<button>`、`<input>`……等，被聚焦的元素通常瀏覽器預設會賦予聚焦標示的樣式，也是[為什麼瀏覽器 Tab 按下去會顯示藍藍的外框？](https://www.webdong.dev/shortpost/focus-indicator/#focus-indicator)的原因。
+
+`tabindex` 可以用來改變**元素是否可以被聚焦**與**聚焦的相關順序**設定。
+
+- `tabindex="0"`：元素可以被鍵盤聚焦，並且會按照 DOM 順序進入焦點序列。
+- `tabindex="-1"`：元素無法被鍵盤聚焦，除非使用 JavaScript 手動聚焦它。例如，某些隱藏的彈出式視窗可以設置 tabindex="-1"，以便在視窗開啟時自動聚焦。
+- 正整數（如 `tabindex="1"`）：這會將元素放在指定的焦點順序，並且優先於 `tabindex="0"` 的元素。`tabindex="1"` 的元素會先聚焦，接著是 `tabindex="2"` 的元素……依此類推。
+
+```html
+<a href="#section1" tabindex="1">Section 1</a>
+<a href="#section2" tabindex="3">Section 2</a>
+<a href="#section3" tabindex="2">Section 3</a>
+<button tabindex="0">Default Focus Button</button>
+
+<!-- 上方的範例中，點選 Tab 鍵時的焦點順序會是：Section 1 → Section 3 → Section 2 → Default Focus Button。 -->
+```
+
+- **避免使用高於 `tabindex="0"` 的值**：為元素指定正整數的 `tabindex` 值會使焦點順序變得複雜且難以維護。
+- **使用 `tabindex="0"` 讓特定元素可聚焦**：例如自訂的按鈕或卡片可以設置 `tabindex="0"`，這樣可以讓它們遵循自然的 DOM 焦點順序。
+- **適時使用 `tabindex="-1"` 排除不必要的元素**：當不希望某些元素被鍵盤聚焦時（例如隱藏的彈出式視窗），可以使用 `tabindex="-1"`。當這些元素顯示時，再透過 JavaScript 手動聚焦它們。
+
+## 如何自動化檢測無障礙
+
+前端有許多需要留意的 SEO、適用性或最佳實踐需要留意，為了得知用戶或爬蟲怎麼解讀網頁可以參考 Google 製作的檢測工具：[Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=zh-tw)。
+
+不只 Chrome 瀏覽器就有內建外也可以到 [PageSpeed Insights](https://pagespeed.web.dev/) 進行檢測。如果想把檢測流程放到專案 CI 當中也可以參考我之前寫過的：[透過 Lighthouse CI 自動化檢測網站效能](https://www.webdong.dev/post/check-website-performance-with-lighthouse-ci/)
+
+## 延伸閱讀
+
+- [Learn Accessibility - web.dev](https://web.dev/learn/accessibility)
+- [ARIA Authoring Practices Guide (APG) - W3C](https://www.w3.org/WAI/ARIA/apg/patterns/)
+- [不被重視的 HTML：Accessibility - Just lepture](https://lepture.com/zh/2014/talk-on-accessibility-jsdc2014)
