@@ -30,6 +30,13 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
         {/* Index */}
         <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shortposts.length - index}</div>
         <div class="w-full">
+          <time class="sr-only" data-pagefind-sort="date">
+            {
+              shortpost.data.publishDate
+                .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                .replace(/\//g, '-')
+            }
+          </time>
           {/* Title */}
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}

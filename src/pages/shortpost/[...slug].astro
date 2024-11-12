@@ -30,7 +30,9 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
       <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
-        <Content components={{ img: PostImage }}  />
+        <div data-pagefind-body>
+          <Content components={{ img: PostImage }}  />
+        </div>
       </ShortpostList>
     </main>
   </Container>
