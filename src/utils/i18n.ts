@@ -89,6 +89,7 @@ export function translateCategory(categoryKey: string, currentLocale?: LanguageK
       Cybersecurity: '网络安全',
       'Non-Technical Discussion': '非技术讨论',
       Frontend: '前端',
+      Accessibility: '无障碍',
     },
     'zh-tw': {
       Share: '分享',
@@ -101,6 +102,7 @@ export function translateCategory(categoryKey: string, currentLocale?: LanguageK
       Cybersecurity: '網路安全',
       'Non-Technical Discussion': '非技術討論',
       Frontend: '前端',
+      Accessibility: '無障礙',
     },
   };
   return (currentLocale && categoryTranslationMap[currentLocale]?.[categoryKey]) || categoryKey;
