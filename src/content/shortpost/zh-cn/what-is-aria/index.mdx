@@ -1,0 +1,22 @@
+---
+headline: 什么是 ARIA - Accessible Rich Internet Applications？
+publishDate: 2024-10-15
+category: Accessibility
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DCZC2hCBs7_
+---
+
+ARIA 是一系列 HTML 属性用于额外标注信息于网页元素当中，帮助用户通过无障碍辅助（Assistive Technologies）来完善体验。
+
+大多前端都应该明白应通过语义化的方式（HTML5）去构建网页，以便让搜索引擎等爬虫理解数据进而增进搜索体验与名次，而语义化的网页也同时会是无障碍网页的第一步，可以帮助浏览器或无障碍辅助用户更清楚网页的内容。
+
+一些动态网页应用会需要额外标示 ARIA 才能提供完善的无障碍体验，举例：“页面中动态显示或改动的信息”就会需要标示 ARIA 属性告知无障碍辅助，以便在改动时可以声音告知用户。在 ARIA 之前应当确保网页语义化充分，错误设置 ARIA 可能造成反效果，比没设置时的体验来得糟糕。
+
+之后才知道原来大多现代浏览器普遍都具备观察无障碍属性相关的专属功能，举例 Chrome Accessibility Tree：
+
+1. F12 打开浏览器 DevTools
+2. Ctrl + Shift + P 或 ⌘ + Shift + P 输入执行指令 Show Accessibility
+3. Accessibility Tree > 勾选 Enable full-page accessibility tree
+
+这样观察浏览器怎么解读网页就方便得多。
+

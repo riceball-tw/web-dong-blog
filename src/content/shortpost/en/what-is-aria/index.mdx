@@ -1,0 +1,22 @@
+---
+headline: What is ARIA - Accessible Rich Internet Applications?
+publishDate: 2024-10-15
+category: Accessibility
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DCZC2hCBs7_
+---
+
+ARIA is a set of HTML attributes used to provide additional annotations to web elements, helping users enhance their experience through Assistive Technologies.
+
+Most front-end developers should understand that web pages should be constructed semantically (HTML5) to allow search engines and other crawlers to comprehend the data, thereby improving search experience and rankings. A semantic web page is also the first step towards an accessible web page, as it helps browsers or assistive technologies better understand the content of the web page.
+
+Some dynamic web applications may require additional ARIA annotations to provide a complete accessible experience. For example, "information that is dynamically displayed or changed on the page" will need ARIA attributes to inform assistive technologies so that users can be audibly notified of changes. Before implementing ARIA, it is essential to ensure that the web page is sufficiently semantic; incorrectly setting ARIA may lead to adverse effects, making the experience worse than if ARIA were not set at all.
+
+Later, I learned that most modern browsers generally have dedicated features to observe accessibility attributes, such as the Chrome Accessibility Tree:
+
+1. Press F12 to open the browser DevTools
+2. Press Ctrl + Shift + P or ⌘ + Shift + P and enter the command Show Accessibility
+3. Accessibility Tree > Check Enable full-page accessibility tree
+
+This makes it much easier to observe how the browser interprets the web page.
+
