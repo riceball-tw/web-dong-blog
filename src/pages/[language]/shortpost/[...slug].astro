@@ -5,7 +5,7 @@ import PostImage from '@/components/post/PostImage.astro';
 import MarkdownIt from 'markdown-it';
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
-import { languages, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import { languages, stripLanguageCode, type LanguageKey, defaultLocale } from '@/utils/i18n.ts';
 
 export async function getStaticPaths() {
   return Object.keys(languages).flatMap((language) => dateSortedLocaleRelatedShortposts(language as LanguageKey).map((shortpost) => ({
@@ -30,7 +30,7 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
 <BlogBase title={headline} description={createExcerpt(shortpost.body)} thumbnail={{ src: `/shortpost/${shortpost.slug}`, alt: `${headline}` }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
-      <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
+      <ShortpostList isSearchAble={Astro.currentLocale !== defaultLocale} shortposts={shortposts} currentSlug={shortpost.slug}>
         <Content components={{ img: PostImage }}  />
       </ShortpostList>
     </main>
