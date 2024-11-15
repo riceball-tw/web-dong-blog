@@ -1,11 +1,13 @@
 ---
 import type { CategoryList } from '@/types'
 import { translateCategory, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
 
 export interface Props extends CategoryList {}
 
 const { category, categoryHref } = Astro.props;
 const CategoryElement = categoryHref ? 'a' : 'div';
+const translatedCategory = translateCategory(category || Astro.currentLocale as LanguageKey, Astro.currentLocale as LanguageKey)
 ---
 
 <CategoryElement
@@ -16,5 +18,5 @@ const CategoryElement = categoryHref ? 'a' : 'div';
   }}
 >
   <span>@</span>
-  <span data-cy="category" data-pagefind-filter="category">{translateCategory(category || Astro.currentLocale as LanguageKey, Astro.currentLocale as LanguageKey)}</span>
+  <span data-cy="category" data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translatedCategory}`}>{translatedCategory}</span>
 </CategoryElement>

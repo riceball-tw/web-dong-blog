@@ -35,6 +35,9 @@ const { placeholderText } = Astro.props;
     // eslint-disable-next-line no-new, no-undef
     new PagefindUI({
       element: "#pagefind-search",
+      ranking: {
+        pageLength: 0.25
+      },
       translations: {
         placeholder: placeholderText
       },

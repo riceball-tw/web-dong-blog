@@ -1,5 +1,6 @@
 ---
 import type { TagsList } from '@/types'
+import * as m from "@/paraglide/messages";
 
 export interface Props extends TagsList {}
 
@@ -11,13 +12,13 @@ const { tags, tagHrefs } = Astro.props;
     tagHrefs ? tagHrefs.map((href, index) => (
       <li data-cy="tag">
         <a data-cy="tag-link" data-astro-prefetch class="p-1.5 flex gap-1 capitalize opacity-60 hover:opacity-100" {href}>
-          <span>#</span><span data-pagefind-filter="tag">{tags[index]}</span>
+          <span>#</span><span data-pagefind-filter={`${`${m.teary_wide_impala_coax()}`}:${tags[index]}`}>{tags[index]}</span>
         </a>
       </li>
   )) : tags.map((tag) => (
       <li data-cy="tag">
         <span class="p-1.5 flex gap-1 capitalize opacity-60 hover:opacity-100">
-          <span>#</span><span data-pagefind-filter="tag">{tag}</span>
+          <span>#</span><span data-pagefind-filter={`${`${m.teary_wide_impala_coax()}`}:${tag}`}>{tag}</span>
         </span>
       </li>
     ))

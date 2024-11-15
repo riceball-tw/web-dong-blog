@@ -2,14 +2,16 @@
 import type { ShortpostPage } from '@/types'
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
+import { translateCategory, defaultLocale, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
 
 export type Props = {
   shortposts: ShortpostPage[]
   currentSlug?: string
+  isSearchAble?: boolean
 } 
 
-const { shortposts, currentSlug } = Astro.props
+const { shortposts, currentSlug, isSearchAble } = Astro.props
 const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
 ---
 <ul class="space-y-4 md:space-y-8">
@@ -29,7 +31,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
         {/* Index */}
         <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shortposts.length - index}</div>
-        <div class="w-full">
+        <div class="w-full" data-pagefind-body={isSearchAble && isActiveShort  || undefined}>
           {/* Title */}
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}
@@ -38,7 +40,13 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
             
             href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/shortpost/${stripLanguageCode(shortpost.slug)}/#${stripLanguageCode(shortpost.slug)}`).replace(/\/$/, '')}>
             
-            <HeadingComponent style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.slug)}>
+            <HeadingComponent
+              data-publish-date={shortpost.data.publishDate
+                .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                .replace(/\//g, '-')} 
+              data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translateCategory(shortpost.data.category || Astro.currentLocale as LanguageKey, Astro.currentLocale as LanguageKey)}`}
+              data-pagefind-sort="date[data-publish-date]" 
+              style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.slug)}>
               <span>{shortpost.data.headline}</span>
             </HeadingComponent>
           </a>
@@ -50,7 +58,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
           {shortpost.data?.social ? <div class={`pt-4 ${(isActiveShort) ? '' : 'hidden'}`}>
             {
               shortpost.data?.social?.threads ? 
-            <a href={shortpost.data.social.threads}>
+            <a data-pagefind-ignore="all" href={shortpost.data.social.threads}>
               <Icon name="simple-icons:threads"></Icon>
             </a>
             : ''
