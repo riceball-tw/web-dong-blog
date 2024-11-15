@@ -57,5 +57,5 @@ jobs:
           labels: |
             auto-translate
           branch: auto-translation
-          delete-branch: true
+          delete-branch: false
           base: main
