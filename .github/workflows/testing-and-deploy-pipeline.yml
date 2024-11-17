@@ -1,7 +1,8 @@
 name: Testing and Deploy Pipeline
+
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 
 jobs:
