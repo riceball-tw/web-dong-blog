@@ -1,8 +1,8 @@
 name: Testing and Deploy Pipeline
 on:
   push:
-    paths:
-      - '!src/content/**'
+    branches:
+      - main
 
 jobs:
   # ESLint + Prettier
