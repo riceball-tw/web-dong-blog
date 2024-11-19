@@ -2,7 +2,7 @@ import { defaultLocale } from '../../../src/utils/i18n.ts';
 
 describe('Post is effective', () => {
   beforeEach(() => {
-    cy.visit(`/post/${defaultLocale}/demo-post`);
+    cy.visit(`${defaultLocale}/post/demo-post`);
   });
 
   it('Header should visible and working', () => {
