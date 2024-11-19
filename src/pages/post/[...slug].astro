@@ -93,7 +93,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
           <PostTableOfContent {headings} />
           {
             postsInSeries.length ? 
-              <PostSeries currentPost={post} 
+              <PostSeries currentLocale={Astro.currentLocale as LanguageKey} currentPost={post} 
               postsInSeries={postsInSeries} />
           : ''
           }
