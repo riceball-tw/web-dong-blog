@@ -4,6 +4,7 @@ import Accordion from '@/components/atoms/accordion/Accordion.astro'
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { defaultLocale, getLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
 
 export interface Props {
   currentLocale: LanguageKey 
@@ -22,7 +23,7 @@ const currentLocalePostsInSeries = postsInSeries.reduce((total: CollectionEntry<
 <div data-cy="series-summary" data-pagefind-ignore="all">
 
 
-<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series}系列`}>
+<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series} ${m.stale_level_platypus_savor()}`}>
   <ul class='pb-4'>
   {currentLocalePostsInSeries.map(({data, slug}) => {
    const isCurrentPost = currentPost.slug === slug
