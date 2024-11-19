@@ -49,7 +49,7 @@ const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.curr
 const isSubheadlineEqualHeadline = subHeadline === headline
 ---
 
-<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${headline}` }}>
+<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${stripLanguageCode(slug)}`, alt: `${headline}` }}>
   <PostJSONLD
     slot="head"
     headline={post.data.headline}
@@ -120,7 +120,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
               <span>{m.extra_ago_ladybug_animate()}</span>
               <a
                 data-pagefind-ignore="all"
-                href={`${postLastModifiedDateUrl}/${post.slug}.mdx`}
+                href={`${postLastModifiedDateUrl}/${slug}.mdx`}
                 class=""
               >
                 <span>

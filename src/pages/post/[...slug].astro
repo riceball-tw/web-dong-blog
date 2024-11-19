@@ -16,7 +16,7 @@ import PostSeries from '@/components/post/PostSeries.astro'
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { type LanguageKey, defaultLocale } from '@/utils/i18n.ts';
+import { type LanguageKey, defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -27,7 +27,7 @@ export async function getStaticPaths() {
   return dateSortedPublishedPosts.map((post) => {
     const postsInSeries = getTargetSeriesPosts(dateSortedPublishedPosts, post.data.series);
     return ({
-    params: { slug: post.slug },
+    params: { slug: stripLanguageCode(post.slug) },
     props: { post, postsInSeries },
   })});
 }
@@ -43,7 +43,7 @@ const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.curr
 const isSubheadlineEqualHeadline = subHeadline === headline
 ---
 
-<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${slug}`, alt: `${headline}` }}>
+<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${stripLanguageCode(slug)}`, alt: `${headline}` }}>
   <PostJSONLD
     slot="head"
     headline={post.data.headline}
@@ -113,7 +113,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
               <span>{m.extra_ago_ladybug_animate()}</span>
               <a
                 data-pagefind-ignore="all"
-                href={`${postLastModifiedDateUrl}/${post.slug}.mdx`}
+                href={`${postLastModifiedDateUrl}/${slug}.mdx`}
                 class=""
               >
                 <span>

@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import Accordion from '@/components/atoms/accordion/Accordion.astro'
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale, getLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import { defaultLocale, getLanguageCode, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 
 export interface Props {
@@ -30,7 +30,7 @@ const currentLocalePostsInSeries = postsInSeries.reduce((total: CollectionEntry<
    return (
       <li>
         <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} 
-        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${slug}/`)}>
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(slug)}/`)}>
         {isCurrentPost && <span>
           <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
         </span>}
