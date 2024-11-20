@@ -1,0 +1,317 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:imagesmode-outline-rounded
+  title: 图片符号
+subHeadline: All You Need To Know About Optimal Images!
+headline: 所有优化网页图片的技巧都写在这了！
+excerpt: 图片是丰富网页内容避不可少的元素之一，大家都会在网页中添加图片，并且大多数网站中图片与影片是传输资料中最繁重的存在，了解如何改善它们是最划算的选择，如果网站效能或加载速度出现问题，第一步可以从图片或影片开始改善。让我们先从简单的例子一步一步找出潜在的问题以及如何解决，了解图片实际上有很多有趣的细节可以调整。
+series: Web Performance
+category: Web Performance
+tags:
+  - Image
+publishDate: 2023-05-19
+---
+
+## 前言
+
+> 大多数网站中图片与影片是传输资料中最繁重的存在，了解如何改善它们是最划算的选择
+
+如果网站效能或加载速度出现问题，第一步可以从图片或影片开始改善。让我们先从简单的例子一步一步找出潜在的问题以及如何解决，了解图片实际上有很多有趣的细节可以调整。
+
+## 良好图片的通则
+
+以下是一些为网站提供好图片的通则，偏向大方向理念而非语法撰写上的建议。
+
+### 合适的尺寸
+
+如果在小画面上呈现一张超大的图片，再怎么精细的影像也无法呈现清楚图片的细节（除非放大来看），因此只要**画面能够显示多大张的图片就提供多大尺寸的图片**即能达成节省运算与传输资源的目的。
+
+设计师不一定会留意这一点，身为前端工程师需要与设计者沟通，让对方提供合适的图片供网页使用，工程师也可以学习基本的绘图软件输出操作，要多大的素材自行输出，或是上网找图片压缩与裁切工具。
+
+![Figma 与 Adobe XD 的输出界面](./export.webp 'Figma 与 Adobe XD 都可以选择画布的输出大小与格式')
+
+不同的「设备尺寸 Device Resolution」与「像素密度 Pixel Density」下合适的图片大小也会有所不同
+
+### 合适的格式
+
+不同的图片格式有不同的特性与局限，先思考好要使用什么方式传输图像，是向量还是点阵？影片还是图片序列？
+
+![向量与点阵的比较](./vector-or-raster.webp)
+![影片与图片](./video-or-image.webp)
+
+衡量「档案格式的特性」与「网站需要到达支援程度」，将图片用最合适的方式呈现可以大幅增进网页效能与加载时间。如果不确定格式支援程度可以到 [Can I use](https://caniuse.com/) 网站上输入格式名称，了解网站客群有没有在范围之内？能不能使用更新型的档案格式？以下是我对常用格式的浓缩建议：
+
+- `.jpg`：老牌点阵图片格式，中规中矩。
+- `.png`：老牌点阵图片格式，如果需要透明背景或高品质无损图片时使用。
+- `.gif`：老牌点阵动图格式，大小、效能以及品质极差。
+- [`.webp`](https://caniuse.com/webp)：集 `.jpg` 与 `.png` 与 `.gif` 功能于一身，优越的压缩比。
+- `.svg`：老牌向量格式，可行内置入于 HTML 中。
+- `.mp4`：老牌影片格式，中规中矩。
+- [`.webm`](https://caniuse.com/webm)：专为网页而生的影片格式，优越的压缩比。
+
+<Info type="info">
+  **对图片的建议**：如果没有特别的要求会建议简单线条与色块的图片使用 `.svg` 向量呈现，复杂一点使用 `.webp`
+  格式可以大幅缩减档案大小。
+</Info>
+
+<Info type="warning">
+  **对影片的建议**：推荐使用 `.webm`。如果有
+  [过长的动图建议使用影片来呈现](https://web.dev/replace-gifs-with-videos/)，为了效能与大小上的考量。
+</Info>
+
+### 适当的压缩
+
+SVG 可以使用 [SVGOMG](https://jakearchibald.github.io/svgomg/) 来压缩，要剪辑图片或影片可以使用 [EZGIF](https://ezgif.com/)。一般来说我建议在输出图片时会选择 80% 的品质，并且没有特殊需求就尽量在 300kb 以下，自行权衡「品质」与「档案大小」哪个比较重要。
+
+### 节省外部请求
+
+每当索取一张图片就是多一次对外部的请求，如果图片数量庞大将会造成负担，因此有各种方法来“减轻”大量对外请求的技巧，像是：
+
+- **行内 SVG**： 将 SVG 写入 HTML 中
+- **[Data URI](https://en.wikipedia.org/wiki/Data_URI_scheme)**： 将图片以 [Base64 编码](https://zh.wikipedia.org/zh-tw/Base64)的方式直接写入 HTML 中
+- **[Image Sprite](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Images/Implementing_image_sprites_in_CSS)**：把多张图片组为单一张图节省外部请求
+- **Icon Fonts**：将多个图像制作成字体使用
+
+以上的做法有好有坏，由于是额外的主题，因此本篇文章不会深入讨论。
+
+```html
+<!-- 外连图片 -->
+<img src="orange-cat.svg" alt="一只橘色的猫" />
+
+<!-- 行内 SVG -->
+<svg>
+  <!-- 添加 SVG Title 用于描述图片 -->
+  <title>一只橘色的猫</title>
+  <!-- ... -->
+</svg>
+
+<!-- Data URI -->
+<img
+  src="data:image/png;base64,iVBORw0KGgoAAA
+ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
+//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
+5ErkJggg=="
+  alt="Red dot"
+/>
+```
+
+## `background-image` 的使用
+
+> 只适合用于载入「非重要装饰性质的背景图片」！
+
+使用这项属性并没有错，只是它应对一个特定的使用情境：「背景图片」，误用滥用将带来以下麻烦问题：
+
+### 留意 SEO
+
+`background-image` 作为背景装饰性图片，天生就不会被搜索引擎给收录。如果图片希望被搜索引擎侦测到，就应当使用 `<img>` 并撰写良好的 `alt` 说明。
+
+### 留意无障碍体验
+
+除了搜索引擎的问题，[屏幕阅读器](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8)也会完全忽略 `background-image`，如果图片具备纯粹装饰以外的意涵也不应该设置为背景图片。
+
+### 留意性能与加载顺序
+
+通常背景图片很少做到能够依照设备大小以及设备像素密度来替换图片，虽然可以使用 [`Media Queries`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries/Using_media_queries) 与 [`image-set`](https://developer.mozilla.org/en-US/docs/Web/CSS/image/image-set)：
+
+```css
+// 768px 时替换合适的图片
+.hero {
+  background-image: url('/image.png');
+}
+@media only screen and (min-width: 768px) {
+  .hero {
+    background-image: url('/image-768.png');
+  }
+}
+
+// 1268px 时替换合适的图片
+@media only screen and (min-width: 1268px) {
+  .hero {
+    background-image: url('/image-1268.png');
+  }
+}
+
+.hero {
+  background-image: image-set(url('/image-1x.png') 1x, url('/image-2x.png') 2x);
+}
+```
+
+但除了十分冗长之外仍有许多需求无法达成，像是：提供不同的图片格式作为备份方案、懒加载、加载顺序……等。
+
+![图片加载顺序的比较](./loading-order.webp 'Load HTML > Load CSS > Load Image')
+
+在外连样式的情况下，也会导致需要等待 CSS 下载完毕开始解析的时候才能开始加载图片，相比于使用 `<img>` 引入图片的方式就会让图片加载速度受到影响，需要使用行内样式、[预加载](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered)图片、[预连接](https://developer.chrome.com/zh/docs/lighthouse/performance/uses-rel-preconnect/)等方式来避免该问题。
+
+## `<img>` 的使用
+
+> 最常见添加图片至网页的方式，该元素合适用绝大多数时机，但仍需留意细节属性的设置
+
+### 撰写替代描述 `alt` 属性
+
+如果你重视 SEO，就应该为每张图片添加描述良好的 `alt`，并尽可能养成描述清楚图片的习惯！
+
+底下有一张很明显的橘色猫咪图，但如果是使用[屏幕阅读器](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8)，或是搜索引擎、网页爬虫想要了解网站图片内容就会出现无法解读的问题，为了解决该状况，就**务必**要为每一个 `<img>` 添加 `alt` 属性。
+
+![一只橘猫在人行道上晒太阳睡觉](./sleeping-orange-cat.webp)
+
+没有为图片撰写良好的替代描述，将会导致搜索引擎、部分网站用户无法正确的了解图片内容。撰写图片的描述可以参考「[Google 搜索中心提供的建议](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw#descriptive-alt-text)」，更好的描述网页图片。
+
+```html
+<!-- 😟 坏 -->
+<img src="cat.jpg" />
+
+<!-- 😑 可以更好 -->
+<img src="cat.jpg" alt="猫" />
+
+<!-- 😊 好 -->
+<img src="cat.jpg" alt="一只橘猫在人行道上晒太阳睡觉" />
+```
+
+### 适当的懒加载
+
+如今大多浏览器已经[支持原生的懒加载](https://caniuse.com/loading-lazy-attr)，只需要添加 `loading=lazy` 属性即可。善用懒加载可以让图片在真正需要用到的时候才开始加载。
+
+```html
+<img loading="lazy" src="cat.jpg" alt="一只橘猫在人行道上晒太阳睡觉" />
+```
+
+<Info type="warning">
+  注意[不要在页面开头（页面加载后的可视范围内）使用这项属性到图片上](https://web.dev/browser-level-image-lazy-loading/#avoid-lazy-loading-images-that-are-in-the-first-visible-viewport)，确保图片可以尽早被加载完成。
+</Info>
+
+### 搭配 `src-set` 与 `sizes` 加载合适尺寸的图片
+
+可以额外使用 `src-set` 属性在网页中加载适当尺寸的图片，例如：当图片在高解析度的设备上显示时，就使用较大的图片，而在低解析度的设备上就可以使用较小的图片。
+
+{/* prettier-ignore */}
+```html
+<img
+  srcset="
+  /image.png?width=100 100w,
+  /image.png?width=200 200w,
+  /image.png?width=400 400w,
+  /image.png?width=800 800w"
+/>
+```
+
+像是以上范例，当设备宽度为 `100px` 时就会使用 `100w` 的图片，当设备宽度为 `200px` 时就会使用 `200w` 的图片，以此类推。不只「设备尺寸」，连「像素密度」也会被纳入考量，例如：`100w` 的图片在 `2x` 的像素密度下就会使用 `200px`。
+
+<Info type="warning">
+须留意不要将该属性用于「艺术呈现」方面的用途，图片来源必须是相同但尺寸不同的图片。如果有「艺术呈现」的需求可以使用 [`<picture>`](http://127.0.0.1:3000/post/all-you-need-to-know-about-optimal-images#%E6%8F%90%E4%BE%9B%E8%97%9D%E8%A1%93%E6%96%B9%E5%90%91%E7%9A%84%E5%9C%96%E7%89%87%E6%9B%BF%E6%8F%9B) 来达成。
+</Info>
+
+<Info type="warning">
+  浏览器会预设所有设置 `srcset` 的图片会占据整个窗口范围也就是
+  `100vw`，必须要知道该张图片在该页面被显示的大小才能知道哪张图片最为合适于此场景，这个指示该图片在某个状态下会是多少大小的信息可以使用
+  `sizes` 属性来注明。
+</Info>
+
+`sizes` 由一个媒体条件和大小值所组成，并用逗号分隔，主要功能是**让浏览器知道该图片在不同设备尺寸下会需要呈现大小**，举例来说：
+
+```html
+<img
+  srcset=""
+  sizes="
+(max-width: 400px) 200px,
+(max-width: 800px) 100vw,
+50vw"
+/>
+```
+
+以以上的例子來說，浏览器会知道该图片在 `400px` 以下时会是 `200px`，在 `400px` 到 `800px` 之间时会是 `100vw`，在 `800px` 以上时会是 `50vw`；假设目前设备尺寸是 `900px`，那么该图片就会是 `50vw * 900px = 450px` 的大小，如果像素密度是 `2x`，那么就会是 `450px * 2 = 900px`。
+
+手动计算这些尺寸真的很累人 😅，因此可以使用 [Responsive Image Breakpoints Generator](https://www.responsivebreakpoints.com/) 来自动计算，或者是使用 [RespImageLint](https://ausi.github.io/respimagelint/) 自动化的检测图片的 `srcset` 与 `sizes` 是否正确。
+
+### 提供明确的图片比例
+
+为了避免[布局偏移](https://web.dev/i18n/zh/cls/)，在提供图片的同时最好同时附上图片的宽高让浏览器提前知道需要预留多少空间给该张图片：
+
+```html
+<img width="600" height="400" />
+```
+
+或是使用 CSS 属性 `aspect-ratio` 来标注图片的比例关系：
+
+```html
+<img style="aspect-ratio: 4 / 6" ; width="100%" />
+```
+
+### 非同步图片解码
+
+此外还有 `decoding="async"` 属性，能够让浏览器将解析图片的工作移到主执行序之外，建议[在画面之外的图片使用](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding#usage_notes)。
+
+```html
+<img decoding="async" />
+```
+
+### 安排图片的资源优先程度
+
+此外也可以手动调整图片获取上的重要程度，让浏览器在第一时间加载真正重要的图片，例如 [LCP 图片](https://web.dev/i18n/zh/optimize-lcp/)。
+
+```html
+<img fetchpriority="high" />
+```
+
+或是降低获取重要程度，举例来说画面首页轮播的后几页：
+
+```html
+<div class="carousel">
+  <img fetchpriority="high" />
+  <img fetchpriority="low" />
+  <img fetchpriority="low" />
+</div>
+```
+
+## `<picture>` 的使用
+
+### 提供替代图片
+
+举例来说你想使用 `.webp` 格式来取代目前的 `.png`，但并不是每个用户的浏览器都支持，因此这时候就可以使用 `<picture>` 来达成提供替代的图片格式：
+
+```html
+<picture>
+  <source srcset="image.webp" type="image/webp" />
+  <img src="image.png" alt="介绍文字" />
+</picture>
+```
+
+以上的意思是如果有支持该格式就使用该 `<source>` 的内容，如果没有就退而使用 `<img>` 来显示。
+
+### 提供艺术呈现的图片替换
+
+艺术呈现指的是在不同的设备尺寸下使用不同的图片，例如在桌面上使用一张图，而在手机上使用不同内容的图，举更为实际的例子来说：你可以使用 `<picture>` 在有宽敞的空间的时候显示完整的 Logo，但当空间不足时就使用简化的小 Logo。
+
+```html
+<picture>
+  <!-- 在大屏幕上使用大图片 -->
+  <source media="(max-width: 767px)" srcset="small-logo.png" />
+  <!-- 在小屏幕上使用小图片 -->
+  <source media="(max-width: 480px)" srcset="tiny-logo.png" />
+  <!-- 后备方案 -->
+  <img src="fallback-logo.png" alt="Logo" />
+</picture>
+```
+
+<Info type="warning">
+作为备选方案的 `<img>` 必须要存在于 `<picture>` 之中，并且在所有的 `<source>` 之后。
+</Info>
+
+## 总结
+
+我的经验是当网站性能出现问题时再特别做优化即可，基础的替代文字、图片尺寸属性都撰写清楚通常就足够了。
+
+- 如果想要在不同设备尺寸下基于艺术呈现显示不同的图片，使用 `<picture>`
+- 如果想要提供替代的图片格式，使用 `<picture>`
+- 如果是不重要的背景图片，可以使用 `background-image`
+- 使用 `srcset` 来提供不同设备尺寸下的图片，使用 `sizes` 来提供图片在不同设备尺寸下的大小
+- 使用 `width` 与 `height` 或是 `aspect-ratio` 来提供图片的比例关系
+- 使用 `alt` 来提供图片的替代文字
+- 使用 `loading` 属性来懒加载图片
+- 使用 `fetchpriority` 属性来安排图片的资源优先程度
+- 使用 `decoding` 属性来让浏览器将解析图片的工作移到主执行序之外
+
+## 参考资料
+
+- [The CSS background-image property as an anti-pattern](https://nystudio107.com/blog/the-css-background-image-property-as-an-anti-pattern)
+- [Optimal Images in HTML - Builder.io](https://www.builder.io/blog/fast-images)
