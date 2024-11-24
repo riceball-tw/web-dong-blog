@@ -20,6 +20,7 @@ ci:
       image-size-responsive: 'warn' # Some pages use external image that cannot be controlled
       non-composited-animations: 'warn'
       offscreen-images: 'warn' # Optional Optimization
+      bf-cache: 'warn' # Optional Optimization
 
   upload:
     target: 'temporary-public-storage'

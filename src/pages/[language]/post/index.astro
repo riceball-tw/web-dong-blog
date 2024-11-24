@@ -5,17 +5,20 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedPosts, sortedPostCategoryies, sortedPostTags } from '@/utils/getPosts.ts';
+import { dateSortedLocaleRelatedPosts, sortedPostCategoryies, sortedPostTags } from '@/utils/getPosts.ts';
 import { localeParams, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { type LanguageKey } from '@/utils/i18n.ts';
 
 export async function getStaticPaths() {
   return localeParams;
 };
+
+const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
 ---
 
-<BlogBase title={m.still_mad_javelina_propel()} description={m.tired_game_husky_sew({number: dateSortedPublishedPosts.length}) }>
+<BlogBase title={m.still_mad_javelina_propel()} description={m.tired_game_husky_sew({number: posts.length}) }>
   <Hero>
     <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
       <a data-cy="categories-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/categories')}>
@@ -36,7 +39,7 @@ export async function getStaticPaths() {
       </a>
     </div>
     <Fragment slot="headline">
-      {m.tired_game_husky_sew({number: dateSortedPublishedPosts.length})}
+      {m.tired_game_husky_sew({number: posts.length})}
     </Fragment>
 
   </Hero>
@@ -45,7 +48,7 @@ export async function getStaticPaths() {
       <h2 class="sr-only">{m.born_full_liger_create()}</h2>
       <SpotlightCardsGallery>
         {
-          dateSortedPublishedPosts.map((post) => {
+          posts.map((post) => {
             const { data } = post
             return (
             <SpotlightPostCard

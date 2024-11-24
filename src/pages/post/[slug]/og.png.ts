@@ -4,7 +4,7 @@ import path from 'path';
 import { ImageResponse } from '@vercel/og';
 import { publishedPosts } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 
 interface Props {
   params: { slug: string };
@@ -103,7 +103,7 @@ export async function GET({ props }: Props) {
 // to generate an image for each blog posts in a collection
 export async function getStaticPaths() {
   return publishedPosts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: stripLanguageCode(post.slug) },
     props: { post },
   }));
 }

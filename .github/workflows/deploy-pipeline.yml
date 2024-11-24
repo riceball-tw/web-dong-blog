@@ -2,8 +2,8 @@ name: Deploy Pipeline
 
 on:
   push:
-    paths:
-      - 'src/content/**'
+    branches:
+      - main
 
 jobs:
   build:

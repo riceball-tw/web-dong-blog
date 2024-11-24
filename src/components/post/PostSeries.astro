@@ -3,25 +3,34 @@ import type { CollectionEntry } from 'astro:content';
 import Accordion from '@/components/atoms/accordion/Accordion.astro'
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { defaultLocale, getLanguageCode, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import * as m from "@/paraglide/messages";
 
 export interface Props {
+  currentLocale: LanguageKey 
   currentPost: CollectionEntry<'post'>;
   postsInSeries: CollectionEntry<'post'>[];
 }
-const { currentPost, postsInSeries } = Astro.props
+const { currentPost, postsInSeries, currentLocale } = Astro.props
+const currentLocalePostsInSeries = postsInSeries.reduce((total: CollectionEntry<'post'>[], curr) => {
+  if (getLanguageCode(curr.slug) === currentLocale) {
+    return [...total, curr]
+  } 
+    return total
+}, [])
 ---
 
 <div data-cy="series-summary" data-pagefind-ignore="all">
 
-<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series}系列`}>
+
+<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series} ${m.stale_level_platypus_savor()}`}>
   <ul class='pb-4'>
-  {postsInSeries.map(({data, slug}) => {
+  {currentLocalePostsInSeries.map(({data, slug}) => {
    const isCurrentPost = currentPost.slug === slug
    return (
       <li>
         <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} 
-        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${slug}/`)}>
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(slug)}/`)}>
         {isCurrentPost && <span>
           <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
         </span>}

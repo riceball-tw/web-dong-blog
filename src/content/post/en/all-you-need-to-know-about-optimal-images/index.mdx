@@ -1,0 +1,320 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:imagesmode-outline-rounded
+  title: Image Icon
+subHeadline: All You Need To Know About Optimal Images!
+headline: All You Need To Know About Optimal Images!
+excerpt: Images are essential elements that enrich web content. Understanding how to improve them is the most cost-effective choice for website performance.
+series: Web Performance
+category: Web Performance
+tags:
+  - Image
+publishDate: 2023-05-19
+---
+
+## Introduction
+
+> Images and videos are the heaviest elements in data transmission on most websites. Understanding how to improve them is the most cost-effective choice.
+
+If there are issues with website performance or loading speed, the first step can start with images or videos. Let's begin with simple examples to identify potential problems step by step and how to solve them, as there are many interesting details about images that can be improved.
+
+## General Principles for Good Images
+
+Here are some general principles for providing good images for websites, focusing more on overall ideas rather than syntax writing suggestions.
+
+### Appropriate Size
+
+If a large image is displayed on a small screen, no matter how detailed the image is, it cannot clearly present the details (unless zoomed in). Therefore, **provide images that are as large as the display can show** to achieve the goal of saving computational and transmission resources.
+
+Designers may not always pay attention to this point, so as front-end engineers, it is necessary to communicate with designers to ensure they provide suitable images for web use. Engineers can also learn basic image processing in graphic software to produce materials of the required size themselves or find online tools for image compression and cropping.
+
+![Export Interface of Figma and Adobe XD](./export.webp 'Both Figma and Adobe XD allow you to choose the output size and format of the canvas.')
+
+The appropriate image size will vary under different "Device Resolutions" and "Pixel Densities."
+
+### Appropriate Format
+
+Different image formats have different characteristics and limitations. First, consider how to transmit the image: is it vector or raster? Video or image sequence?
+
+![Comparison of Vector and Raster](./vector-or-raster.webp)
+![Video and Image](./video-or-image.webp)
+
+Evaluating the "characteristics of file formats" and the "level of support needed by the website" can significantly enhance web performance and loading times by presenting images in the most suitable way. If unsure about format support, you can visit [Can I use](https://caniuse.com/) to search the format name and check if the website audience falls within the range. Can newer file formats be used? Here are my condensed recommendations for commonly used formats:
+
+- `.jpg`: Classic raster image format, standard.
+- `.png`: Classic raster image format, used for transparent backgrounds or high-quality lossless images.
+- `.gif`: Classic raster animated image format, poor size, performance, and quality.
+- [`.webp`](https://caniuse.com/webp): Combines the features of `.jpg`, `.png`, and `.gif`, with superior compression ratios.
+- `.svg`: Classic vector format, can be embedded in HTML.
+- `.mp4`: Classic video format, standard.
+- [`.webm`](https://caniuse.com/webm): Video format designed for the web, with superior compression ratios.
+
+<Info type="info">
+  **Image Recommendation**: If there are no special requirements, it is recommended to use `.svg` for simple line and
+  color block images, and for more complex images, using `.webp` format can significantly reduce file size.
+</Info>
+
+<Info type="warning">
+  **Video Recommendation**: It is recommended to use `.webm`. If there are [long animated images, it is advisable to use
+  video instead](https://web.dev/replace-gifs-with-videos/) for performance and size considerations.
+</Info>
+
+### Appropriate Compression
+
+SVG can be compressed using [SVGOMG](https://jakearchibald.github.io/svgomg/), and for editing images or videos, you can use [EZGIF](https://ezgif.com/). Generally, I recommend choosing 80% quality when exporting images, and unless there are special requirements, try to keep it below 300kb, weighing "quality" against "file size" to determine which is more important.
+
+### Save External Requests
+
+Every time an image is requested, it results in an new request. If the number of images is large, it can create a burden. Therefore, there are various methods to "lighten" the load of numerous external requests, such as:
+
+- **Inline SVG**: Writing SVG directly into HTML
+- **[Data URI](https://en.wikipedia.org/wiki/Data_URI_scheme)**: Embedding images directly into HTML using [Base64 encoding](https://zh.wikipedia.org/zh-tw/Base64)
+- **[Image Sprite](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Images/Implementing_image_sprites_in_CSS)**: Combining multiple images into a single image to save external requests
+- **Icon Fonts**: Creating multiple images as fonts
+
+These methods have their pros and cons, and since they are an additional topic, this article will not delve into them.
+
+```html
+<!-- External image -->
+<img src="orange-cat.svg" alt="An orange cat" />
+
+<!-- Inline SVG -->
+<svg>
+  <!-- Add SVG Title for image description -->
+  <title>An orange cat</title>
+  <!-- ... -->
+</svg>
+
+<!-- Data URI -->
+<img
+  src="data:image/png;base64,iVBORw0KGgoAAA
+ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
+//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
+5ErkJggg=="
+  alt="Red dot"
+/>
+```
+
+## Using `background-image`
+
+> Only suitable for loading "non-essential decorative background images"!
+
+There is nothing wrong with using `background-image`; it is just meant for a specific use case. Misuse can lead to the following troublesome issues:
+
+### Pay Attention to SEO
+
+As a decorative background image, `background-image` will not be indexed by search engines. If you want the image to be detected by search engines, you should use `<img>` and provide a good `alt` description.
+
+### Pay Attention to Accessibility
+
+In addition to search engine issues, [screen readers](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8) will completely ignore `background-image`. If the image has meaning beyond mere decoration, it should not be set as a background image.
+
+### Pay Attention to Performance and Loading Order
+
+Typically, background images are rarely replaced based on device size and pixel density. Although you can use [`Media Queries`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Media_Queries/Using_media_queries) and [`image-set`](https://developer.mozilla.org/en-US/docs/Web/CSS/image/image-set):
+
+```css
+// Replace with appropriate image at 768px
+.hero {
+  background-image: url('/image.png');
+}
+@media only screen and (min-width: 768px) {
+  .hero {
+    background-image: url('/image-768.png');
+  }
+}
+
+// Replace with appropriate image at 1268px
+@media only screen and (min-width: 1268px) {
+  .hero {
+    background-image: url('/image-1268.png');
+  }
+}
+
+.hero {
+  background-image: image-set(url('/image-1x.png') 1x, url('/image-2x.png') 2x);
+}
+```
+
+However, aside from being quite lengthy, many requirements cannot be met, such as providing different image formats as fallback options, lazy loading, loading order, etc.
+
+![Comparison of image loading order](./loading-order.webp 'Load HTML > Load CSS > Load Image')
+
+In the case of external styles, it also leads to needing to wait for the CSS to finish downloading before parsing begins, which can affect image loading speed compared to using `<img>` to introduce images. You need to use inline styles, [preload](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered) images, [preconnect](https://developer.chrome.com/zh/docs/lighthouse/performance/uses-rel-preconnect/) and other methods to avoid this issue.
+
+## Usage of `<img>`
+
+> The most common way to add images to a webpage. This element is suitable for most situations, but attention must be paid to the details of its attributes.
+
+### Writing Alternative Description `alt` Attribute
+
+If you care about SEO, you should add a well-described `alt` for each image and develop the habit of clearly describing the images whenever possible!
+
+Below is a very obvious picture of an orange cat, but if a [screen reader](https://zh.wikipedia.org/zh-tw/%E8%9E%A2%E5%B9%95%E9%96%B1%E8%AE%80%E5%99%A8) or search engines and web crawlers want to understand the content of the website's images, they will encounter unreadable issues. To solve this situation, it is **essential** to add an `alt` attribute to every `<img>`.
+
+![An orange cat sleeping in the sun on the sidewalk](./sleeping-orange-cat.webp)
+
+Not writing a good alternative description for images will lead to search engines and some website users being unable to correctly understand the content of the images. You can refer to the "[Google Search Center's recommendations](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw#descriptive-alt-text)" for better descriptions of webpage images.
+
+```html
+<!-- 😟 Bad -->
+<img src="cat.jpg" />
+
+<!-- 😑 Can be better -->
+<img src="cat.jpg" alt="Cat" />
+
+<!-- 😊 Good -->
+<img src="cat.jpg" alt="An orange cat sleeping in the sun on the sidewalk" />
+```
+
+### Proper Lazy Loading
+
+Most browsers now [support native lazy loading](https://caniuse.com/loading-lazy-attr), and you only need to add the `loading=lazy` attribute. Proper use of lazy loading allows images to load only when they are truly needed.
+
+```html
+<img loading="lazy" src="cat.jpg" alt="An orange cat sleeping in the sun on the sidewalk" />
+```
+
+<Info type="warning">
+  Note [not to use this attribute on images at the top of the page (within the visible range after the page
+  loads)](https://web.dev/browser-level-image-lazy-loading/#avoid-lazy-loading-images-that-are-in-the-first-visible-viewport)
+  to ensure that images can be loaded as early as possible.
+</Info>
+
+### Loading Appropriate Sized Images with `src-set` and `sizes`
+
+You can additionally use the `src-set` attribute to load appropriately sized images on the webpage. For example, when an image is displayed on high-resolution devices, a larger image should be used, while a smaller image can be used on low-resolution devices.
+
+{/* prettier-ignore */}
+```html
+<img
+  srcset="
+  /image.png?width=100 100w,
+  /image.png?width=200 200w,
+  /image.png?width=400 400w,
+  /image.png?width=800 800w"
+/>
+```
+
+In the above example, when the device width is `100px`, the `100w` image will be used; when the device width is `200px`, the `200w` image will be used, and so on. Not only "device size," but also "pixel density" will be taken into account. For example, the `100w` image will be used at `200px` under a `2x` pixel density.
+
+<Info type="warning">
+Be careful not to use this attribute for "artistic presentation" purposes. The images must come from the same source but be of different sizes. If there is a need for "artistic presentation," you can use [`<picture>`](http://127.0.0.1:3000/post/all-you-need-to-know-about-optimal-images#%E6%8F%90%E4%BE%9B%E8%97%9D%E8%A1%93%E6%96%B9%E5%90%91%E7%9A%84%E5%9C%96%E7%89%87%E6%9B%BF%E6%8F%9B) to achieve that.
+</Info>
+
+<Info type="warning">
+  Browsers will default to all images set with `srcset` occupying the entire window range, which is `100vw`. You must
+  know the size at which the image will be displayed on the page to determine which image is most suitable for this
+  scenario. This information about how large the image will be in a certain state can be indicated using the `sizes`
+  attribute.
+</Info>
+
+`sizes` consists of a media condition and size value, separated by commas, and its main function is to **let the browser know what size the image will need to be displayed at different device sizes**. For example:
+
+```html
+<img
+  srcset=""
+  sizes="
+(max-width: 400px) 200px,
+(max-width: 800px) 100vw,
+50vw"
+/>
+```
+
+Taking the above example, the browser knows that the image will be `200px` when below `400px`, `100vw` when between `400px` and `800px`, and `50vw` when above `800px`; assuming the current device size is `900px`, the image will be `50vw * 900px = 450px` in size, and if the pixel density is `2x`, it will be `450px * 2 = 900px`.
+
+Manually calculating these dimensions is really tedious 😅, so you can use the [Responsive Image Breakpoints Generator](https://www.responsivebreakpoints.com/) to calculate automatically, or use [RespImageLint](https://ausi.github.io/respimagelint/) for automated checks of whether the image's `srcset` and `sizes` are correct.
+
+### Provide Clear Image Aspect Ratio
+
+To avoid [layout shifts](https://web.dev/i18n/en/cls/), it's best to provide the width and height of the image along with it so the browser knows in advance how much space to reserve for the image:
+
+```html
+<img width="600" height="400" />
+```
+
+Or use the CSS property `aspect-ratio` to indicate the aspect ratio of the image:
+
+```html
+<img style="aspect-ratio: 4 / 6" ; width="100%" />
+```
+
+### Asynchronous Image Decoding
+
+Additionally, there is the `decoding="async"` attribute, which allows the browser to move the image decoding work off the main thread. It is recommended to [use it for off-screen images](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/decoding#usage_notes).
+
+```html
+<img decoding="async" />
+```
+
+### Prioritize Image Resource Loading
+
+You can also manually adjust the importance of image fetching, allowing the browser to load truly important images first, such as [LCP images](https://web.dev/i18n/en/optimize-lcp/).
+
+```html
+<img fetchpriority="high" />
+```
+
+Or lower the fetching priority, for example, for the later pages of a homepage carousel:
+
+```html
+<div class="carousel">
+  <img fetchpriority="high" />
+  <img fetchpriority="low" />
+  <img fetchpriority="low" />
+</div>
+```
+
+## Usage of `<picture>`
+
+### Provide Alternative Images
+
+For example, if you want to use the `.webp` format instead of the current `.png`, but not every user's browser supports it, you can use `<picture>` to provide an alternative image format:
+
+```html
+<picture>
+  <source srcset="image.webp" type="image/webp" />
+  <img src="image.png" alt="Description" />
+</picture>
+```
+
+This means that if the format is supported, the content of the `<source>` will be used; if not, it will fall back to the `<img>` for display.
+
+### Provide Artistic Image Replacement
+
+Artistic presentation refers to using different images at different device sizes, for example, using one image on a desktop and a different one on a mobile device. A more practical example is that you can use `<picture>` to display a full logo when there is enough space, but use a simplified small logo when space is limited.
+
+```html
+<picture>
+  <!-- Use large image on large screens -->
+  <source media="(max-width: 767px)" srcset="small-logo.png" />
+  <!-- Use small image on small screens -->
+  <source media="(max-width: 480px)" srcset="tiny-logo.png" />
+  <!-- Fallback option -->
+  <img src="fallback-logo.png" alt="Logo" />
+</picture>
+```
+
+<Info type="warning">
+The fallback `<img>` must exist within the `<picture>` and after all `<source>` elements.
+</Info>
+
+## Summary
+
+My experience is that optimization should be done specifically when website performance issues arise; usually, clear alternative text and image size attributes are sufficient.
+
+- Use `<picture>` if you want to display different images based on artistic presentation for different device sizes.
+- Use `<picture>` if you want to provide alternative image formats.
+- For unimportant background images, you can use `background-image`.
+- Use `srcset` to provide images for different device sizes, and use `sizes` to specify the size of images for different device sizes.
+- Use `width` and `height` or `aspect-ratio` to provide the aspect ratio of images.
+- Use `alt` to provide alternative text for images.
+- Use the `loading` attribute to lazy-load images.
+- Use the `fetchpriority` attribute to prioritize image resource loading.
+- Use the `decoding` attribute to allow the browser to move image decoding work off the main thread.
+
+## References
+
+- [The CSS background-image property as an anti-pattern](https://nystudio107.com/blog/the-css-background-image-property-as-an-anti-pattern)
+- [Optimal Images in HTML - Builder.io](https://www.builder.io/blog/fast-images)

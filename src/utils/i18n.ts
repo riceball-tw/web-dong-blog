@@ -43,6 +43,11 @@ export function stripLanguageCode(str: string) {
   return str.replace(/^[a-z]{2}(-[a-z]{2})?\//i, '');
 }
 
+export function getLanguageCode(str: string): string | null {
+  const match = str.match(/^[a-z]{2}(-[a-z]{2})?\//i);
+  return match ? match[0].slice(0, -1) : null;
+}
+
 export function removeLanguagePrefix(path: string, languagePrefixes: string[]): string {
   const prefixRegex = new RegExp(`^/(${languagePrefixes.join('|')})`);
   return path.replace(prefixRegex, '').replace(/^\/+/, '');
@@ -106,4 +111,10 @@ export function translateCategory(categoryKey: string, currentLocale?: LanguageK
     },
   };
   return (currentLocale && categoryTranslationMap[currentLocale]?.[categoryKey]) || categoryKey;
+}
+
+// Get Locale code from slug
+export function getLocaleCode(str: string) {
+  const match = str.match(/^[a-z]{2}(-[a-z]{2})?/i);
+  return match ? match[0] : null;
 }
