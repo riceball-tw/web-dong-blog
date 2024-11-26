@@ -21,6 +21,7 @@ ci:
       non-composited-animations: 'warn'
       offscreen-images: 'warn' # Optional Optimization
       bf-cache: 'warn' # Optional Optimization
+      uses-rel-preconnect: 'warn' # Optional Optimization
 
   upload:
     target: 'temporary-public-storage'

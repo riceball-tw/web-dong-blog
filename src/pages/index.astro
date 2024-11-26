@@ -7,16 +7,16 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import uniqolor from 'uniqolor';
 import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
-import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { localeParams, translateCategory, type LanguageKey , defaultLocale} from '@/utils/i18n.ts';
+import { stripLanguageCode, localeParams, translateCategory, type LanguageKey , defaultLocale} from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
   type: category,
-  posts: publishedPosts
+  posts: dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey)
     .filter((post) => post.data.category === category)
     .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
 }));
@@ -76,7 +76,7 @@ export async function getStaticPaths() {
       <div class="flex flex-wrap gap-4">
         <SpotlightCardsGallery minCardWidth={700}>
           {
-            categoriesLists.map((categoriesList) => (
+            categoriesLists.map((categoriesList) => categoriesList.posts.length ? (
               <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
                 <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
                   <h2
@@ -109,7 +109,7 @@ export async function getStaticPaths() {
                           <a
                             data-astro-prefetch
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(post.slug)}/`)}
                           >
                             {post.data.headline}
                           </a>
@@ -118,7 +118,7 @@ export async function getStaticPaths() {
                   )}
                 </ul>
               </SpotlightCard>
-            ))
+            ) : null)
           }
         </SpotlightCardsGallery>
       </div>
