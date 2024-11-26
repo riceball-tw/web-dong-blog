@@ -8,11 +8,5 @@ declare namespace Cypress {
      * @example cy.dataCy('submit-button')
      */
     dataCy(value: string): Chainable<JQuery<HTMLElement>>;
-
-    /**
-     * Check if element is scrolled to the viewport
-     * @example cy.dataCy('submit-button').isScrolledTo()
-     */
-    isScrolledTo(value: string): Chainable<JQuery<HTMLElement>>;
   }
 }
