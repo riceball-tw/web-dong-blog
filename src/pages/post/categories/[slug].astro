@@ -5,13 +5,13 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
-import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { translateCategory, type LanguageKey , defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
-  return sortedPostCategoryies.flatMap((category) => [{ params: { slug: category }, props: { posts: publishedPosts, categories: sortedPostCategoryies } }]);
+  return sortedPostCategoryies.flatMap((category) => [{ params: { slug: category }, props: { posts: dateSortedLocaleRelatedPosts(defaultLocale), categories: sortedPostCategoryies } }]);
 }
 
 const { slug } = Astro.params;
@@ -40,22 +40,25 @@ const avaliableCurrentCategoryPosts = posts
     </Fragment>
   </Hero>
   <Container>
-    <SpotlightCardsGallery>
-      {
-        avaliableCurrentCategoryPosts.map((post) => {
-          const { data } = post 
-          return (
-            <SpotlightPostCard
-              post={{
-                categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
-                tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
-                slug: post.slug,
-                ...data,
-              }}
-            />
-          )
-        })
-      }
-    </SpotlightCardsGallery>
+    {
+      avaliableCurrentCategoryPosts.length ? <SpotlightCardsGallery>
+        {avaliableCurrentCategoryPosts.map((post) => {
+        const { data } = post 
+        return (
+          <SpotlightPostCard
+            post={{
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
+              slug: post.slug,
+              ...data,
+            }}
+          />
+        )
+      })}
+      </SpotlightCardsGallery> : 
+      <div class="text-center">
+        <p class="text-2xl">{m.lofty_new_gazelle_cut()}</p>
+      </div>
+    }
   </Container>
 </BlogBase>

@@ -5,13 +5,13 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
-import { sortedPostTags, publishedPosts } from '@/utils/getPosts.ts'
+import { sortedPostTags, dateSortedLocaleRelatedPosts } from '@/utils/getPosts.ts'
 import { defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 export async function getStaticPaths() {
-  return sortedPostTags.flatMap((tag) => [{ params: { slug: tag }, props: { posts: publishedPosts, tags: sortedPostTags } }]);
+  return sortedPostTags.flatMap((tag) => [{ params: { slug: tag }, props: { posts: dateSortedLocaleRelatedPosts(defaultLocale), tags: sortedPostTags } }]);
 }
 
 const { slug } = Astro.params;
@@ -36,7 +36,8 @@ const avaliableCurrentTagPosts = posts
     <Fragment slot="headline">{m.late_nice_flea_gasp()+slug}</Fragment>
   </Hero>
   <Container>
-    <SpotlightCardsGallery>
+    {
+      avaliableCurrentTagPosts.length ? <SpotlightCardsGallery>
       {
         avaliableCurrentTagPosts.map((post) => {
           const { data } = post 
@@ -52,6 +53,10 @@ const avaliableCurrentTagPosts = posts
           )
         })
       }
-    </SpotlightCardsGallery>
+    </SpotlightCardsGallery> :
+      <div class="text-center">
+        <p class="text-2xl">{m.this_flat_badger_sail()}</p>
+      </div>
+    }
   </Container>
 </BlogBase>

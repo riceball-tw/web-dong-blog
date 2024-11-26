@@ -5,7 +5,7 @@ import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
-import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
+import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { translateCategory, type LanguageKey, languages, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
@@ -13,7 +13,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 export async function getStaticPaths() {
   return sortedPostCategoryies.flatMap((category) => Object.keys(languages).map((language) => ({
       params: { slug: category, language },
-      props: { posts: publishedPosts, categories: sortedPostCategoryies }
+      props: { posts: dateSortedLocaleRelatedPosts(language as LanguageKey), categories: sortedPostCategoryies }
     })));
 }
 
@@ -22,6 +22,7 @@ const { posts, categories } = Astro.props;
 const avaliableCurrentCategoryPosts = posts
   .filter((post) => post.data.category === slug)
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
   
 ---
 
@@ -43,9 +44,9 @@ const avaliableCurrentCategoryPosts = posts
     </Fragment>
   </Hero>
   <Container>
-    <SpotlightCardsGallery>
       {
-        avaliableCurrentCategoryPosts.map((post) => {
+        avaliableCurrentCategoryPosts.length ? <SpotlightCardsGallery>
+          {avaliableCurrentCategoryPosts.map((post) => {
           const { data } = post 
           return (
             <SpotlightPostCard
@@ -57,8 +58,11 @@ const avaliableCurrentCategoryPosts = posts
               }}
             />
           )
-        })
+        })}
+        </SpotlightCardsGallery> : 
+        <div class="text-center">
+          <p class="text-2xl">{m.lofty_new_gazelle_cut()}</p>
+        </div>
       }
-    </SpotlightCardsGallery>
   </Container>
 </BlogBase>
