@@ -1,0 +1,217 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:task-alt-rounded
+  title: 打勾圓圈符號
+subHeadline: Express.js Basic CRUD Todo list
+headline: Express.js 入门造个简单的增删查改待办事项
+excerpt: 近期正在学习后端相关领域，与前端最贴近的框架绝对就是 Express.js 了，很适合目标为全端的工程师。这次实作并不会牵扯到数据库相关的部分，侷限在使用 Express.js 打造一个简单的 in-memory 待办事项后端服务器。
+category: Implementation
+tags:
+  - Express.js
+publishDate: 2024-11-25
+---
+
+## 前言
+
+近期正在学习后端相关领域，与前端最贴近的框架绝对就是 [Express.js](https://expressjs.com/) 了，很适合目标为全端的工程师，因为可以使用单一语言最快接触到两种领域。
+
+![express-fastify-koa-restify-trend](express-fastify-koa-restify-trend.webp 'Express.js 长年下载量最高')
+
+这次实作并不会牵扯到数据库相关的部分，侷限在使用 Express.js 打造一个简单的 in-memory 后端服务器，熟悉一下开设增删查改相关 API。
+
+## 建构最小可运作 Express.js
+
+基本环境 [Node.js](https://nodejs.org/en)、开发编辑器就不多介绍了，先开个新资料夹初始化 NPM 专案并安装 Express.js。
+
+```bash
+# npm 初始化 (-y 为全部采用默认值不再逐一设置)
+$ npm init -y
+# 安装 Express
+$ npm install express
+```
+
+接着只要创建一个新的 `app.js` 撰写 Express.js 相关代码并用 Node.js 执行 (`node app.js`)即可，以下为最小可运作 Express.js。
+
+- req 为 request 惯例缩写
+- res 为 response 惯例缩写
+
+```js
+import express from 'express';
+
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});
+```
+
+我们将 Express 公开在 `3000` 通讯埠上，因此只要打开浏览器到本机的对应位置 `http://localhost:3000/` 就能看到 Hello World 示例。Express 有许多方法可以调用，翻阅官方文件了解更多像是：[app.get()](http://expressjs.com/en/5x/api.html#app.get)、[res.send()](http://expressjs.com/en/5x/api.html#res.send)。
+
+<Info type="info">
+  为了遵循最新语法习惯，这里使用了 ESM 而非 CJS 的引入语法，可以预期 Node 会警告你标示 `"type": "module"` 到
+  `package.json` 当中
+</Info>
+
+## 建构增删查改 API
+
+### 一、规划
+
+Express.js 的 API 非常直观，对应 [HTTP 请求方法](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Methods) 可以到官方文件找同名的方法，可以期望建构一个待办事项我们会需要：
+
+1. `todos` 数据初始化于 Express 开启时
+2. 开设 API 供外部与数据互动
+3. 撰写数据增删查改相关逻辑
+
+```js
+let todos = [
+  // {
+  //   id: 1, (不重复的识别码)
+  //   title: 'Init Todo',
+  //   isCompleted: false,
+  // },
+];
+
+// 获取 Todos
+app.get();
+
+// 新增 Todos
+app.post();
+
+// 修改 Todos
+app.put();
+
+// 删除 Todos
+app.delete();
+```
+
+````markdown
+有一点要留意的是 Express 默认不会解析 `res.body` 为 JSON 格式，我们可以通过 [Middleware](https://expressjs.com/en/guide/using-middleware.html) 来默认处理所有 `res.body` 使用 [express.json](https://expressjs.com/en/4x/api.html#express.json)。
+
+```js
+app.use(express.json());
+```
+````
+
+### 二、实现
+
+剩下就是撰写服务器内部逻辑与数据互动，我习惯独立计算出一个新的 `todos` 再把内容重新指派回去，中途留意一些例外状况像是编辑不存在的 `ID` 需要返回客户端错误。
+
+{/* prettier-ignore */}
+```js
+// Get All Todos
+app.get("/api/todos", (req, res) => {
+  res.json(todos)
+})
+
+// Create Todo
+app.post("/api/todos", (req, res) => {
+  const newTodo = {
+    id: Date.now(),
+    title: req.body.title,
+    isCompleted: false
+  }
+
+  todos = [...todos, newTodo]
+  res.status(201).json(newTodo)
+})
+
+// Edit {id} Todo
+app.put("/api/todos/:id", (req, res) => {
+  const targetId = parseInt(req.params.id)
+  const targetIndex = todos.findIndex(todo => todo.id === targetId);
+  const isTargetTodoExist = targetIndex !== -1
+
+  if (!isTargetTodoExist) {
+    return res.status(404).json({ error: "Todo not found" });
+  }
+
+  const updatedTodo = {
+    ...todos[targetIndex],
+    title: req.body.title ?? targetTodo.title,
+    isCompleted: req.body.isCompleted ?? targetTodo.isCompleted
+  }
+
+  const newTodos = [
+      ...todos.slice(0, targetIndex),
+      updatedTodo,
+      ...todos.slice(targetIndex + 1),
+    ];
+
+  todos = newTodos
+  res.json(updatedTodo)
+})
+
+// Delete {id} Todo
+app.delete("/api/todos/:id", (req, res) => {
+  const targetId = parseInt(req.params.id)
+  const targetIndex = todos.findIndex(todo => todo.id === targetId);
+  const isTargetTodoExist = targetIndex !== -1
+
+  if (!isTargetTodoExist) {
+    return res.status(404).json({ error: "Todo not found" });
+  }
+
+  const newTodos = [
+    ...todos.slice(0, targetIndex),
+    ...todos.slice(targetIndex + 1),
+  ]
+
+  todos = newTodos
+  res.status(204).send();
+})
+```
+
+### 三、检查
+
+热门的 API 检测工具有：[Postman](https://www.postman.com/)、[Hoppscotch](https://hoppscotch.io/)、[Insomnia](https://insomnia.rest/)，可以选一套顺手的进行检测，我偏好 Hoppscotch 并且之前也有写过相关推荐文章：[从图片学习使用 Hoppscotch 来打出 API](https://www.webdong.dev/post/learn-hoppscotch/)。可以创建一个群组将这次项目相关的 API 都储存起来方便管理。
+
+![Hoppscotch API 群組](hoppscotch-apis.webp)
+
+## 补充：CORS 设置
+
+```
+Access to fetch at 'http://localhost:3000/api/todos' from origin 'http://127.0.0.1:5500' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+```
+
+如在前端项目遇到以上 CORS 错误信息可以参考我写过的另一篇文章：[写给网页开发者的 CORS 理解](https://www.webdong.dev/post/cors-for-web-developer/)。
+
+如字面意思来说可以通过替服务器回应设置允许的 `Access-Control-Allow-Origin` 来允许不同通讯埠的网站也能使用该 API，这里我依靠设置 Express.js 一款 Middleware：[cors](https://www.npmjs.com/package/cors) 来解决。
+
+```bash
+$ npm install cors
+```
+
+安装完成后添加该 Middleware 并设置开放 origin 即可：
+
+```js
+app.use(cors({ origin: 'http://127.0.0.1:5500' }));
+```
+
+## 补充：使用 Nodemon 及时重启服务器
+
+如果开发时更动后需要反复的重启服务器很麻烦可以尝试看看 [Nodemon](https://github.com/remy/nodemon#nodemon)。
+
+Nodemon 用来在开发 Node.js 应用程序时自动监测文件变更并重新启动服务器，避免手动停止并重新启动服务器的麻烦。如下添加为 [NPM Script](https://docs.npmjs.com/cli/v8/using-npm/scripts) 以后可以执行 `npm run dev` 就能开启即时更新开发服务器了。
+
+```json
+  "scripts": {
+    "dev": "nodemon app.js"
+  }
+```
+
+## 总结
+
+这次实现项目：[in-memory-todo](https://github.com/riceball-tw/in-memory-todo) 的文件有放上 GitHub，后续额外实现了前端的部分。如果对前端感兴趣可以参考我的另一篇文章：[JavaScript 五个步骤制作代办事项](https://www.webdong.dev/post/javascript-todo-list-exercise/) 基本就是在此基础上接上后端的数据，并更动规避了一些 [XSS](https://www.webdong.dev/post/xss-for-web-developer/) 的隐患。
+
+## 延伸阅读
+
+- [Hello world example - Express](https://expressjs.com/en/starter/hello-world.html)
+- [Create a Todo application with Express.js - postman](https://quickstarts.postman.com/guide/express/index.html?index=..%2F..index#0)
+- [RESTful APIs in 100 Seconds // Build an API from Scratch with Node.js Express - Fireship](https://youtu.be/-MTSQjw5DrM?si=WYRzwjR-_yNPgj5u&t=153)
+- [Learn CORS In 6 Minutes](https://www.youtube.com/watch?v=PNtFSVU-YTI)

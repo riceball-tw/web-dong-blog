@@ -7,6 +7,7 @@ excerpt: '代辦事項是非常常見的習題，其中需求含括了增、刪�
 category: Implementation
 tags: ['簡單題']
 publishDate: 2022-11-15
+lastModifiedDate: 2024-11-26
 ---
 
 ## 前言
@@ -101,6 +102,12 @@ function renderTask(tasks) {
 
 renderTask(tasks);
 ```
+
+<Info type="warning">
+  留意以上使用到 `innerHTML` 直接渲染用戶輸入內容將可能造成 [XSS](https://www.webdong.dev/post/xss-for-web-developer/)
+  問題，最好使用 `appendChild` 等方式[創建好元素再注入 DOM
+  中](https://github.com/riceball-tw/in-memory-todo/blob/7028998945c77e57ea36145a0c9f73c7c25a8c0f/frontend/script.js#L112)
+</Info>
 
 可以特別注意這裡使用了現有的資料作判斷，當「isCompleted 為 true」就為 input 添加打勾否則不打勾。
 
