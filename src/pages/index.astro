@@ -9,7 +9,7 @@ import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import { publishedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { localeParams, translateCategory, type LanguageKey , defaultLocale} from '@/utils/i18n.ts';
+import { stripLanguageCode, localeParams, translateCategory, type LanguageKey , defaultLocale} from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -109,7 +109,7 @@ export async function getStaticPaths() {
                           <a
                             data-astro-prefetch
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${post.slug}/`)}
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(post.slug)}/`)}
                           >
                             {post.data.headline}
                           </a>
