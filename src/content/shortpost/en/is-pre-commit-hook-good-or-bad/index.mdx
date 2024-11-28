@@ -1,0 +1,18 @@
+---
+headline: Are Git Pre-Commit Hooks Good or Bad?
+publishDate: 2024-11-28
+category: Non-Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DC4ODu3hemB
+---
+
+Thinking of Theo's video: [Pre-Commit Hooks Are Bad](https://www.youtube.com/watch?v=RAelLqnnOp0), there are some debates in the comments. In short, Git can trigger actions during a commit, usually used to run some CI checks. This seems like a good opportunity to intercept errors before they enter the version control system, but it can also become a barrier.
+
+- ✅ Positive:
+  - **Early Detection of Errors**: Checks can be performed before the code enters version control, avoiding low-quality or bad code, reducing wasted time during Code Review.
+  - **Reduced CI Pressure**: Developers can detect and warn about errors locally.
+- ❌ Negative:
+  - **Over-reliance on Local Environment**: The execution of hooks depends on the developer's local environment; if the environment is not correctly configured, it may lead to inconsistent behavior.
+  - **Impact on Developer Flexibility**: Interferes with developers' ability to experiment quickly locally, forcing the committed code to meet certain standards.
+
+In the past, I encountered project Pre-Commit Hooks that always took about 5 or 6 seconds to run. While still acceptable, waiting for checks during frequent commits can be quite annoying. I tend to prefer CI checks and follow team's habit.
