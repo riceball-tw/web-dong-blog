@@ -111,9 +111,14 @@ app.get("/api/todos", (req, res) => {
 
 // Create Todo
 app.post("/api/todos", (req, res) => {
+  const { title } = req.body;
+  if (!title || title.trim() === "") {
+    return res.status(400).json({ error: "Title is required and cannot be empty." });
+  }
+
   const newTodo = {
-    id: Date.now(),
-    title: req.body.title,
+    id: Date.now().toString(),
+    title,
     isCompleted: false
   }
 
@@ -123,7 +128,7 @@ app.post("/api/todos", (req, res) => {
 
 // Edit {id} Todo
 app.put("/api/todos/:id", (req, res) => {
-  const targetId = parseInt(req.params.id)
+  const targetId = req.params.id
   const targetIndex = todos.findIndex(todo => todo.id === targetId);
   const isTargetTodoExist = targetIndex !== -1
 
@@ -133,8 +138,8 @@ app.put("/api/todos/:id", (req, res) => {
 
   const updatedTodo = {
     ...todos[targetIndex],
-    title: req.body.title ?? targetTodo.title,
-    isCompleted: req.body.isCompleted ?? targetTodo.isCompleted
+    title: req.body.title ?? todos[targetIndex].title,
+    isCompleted: req.body.isCompleted ?? todos[targetIndex].isCompleted
   }
 
   const newTodos = [
@@ -149,7 +154,7 @@ app.put("/api/todos/:id", (req, res) => {
 
 // Delete {id} Todo
 app.delete("/api/todos/:id", (req, res) => {
-  const targetId = parseInt(req.params.id)
+  const targetId = req.params.id
   const targetIndex = todos.findIndex(todo => todo.id === targetId);
   const isTargetTodoExist = targetIndex !== -1
 
@@ -165,6 +170,7 @@ app.delete("/api/todos/:id", (req, res) => {
   todos = newTodos
   res.status(204).send();
 })
+
 ```
 
 ### 三、检查
