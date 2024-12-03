@@ -1,0 +1,121 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:manage-search-rounded
+  title: 文字片段与放大镜符号
+subHeadline: Build a Searchbar Using JavaScript in Five Steps
+headline: JavaScript 五个步骤制作搜寻功能
+excerpt: 搜寻列是普遍输入资料于 HTML 中最常用的方式之一，让我们学会如何使用它。本篇文章将会练习从无到有包含介面制作一个搜寻框，可以输入结果并比对现有资料显示关联的内容，是一个非常适合 JavaScript 新手的一道实用练习题目。
+category: JavaScript
+tags:
+  - beginner
+publishDate: 2023-02-06
+---
+
+## 前言
+
+<Info type="info">本篇文章将会练习制作一个搜寻框，可以输入结果并比对现有资料显示关联的内容</Info>
+
+## 解题
+
+### 第一步：制作界面
+
+先定义一个 `<div>`，并且在里面放置一个标题、一个搜索表单、一个用来放置搜索结果的列表。
+
+```html
+<div>
+  <!-- 标题 -->
+  <h1>Book Finder</h1>
+  <!-- 搜索表单 -->
+  <form data-bookfinder-form>
+    <input name="search" type="text" placeholder="请输入搜索内容……" />
+    <button type="submit">提交</button>
+  </form>
+  <!-- 搜索结果 -->
+  <ul data-books></ul>
+</div>
+```
+
+### 第二步：定义数据
+
+先定义好一组数据，这里定义一个数组，里面包含许多书籍相关的对象。数据结构可以自行定义，无论是自己定义还是从第三方获取数据都可以。
+
+```javascript
+const books = [
+  {
+    name: '双城记',
+    author: '狄更斯',
+  },
+  {
+    name: '童军警探',
+    author: '贝登堡',
+  },
+  {
+    name: '魔戒',
+    author: '约翰',
+  },
+];
+```
+
+### 第三步：渲染数据到界面
+
+有了数据后，可以专注于如何将现有数据展示到界面上。这里拆分为两个函数，一个用于「生成数据对应的 HTML」，另一个用于「将生成的 HTML 渲染到界面」。这样拆分能让代码更易于阅读、维护和测试。完成后界面上应该就可以看到前面定义的数据了！
+
+```javascript
+function renderBooks(targetHTML) {
+  const bookList = document.querySelector('[data-books]');
+  bookList.innerHTML = targetHTML;
+}
+
+function generateBookHTML(targetBooks) {
+  return targetBooks
+    .map((book) => {
+      return `<li class="bookList__item">${book.name} - <span class="bookList__author">${book.author}</span></li>`;
+    })
+    .join('');
+}
+```
+
+### 第四步：监听表单
+
+前面定义了 `data-bookfinder-form` 这个属性，这里可以使用 `querySelector` 选择该元素，并监听其 `submit` 事件。当用户点击提交按钮时，就可以获取用户输入的值（`e.target.search.value`）。
+
+```javascript
+document.querySelector('[data-bookfinder-form]').addEventListener('submit', (e) => {
+  e.preventDefault();
+  renderBooks(generateBookHTML(booksFilter(e.target.search.value)));
+});
+```
+
+### 第五步：过滤函数
+
+重点在于前面的 booksFilter 函数如何过滤数据。实际上很简单，只需要将表单提交的值与每条现有数据进行对比，如果匹配则返回该条数据，代码如下：
+
+```javascript
+function booksFilter(targetBook, allBooks = books) {
+  return allBooks.filter((book) => {
+    return book.name.includes(targetBook);
+  });
+}
+```
+
+## 结语
+
+从这个简单的练习中，用 JavaScript 提供的现有方法达成一件常见的功能。以下是完整的程式码，可以在 CodePen 上面试试看：
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="QWBoQyb"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/QWBoQyb">Book-Finder</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
