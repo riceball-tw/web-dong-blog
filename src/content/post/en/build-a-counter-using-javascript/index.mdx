@@ -1,0 +1,143 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:exposure-plus-1-rounded
+  title: +1 Icon
+subHeadline: Create a Counter in JavaScript in Five Steps
+headline: Create a Counter in JavaScript in Five Steps
+excerpt: A counter is a basic exercise commonly seen in various frameworks, showcasing minimal functionality of any app. Let's recreate it using native JavaScript.
+category: JavaScript
+tags:
+  - beginner
+publishDate: 2023-02-04
+---
+
+## Introduction
+
+<Info type="info">This article will creating a JavaScript counter with add, subtract, and reset functionalities.</Info>
+
+## Problem Solving
+
+### Step 1: Create the Interface
+
+First, define a `counter` block that displays the current number and contains a container `buttonGroup` with buttons for "subtract, reset, and add."
+
+```html
+<div class="counter">
+  <div id="counterDisplay" class="counter__display"></div>
+  <div id="buttonGroup" class="buttonGroup">
+    <button class="button" id="minus">-</button>
+    <button class="button" id="reset">Reset</button>
+    <button class="button" id="add">+</button>
+  </div>
+</div>
+```
+
+### Step 2: Select Screen Elements
+
+Use the previously defined `id` attributes to select each DOM element (using the [getElementById](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById) method) and store them in variables.
+
+```javascript
+// Select screen elements
+const counterDisplay = document.getElementById('counterDisplay');
+const counterMinusButton = document.getElementById('minus');
+const counterResetButton = document.getElementById('reset');
+const counterAddButton = document.getElementById('add');
+const counterButtons = document.getElementById('buttonGroup');
+```
+
+### Step 3: Render Data on the Screen
+
+Currently, the `counterDisplay` has no content, so we can define a piece of data and render it on the screen; since "rendering data on the screen" is a highly repetitive action, we can isolate it into a function to call when needed.
+
+```javascript
+const counter = 0;
+
+function renderCounter() {
+  counterDisplay.textContent = counter;
+}
+
+renderCounter(counter);
+```
+
+### Step 4: Listen for Events
+
+The data is now correctly displayed on the screen, but the buttons have no functionality yet. The next step is to listen for button click events and execute the corresponding functions upon clicking; use [eventListener](https://developer.mozilla.org/zh-TW/docs/Web/API/EventTarget/addEventListener) to listen for "click" events.
+
+```javascript
+// When the + button is clicked, execute addCounter() function
+counterAddButton.addEventListener('click', (e) => {
+  addCounter();
+});
+
+// When the Reset button is clicked, execute resetCounter() function
+counterResetButton.addEventListener('click', (e) => {
+  resetCounter();
+});
+
+// When the - button is clicked, execute subtractCounter() function
+counterMinusButton.addEventListener('click', (e) => {
+  subtractCounter();
+});
+```
+
+In other words, you can achieve the functionality of three `eventListeners` with a single `eventListener` by checking the id (e.target.id) of the clicked event target and performing the corresponding action based on that.
+
+```javascript
+counterButtons.addEventListener('click', (e) => {
+  if (e.target.id === 'add') {
+    addCounter();
+  } else if (e.target.id === 'reset') {
+    resetCounter();
+  } else if (e.target.id === 'minus') {
+    subtractCounter();
+  }
+});
+```
+
+### Step 5: Manipulating Data
+
+Next, we need to implement the functionality for each button. Here, we define three functions: "add, subtract, and reset."
+
+```javascript
+// Increase the value of counter and re-render the screen
+function addCounter() {
+  counter++;
+  renderCounter(counter);
+}
+
+// Reset the value of counter and re-render the screen
+function resetCounter() {
+  counter = 0;
+  renderCounter(counter);
+}
+
+// Decrease the value of counter and re-render the screen
+function subtractCounter() {
+  counter--;
+  renderCounter(counter);
+}
+```
+
+## Conclusion
+
+From this simple exercise, we have separated data from logic. This separation makes it easier to maintain the code and allows other developers to read and modify it more easily.
+
+This is a simple example, but there are still many things to think about and improve upon, such as: "How can the code be made reusable?" "How can the code be made predictable and testable?" These are all worthwhile questions to consider.
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="XWBxORG"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/XWBxORG">Counter</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
