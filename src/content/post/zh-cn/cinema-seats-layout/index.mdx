@@ -1,0 +1,189 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:airline-seat-recline-extra-rounded
+  title: 一个人坐在座位上符号
+subHeadline: Build a Cinema Seats Layout by using CSS Grid and Form
+headline: CSS Grid 与表单实现电影院座位选位系统
+excerpt: 之前碰到一道有趣的前端 UI 题，发现需要对于前端有较为全面的认知才有办法解出来，并且也可以针对感兴趣的领域延伸提出更更多问题，于是特地纪录一下我的思考解题过程。身为一名前端工程师，你会怎么实作上图的电影院座位选位系统？
+category: CSS
+tags:
+  - Form
+  - Grid
+publishDate: 2024-09-19
+lastModifiedDate: 2024-09-19
+---
+
+## 前言
+
+之前碰到一道有趣的前端 UI 题，发现需要对前端有较为全面的认知才有办法解出来，并且也可以针对感兴趣的领域延伸提出更多问题，于是特地记录一下我的思考解题过程。
+
+## 问题：电影院座位选位系统
+
+![问题示意图](problem-demo.webp '问题示意图')
+
+身为一名前端工程师，你会怎么实现上图的电影院座位选位系统？
+
+- 用户可以单选任意空位使其变换状态为「已选择」
+- 用户无法点击已售出座位
+- 样式自由设计，吻合核心功能即可
+- 请额外制作按钮点击后可以提交已选择座位
+
+预期会碰到哪些技术难题以及会如何解决？
+
+## 解题
+
+这个题目包括了版面布局、用户互动、边界案例处理与后端沟通……等，可说是一个非常综合有广度与深度的题目。
+
+### 第一步：确认清楚需求
+
+原先题目其实只给出了最基础的需求，但在实现之前还是最好多确认有没有可能有额外延伸需求的可能。额外的细节都有可能大幅度影响到最终实现的架构，也能趁机展现你会如何面对实际问题。
+
+- 未来有没有可能需要贩售多个座位，座位变为可被多选？
+- 未来座位有没有可能出现不同状态的座位？例如 VIP 席位、轮椅席位……等
+- 售出的定义是什么？假定结账才算售出，那么选好位子后才发现已经卖出该如何应对？为了避免用户到最后才发现无法购买，是不是需要有更新或验证座位状态的机制？
+- 定义座位格式的数据样貌是如何？
+- 有没有可能有不同种类的座位布局？
+
+### 第二步：版面布局
+
+从网页语义来说，用户提交可以使用表单 `<form>` 元素并且搭配 `<input type="radio">` 来达成样式与状态的管理，预想到各浏览器的表单元素样式都不统一也不好改，我会在视觉上完全隐藏 `<input>` 元素并且通过跟 `<label>` 连动的方式来客制化座位样貌。
+
+```html
+<form>
+  <label class="seat">
+    <input name="seat" type="radio" class="visually-hidden" checked />
+  </label>
+  <label class="seat">
+    <input name="seat" type="radio" class="visually-hidden" disabled />
+  </label>
+  <label class="seat">
+    <input name="seat" type="radio" class="visually-hidden" />
+  </label>
+</form>
+```
+
+```css
+:root {
+  --color-primary: #15964e;
+  --color-disabled: #dddddd;
+  --border-disabled: var(--color-disabled);
+}
+
+.seat {
+  --seat-background: transparent;
+  --seat-border: var(--border-disabled);
+  --seat-border-width: 2px;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--seat-background);
+  border-width: var(--seat-border-width);
+  border-style: solid;
+  border-color: var(--seat-border);
+  border-radius: calc(infinity * 1px);
+}
+
+.seat:has(input[type='radio']) {
+  cursor: pointer;
+}
+
+.seat-active,
+.seat:has(input[type='radio']:checked) {
+  --seat-background: var(--color-primary);
+  --seat-border: var(--color-primary);
+  cursor: auto;
+}
+
+.seat-disabled,
+.seat:has(input[type='radio']:disabled) {
+  --seat-background: var(--color-disabled);
+  --seat-border: var(--color-disabled);
+  cursor: auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+```
+
+就网页版面布局来说，理论上大多电影院座位群组都是矩形的，所以可以考虑使用 CSS Grid 来排版，这么做可以更方便地控制座位群组间的尺寸以及留白。
+
+如下范例，可以根据需求先制作出自定义中间与两侧两种排版方式，并使用变量统一管理间距，如果有扩展的需求也可以动态动态生成对应样式与模板。
+
+```html
+<form id="seat-form" class="seats">
+  <div class="seats-side"></div>
+  <div class="seats-center"></div>
+  <div class="seats-side"></div>
+</form>
+```
+
+```css
+.seats {
+  --seats-gap: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.seats-center {
+  height: 100%;
+  display: grid;
+  gap: var(--seats-gap);
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.seats-side {
+  height: 100%;
+  display: grid;
+  gap: var(--seats-gap);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+```
+
+### 第三步：资料
+
+每个座位的资料目前看起来需要储存三种状态：空位、已选择、已售出，我的策略是预设所有的座位都是空位状态（最常见的状态）并且有需要时用资料去记录座位的坐标与状态，这样可以在更新资料时少传输不必要的资料。
+
+目前是使用 [Map](/post/javascript-maps/) 来储存座位资料，单纯因为它具备简洁的 API 并且可以快速直觉的查找资料状态，用对象也会是不错的选择，如下范例：
+
+```js
+const seats = new Map([
+  ['center-1', { isUnavailable: true }],
+  ['right-1', { isUnavailable: true }],
+  ['left-1', { isUnavailable: true }],
+]);
+```
+
+用区块作为坐标是一种方式，不过事后我想或许用 xy 轴作为坐标可能会更贴近真实，毕竟电影院座位通常都是用二维坐标来表示具体座位的，也许可以通过座位数量 + 区块数量 + 间隔距离等资料生成一个大网格，并且每个座位赋予对应的 xy 值使其显示在特定区域。
+
+保持座位的实时更新也很关键，我会想到或许使用 [Long polling](https://javascript.info/long-polling) 或者是 [WebSocket](https://javascript.info/websocket) 来和服务器保持连线，这样可以在座位状态有变动时及时更新座位状态。
+
+## 总结
+
+经过以上的思考过程我很快的通过 Vue 实践出一个简单的电影院座位选位系统，最终用什么技术来实践其实不是太重要，重点是通过熟悉的框架可以很快的让我把想法实践出来，着重在应对商业需求快速得到结果并获得反馈。
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="NWZQwWr"
+  data-pen-title="seat-map-2"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/NWZQwWr">seat-map-2</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
