@@ -1,0 +1,50 @@
+---
+isDraft: false
+icon: 
+  name: material-symbols:image-outline-rounded
+  title: 图片符号
+subHeadline: 我可以把图片放在标题里面吗？
+headline: 我可以把图片放在标题里面吗？
+excerpt: 有时候为了装饰用途会需要用图片来显示标题，于是我开始思考“把图片放在标题里面”是不是和规的 HTML？是不是一个好的作法？主要查阅了 Google Search Central 的回应以及 MDN 文件，结论是和规的，以及有更多可以留意的细节。
+category: SEO
+tags:
+  - Image
+publishDate: 2023-06-08
+---
+
+## 是否合规？
+
+> 将图片放在标题内是合规的语法
+
+经过搜索资料与测试(使用 [W3C Markup Validation Service](https://validator.w3.org/))，结论是把图片放在标题里面是 100% 合规的语法，标题标签可以接受行内元素，而 `<img>` 就是行内元素，因此它可以被放置于标题标签之内。
+
+## 是否是好的作法？
+
+> 虽然网络上有很多争议，但 Google Search Central 回应是：“[这是个好作法](https://youtu.be/fBLvn_WkDJ4?t=29)！”
+
+也就是说以下的写法是可行而且是好的作法：
+
+```html
+<!-- 😀 Good -->
+<h1>
+  <a href="/">
+    <img src="logo.svg" alt="A 公司的 LOGO" />
+  </a>
+</h1>
+
+<h2>
+  <img src="cat-with-sign.webp" alt="一只猫咪抱着一块牌子上面写「领养资讯」" />
+</h2>
+```
+
+由于图片的 `alt` 属性撰写上实际上有一些 [建议的撰写方式](https://developers.google.com/search/docs/appearance/google-images?hl=zh-tw#descriptive-alt-text) 因此我能想象得到如果把装饰图片与标题分离，并用 CSS 隐藏标题文字在该情境下也会是一个不错的选择，举例来说 Bootstrap 有 [visually-hidden](https://getbootstrap.com/docs/5.3/helpers/visually-hidden/) 而 Tailwind 有 [sr-only](https://tailwindcss.com/docs/screen-readers) 让文字在视觉上不会显示，但语义上是存在的。
+
+```html
+<h2 class="visually-hidden">领养资讯</h2>
+<img src="cat-with-sign.webp" alt="一只猫咪抱着一块牌子上面写「领养资讯」" />
+```
+
+## 参考资料
+
+- [Can we place `<img>` inside `<h1>` according to web standards? - Stack Overflow](https://stackoverflow.com/questions/1605454/can-we-place-img-inside-h1-according-to-web-standards)
+
