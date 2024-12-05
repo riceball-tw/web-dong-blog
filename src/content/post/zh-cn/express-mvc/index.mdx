@@ -1,0 +1,166 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:responsive-layout-outline-rounded
+  title: 重叠的抽象几何线条符号
+subHeadline: Building Express.js project by Utilizing MVC Pattern
+headline: Express.js 入门构建 MVC 示例
+excerpt: Express 提供便捷优雅的API 让我们接收请求经过处理后回应，但会发现随着规模庞大起来路径、商业逻辑、资料……等代码都塞在一个 app.js 实在不是一个好做法，于是这篇文章介绍使用MVC 架构替代码进行用途上的切割，以方便维护。
+category: Express.js
+tags:
+  - MVC
+publishDate: 2024-11-29
+---
+
+## 前言
+
+延续上一篇 Express.js 入门文章：[Express.js 入门造个简单的增删查改待办事项](/zh-cn/post/expressjs-basic-crud-todolist/) 中 Express 提供便捷优雅的 API 让我们接收请求经过处理后回应，但随着规模增大，路径、商业逻辑、数据……等代码都塞在一个 `app.js` 实在不是好做法，本文介绍使用 MVC 架构进行代码切割，方便维护。
+
+## 什么是 <abbr title="Model–view–controller">MVC</abbr>
+
+MVC（[Model-View-Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)）是一种广泛应用的开发架构模式，将应用程序的逻辑分为三个主要部分：
+
+- Model（模型）：**负责处理与数据相关逻辑**。管理应用程序数据业务逻辑，并且和数据库进行交互。
+- View（视图）：**负责显示数据**，管理数据展示，通常不会进行任何业务逻辑处理。它的作用是将从 Model 获取的数据以适当的格式呈现出来。
+- Controller（控制器）：**负责处理用户的请求并且决定如何回应**。管理 Model 和 View，接收来自 View 的请求，并通过 Model 进行处理，然后再将结果返回给 View。简单来说，Controller 控制了数据的流动，并负责应用程序的商业逻辑。
+
+通过这种方式，MVC 架构能够实现代码的清晰分离，使得不同部分的功能更加专注且可独立维护。这样一来，开发人员可以更轻松地进行开发、测试和维护，尤其是在应用程序规模变大时。
+
+![MVC Express](mvc_express.png 'MVC Express')
+
+<Info type="warning">
+  由于本范例采取前后端分离且只关注后端部分，所以不会实现 View 的部分。View 的角色可能由前端框架（如
+  React）或模板引擎（如 EJS）承担，并非在此文范围内讨论。
+</Info>
+
+## 了解现有问题
+
+举例现有的 `app.js` 当中：「根据 ID 编辑 Todo 代码片段」，会发现所有逻辑是参杂在一起的，像是未来与路径(Route)、商业逻辑(Controller)、DB 沟通(Model)……等，我们是否能依照 MVC 模式为参考**拆解出不同职责的代码方便未来管理**呢？
+
+{/* prettier-ignore */}
+```js {"Route":2} {"Controller":3-9} {"Model":11-23} {"Controller":24-24}
+          // Edit {id} Todo
+          app.put("/api/todos/:id", (req, res) => {
+            const targetId = req.params.id
+            const targetIndex = todos.findIndex(todo => todo.id === targetId);
+            const isTargetTodoExist = targetIndex !== -1
+
+            if (!isTargetTodoExist) {
+              return res.status(404).json({ error: "Todo not found" });
+            }
+
+            const updatedTodo = {
+              ...todos[targetIndex],
+              title: req.body.title ?? todos[targetIndex].title,
+              isCompleted: req.body.isCompleted ?? todos[targetIndex].isCompleted
+            }
+
+            const newTodos = [
+                ...todos.slice(0, targetIndex),
+                updatedTodo,
+                ...todos.slice(targetIndex + 1),
+              ];
+
+            todos = newTodos
+            res.json(updatedTodo)
+          })
+```
+
+### 一、划分不同职责代码档案
+
+举例一个待办事项的 API 个别用资料夹分隔管理不同职责的代码，命名没有一定，也有的人会命名成 `todos.model.js`、`todos.controller.js` 的模式，方便区分用途即可：
+
+```
+.
+├── routes/
+│   └── todos.js
+├── models/
+│   └── todos.js
+├── controllers/
+│   └── todos.js
+└── app.js
+```
+
+### 二、Routes
+
+```js title="app.js"
+import todoRouter from './routes/todos.js';
+
+app.use('/api/todos', todoRouter);
+```
+
+并且在最初 `app.js` 注册 `routes/todos.js` 相关的路径 [Middleware](https://expressjs.com/en/guide/using-middleware.html)，具体来说使用 [express.Router](http://expressjs.com/en/guide/routing.html#express-router)，如此一来所有 `todoRouter` 都会前缀 `/api/todos` 路径。
+
+```js title="routes/todos.js"
+import todoController from '../controllers/todos.js';
+
+const router = express.Router();
+
+// Edit {id} Todo
+router.put('/:id', todoController.editTodo); // /api/todos/:id
+
+export default router;
+```
+
+### 三、Controllers
+
+简单输出一个包含 `editTodo` 方法的对象可被调用：
+
+{/* prettier-ignore */}
+```js title="controllers/todos.js"
+import todoModel from '../models/todos.js';
+
+export default {
+  editTodo: (req, res) => {
+    const targetId = req.params.id;
+    const updatedTodo = todoModel.edit(targetId, {
+      title: req.body.title,
+      isCompleted: req.body.isCompleted,
+    });
+    if (!updatedTodo) {
+      return res.status(404).json({ error: 'Todo not found' });
+    }
+    return res.status(200).json(updatedTodo);
+  },
+};
+```
+
+### 四、Models
+
+简单输出一个包含 `edit` 方法的对象可被调用，并且主要与数据库进行互动（此范例没有用到数据库，以程序执行内变量为例）：
+
+```js title="models/todos.js"
+let todos = [];
+
+export default {
+  edit: (id, newTodo) => {
+    const targetIndex = todos.findIndex((todo) => todo.id === id);
+    const isTargetTodoExist = targetIndex !== -1;
+    if (!isTargetTodoExist) return null;
+    const updatedTodo = {
+      ...todos[targetIndex],
+      title: newTodo.title ?? todos[targetIndex].title,
+      isCompleted: newTodo.isCompleted ?? todos[targetIndex].isCompleted,
+    };
+    const newTodos = [...todos.slice(0, targetIndex), updatedTodo, ...todos.slice(targetIndex + 1)];
+    todos = newTodos;
+    return updatedTodo;
+  },
+};
+```
+
+## 总结
+
+通过本文范例，我们将一个集中式的 Express 应用程序重构为遵循 MVC 架构的模块化设计，清晰地划分了数据层（Model）、业务逻辑层（Controller）、与路由层（Route）之间的责任。这样的设计不仅提升了代码的可读性和可维护性，还为团队协作和项目扩展奠定了良好的基础。
+
+- **单一职责**：每个模块专注于完成其特定的功能，避免了代码混杂问题。
+- **易于测试**：每层模块都可以被单独测试，降低了测试的复杂性。
+- **模块化开发**：团队成员可以独立开发 Model、Controller 或 Route，提升开发效率。
+- **良好的扩展性**：随着应用程序规模增长，MVC 结构使得新增功能和优化更加直观和可控。
+
+虽然这是适合初学者的简化范例，但在实际项目中，还可能需考虑数据验证、安全性、错误处理以及多层架构（如服务层）的设计。
+
+## 延伸阅读
+
+- [27 分钟示范 MVC 架构｜六角学院｜ 2023 铁人赛 #3 - 六角学院 Hexschool](https://www.youtube.com/watch?v=kgcoikKc-74)
+- [Project structure for an Express REST API when there is no "standard way" - Corey Cleary](https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way)
