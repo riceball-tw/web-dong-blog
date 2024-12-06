@@ -1,0 +1,137 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:text-select-move-forward-word-outline-rounded
+  title: Box Size Change Symbol
+subHeadline: Rethink RWD through CSS Container Queries
+headline: Rethink RWD through CSS Container Queries
+excerpt: I first heard the term CSS Container Queries a year or two ago. As web evolves, this technology will be a key piece for future RWD web development.
+category: CSS
+tags:
+  - RWD
+publishDate: 2024-05-26
+lastModifiedDate: 2024-05-26
+---
+
+## Introduction
+
+I first heard the term [CSS Container Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries) a year or two ago. As web evolves, I am increasingly convinced that this technology will be an important piece for future Responsive web design. This article will introduce the shortcomings of existing [Media Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries) and the advantages of the new solution.
+
+## Differences between Media Queries and Container Queries
+
+When it comes to RWD, Media Queries usually come to mind. Both old and new properties provide different solutions typically used to address **"style switching of UI fragments on different device sizes."** For example, the thinking behind writing RWD using Media Queries is:
+
+> Use style `y` when the current device size is `x`.
+
+- I want to collapse the menu on small devices and expand (hide) it on large devices.
+- I want to display 1 column on small devices but 3 columns on large devices (change layout).
+
+Noted that the focus is on **observing changes in device size and applying different styles**. This method of creating RWD web pages has accompanied us for a long time, but what if we want the style change to occur on specific web elements? Relying solely on device size to change styles becomes insufficiently flexible.
+
+With the development of web componentization, we tend to [build web components that flexibly adapt to various device sizes rather than emphasizing specific designs for specific devices as in early AWD](https://www.webdong.dev/post/how-many-breakpoint-should-you-use/#awd-%E8%88%87-rwd-%E7%9A%84%E5%87%BA%E7%99%BC%E9%BB%9E%E4%B8%8D%E5%90%8C). This is also why, despite having Media Queries, there is still a need to introduce Container Queries—**"observing changes in specific web elements and applying different styles,"** which means:
+
+> Element `x` uses style `z` when at size `y`.
+
+## How to Use Container Queries
+
+With Container Queries, developers can truly define styles for individual web elements. It provides greater flexibility to choose which element size to observe and apply styles when conditions are met.
+
+First, you need to define a non-`inline` element as a "container." By default, no element is a container, allowing you to control which element is the "container."
+
+<Info type="info">
+  Container queries require a container element that can determine its size, and `inline` elements cannot independently
+  determine size, making them unsuitable for container query applications. Typically, container queries are applied to
+  `block-level` elements or other elements that can determine size.
+</Info>
+
+### `inline-size` vs `size`
+
+When you define a container context, you will use the `container-type` property and give it a value of `inline-size` or `size`. The default value of this property is `normal`, and it can also be set to cancel the container when needed.
+
+- `inline-size`: The width of the container is determined by the container, and the height is determined by the content.
+- `block-size`: Both the height and width of the container are determined by the container; if not set, it defaults to `0`.
+
+Most of the time, specifying the height of the container is meaningless because the height is usually determined by the content, so the vast majority will only use the `inline-size` property to set the container.
+
+```css
+.container-element {
+  container-type: inline-size;
+}
+```
+
+### Default Usage
+
+Once a container is set, the new `@container` can be used on any element within the container.
+
+```css
+@container (min-width: 30em) {
+  .child-element {
+    font-size: 1rem;
+  }
+}
+```
+
+### Naming Containers
+
+If there are many containers, giving them names is a clear way to specify a container. While not absolutely necessary, it defaults to targeting the nearest parent container.
+
+```css
+.container-element {
+  container-name: card;
+  container-type: inline-size;
+
+  /* Shorthand as follows */
+  container: card / inline-size;
+}
+```
+
+You can directly reference named Container Queries in your queries.
+
+```css
+@container card (min-width: 50em) {
+  .child-element {
+    font-size: 1rem;
+  }
+}
+```
+
+### Container Query Length Units
+
+You can use [Container Query Length Units](https://developer.mozilla.org/en-US/docs/Web/CSS/length#container_query_length_units) within a container to obtain information related to the container, such as its width and height.
+
+- [cqw](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqw): 1% of the Query Container's width
+- [cqh](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqh): 1% of the Query Container's height
+- [cqi](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqi): 1% of the Query Container's inline size
+- [cqb](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqb): 1% of the Query Container's block size
+- [cqmin](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqmin): 1% of the smaller value between the container's inline size or block size
+- [cqmax](https://developer.mozilla.org/en-US/docs/Web/CSS/length#cqmax): 1% of the larger value between the container's inline size or block size
+
+## Container Queries Do Not Replace Media Queries
+
+Since Container Queries can more flexibly select elements on a webpage, what reason is there to use Media Queries? In fact, the two are not replacements but complementary; in certain cases, you will still need to adjust styles based on device size. For example: using Media Queries to adjust global variables across the entire webpage. The following example demonstrates using Media Queries to change global CSS variables, with many possibilities beyond color: font size, spacing, etc., closely related to device size.
+
+```css
+:root {
+  --bg-color: red;
+}
+
+@media (800px < width) {
+  :root {
+    --bg-color: green;
+  }
+}
+```
+
+## Summary
+
+- Media Queries: Easy to specify overall page styles
+- Container Queries: Easy to specify styles for individual elements at different sizes
+
+I highly recommend Ahmad Shadeed's article: [An Interactive Guide to CSS Container Queries](https://ishadeed.com/article/css-container-query-guide/#the-container-should-be-an-additional-element) which includes interactive teaching examples and all common Container Queries application scenarios.
+
+## Further Reading
+
+- [Container Queries are going to change how we make layouts - Kevin Powell](https://www.youtube.com/watch?v=3_-Je5XpbqY)
+- [An Interactive Guide to CSS Container Queries - Ahmad Shadeed](https://ishadeed.com/article/css-container-query-guide/)
+- [Responsive CSS Will Never Be The Same - Web Dev Simplified](https://www.youtube.com/watch?v=rrLAg7xNERA)
+- [How to use CSS container queries - Sam Hermes](https://samhermes.com/posts/how-to-use-css-container-queries/)
