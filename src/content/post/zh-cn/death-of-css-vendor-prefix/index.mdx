@@ -1,0 +1,53 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:sentiment-very-dissatisfied-outline-rounded
+  title: 死掉的人脸表情符号
+subHeadline: Death of CSS vendor prefix
+headline: 逐渐凋零的浏览器引擎前缀
+excerpt: 浏览器引擎前缀是为了让开发者在浏览器尚未正式支援的情况下先使用这些前缀来实现一些新的 CSS 特性，甚至当时还时常会使用 PostCSS 这类预处理器的 autoprefixer 插件来预处理 CSS 添加上这些前缀。近期发现需要前缀的属性越来越少，未来也大机率不会再有新的前缀被加入了。
+series: Web History
+category: CSS
+tags:
+  - Concept
+publishDate: 2024-05-30
+---
+
+## 你还记得浏览器引擎前缀吗？
+
+```css
+-webkit-transition: all 4s ease;
+-moz-transition: all 4s ease;
+-ms-transition: all 4s ease;
+-o-transition: all 4s ease;
+transition: all 4s ease;
+```
+
+通常是某些实验性、非标准的 CSS 前需要添加的前缀语法，像是：
+
+- `-webkit-` (Chrome, Safari, 较新版本的 Opera 与 Edge, 几乎所有 iOS 上的浏览器包含了 iOS for Firefox 基本上所有 WebKit 或 Chromium 基底的浏览器引擎)
+- `-moz-` (Firefox)
+- `-o-` (旧版本 Opera)
+- `-ms-` (使用 Chromium 基底之前的 Internet Explorer 和 Microsoft Edge)
+
+这些前缀是为了让开发者在浏览器尚未正式支持的情况下用于实现新的 CSS 特性，甚至当时还时常会使用 PostCSS 这类预处理器的 [autoprefixer](https://github.com/postcss/autoprefixer) 插件来预处理 CSS 添加上这些前缀，以便让网站语法能够适应更广的用户。
+
+但近期会发现需要前缀的属性直线下降，且未来也大概率不会再有新的前缀会被加入使用了。
+
+## 为什么浏览器前缀会逐渐消失？
+
+原因是因为测试用的前缀已经偏移其原始目的 —— 功能实验
+
+随着前缀数量的增多，事情也变得愈加混乱，浏览器厂商逐渐认识到过多的实验性前缀会导致开发者对非标准化功能的依赖，进而影响到网站在不同浏览器中的兼容性。
+
+因此现今浏览器会更加谨慎地引入实验性功能，并在引入前确保新功能已经有足够的完成度以及跨浏览器的一致性，并且逐渐远离使用浏览器引擎前缀来测试新功能，而是通过在浏览器内设置手动切换，或是提供测试版本的浏览器（[Chrome Canary](https://www.google.com/chrome/canary/)、[Firefox Nightly](https://www.mozilla.org/en-US/firefox/channel/desktop/)）用于实验用途。
+
+## 总结
+
+网页正迈向更为一致且注重标准化的方向，这对于开发者来说是个好消息！
+
+## 延伸阅读
+
+- [The slow death of CSS vendor prefixes - Fully Stacked](https://fullystacked.net/prefix/)
+- [Vendor Prefix - MDN](https://developer.mozilla.org/en-US/docs/Glossary/Vendor_Prefix)
+- [Is Vendor Prefixing Dead? - CSS-TRICKS](https://css-tricks.com/is-vendor-prefixing-dead/)
