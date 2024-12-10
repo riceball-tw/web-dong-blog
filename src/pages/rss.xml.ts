@@ -5,7 +5,7 @@ import { shortposts } from '@/utils/getShortposts.ts';
 import sanitizeHtml from 'sanitize-html';
 import MarkdownIt from 'markdown-it';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { defaultLocale, stripLanguageCode, getLocaleCode } from '@/utils/i18n.ts';
 
 const parser = new MarkdownIt();
 const { name, description } = (await currentLocaleWebsiteConfig(defaultLocale)).data.brand;
@@ -18,6 +18,9 @@ export const GET = async (context: APIContext) => {
     site: context.site || '',
     items: [...publishedPosts, ...shortposts].map((collectionItem) => {
       const { slug } = collectionItem;
+      const slugWithoutLocaleCode = stripLanguageCode(slug);
+      const LocaleCode = getLocaleCode(slug);
+
       if (collectionItem.collection === 'shortpost') {
         const { body } = collectionItem;
         const { headline, publishDate, category } = collectionItem.data;
@@ -25,7 +28,7 @@ export const GET = async (context: APIContext) => {
           title: headline,
           content: sanitizeHtml(parser.render(body)),
           pubDate: publishDate,
-          link: `shortpost/${slug}/#${slug}`,
+          link: `${LocaleCode}/shortpost/${slugWithoutLocaleCode}/#${slugWithoutLocaleCode}`,
           categories: [category],
         };
       }
@@ -36,7 +39,7 @@ export const GET = async (context: APIContext) => {
           title: headline,
           description: excerpt,
           pubDate: publishDate,
-          link: `post/${slug}`,
+          link: `${LocaleCode}/post/${slugWithoutLocaleCode}`,
           categories: [category, ...tags],
         };
       }
