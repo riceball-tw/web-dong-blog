@@ -1,0 +1,154 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:published-with-changes-rounded
+  title: 更新符號
+subHeadline: Auto Publish TypeScript Package with Semver to NPM
+headline: 撰寫自動化發布語意化版本 TypeScript NPM 套件
+excerpt: '使用套件時總是會好奇一般管理套件開發的流程是如何？我透過 Matt Pocock 的 Blazing Fast Tips: Publishing to NPM 教學影片順手實作了一次，並且把自己之前遇過的需求寫成一個獨立的 TS 套件公開發布：edit-element。'
+category: CI/CD
+tags:
+  - NPM
+publishDate: 2024-12-11
+---
+
+## 前言
+
+使用套件時總是會好奇一般管理套件開發的流程是如何？今天遇到 Matt Pocock 的 [Blazing Fast Tips: Publishing to NPM](https://www.youtube.com/watch?v=eh89VE3Mk5g) 教學於是順手實作了一次，並且把自己之前遇過的需求寫成一個獨立的 TS 套件公開發布：[edit-element](https://github.com/riceball-tw/edit-element)。
+
+<Info type="info">這則教學使用的腳本版本以及套件管理器(pnpm)並非絕對，選擇順手的即可</Info>
+
+## 一、安裝 TypeScript
+
+1. 初始化新 NPM 套件先。
+2. 安裝最新版的 TypeScript。
+3. 初始化一個基本的 TypeScript 配置文件，這會生成一個默認的 `tsconfig.json`，可根據需要修改。
+
+```bash
+pnpm init
+pnpm add typescript -D
+npx tsc --init
+```
+
+最後可以直接執行 `tsc 檔案位置` 來將 `.ts` 檔案進行轉譯為 `.js`：
+
+```bash
+pnpm tsc foo.ts
+```
+
+## 二、轉換模組格式
+
+尷尬的是 JavaScript 生態內有 CommonJS 與 ES Modules 兩種模組系統，所以借助 [tsup](https://github.com/egoist/tsup) 套件協助將 `ts` 快速打包成需要的檔案，安裝好後在 `package.json` 設置 [NPM Scripts](https://docs.npmjs.com/cli/v9/using-npm/scripts) 中設置要觸發的腳本即可。
+
+```json title="package.json"
+"scripts": {
+  "build": "tsup index.ts --format cjs,esm --dts",
+},
+```
+
+設置同樣非常簡單，標示一下 TS 檔案位置以及要轉換的種類，並且預設生成於 `dist` 資料夾中。生成不同種類的套件檔案後**記得於標示不同模組系統需要對照的檔案**。
+
+```json title="package.json"
+{
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts"
+}
+```
+
+## 三、嚴謹 CI 流程
+
+目前已經可以完美編輯 `index.ts` 並 tsup 處理後推上 NPM 發布屬於你自己的套件了！不過整個代碼發布的流程還不是太嚴謹，最好是可以在**每次有代碼推送時對代碼進行一次檢測和建構**，[GitHub Actions](https://github.com/features/actions) 可以很方便的達成這件事，只要在 `.github/workflows` 新建一支簡單的流程檔案：
+
+```yaml title="ci.yml"
+name: CI
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint && pnpm run build
+```
+
+## 四、透過 Changeset GitHub Actions 進行自動化語意化版本發布
+
+CI 流程有了，我們可以進一步思考**如何將部屬的流程也同樣自動化**。安裝 [@changesets/cli](https://www.npmjs.com/package/@changesets/cli) 同樣新增一個新的 Workflow 透過 [changesets/action](https://github.com/changesets/action) 來自動化：
+
+```json title="package.json"
+  "scripts": {
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "release": "pnpm run build && changeset publish",
+  },
+```
+
+```yaml title="publish.yml"
+name: Publish
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm run release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+關於會使用到的環境變數：
+
+1. `GITHUB_TOKEN` - 透過[設置 `permissions`](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token)賦予必要的 GitHub 權限，該變數預設存在。
+2. `NPM_TOKEN` - 登入到 [NPM > Access Tokens](https://docs.npmjs.com/creating-and-viewing-access-tokens) 去設置取得自己帳號讀寫權限的密鑰，並放到 [GitHub Env](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/store-information-in-variables) 當中
+
+設置完成後我們可以隨時在想更動專案版本時執行 `npm run changeset` 並輸入要更新的套件版本種類與細節描述，將會自動生成一個暫時的 markdown 檔案存放。
+
+後續要推送版本就可以使用 `npm run chagneset version` 便會自動更新套件版本，commit 後透過先前撰寫的 Publish 流程發現版本差異就會自動部屬上 NPM 以及 [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)。
+
+## 總結
+
+如果你偏好透過影片學習建議可以看 Matt Pocock 的 [Blazing Fast Tips: Publishing to NPM](https://www.youtube.com/watch?v=eh89VE3Mk5g) 教學，但要留意套件版本較低，並且後續有一些改動需要調整，最新進度應該查看 [mattpocock/pkg-demo](https://github.com/mattpocock/pkg-demo) 倉庫。
+
+我透過這個教學也寫了一個自己的套件：[edit-element](https://github.com/riceball-tw/edit-element)，並且擴充了額外的測試流程和環境也可以參考看看。
+
+## 延伸閱讀
+
+- [語意化版本 2.0.0 - semver.org](https://semver.org/lang/zh-TW/)
