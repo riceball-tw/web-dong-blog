@@ -50,7 +50,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: package.json
-          cache: 'pnpm'
+          # To avoid missing Cypress binrary, Skip Cahce Here, cypress-io/github-action has it's cache on node_moduels too
+          # cache: 'pnpm'
+
       # 1. List all LFS files
       # 2. Extract the first column (ID)
       # 3. Sort the IDs
