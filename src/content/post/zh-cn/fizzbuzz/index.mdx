@@ -1,0 +1,190 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:integration-instructions-outline-rounded
+  title: 程式文件符號
+subHeadline: 让我们解决 FizzBuzz！详细的问题解决过程
+headline: 解决 FizzBuzz 的详细思路
+excerpt: 这次我透过一步一步拆解解题路径来描述如何解题。从基本解到分离资料与逻辑、保持 immutable 以及边缘案例还有文件编写都有涵盖。打印出 1 到 100 的数字、假如数字是 3 的倍数，则打印 Fizz、假如数字是 5 的倍数，则打印 Buzz、假如数字是 3 和 5 的公倍数，则打印 FizzBuzz。
+category: Implementation
+tags:
+  - Beginner
+publishDate: 2024-09-01
+lastModifiedDate: 2024-09-23
+---
+
+## 前言
+
+FizzBuzz 大概是最广为人知的程序设计题目之一，它的题目是这样的：
+
+- 打印出 `1` 到 `100` 的数字
+  - 假如数字是 `3` 的倍数，则打印 `Fizz`
+  - 假如数字是 `5` 的倍数，则打印 `Buzz`
+  - 假如数字是 `3` 和 `5` 的公倍数，则打印 `FizzBuzz`
+
+## 解题
+
+### 基本解
+
+最直接的解法即是制作一个函数会打印 `1 ~ 100` 的数字，并依照规则判断是否要打印 `Fizz`、`Buzz` 或 `FizzBuzz`。但明显这样的做法会将所有数值都写死在程序当中，未来要扩充条件时就需要修改代码，尚不够灵活。
+
+```js
+function fizzBuzz(max) {
+  for (let i = 1; i <= max; i++) {
+    if (i % 3 === 0 && i % 5 === 0) {
+      console.log('FizzBuzz');
+    } else if (i % 3 === 0) {
+      console.log('Fizz');
+    } else if (i % 5 === 0) {
+      console.log('Buzz');
+    } else {
+      console.log(i);
+    }
+  }
+}
+
+fizzBuzz(100);
+```
+
+### 分离数据与逻辑
+
+既然可以预期规则都是 `某数字` 要打印 `某结果` 那么或许可以使用对象来记录这些 Key-Value 结构的数据：
+
+```js
+function fizzBuzz(max) {
+  const map = {
+    3: 'Fizz',
+    5: 'Buzz',
+    15: 'FizzBuzz',
+  };
+
+  for (let i = 1; i <= max; i++) {
+    if (i % Object.keys(map)[0] === 0 && i % Object.keys(map)[1] === 0) {
+      console.log(Object.values(map)[2]);
+    } else if (i % Object.keys(map)[0] === 0) {
+      console.log(Object.values(map)[0]);
+    } else if (i % Object.keys(map)[1] === 0) {
+      console.log(Object.values(map)[1]);
+    } else {
+      console.log(i);
+    }
+  }
+}
+```
+
+数据是抽离出来了，但逻辑还是依赖指定 `map` 对象当中的特定内容，让我们再写个循环自动的将 `map` 对象的内容取出来，让数据来驱动逻辑：
+
+```js
+function fizzBuzz(max) {
+  const map = {
+    3: 'Fizz',
+    5: 'Buzz',
+  };
+
+  for (let i = 1; i <= max; i++) {
+    let output = '';
+    for (const key in map) {
+      if (i % key === 0) {
+        output += map[key];
+      }
+    }
+    console.log(output || i);
+  }
+}
+```
+
+### 保持数值不变（Immutable）
+
+以上解法可以观察到目前定义了 `i` 以及 `output` 两个变量并且于程序中持续的变动其内容，**在某些程序开发风格当中会被视为应当避免的习惯**，我们可以尝试看看将覆盖变量的部分改为[纯粹函数](https://www.webdong.dev/post/why-pure-function/)。
+
+```js
+numberReplacer(100, {
+  3: 'Fizz',
+  5: 'Buzz',
+}).forEach((value) => console.log(value));
+
+function numberReplacer(max, replacementMap) {
+  return Array.from({ length: max }, (_, index) => {
+    const currentNumber = index + 1;
+    const replacement = Object.entries(replacementMap).reduce(
+      (acc, [divisor, replaceWord]) => (currentNumber % divisor === 0 ? acc + replaceWord : acc),
+      '',
+    );
+    return replacement || currentNumber;
+  });
+}
+```
+
+### 补齐文档与检查边界案例
+
+JavaScript 是动态类型语言，因此其他人在使用这个函数时可能不清楚具体参数的需求，这里通过 JSDoc 来补齐文档，也可以考虑使用 TypeScript 来检测类型或于 Runtime 进行类型检测：
+
+```js
+/**
+ * 生成一数组，将 1 到 max 之间的数字取代为指定字符串
+ *
+ * @param {number} max - 最大数值
+ * @param {Object<number, string>} replacementMap - key 为除数，value 为取代字符串
+ * @returns {Array<string | number>} - 取代后的数值
+ * @throws {TypeError} 如 max 不是正整数
+ * @throws {TypeError} 如 replacementMap 不是非空对象
+ * @throws {TypeError} 如 replacementMap 内的 key 不是正整数
+ * @example
+ * numberReplacer(15, { 3: 'Fizz', 5: 'Buzz' });
+ * // Returns [1, 2, 'Fizz', 4, 'Buzz', 'Fizz', 7, 8, 'Fizz', 'Buzz', 11, 'Fizz', 13, 14, 'FizzBuzz']
+ */
+function numberReplacer(max, replacementMap) {
+  if (!Number.isInteger(max) || max <= 0) {
+    throw new TypeError('max 必须是正整数');
+  }
+
+  if (typeof replacementMap !== 'object' || replacementMap === null) {
+    throw new TypeError('replacementMap 必须是非空对象');
+  }
+
+  return Array.from({ length: max }, (_, index) => {
+    const currentNumber = index + 1;
+    const replacement = Object.entries(replacementMap).reduce((acc, [divisor, replaceWord]) => {
+      const numDivisor = Number(divisor);
+      if (!Number.isInteger(numDivisor) || numDivisor <= 0) {
+        throw new TypeError('replacementMap 内的 key 必须是正整数');
+      }
+      return currentNumber % numDivisor === 0 ? acc + replaceWord : acc;
+    }, '');
+    return replacement || currentNumber;
+  });
+}
+
+try {
+  numberReplacer(100, {
+    3: 'Fizz',
+    5: 'Buzz',
+  }).forEach((value) => console.log(value));
+} catch (error) {
+  console.error(error.message);
+}
+```
+
+### 通过局部应用来简化 `numberReplacer`
+
+你可能会想说：老天！只是要印个 `FizzBuzz` 为什么每次都要通过 `numberReplacer` 来计算？有没有办法单纯创个函数只传入最大值就好？就像一开始一样？让我们用局部应用函数来通过创造抽象达成简化：
+
+```js
+const createFizzBuzz = (max) => {
+  return numberReplacer(max, {
+    3: 'Fizz',
+    5: 'Buzz',
+  });
+};
+const fizzBuzz100 = createFizzBuzz(100);
+fizzBuzz100.forEach((value) => console.log(value));
+
+const fizzBuzz15 = createFizzBuzz(15);
+fizzBuzz15.forEach((value) => console.log(value));
+```
+
+在这次解题过程中我贯彻 [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) 原则，并且通过不断的重构来提升代码的可读性与可维护性，但也可以思考真的有必要制造更多抽象吗？过早的优化是万恶之源，或许 [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)。
+
+## 延伸阅读
+
+- [FizzBuzz: One Simple Interview Question - Tom Scott](https://www.youtube.com/watch?v=QPZ0pIK_wsc)
