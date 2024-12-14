@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:upload-file-outline-rounded', title: '上傳檔案圖示' }
-subHeadline: 'How I Use Git LFS to Manage Large Git Files?'
-headline: '我如何使用 Git LFS 來託付大型 Git 檔案？'
-excerpt: 'Git 允許我們紀錄任何檔案的變更，並且可以輕鬆地回溯到任何一個版本，但是當需要儲存大型檔案時 Git 就會顯得力不從心，因為 Git 並不是為了儲存大型檔案（圖片、影片、音樂……等二進制檔案）而設計的。而這次介紹的 Git Large File Storage 是 Git 的擴充，專門用於解決以上問題。'
+icon:
+  name: material-symbols:upload-file-outline-rounded
+  title: 上傳檔案圖示
+subHeadline: How I Use Git LFS to Manage Large Git Files?
+headline: 我如何使用 Git LFS 來託付大型 Git 檔案？
+excerpt: Git 允許我們紀錄任何檔案的變更，並且可以輕鬆地回溯到任何一個版本，但是當需要儲存大型檔案時 Git 就會顯得力不從心，因為 Git 並不是為了儲存大型檔案（圖片、影片、音樂……等二進制檔案）而設計的。而這次介紹的 Git Large File Storage 是 Git 的擴充，專門用於解決以上問題。
 category: Technical Discussion
-tags: ['Git']
+tags:
+  - Git
 publishDate: 2024-05-29
 ---
 
@@ -23,8 +26,6 @@ Git LFS 解決問題的方式是將大型檔案內容儲存在額外的伺服器
 
 ## 如何使用 Git LFS？
 
-### 安裝 Git LFS
-
 ### 一、下載 GitLFS
 
 首先需要安裝 Git LFS （廢話 😐）
@@ -35,7 +36,7 @@ git lfs install
 
 ### 二、設定要使用 Git LFS 的檔案
 
-在要使用 Git LFS 的 Git 儲存庫中，選擇希望 Git LFS 管理的檔案類型（或直接編輯 .gitattributes），可以在任何時刻配置新的需要 LFS 介入處理的檔案副檔名，以下設定告知了 LFS 需要處理所有有關 `.png` 副檔名的檔案。
+在要使用 Git LFS 的 Git 儲存庫中，選擇希望 Git LFS 管理的檔案類型（或直接編輯 `.gitattributes`），可以在任何時刻配置新的需要 LFS 介入處理的檔案副檔名，以下設定告知了 LFS 需要處理所有有關 `.png` 副檔名的檔案。
 
 ```bash
 git lfs track "*.png"
