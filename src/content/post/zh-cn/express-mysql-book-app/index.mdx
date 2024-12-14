@@ -1,0 +1,161 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:book-5-outline-rounded
+  title: 打开的书图示
+subHeadline: Express.js Connects to MySQL to Implement Book App
+headline: Express.js 串接 MySQL 实作书本管理 App
+excerpt: 先前系列提到使用 Express.js 简单的创造一个 CRUD App 并用 MVC 分层，这次流程差不多，目标是把后端接上本地的 MySQL 服务器并使用 MySQL2，一个专为 Node.js 应用设计的 MySQL 数据库连接工具。
+category: Express.js
+tags:
+  - CRUD
+publishDate: 2024-12-14
+---
+
+## 前言
+
+先前系列提到使用 Express.js 简单的创造一个 CRUD App 并用 MVC 分层，这次流程差不多，目标是把后端接上本地的 MySQL 服务器并使用 [MySQL2](https://www.npmjs.com/package/mysql2)，一个专为 Node.js 应用设计的 MySQL 数据库连接工具。
+
+## 设置本地 MySQL
+
+到 [MySQL 官网](https://dev.mysql.com/downloads/installer/) 进行安装，建议安装 MySQL workbench 对新手比较友好(GUI 方便操作)，输入以下 SQL 创建一个 `books` 数据库并在里面添加 `books` 书本相关表格：
+
+```sql
+CREATE DATABASE `books`;
+
+CREATE TABLE `books`, `books` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `desc` VARCHAR(255) NOT NULL,
+  `cover` VARCHAR(45) NULL,
+  PRIMARY KEY ( id )
+);
+```
+
+简单的查询和新增：
+
+```sql
+SELECT * FROM books.books;
+
+INSERT INTO `books`.`books` (`id`, `title`, `desc`, `cover`) VALUES ('1', 'title content', 'desc content', 'cover content');
+```
+
+## 设置 Express
+
+在现有的 Express App 中使用 [MySQL2 createConnection](https://sidorares.github.io/node-mysql2/docs) 连接本地 MySQL。
+
+- 使用 `dotenv` 变量，把环境变量储存在 `.env` 文件当中统一管理
+- CORS 设置套件
+- [使用 MySQL2 的 Promise API](https://sidorares.github.io/node-mysql2/docs#using-promise-wrapper)。
+
+```js title="app.js"
+import express from 'express';
+import mysql from 'mysql2';
+import cors from 'cors';
+import 'dotenv/config';
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const db = mysql
+  .createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+  })
+  .promise();
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log('Connected to backend.');
+});
+```
+
+## 建构 API
+
+### 简单查询 Simple Queries
+
+写个简单的「撈取所有书本资料」 API，`connection.query` 是 [Simple Queries](https://sidorares.github.io/node-mysql2/docs/examples/queries/simple-queries)，简单来说：
+
+- **动态构建查询**： 查询语句在运行时拼接，依赖输入值构建最终的 SQL 字符串。
+- **易受 SQL Injection 攻击**： 如果用户输入未经适当的处理（如 userInput 包含恶意 SQL），可能导致 SQL 注入攻击。
+- **无法重复使用查询计划**： 每次执行查询时，必须重新解析和优化查询。
+
+```js
+app.get('/api/books', async (req, res) => {
+  try {
+    const sql = 'SELECT * FROM books';
+    const [result] = await connection.query(sql);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to fetch books' });
+  }
+});
+```
+
+### 预处理 Prepared Statements
+
+换作是需要参数的 SQL 最好使用 [Prepared Statements](https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements)，预编译的查询模板，使用占位符来代替动态值。数据库会对查询模板进行编译，然后执行时插入具体值。
+
+- **预编译查询模板**： 查询的结构（如字段名和表名）在第一步就被数据库解析，后续执行时只需插入值，不需要重新解析 SQL 语法。
+- **防止 SQL Injection**： 用户输入的值不直接拼接到查询中，而是作为参数传递给数据库，数据库将它们当作纯数据处理，无法改变查询逻辑。
+- **提升性能（在重复执行场景）**： 由于查询计划被预编译，可以多次重用，不需要每次执行都进行解析和优化。
+
+```js
+app.post('/api/books', async (req, res) => {
+  try {
+    const sql = 'INSERT INTO books(`title`, `desc`, `cover`) VALUES (?, ?, ?)';
+    const values = [req.body.title, req.body.desc, req.body.cover];
+    const [result] = await connection.execute(sql, values);
+    res.status(201).json({ message: 'Book created successfully', bookId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to create book' });
+  }
+});
+```
+
+## 总结
+
+本篇教学主要受 [React Node.js MySQL CRUD Tutorial for Beginners - Lama Dev](https://www.youtube.com/watch?v=fPuLnzSjPLE) 的影片教学启发，不过采用较新的套件与翻了一下文件了解细节 API 差异，并只关注如何与 MySQL 互动的部分。
+
+剩下删除与更新书籍的动作其实也只是重复先前的查询，替换 SQL 即差不多，具体代码仓库可以参考 [mysql-book](https://github.com/riceball-tw/mysql-book/tree/main/backend)。
+
+```js
+app.delete('/api/books/:id', async (req, res) => {
+  try {
+    const sql = 'DELETE FROM books WHERE id = ?';
+    const bookId = req.params.id;
+    const [result] = await connection.execute(sql, [bookId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+    res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to delete book' });
+  }
+});
+
+app.put('/api/books/:id', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const sql = 'UPDATE books SET `title`= ?, `desc`= ?, `cover`= ? WHERE id = ?';
+    const values = [req.body.title, req.body.desc, req.body.cover];
+    const [result] = await connection.execute(sql, [...values, bookId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+    res.status(200).json({ message: 'Book updated successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to update book' });
+  }
+});
+```
+
+## 延伸阅读
+
+- [MySQL2](https://sidorares.github.io/node-mysql2/docs)

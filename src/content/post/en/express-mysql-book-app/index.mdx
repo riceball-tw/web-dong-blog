@@ -1,0 +1,161 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:book-5-outline-rounded
+  title: Open Book Icon
+subHeadline: Express.js Connects to MySQL to Implement Book App
+headline: Express.js Connects to MySQL to Implement Book App
+excerpt: The previous series discussed creating a simple CRUD App with Express.js using MVC. This time, connect the backend to a local MySQL.
+category: Express.js
+tags:
+  - CRUD
+publishDate: 2024-12-14
+---
+
+## Introduction
+
+The previous series discussed creating a simple CRUD App with Express.js using MVC. This time, the process is similar, with the goal of connecting the backend to a local MySQL server using [MySQL2](https://www.npmjs.com/package/mysql2), a MySQL database connection tool designed for Node.js applications.
+
+## Setting Up Local MySQL
+
+Go to [MySQL Official Website](https://dev.mysql.com/downloads/installer/) for installation. It is recommended to install MySQL Workbench as it is more user-friendly for beginners (GUI for easier operation). Enter the following SQL to create a `books` database and add a `books` table for book-related information:
+
+```sql
+CREATE DATABASE `books`;
+
+CREATE TABLE `books`, `books` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `desc` VARCHAR(255) NOT NULL,
+  `cover` VARCHAR(45) NULL,
+  PRIMARY KEY ( id )
+);
+```
+
+Simple queries and inserts:
+
+```sql
+SELECT * FROM books.books;
+
+INSERT INTO `books`.`books` (`id`, `title`, `desc`, `cover`) VALUES ('1', 'title content', 'desc content', 'cover content');
+```
+
+## Setting Up Express
+
+Use [MySQL2 createConnection](https://sidorares.github.io/node-mysql2/docs) to connect to the local MySQL in the existing Express App.
+
+- Use `dotenv` variables to manage environment variables in a `.env` file.
+- Setup CORS package.
+- [Using MySQL2's Promise API](https://sidorares.github.io/node-mysql2/docs#using-promise-wrapper).
+
+```js title="app.js"
+import express from 'express';
+import mysql from 'mysql2';
+import cors from 'cors';
+import 'dotenv/config';
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+const db = mysql
+  .createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+  })
+  .promise();
+
+app.listen(process.env.SERVER_PORT, () => {
+  console.log('Connected to backend.');
+});
+```
+
+## Building the API
+
+### Simple Queries
+
+Create a simple API to "fetch all book data." The `connection.query` is [Simple Queries](https://sidorares.github.io/node-mysql2/docs/examples/queries/simple-queries), simply put:
+
+- **Dynamic Query Construction**: The query statement is constructe at runtime, relying on input values to build the final SQL string.
+- **Vulnerable to SQL Injection**: If user input is not properly sanitized (e.g., userInput contains malicious SQL), it may lead to SQL injection attacks.
+- **Cannot Reuse Query Plans**: Each time a query is executed, it must be re-parsed and optimized.
+
+```js
+app.get('/api/books', async (req, res) => {
+  try {
+    const sql = 'SELECT * FROM books';
+    const [result] = await connection.query(sql);
+    res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to fetch books' });
+  }
+});
+```
+
+### Using Prepared Statements
+
+For SQL that requires parameters, it is best to use [Prepared Statements](https://sidorares.github.io/node-mysql2/docs/examples/queries/prepared-statements), which are precompiled query templates that use placeholders to replace dynamic values. The database compiles the query template and then inserts specific values during execution.
+
+- **Precompiled Query Templates**: The structure of the query (such as field names and table names) is parsed by the database in the first step, and subsequent executions only need to insert values without re-parsing the SQL syntax.
+- **Prevent SQL Injection**: User input values are not directly add into the query but are passed as parameters to the database, which treats them as pure data and cannot alter the query logic.
+- **Performance Improvement (in repeated execution scenarios)**: Since the query is precompiled, it can be reused multiple times without needing to parse and optimize each execution.
+
+```js
+app.post('/api/books', async (req, res) => {
+  try {
+    const sql = 'INSERT INTO books(`title`, `desc`, `cover`) VALUES (?, ?, ?)';
+    const values = [req.body.title, req.body.desc, req.body.cover];
+    const [result] = await connection.execute(sql, values);
+    res.status(201).json({ message: 'Book created successfully', bookId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to create book' });
+  }
+});
+```
+
+## Summary
+
+This tutorial is mainly inspired by the video tutorial [React Node.js MySQL CRUD Tutorial for Beginners - Lama Dev](https://www.youtube.com/watch?v=fPuLnzSjPLE), but my tutorial uses newer packages and reviews the documentation to understand the differences in the API, focusing only on how to interact with MySQL.
+
+The remaining actions of deleting and updating books are just repetitions of the previous queries, with the SQL replaced accordingly. The specific code repository can be referenced at [mysql-book](https://github.com/riceball-tw/mysql-book/tree/main/backend).
+
+```js
+app.delete('/api/books/:id', async (req, res) => {
+  try {
+    const sql = 'DELETE FROM books WHERE id = ?';
+    const bookId = req.params.id;
+    const [result] = await connection.execute(sql, [bookId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+    res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to delete book' });
+  }
+});
+
+app.put('/api/books/:id', async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const sql = 'UPDATE books SET `title`= ?, `desc`= ?, `cover`= ? WHERE id = ?';
+    const values = [req.body.title, req.body.desc, req.body.cover];
+    const [result] = await connection.execute(sql, [...values, bookId]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+    res.status(200).json({ message: 'Book updated successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Failed to update book' });
+  }
+});
+```
+
+## Further Reading
+
+- [MySQL2](https://sidorares.github.io/node-mysql2/docs)
