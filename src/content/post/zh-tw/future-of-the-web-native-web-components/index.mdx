@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:developer-guide-outline-rounded', title: '箱子符號' }
-subHeadline: 'Future of the Web - Native Web Components'
-headline: '了解網頁元件化的未來：Web Components'
-excerpt: '從很早以前就大致知道瀏覽器開始推出 Web Components 相關 API 與標準，但一直沒有機會在實戰中使用這項技術。想撰寫這篇文章記錄是因為隨著時間推移發現 Web Components 的應用範疇越來越廣，因此趁著有空也來了解一下相關知識，並且分析它與現有的解決方案有什麼不同。'
+icon:
+  name: material-symbols:developer-guide-outline-rounded
+  title: 箱子符號
+subHeadline: Future of the Web - Native Web Components
+headline: 了解網頁元件化的未來：Web Components
+excerpt: 從很早以前就大致知道瀏覽器開始推出 Web Components 相關 API 與標準，但一直沒有機會在實戰中使用這項技術。想撰寫這篇文章記錄是因為隨著時間推移發現 Web Components 的應用範疇越來越廣，因此趁著有空也來了解一下相關知識，並且分析它與現有的解決方案有什麼不同。
 category: Technical Discussion
-tags: ['Web Components']
+tags:
+  - Web API
 publishDate: 2024-07-27
 ---
 
@@ -154,9 +157,9 @@ template.innerHTML = `
 </hello-world>
 ```
 
-## 實作計時器
+## 實作計數器
 
-讓我們透過 Web Components 實作一個[簡單的計時器元件](https://codepen.io/riecball/pen/OJebZaN)：
+讓我們透過 Web Components 實作一個[簡單的計數器元件](https://codepen.io/riecball/pen/OJebZaN)：
 
 ```js
 class Counter extends HTMLElement {

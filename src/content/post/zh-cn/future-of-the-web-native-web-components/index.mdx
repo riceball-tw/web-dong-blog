@@ -1,0 +1,233 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:developer-guide-outline-rounded
+  title: 箱子符号
+subHeadline: Future of the Web - Native Web Components
+headline: 了解网页组件化的未来：Web Components
+excerpt: 从很早以前就大致知道浏览器开始推出 Web Components 相关 API 与标准，但一直没有机会在实战中使用这项技术。想撰写这篇文章记录是因为随着时间推移发现 Web Components 的应用范围越来越广，因此趁着有空也来了解一下相关知识，并且分析它与现有的解决方案有什么不同。
+category: Technical Discussion
+tags:
+  - Web API
+publishDate: 2024-07-27
+---
+
+## 前言
+
+从很早以前就大致知道浏览器开始推出 Web Components 相关 API 与标准，但一直没有机会在实战中使用这项技术。
+
+会想撰写这篇文章记录是因为随着时间推移发现 Web Components 的应用范围越来越广，并且也可以看到各大框架套件相继支持原生 Web Components，像是：[Swiper](https://swiperjs.com/)也建议转向 Web Components 实作的版本、[Vue and Web Components](https://vuejs.org/guide/extras/web-components)、[React Custom HTML elements](https://react.dev/reference/react-dom/components#custom-html-elements) 也有提到如何与 Web Components 配合。
+
+因此趁着有空也来了解一下相关知识，并且分析它与现有的解决方案有什么不同。
+
+## 什么是 Web Components
+
+Web Components 是一系列浏览器 API 标准让开发者可以在客户端环境创建自定义、可定制、独立的 HTML 元件。可以在任何现代浏览器环境中使用，不需要额外的框架或工具。
+
+相信非常多前端都有接触过 Vue、React、Angular 这类框架套件，也熟悉它们提供的元件概念，但具体来说 Web Components 与这些框架身为浏览器原生功能之外有什么不同呢？
+
+- **原生便利**：Web Components 是存在于浏览器的原生 API，因此无须建置任何环境即可使用。
+- **局限性**：Web Components 被设计应用于客户端环境，无法像现代框架套件一样提供服务器端渲染(SSR)的功能，像 Next、Nuxt。
+- **社区支持度**：论当前社区支持度，现代前端框架套件们的支持度远远高于 Web Component，大多数已于早期已经发展一套完善的解决方案，立即替换 Web Components 并不是一件容易的事情。但可以确定的是**这项标准的推出将会凝聚前端关于组件 UI 的实现方式**。
+
+## 建立 Web Components
+
+先让我们创建一个自定义的 `hello-world` 元素再依序说明：
+
+```js
+class HelloWorld extends HTMLElement {
+  constructor() {
+    super(); // 调用父类(HTMLElement Class)的 constructor
+    this.innerHTML = '<h1>Hello World</h1>';
+  }
+}
+
+window.customElements.define('hello-world', HelloWorld);
+```
+
+可以发现整个定制化元素的建立过程非常的简单，首先是建立一个继承自 `HTMLElement` 的 Class，然后在 `constructor` 中设置元素的内容，最后使用 `window.customElements.define` 方法注册元素，便可以在 HTML 当中自由的加入新定义好的元素。
+
+```html
+<hello-world></hello-world>
+```
+
+可以为元素加入任何你想要的属性、方法、事件并且重复置入在页面任何角落，就像任何 HTML 元素一样！唯一需要留意的是元素命名有一定的原则需要遵守：[Valid custom element names](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define#valid_custom_element_names)。
+
+## 生命周期
+
+Web Components 具备对应的生命周期：
+
+- `constructor()`：初始化元素实例。
+- `connectedCallback()`：当元素被插入到 DOM 中时调用。
+- `disconnectedCallback()`：当元素从 DOM 中移除时调用。
+- `attributeChangedCallback()`：当元素的属性被增加、移除、更新时调用。
+
+````markdown
+可以根据需求在客制化元素中根据生命周期进行操作，例如：当元素被添加到 DOM 中时绑定事件监听，并在移除时解除。
+
+## Shadow DOM
+
+单纯的操纵页面 DOM 是长久以来前端们熟悉的方式，但扩展性却不太好，原因是因为我们无法确保自定义元素的样式与行为不会受外部影响，这时候 Shadow DOM 就能派上用场。
+
+举例 HTML 原生的 `<Select>` 元素，会发现不同浏览器都为其预设制作了一些 DOM 独立于整体网页，背后是因为使用了 Shadow DOM，可以打开显示 user agent shadow DOM 设置来观察各浏览器背后是如何实现各项元素。
+
+![Chrome 浏览器 user agent shadow dom 设置](show-user-agent-shadow-dom.webp '开启 Chrome 浏览器 user agent shadow dom 设置')
+![Select Shadow DOM](select-shadow-dom.webp 'Select Shadow DOM')
+
+你会希望自定义元素也能像 `<Select>` 一样具有完全独立的样式与行为，这时候 Shadow DOM 就能派上用场。
+
+### 第一步：创建 Shadow DOM Root
+
+根据先前的 HelloWorld 示例，我们可以在 `constructor` 中创建 Shadow DOM Root 通过 `attachShadow` 方法，设置 [mode](https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow#mode) 决定我们在创建后是否可以通过 `this.shadowRoot` 来修改 Shadow DOM。
+
+```js
+class HelloWorld extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({ mode: 'open' }); // open & closed 允许创建的 ShadowDom 是否允许修改
+  }
+}
+```
+````
+
+### 第二步：创建 Template
+
+创建 Shadow DOM Root 后可以制作对应的 template 元素与样式：
+
+```js
+const template = document.createElement('template');
+template.innerHTML = `
+<style>
+  h3 {color: green}
+</style>
+<h3 data-title>
+</h3>
+`;
+```
+
+### 第三步：将 Template 插入 Shadow DOM
+
+通过 [cloneNode](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) + [deep 参数](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode) 可以将所有的 template 内容插入 Shadow DOM 中。也可以针对 shadowRoot 进行元素的搜索与修改，举例先前制作的 template 就预埋了一个 `data-title` 的属性，通过搜索该项属性所在的元素可以轻易的更改其内容通过 JS：
+
+```js
+shadowRoot.appendChild(template.content.cloneNode(true));
+shadowRoot.querySelector('[data-title]').innerText = 'foobar';
+```
+
+## Slot
+
+`<slot>` 是 Web Components 内建的 HTML 元素，一个占位符用于代表输入客制化元素的内容，举例来说以下注入 `hello-world` 客制化元素的内容应该如何处理？
+
+```html
+<hello-world>
+  <span>Foobar</span>
+</hello-world>
+```
+
+可以通过 slot 来为其安排：
+
+```js
+const template = document.createElement('template');
+template.innerHTML = `
+<style>
+  h3 {color: green}
+</style>
+<h3 data-title>
+  <slot></slot>
+</h3>
+`;
+```
+
+### 具名 Slot
+
+可以通过 `name` 属性来区分多个 slot：
+
+```js
+const template = document.createElement('template');
+template.innerHTML = `
+<h3><slot name="title" /></h3>
+<p><slot name="content" /></p>
+`;
+```
+
+并且在 HTML 中通过 `slot` 属性来指定对应的 slot 名称：
+
+```html
+<hello-world>
+  <span slot="title">Title</span>
+  <span slot="content">Content</span>
+</hello-world>
+```
+
+## 实作计数器
+
+让我们通过 Web Components 实作一个[简单的计数器组件](https://codepen.io/riecball/pen/OJebZaN)：
+
+```js
+class Counter extends HTMLElement {
+  constructor() {
+    super();
+    this.count = 0;
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    this.render();
+    this.shadowRoot.querySelector('[data-increment]').addEventListener('click', () => this.increment());
+    this.shadowRoot.querySelector('[data-decrement]').addEventListener('click', () => this.decrement());
+  }
+
+  increment() {
+    this.count++;
+    this.updateCount();
+  }
+
+  decrement() {
+    this.count--;
+    this.updateCount();
+  }
+
+  updateCount() {
+    this.shadowRoot.querySelector('[data-count]').textContent = `Count: ${this.count}`;
+  }
+
+  render() {
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          text-align: center;
+        }
+        button {
+          font-size: 1rem;
+          padding: 0.5em 1em;
+          margin-top: 1em;
+        }
+      </style>
+      <div data-count>Count: ${this.count}</div>
+      <button data-increment>Increment</button>
+      <button data-decrement>Decrement</button>
+    `;
+  }
+}
+
+customElements.define('app-counter', Counter);
+```
+
+## 总结
+
+以上简单的实际操作创建 Web Components 后发现相较于其他成熟的 JS 框架套件，它更像是一個底层客制化 DOM 元素的 API 标准，相较于当前复杂的前端需求：
+
+- 宣告式且简洁高效的模板系统
+- 响应式的状态与对应的跨组件通讯
+- 伺服端渲染
+
+Web Components 一样都没有 😅，并不会取代现有的解决方案，不过可以期待更多网页组件的实现方式会向浏览器原生 API 靠拢。此外完全基于 Web Components 的轻量套件像是 [Lit](https://lit.dev/) 也可以留意看看。
+
+## 延伸阅读
+
+- [The Story of Web Components - uidotdev](https://www.youtube.com/watch?v=fKqgdT-KLrM)
+- [Web Components Crash Course - Traversy Meid](https://www.youtube.com/watch?v=PCWaFLy3VUo)
+- [Vue and Web Components - Vue.js](https://vuejs.org/guide/extras/web-components)
+- [What Are Web Components? - Syntax](https://www.youtube.com/watch?v=83W63gTVlSk)
+- [Web components - JavaScript.INFO](https://javascript.info/web-components)
