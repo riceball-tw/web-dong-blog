@@ -38,16 +38,15 @@ export async function getStaticPaths() {
   </slot>
   <Hero>
     <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={projectUpdateBadgeUrl}>
-      <Badge>{`${m.north_tense_hedgehog_inspire()} ${currentTime}`}</Badge>
+      <Badge class="text-center items-center">{`${m.north_tense_hedgehog_inspire()} ${currentTime}`}</Badge>
     </a>
     <div slot="headline" style={`max-width: ${currentLocale === 'en' ? '2000' : '1600'}px`}>
       <span>{m.vivid_quick_giraffe_read()}</span>
       <span class="text-primary">{m.each_main_toucan_dine()}</span>
       <span>{m.same_tasty_swallow_cuddle()}</span>
-      <div class="text-primary inline-flex items-center gap-2">
-        <span >
-          <span class="relative inline-flex">
-
+      <span class="text-primary">
+        <!-- Edit -->
+        <span class="relative inline-flex">
           <span id="draggable" style="--selection: hsl(var(--primary))" class="inline-flex border border-[--selection] whitespace-nowrap cursor-move">
             {m.nice_equal_wallaby_slide()}
             <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
@@ -59,13 +58,12 @@ export async function getStaticPaths() {
             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
             <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
           </span>
-
         </span>
           {m.equal_stock_newt_aid()}
-          <span class="cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>'] after:ml-2" contenteditable>{m.watery_pink_hamster_relish()}</span>
+          <!-- </> -->
+          <span class="cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>'] " contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
           {m.inner_petty_giraffe_drip()}
-        </span>
-      </div>
+      </span>
     </div>
     {import.meta.env.PROD && <Pagefind placeholderText={m.awake_quiet_ape_emerge()}/>}
   </Hero>
