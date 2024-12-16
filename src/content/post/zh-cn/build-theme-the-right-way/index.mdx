@@ -1,0 +1,101 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:colorize-outline-rounded
+  title: 选色器符号
+subHeadline: Build Dark Mode (or Any Website Style) the Right Way
+headline: 用正确的方式制作深色模式（或任何网站风格）
+excerpt: 先前提到「添加深色模式要考虑的代价」无可避免的会增加比预想中还要多的成本，但如果能在一开始用正确的方式制作网页风格，那么可以有效的避免掉许多问题。如果你希望制作不同风格的数字产品都可以参考本篇文章，用更省力的方式定义风格。
+series: Darkmode
+category: UI
+publishDate: 2024-06-25
+---
+
+## 前言
+
+根据先前提到「[添加深色模式要考虑的代价](https://www.webdong.dev/post/cost-behind-adding-darkmode/)」，添加深色模式无可避免的会造成额外的设计、开发与维护成本，但如果能在一开始用正确的方式制作网页风格，那么是可以有效迴避许多问题的。
+
+## 实践深色模式（颜色风格）的方法
+
+深色模式换个角度来看其实就是一种深色调为主轴的颜色风格，制作深色模式实际上是在替网页制作不同的颜色风格，那么一套自由扩展方便维护的颜色系统该怎么做？
+
+### 方法一、让风格具备不同颜色
+
+可以先将颜色数值定义为一种变量，并且在不同地方被引用，例如：`#534af7`。而深色模式可以视作是一种主题，在特定主题情况下颜色也需要会有所变化，举例来说颜色 `A` 在深色模式下可能会变成颜色 `B`，可以进一步通过命名来联系颜色之间的关系。
+
+先定义好颜色：
+
+- `primary: #534af7`
+- `primary-dark: #b887f7`。
+
+再定义好逻辑：
+
+```css
+:root {
+  --primary: #534af7;
+  --primary-dark: #b887f7;
+}
+
+/* 文字使用 primary 色 */
+body {
+  color: var(--primary);
+}
+
+/* 当 body 在暗色风格下文字使用 primary-dark 色 */
+body.dark {
+  color: var(--primary-dark);
+}
+```
+
+或者你是设计师工作内容可能会需要画两套相同内容的设计稿但指派不同颜色：
+
+![不同风格下的颜色](./color-in-different-theme.webp '界面 * 风格 = 累死人的工作量😐')
+
+显然这种做法太鸟了，这么做意味着每新增一种风格工作量会至少暴增一倍。除非是一些特殊的情境需要特别指定颜色，否则最好不要用这种方式来管理颜色。**如果你正在使用 [Tailwind 的 Darkmode 功能](https://tailwindcss.com/docs/dark-mode) 也应当留意这样的问题可能发生**。
+
+### 方法二、让颜色具备不同风格
+
+由前者案例可以看出虽然自由度高但颜色之间的关联性是定义在引用条件上的，这些逻辑零散的散落在不同页面角落将会很难管理与统一。
+
+但如果我们在这之上指定相同颜色具备不同风格特性，那么就可以让颜色之间的关联性更加紧密、更易于颜色管理与扩展风格。
+
+```css
+/* Primary 色的逻辑可以在不同情境下有不同的解释 */
+:root {
+  --primary: #534af7;
+}
+
+:root .dark {
+  --primary: #b887f7;
+}
+
+/* body 文字使用 primary 色 */
+body {
+  color: var(--primary);
+}
+```
+
+如今现代的 UI 设计软件都具备替相同颜色定义不同风格的功能，举例来说 Figma 可以通过 [Design Token](https://help.figma.com/hc/en-us/articles/18490793776023-Update-1-Tokens-variables-and-styles) 功能来实现不同情境下的变量定义，让设计者可以在弹指之间切换不同的风格，包括但不限于颜色。
+
+<Video
+  width={1200}
+  height={676}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/build-theme-the-right-way/mode-switch.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/build-theme-the-right-way/mode-switch.mp4',
+    },
+  ]}
+></Video>
+
+像是以上影片就是來自 [Update 1: Tokens, variables, and styles](https://help.figma.com/hc/en-us/articles/18490793776023-Update-1-Tokens-variables-and-styles) Figma 官方文件描述，可以替相同颜色打造不同风格定义，并轻松切换。
+
+![Figma Token 面板](./token-variant.webp 'Figma 可替不同颜色令牌定义不同风格')
+
+## 总结
+
+大多数时候制作颜色风格都应该替颜色定义不同样式作为出发点，很少会需要将定义颜色的逻辑写在个别 UI 当中，统一管理通常是「最正确」的做法。
