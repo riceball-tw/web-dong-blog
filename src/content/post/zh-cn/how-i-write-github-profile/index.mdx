@@ -1,0 +1,82 @@
+---
+isDraft: false
+icon:
+  name: simple-icons:github
+  title: GitHub Logo 符号
+subHeadline: How I write GitHub profile
+headline: 如何编写 GitHub 个人档案
+excerpt: 「如何编写 GitHub 个人档案」这个问题其实就像是「开发者怎么制作自己的名片」，毕竟对你感兴趣的人来说 GitHub 个人档案就是第一印象，所以可以斟酌放些「你热爱参与的专案或展示专业」基本不会错。像我有热情持续经营展现技术博客那就放上最大篇幅去介绍，把作品、博客或履历放上。
+category: Non-Technical Discussion
+tags:
+  - GitHub
+publishDate: 2024-09-25
+---
+
+## 为什么写 GitHub 个人档案
+
+「如何编写 GitHub 个人档案」这个问题其实就像是「开发者怎么制作自己的名片」，毕竟对你感兴趣的人来说 GitHub 个人档案就是第一印象，所以可以斟酌放些**你热爱参与的专案或展示专业**基本不会错。
+
+最终这是我的[个人 GitHub 档案](https://github.com/riceball-tw)。
+
+## 怎么编写自己的 GitHub 个人档案
+
+### 第一步、建立个人档案 Repo
+
+GitHub 个人档案并不是通过其他设置来创立，正是通过建立一个与自己 GitHub 账号同名的代码仓库，而里面的 `README.md` 就是个人档案。
+
+![创建个人档案 Repo](new-repo.webp)
+
+### 第二步、写下介绍
+
+觉得其实不用列上一大堆碰过的技术或等级，像我有热情持续经营展现技术博客那就放上最大篇幅去介绍，把作品、博客或履历放上，感兴趣的人会自己去点击。
+
+{/* prettier-ignore */}
+```md
+<h3>Hi 👋, I'm Riceball</h3>
+<p>A self-taught frontend developer from Taiwan, Passionate about developing interesting web apps!</p>
+
+- [📜 Resume](https://weweweb.pages.dev/en/resume/)
+- [💼 Portfolio](https://weweweb.pages.dev/en/work/)
+- [🏡 Personal Website](https://weweweb.pages.dev/en/)
+- [📝 Blog](https://www.webdong.dev/en/)
+
+---
+
+<!--START_SECTION:feed-->
+#### [实作电影院座位选位系统](https://www.webdong.dev/post/cinema-seats-layout/)
+之前碰到一道有趣的前端 UI 题，发现需要对于前端有较为全面的认知才有办法解出来，并且也可以针对感兴趣的领域延伸提出更更多问题，于是特地记录一下我的思考解题过程。身为一名前端工程师，你会怎么实作上图的电影院座位选位系统？
+#### [Intersection Observer 真实案例：自动更新目录](https://www.webdong.dev/post/real-use-case-of-intersection-observer-toc/)
+近期制作到内容大纲（Table of Contents）相关的功能，发现是一个很适合使用 Intersection Observer 的案例，通过监听特定元素来自动更新目录的状态。在早期可能会需要通过 getBoundingClientRect 之类的方法来计算元素有没有离开窗口，现在这样的需求就变得更加容易实现。
+#### [CSS Grid 真实案例：凸出的侧栏](https://www.webdong.dev/post/real-use-case-of-css-grid-extended-sidebar/)
+实际网页很少遇到特殊的视觉会需要动用到 CSS Grid 的情况，而我近期在制作一些比较特殊视觉的网页布局，事后感觉特别适合作为一个 CSS Grid 的启发教材，于是写下了本篇文章帮助通过真实世界案例更深刻了解 CSS Grid。
+#### [写给网页开发者的 CORS 理解](https://www.webdong.dev/post/cors-for-web-developer/)
+CORS (Cross-Origin Resource Sharing) 跨来源资源共享，是一个机制用来决定网页是否能够存取其他来源的资源，能有效防止不同来源之间的不正当资源存取。通过 CORS，可以在保护用户资料的同时，允许合法的跨来源请求。
+#### [来解 FizzBuzz 吧！附详细解题思路](https://www.webdong.dev/post/fizzbuzz/)
+这次我通过一步一步拆解解题路径来描述如何解题。从基本解到分离资料与逻辑、保持 immutable 以及边缘案例还有文件编写都有涵盖。打印出 1 到 100 的数字、假如数字是 3 的倍数，则打印 Fizz、假如数字是 5 的倍数，则打印 Buzz、假如数字是 3 和 5 的公倍数，则打印 FizzBuzz。
+<!--END_SECTION:feed-->
+```
+
+![我的 GitHub 个人档案](readme.webp)
+
+刚好我的博客有 RSS Feed，所以通过一些方便的现成 GitHub Action 来定期索取最新文章更新到个人档案中，使用 [rss-to-readme](https://github.com/JasonEtco/rss-to-readme) 有兴趣可以参考看看。
+
+```yml
+name: Update this repo's README
+
+on:
+  push:
+  schedule:
+    # Once a day at 8 AM
+    - cron: 0 8 * * *
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: JasonEtco/rss-to-readme@v1
+        with:
+          feed-url: https://www.webdong.dev/rss.xml
+          readme-section: feed
+          max: 5
+          template: "#### [{{ title }}]({{ link }}) \n{{ contentSnippet }}\n\n"
+```
