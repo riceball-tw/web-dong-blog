@@ -1,0 +1,80 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:edit-document-outline-rounded
+  title: Document Icon
+subHeadline: How to Achieve a Smoother Code Review Process?
+headline: How to Achieve a Smoother Code Review Process?
+excerpt: How to effectively conduct code reviews? This article aims to explore how to perform code reviews and improve overall code quality.
+category: Team
+tags:
+  - Communication
+publishDate: 2024-06-08
+lastModifiedDate: 2024-06-08
+series: Team Improvement
+---
+
+## Introduction
+
+I have never really understood how to effectively conduct code reviews. Everyone assumes that **being able to write code means you can also review others' code**, but I believe this is an additional skill. This prompted me to write this article to understand how to conduct code reviews. Over time, I will return to edit this article to gradually address the issues I encounter during code reviews...
+
+- How deep should I understand the code being reviewed?
+- Is reviewing code a meaningful output?
+- How can I successfully lead a code review?
+
+## Reviewee
+
+### Prepare all necessary information for the code review
+
+Code is used to implement product behavior, and before reviewing how to achieve the goals (How), one should fully understand why (Why) this is done. Providing complete background information can help reviewers better understand the purpose of the code. Before asking others to review the code, provide the necessary contextual information to **help reviewers efficiently enter the mindset and environment for the review**:
+
+- Specification documents
+- Design drafts
+- Testing environment, relevant technical document links
+
+More supplementary information could include:
+
+- How to approach this code change (specific file, segment, or document)
+- How you tested and ensured the code works correctly (through automated tests or at least a brief description of expected behavior)
+
+Sometimes, when adjusting UI-related code, I will open a whiteboard tool like [excalidraw](https://excalidraw.com/) and take screenshots of my testing process to ensure everything is fine. People tend to understand images faster and with less cognitive load.
+
+### Minimize the scope of the review as much as possible
+
+A large review can create immense pressure for both the reviewer and the reviewee, and focus will sharply decline.
+
+Simply put, **attention is a limited resource for everyone**. When the scope of the review expands, it means that the reviewer needs to space out more uninterrupted time to focus on the review, which not everyone can manage. Therefore, we should minimize the scope of the review as much as possible, aiming for quicker iterations, making it easier to identify issues with each small change.
+
+However, this largely depends on the management of the team. For example, different version management strategies can also affect iteration speed: [Git Branching Strategies: Git Flow, GitHub Flow, GitLab Flow, TBD](/post/trunk-based-development/). Personally, I prefer fast and frequent iterations, but it still depends on the team's habits and the nature of the product.
+
+## Reviewer
+
+### Provide a level for feedback
+
+During the review, we should be mindful that our "goal" is to reach a consensus and conclude the review as quickly as possible. It might be a good idea to grade feedback, for example, marking: `Nit(nitpick):` for minor issues that can be considered optional.
+
+To balance between perfect code and time costs, I believe that each time a reviewer should provide clear boundaries to inform the reviewee "what minimum issues need to be fixed to pass the review." After addressing the truly important issues, we can see if there is extra time to explore minor problems.
+
+### Provide feedback as quickly as possible
+
+The longer the review takes, the more pressure accumulates on the reviewee to get the review approved. Often, this means sacrificing code refactoring and improvement in favor of just passing the review.
+
+Reviewers can speed up feedback to mitigate this issue or inform the reviewee in advance if they expect not to complete the review in a short time. This allows the reviewee to mentally prepare to handle other tasks or find other reviewers.
+
+### Style standards
+
+Some issues do not have absolute right or wrong answers, and such questions often lead to disputes between reviewers and reviewees without clear outcomes, such as syntax style, naming conventions, etc. A consensus can be reached within the team, and even if there are objections later, everyone should agree to fully adhere to the standards ([Disagree and commit](https://en.wikipedia.org/wiki/Disagree_and_commit)) to focus time on truly important matters. Automated Linter tools can be used to review such style issues and establish hard rules.
+
+## Conclusion
+
+Reviewing code is the most direct way to discover and improve issues. Properly conducted code reviews can fill knowledge gaps among team members and enhance the overall quality of the code.
+
+- Ensure code quality, thereby ensuring product quality
+- Reduce future technical debt, resulting in lower maintenance costs
+- Provide knowledge sharing among developers, thus improving work efficiency and increasing bus index
+
+## Further Reading
+
+- [The Art of Code Review - kettanaito](https://kettanaito.com/blog/the-art-of-code-review)
+- [Speed of Code Reviews - eng-practices](https://google.github.io/eng-practices/review/reviewer/speed.html)
+- [成為更重視 Code Review 的工程師 - Byte and Ink](https://minglunwu.com/notes/2024/code_review.html/)
