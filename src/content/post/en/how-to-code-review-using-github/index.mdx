@@ -1,0 +1,52 @@
+---
+isDraft: false
+icon:
+  name: simple-icons:github
+  title: GitHub Logo
+subHeadline: How to Code Review Using GitHub
+headline: How to Code Review Using GitHub
+excerpt: Git and GitHub have become mainstream in the industry. This article explores built-in features on GitHub that can enhance code review efficiency.
+category: Technical Discussion
+tags:
+  - Git
+  - GitHub
+  - Productive
+publishDate: 2024-05-27
+---
+
+## Introduction
+
+Git and GitHub have become mainstream in the industry, and there is a high chance that your project will also use them for version control. This article mainly explores the many built-in features on the GitHub web version that can enhance code review efficiency and are worth understanding.
+
+Since GitHub is a service built on top of Git, we often underestimate its functionalities. However, GitHub has many great features that are not so obvious, so I will share some that I find useful but are often overlooked in daily use.
+
+## Tip 1: Submission Review Methods
+
+Have you ever wondered what the difference is between "Add single comment" and "Start a review" during a GitHub review? If you haven't [specifically checked the documentation](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request?tool=webui), you might not know the difference in purpose between these two buttons. Aren't they both for submitting reviews?
+
+![review](./review.webp)
+
+The main difference lies in the usage scenario. If you are sure that you only have one review to submit, then "Add single comment" is very convenient. However, if you have multiple reviews to submit, it's better to choose "Start a review" so you can comment all at once before submitting.
+
+- **Add single comment**: Quickly submit a single comment.
+- **Start a review**: Add multiple comments and click the "Finish your review" button to submit them all at once.
+
+Why not submit one by one? Because each submission will notify (and even email) everyone watching the PR. If there are many items to review or it takes a long time, frequent notifications can be quite annoying.
+
+## Tip 2: Code Suggestions
+
+Sometimes you want to provide some code suggestions during the review, and you can use the "Add a suggestion" feature (or `ctrl + g`). This will bring up a Markdown Code Block, making it easy to write down suggestions, and when switching to Preview, it will automatically show an interactive comparison with the existing code.
+
+![suggestion](./suggestion.webp)
+
+Reviewers, while reading the review, not only receive more specific suggestions but can also directly click the "Commit suggestion > Commit changes" button to apply the suggestions.
+
+## Tip 3: Multi-line Review
+
+The "+" button to activate code suggestions is actually draggable, allowing you to select multiple lines of related code for review at once.
+
+![Multi-line Review](./multi-lines-comment.webp)
+
+## Further Reading
+
+- [How to Review a Pull Request on GitHub - Dev Leonardo](https://www.youtube.com/watch?v=TO9xK4XTBbQ)
