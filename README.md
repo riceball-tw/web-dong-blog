@@ -1,6 +1,5 @@
 **[WebDong](https://www.webdong.dev/) - Discover Interesting Things Around The Web**
 
-[About](https://www.webdong.dev/about/) /
 [Posts](https://www.webdong.dev/post/) /
 [Toolbox](https://www.webdong.dev/toolbox/) /
 [ShortPosts](https://www.webdong.dev/shortpost/)
