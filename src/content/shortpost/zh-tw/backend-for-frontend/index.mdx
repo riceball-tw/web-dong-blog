@@ -1,0 +1,26 @@
+---
+headline: 學會新概念 Backend for Frontend (BFF)
+publishDate: 2024-12-21
+category: Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DDzUQG5B6pU
+---
+
+了解一下發現是一種 API Gateway Pattern 的延伸，簡單來說是一個 API 的代理架構，用來滿足多樣化前端需求的專屬後端（注重業務邏輯，進行數據整合、轉換和裁剪）。
+
+舉例多種前端需要和多個服務索取資料，將產生問題：
+
+1. 前端不是與多個後端服務緊密耦合（造成依賴性高）就是使用過於通用的 API（無法滿足特定需求）
+2. 須與不同服務頻繁溝通
+3. 安全性問題（暴露具體服務 Endpoint）
+
+這時候如果多設置一層 BFF，可以將所有溝通進行集中並且提供最合乎需求的 API 供前端使用，當然也會產生額外的問題：
+
+1. 增加複雜度
+2. 增加延遲
+3. 增加單點故障的可能性
+
+如果前端和後端服務到達一定複雜程度，創建 BFF 是一種解決問題的選項。許多現代框架像是 Next 或 Nuxt 都具備全端能力，是一個快速切入的好選項，也可以讓處理 Client 的團隊接手 BFF 降低維護成本並提高開發效率。
+
+- [前端開發者該負責寫 API Endpoints 嗎？The Backend For Frontend Pattern (BFF) In Microservices World - 莫力全 Kyle Mo](https://medium.com/starbugs/%E5%89%8D%E7%AB%AF%E9%96%8B%E7%99%BC%E8%80%85%E8%A9%B2%E8%B2%A0%E8%B2%AC%E5%AF%AB-api-endpoints-%E5%97%8E-the-backend-for-frontend-pattern-bff-in-microservices-world-1368362c141c)
+- [What is BFF?! (With Nuxt, Nitro and h3) - Alexander Lichter](https://www.youtube.com/watch?v=Zli-u9kxw0w)
