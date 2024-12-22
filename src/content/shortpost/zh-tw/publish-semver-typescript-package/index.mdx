@@ -1,0 +1,17 @@
+---
+headline: 撰寫自動化發布語意化版本 TypeScript NPM 套件
+publishDate: 2024-12-13
+category: CI-CD
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DDgMGg9BU-Y
+---
+
+使用套件時總是會好奇開發的流程是如何做到的？近期路過 Matt Pocock 的影片跟著做出一個套件發到 NPM 上，最棒的是很多步驟都達成自動化省下不少功夫：
+
+1. 使用 tsup 將 ts 轉為 esm 與 cjs 模組格式
+2. 使用 changeset 管理更新 changelog 與 version
+3. 使用 GitHub Actions 自動化 CI/CD 流程
+
+[Blazing Fast Tips: Publishing to NPM - Matt Pocock](https://www.youtube.com/watch?v=eh89VE3Mk5g)
+
+我的經歷可以參考：[撰寫自動化發布語意化版本 TypeScript NPM 套件](https://www.webdong.dev/post/auto-publish-typescript-package-with-semver-to-npm/)，後續寫了一個 TS 套件公開發布：[edit-element](https://github.com/riceball-tw/edit-element)。也順帶玩玩看 Playwright 做 E2E 測試
