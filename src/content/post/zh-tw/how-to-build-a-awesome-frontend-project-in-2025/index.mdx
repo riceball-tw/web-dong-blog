@@ -1,0 +1,114 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:auto-awesome-rounded
+  title: 星星符號
+subHeadline: How to Build a Awesome Frontend Project in 2025
+headline: 如何架構一個超讚的前端專案於 2025 年 (feat. Vue)
+excerpt: 隨著前端演進，我們時常需要依靠現成的框架輪子協助，而其中 Vue 又是繼 React 外第二熱門且成熟的選項，但很少有教學提到一個完整的專案該如何建構，以及有哪些模式可以遵循。這次來介紹一下如果從頭開始我會怎麼建構一個 Vue 專案，在 2025 年！
+category: Vue
+publishDate: 2024-12-23
+---
+
+## 前言
+
+隨著前端演進，我們時常需要依靠現成的框架輪子協助，而其中 Vue 又是繼 React 外第二熱門且成熟的選項，但很少有教學提到一個完整的專案該如何建構，以及有哪些模式可以遵循。這次來介紹一下如果從頭開始我會怎麼建構一個 Vue 專案，在 2025 年！
+
+<Info type="info">
+  雖然主軸是介紹如何在 Vue
+  生態系內建構一個前端專案，但相同的概念可以拿到任何生態系上，你永遠會需要查看最新文件了結更多。
+</Info>
+
+## 框架選擇
+
+Vue 標榜是一個 Progressive JavaScript Framework，也就是說可以漸進採用適合自己的技術。現今如果想要創建一個正經的專案通常會使用 Vite 建構工具，透過官方推薦的 [create-vue](https://github.com/vuejs/create-vue) ，常搭配的工具也會詢問要不要順帶安裝：
+
+```bash
+✔ Project name: … <your-project-name>
+✔ Add TypeScript? … No / Yes
+✔ Add JSX Support? … No / Yes
+✔ Add Vue Router for Single Page Application development? … No / Yes
+✔ Add Pinia for state management? … No / Yes
+✔ Add Vitest for Unit testing? … No / Yes
+✔ Add an End-to-End Testing Solution? … No / Cypress / Nightwatch / Playwright
+✔ Add ESLint for code quality? … No / Yes
+✔ Add Prettier for code formatting? … No / Yes
+✔ Add Vue DevTools 7 extension for debugging? (experimental) … No / Yes
+
+Scaffolding project in ./<your-project-name>...
+Done.
+```
+
+<Info type="info">
+  使用 Vite 的另一個原因是因為我們通常需要將 single-file components (SFCs) 也就是 `.vue` 檔案轉換為瀏覽器看得懂的 JS
+  模組。
+</Info>
+
+或是初始化一個乾淨的 [vite 專案](https://vite.dev/guide/)，預設 Vite 是 <abbr title="Single Page Application">SPA</abbr> 模式，如果你想把 Vite 爆改成 <abbr title="Multi Page Application">MPA</abbr> 或 <abbr title="Server Side Rendering">SSR</abbr> 與其他渲染模式也是沒問題的，像是 Nuxt、Astro、Remix、SvelteKit、Vitest……等一大票現代熱門框架背後都是依靠 Vite，已經是個成熟熱門的解決方案。
+
+如要建立「中大型應用」或是「SPA 外的渲染模式」可以直接選擇 [Nuxt](https://nuxt.com/) 元框架，它在 Vite 之上發展了極為成熟的 Vue 生態系，像是路由、渲染模式、狀態管理、TypeScript……等方面都有非常全面的整合，可以參考介紹影片：[Nuxt in 100 Seconds](https://www.youtube.com/watch?v=dCxSsr5xuL8)。
+
+## 專案習慣
+
+建議團隊在初期就**制定且貫徹相同的習慣**根據：
+
+- [Vue.js 官方寫作風格範例](https://vuejs.org/style-guide/)
+- [Nuxt 官方目錄結構文件](https://nuxt.com/docs/guide/directory-structure/app)
+- [Vue 常見設計模式](https://www.patterns.dev/vue/components)
+
+並不存在絕對具體的方式去管理專案結構，這部分通常是**規則制定了，那就一直延續下去是最好的**。有的團隊根據功能分類也有的根據頁面分類，單純的習慣問題。
+
+參考你過往經驗或有興趣的專案並從中學習，**建立一個團隊成員都信服的制度去管理即可**，可以參考看看：[Junior vs Senior React Folder Structure - How To Organize React Projects - Web Dev Simplified](https://www.youtube.com/watch?v=UUga4-z7b6s)
+
+## 如何維護 UI
+
+在創立專案時就應該思考清楚應該如何應對常見的 UI 模式像是：按鈕、選單、輸入框，是完全自己造輪子嗎？還是省事用現成的就好？沒有絕對的解答，但通常大多數 UI 問題都應該在規劃時解決，讓我們把時間留給真正重要的事情上。
+
+- 產品還在驗證可行性階段或不需要太多客製化 = 使用現成元件庫
+- 需要客製化或存在歷史包袱 = 自行維護
+
+如果從更高層次來探討如何建構現代網頁，不單前端，就連 UI 也應該具備 [Atomic Design](https://atomicdesign.bradfrost.com/chapter-2/) 的思維來開發與維護，才能避免設計與開發配合上脫鉤以及後續配合流暢。
+
+以我的經歷來說使用 Atomic Design 給元件劃分了清晰的用途與階級，非常適合管理純粹重複性質高的 UI 元件，差不多像是 [the component gallery](https://component.gallery/components/) 提到的通用 UI 模式或各大設計系統一樣。
+
+但實際上很多情境是在抽象完才發現永遠不會覆用導致徒增複雜度，只能說**對於抽象請盡量謹慎，過早或過度的抽象都是邪惡的**，最好讓團隊在 Wireframe 階段就應當規劃清楚。
+
+## 選擇趁手工具
+
+代碼品質？測試？SEO？字體？Icon 庫？ Nuxt 對於開發者體驗非常友好，上面提到的需求大致上都有對應的套件供你使用，可以參考： [8 libraries I use on EVERY project](https://www.youtube.com/watch?v=_GrdYoO3h0g&list=PLKE7c8z_v-jnt2YlEfF0kFSOehB_Fgxom)。
+
+- 代碼品質：ESLint、Prettier
+- 代碼測試：Vitest、Cypress、Playwright、Storybook
+- 表單驗證：vee-validation、Zod
+- SEO：NuxtSEO
+- Icon 庫：iconify
+- 工具庫：Lodash、VueUse
+- 流量分析：Google Analytics
+- ……
+
+不同生態系和團隊有不一樣的偏好套件，大概念是**最好在一開始規劃好整個專案應採用的工具**，避免開發到一半才開始評估如何在開發環境中導入工具與流程。
+
+## 如何運營專案
+
+待專案進入穩定階段後，除了開發外也應當開始留意專案運營上如何降低成本，也就是 CI/CD 以及版本管理上的策略。程式行為如何自動化測試？專案如何自動化部屬？開發環境如何規劃？
+
+- [What does larger scale software development look like? - Web Dev Cody](https://www.youtube.com/watch?v=Dl-BdxNRUqs)
+- [完整介紹 Git 分支策略 feat. Git Flow, GitHub Flow, GitLab Flow, TBD](https://www.webdong.dev/post/trunk-based-development/)
+
+## 如何管理巨型專案
+
+隨著多個專案成功步上正軌，也順帶將會遇到多個專案同步上的問題，如果各個專案和團隊各自為政可能面臨效率低下的問題。專案間代碼如何協同合作？套件版本如何保持更新？CI/CD 效率如何改善與統一？
+
+- [故事化直白的解釋 Monorepo 是什麼](https://www.webdong.dev/post/explain-monorepo/)
+- [來看看 Nx 如何解決套件框架更新的問題 - nx migrate](https://www.webdong.dev/post/nx-migrate-to-solve-upgrade-problem/)
+
+Nuxt Layer 是一個比較新穎的解決方案也可以參考看看：[從理念到實踐：Nuxt Monorepo 開發大型 Vue Web 應用](https://serko.dev/post/nuxt-3-monorepo-zh)
+
+## 總結
+
+綜合先前工作時遇到的經驗總結出如果要架構一個 Vue 為基底的 App 我會如何處理以及留意的地方。不管是規劃新專案或是了解不同公司的技術都會是很好的參照。
+
+## 延伸閱讀
+
+- [Mastering Vue Components Folder Structure for Scalable Apps - Vue.js Nation](https://vueschool.io/articles/vuejs-tutorials/structuring-vue-components/)
+- [How to Structure a Large Scale Vue Application - Vue.js Nation](https://vueschool.io/articles/vuejs-tutorials/how-to-structure-a-large-scale-vue-application/)

@@ -1,0 +1,114 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:auto-awesome-rounded
+  title: Star Symbol
+subHeadline: How to Build a Awesome Frontend Project in 2025
+headline: How to Build a Awesome Frontend Project in 2025
+excerpt: Few tutorials cover how to build a complete project. This is how I would build a Vue project from scratch in 2025!
+category: Vue
+publishDate: 2024-12-23
+---
+
+## Introduction
+
+As frontend evolves, we often rely on existing frameworks. Vue is the second most popular option after React, but few tutorials cover how to build a complete project. This post introduces how I would structure a Vue project from scratch in 2025!
+
+<Info type="info">
+  Although the focus is on how to build a frontend project within the Vue ecosystem, the same concepts can be applied to
+  any ecosystem. You will always need to check the latest documentation for more.
+</Info>
+
+## Framework Selection
+
+Vue claims to be a Progressive JavaScript Framework, meaning it can be adopted incrementally based on your needs. Nowadays, if you want to create a serious project, you would typically use Vite as the build tool, through the officially recommended [create-vue](https://github.com/vuejs/create-vue), and it will also ask you whether to install common tools:
+
+```bash
+✔ Project name: … <your-project-name>
+✔ Add TypeScript? … No / Yes
+✔ Add JSX Support? … No / Yes
+✔ Add Vue Router for Single Page Application development? … No / Yes
+✔ Add Pinia for state management? … No / Yes
+✔ Add Vitest for Unit testing? … No / Yes
+✔ Add an End-to-End Testing Solution? … No / Cypress / Nightwatch / Playwright
+✔ Add ESLint for code quality? … No / Yes
+✔ Add Prettier for code formatting? … No / Yes
+✔ Add Vue DevTools 7 extension for debugging? (experimental) … No / Yes
+
+Scaffolding project in ./<your-project-name>...
+Done.
+```
+
+<Info type="info">
+  Another reason to use Vite is that we usually need to convert single-file components (SFCs), which are `.vue` files,
+  into JS modules that the browser can understand.
+</Info>
+
+Alternatively, you can initialize a clean [vite project](https://vite.dev/guide/). By default, Vite operates in <abbr title="Single Page Application">SPA</abbr> mode. If you want to modify Vite to <abbr title="Multi Page Application">MPA</abbr> or <abbr title="Server Side Rendering">SSR</abbr> and other rendering modes, that's also possible. Many modern popular frameworks like Nuxt, Astro, Remix, SvelteKit, Vitest, etc., rely on Vite, making it a mature and popular solution.
+
+For building "medium to large applications" or "rendering patterns outside of SPA," you can directly choose the [Nuxt](https://nuxt.com/) meta-framework, which has developed a very mature Vue ecosystem on top of Vite, with comprehensive integrations in areas like routing, rendering modes, state management, TypeScript, etc. You can refer to the video: [Nuxt in 100 Seconds](https://www.youtube.com/watch?v=dCxSsr5xuL8).
+
+## Project Best Practices
+
+It is recommended that teams **establish and adhere to the same practices** from the beginning based on:
+
+- [Vue.js Official Style Guide](https://vuejs.org/style-guide/)
+- [Nuxt Official Directory Structure Documentation](https://nuxt.com/docs/guide/directory-structure/app)
+- [Common Vue Design Patterns](https://www.patterns.dev/vue/components)
+
+There is no absolute way to manage project structure; it is usually best to **continue with the established rules**. Some teams categorize by functionality, while others categorize by pages; it is simply a matter of habit.
+
+Refer to your past experiences or some project you are interested in and learn from them, **establish a system that all team members can understand and agree upon**. You can check out: [Junior vs Senior React Folder Structure - How To Organize React Projects - Web Dev Simplified](https://www.youtube.com/watch?v=UUga4-z7b6s)
+
+## Managing UI
+
+When starting a project, you should think carefully about how to address common UI patterns such as buttons, dropdown menus, and input fields. Should you reinvent the wheel completely, or is it better to use existing solutions? There is no absolute answer, but most UI issues should be resolved during planning, allowing us to focus on what truly matters.
+
+- The product is still in the experimental stage or does not require much customization = Use ready-made component libraries
+- Requires customization or has historical baggage = Maintain it yourself
+
+From a higher-level perspective on how to construct modern web pages, not only the front end but also the UI should adopt the thinking of [Atomic Design](https://atomicdesign.bradfrost.com/chapter-2/) for development and maintenance, to ensure smooth collaboration later.
+
+In my experience, using Atomic Design provides a clear purpose and hierarchy for components, making it very suitable for managing purely repetitive UI components, similar to the common UI patterns mentioned in [the component gallery](https://component.gallery/components/) or various design systems.
+
+However, in many situations, it is only after abstraction that we realize it will never be reused, leading to unnecessary complexity. One can only say **be cautious with abstraction; premature or excessive abstraction is evil**. It is best for the team to plan clearly during the Wireframe stage.
+
+## Choosing the Right Tools
+
+Code quality? Testing? SEO? Fonts? Icon libraries? Nuxt is very friendly for developer experience, and the aforementioned needs generally have corresponding packages for you to use. You can refer to: [8 libraries I use on EVERY project](https://www.youtube.com/watch?v=_GrdYoO3h0g&list=PLKE7c8z_v-jnt2YlEfF0kFSOehB_Fgxom).
+
+- Code quality: ESLint, Prettier
+- Code testing: Vitest, Cypress, Playwright, Storybook
+- Form validation: vee-validation, Zod
+- SEO: NuxtSEO
+- Icon library: iconify
+- Utility library: Lodash, VueUse
+- Analysis: Google Analytics
+- ……
+
+Different ecosystems and teams have different preferred packages. The general idea is **it is best to plan the tools to be used for the entire project from the beginning**, to avoid evaluating how to introduce tools and processes into the development environment halfway through development.
+
+## How to Operate a Project
+
+Once the project enters a stable phase, in addition to development, attention should also be paid to how to reduce costs in project operations, specifically regarding CI/CD and version management strategies. How can program behavior be automated for testing? How can the project be automatically deployed? How should the development environment be planned?
+
+- [What does larger scale software development look like? - Web Dev Cody](https://www.youtube.com/watch?v=Dl-BdxNRUqs)
+- [Complete introduction to Git branching strategies feat. Git Flow, GitHub Flow, GitLab Flow, TBD](https://www.webdong.dev/post/trunk-based-development/)
+
+## How to Manage Large Projects
+
+As multiple projects successfully get on track, there will also be issues with synchronizing multiple projects. If each project and team acts independently, they may face efficiency issues. How can code collaborate between projects? How can package versions be kept up to date? How can CI/CD efficiency be improved and unified?
+
+- [A straightforward explanation of what Monorepo is](https://www.webdong.dev/post/explain-monorepo/)
+- [Let's see how Nx solves the problem of package framework updates - nx migrate](https://www.webdong.dev/post/nx-migrate-to-solve-upgrade-problem/)
+
+Nuxt Layer is a relatively new solution that can also be referenced: [Nuxt Monorepo for Large-Scale Vue Web Application](https://serko.dev/post/nuxt-3-monorepo)
+
+## Summary
+
+Based on the experiences encountered in previous work, I summarize how I would handle and pay attention to building a frontend App. Whether planning a new project or understanding the technologies of different companies, it will serve as a good reference.
+
+## Further Reading
+
+- [Mastering Vue Components Folder Structure for Scalable Apps - Vue.js Nation](https://vueschool.io/articles/vuejs-tutorials/structuring-vue-components/)
+- [How to Structure a Large Scale Vue Application - Vue.js Nation](https://vueschool.io/articles/vuejs-tutorials/how-to-structure-a-large-scale-vue-application/)
