@@ -1,0 +1,218 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:robot-2-outline-rounded
+  title: Robot Icon
+subHeadline: Integrate AI into your coding workflow - GitHub Copilot
+headline: Integrate AI into your coding workflow - GitHub Copilot
+excerpt: The nature of developers' work puts us on the front lines alongside AI, and GitHub Copilot has significantly boosted my productivity and learning efficiency.
+category: Share
+tags:
+  - Productive
+publishDate: 2023-12-26
+---
+
+## Introduction
+
+GitHub Copilot is a collaborative programming tool powered by artificial intelligence launched by Microsoft, supported in [various IDEs](https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot?tool=azure_data_studio). My opportunity to use it came when I received the [GitHub Student Developer Pack](https://education.github.com/pack) while still a student. By registering with my school email and providing some proof, I was able to claim it. Over the years, it greatly improved my development and learning efficiency, making it **one of the few services I truly believe is worth paying for**.
+
+<Info type="info">
+  If you are a student, I highly recommend claiming the [GitHub Student Developer
+  Pack](https://education.github.com/pack), and you can also [try Copilot for
+  free](https://github.com/github-copilot/signup).
+</Info>
+
+## Positioning of GitHub Copilot
+
+Currently, Copilot is very suitable for assisting developers in automatically resolving underlying programming tasks, such as filling in boilerplate code, generating documentation and dummy data, addressing common questions with clear answers, writing tests, and more. This allows developers to focus more on planning the high-level logic of their programs rather than getting bogged down in low-level details.
+
+### If You Are a Beginner
+
+> Now is the best time to learn development with AI assistance.
+
+For those just entering the field of programming, you may still be exploring syntax and understanding processes. At this point, Copilot acts like a mentor mastering in common patterns, always able to provide correct and standard code examples. It can help you quickly understand the syntax of different languages while providing practical references during the learning process. In the early stages, it can greatly build your confidence in coding, but be careful not to rely too heavily on suggestions and accept them blindly.
+
+I recommend carefully reading and actively verifying every line of code suggested by Copilot to ensure you understand the meaning behind each line and can explain why it is written that way. This way, you can truly learn something rather than just coding based on suggestions.
+
+### If You Know What You're Doing
+
+> It's worth adopting to experience an immediate leap in productivity
+
+For developers with clear plans and goals for their projects, Copilot is also a powerful assistant. Once you understand and master most of the basic syntax or background, Copilot can become your rapid development partner, allowing you to focus on higher-level design and logic. This makes you more efficient during the development process, enabling you to realize your ideas more quickly. Additionally, Copilot's suggestions can serve as good references and may even inadvertently inspire new solutions to problems.
+
+Make good use of GitHub Copilot, letting it become a valuable assistant in your development journey, not only improving productivity but also potentially making your code more concise and efficient.
+
+## Basic Operations
+
+The [official documentation](https://docs.github.com/en/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode) provides detailed integration methods. For my commonly used editor VS Code, you only need to add Copilot in the extensions and log in with your GitHub account. After installation, a Copilot icon will appear in the lower right corner, indicating successful installation, and you can click it to configure Copilot:
+
+![GitHub Copilot Icon in the Lower Right Corner of VSCode](./show-copilot-status-menu.webp)
+
+### Accepting Suggestions
+
+As soon as you start typing code, Copilot will begin to suggest, and you can press <kbd>tab</kbd> to accept the suggestion:
+
+<Video
+  width={600}
+  height={214}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/integrate-ai-into-your-coding-workflow/greeting.mp4',
+    },
+  ]}
+></Video>
+
+### Accepting Partial Suggestions
+
+If you agree with some content in the suggestion, you can accept partial suggestions using keyboard shortcuts.
+
+<Video
+width={600}
+height={282}
+data={[
+{
+type: 'mp4',
+src: 'images/posts/integrate-ai-into-your-coding-workflow/word.mp4',
+},
+]}
+
+> </Video>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operating System</th>
+      <th>Accept Next Suggestion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>macOS</td>
+      <td>
+        <kbd>Command</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>
+        <kbd>Control</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>
+        <kbd>Control</kbd>+<kbd>→</kbd>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Switching Suggestions
+
+If you are not satisfied with the suggestion results, you can switch to different suggestions using keyboard shortcuts or by hovering over the suggestion and clicking the interface. Alternatively, <kbd>Ctrl</kbd> + <kbd>Enter</kbd> will open a new window and generate more suggestion options (you can click the "Accept" button to add them to the existing code):
+
+<Video
+width={600}
+height={364}
+data={[
+{
+type: 'mp4',
+src: 'images/posts/integrate-ai-into-your-coding-workflow/next.mp4',
+},
+]}
+
+> </Video>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operating System</th>
+      <th>View Next Suggestion</th>
+      <th>View Previous Suggestion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>macOS</td>
+      <td>
+        <kbd>Option (⌥) or Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Option (⌥) or Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Windows</td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+    <tr>
+      <td>Linux</td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>]</kbd>
+      </td>
+      <td>
+        <kbd>Alt</kbd>+<kbd>[</kbd>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+![More Suggestions Copilot Window](./more.webp 'More Suggestion Prompt Window')
+
+## Advanced Operations - Interacting with Copilot
+
+By installing the additional [Copilot Chat Extension](https://docs.github.com/en/copilot/github-copilot-chat/using-github-copilot-chat-in-your-ide), you can interact with Copilot through conversation. In the chat box, you can specify the context of the conversation using keywords: `@workspace`, `@vscode`, `@terminal`, and specify actions using `/`, such as: `@workspace /explain How does this project work?`
+
+![Using GitHub Copilot Chat Extension](./devcontainer-explain.webp)
+
+### Instruction Template
+
+It's better to practice than to talk a lot. Here are some prompts you can try in your existing projects:
+
+- `/help`: List Copilot commands
+- `/clear`: Clear Copilot's conversation
+- `@workspace /explain`: Explain how to run selected code through a series of steps
+- `@workspace /fix`: Fix errors in selected code
+- `@workspace /new`: Create a new project through description
+- `@workspace /newNotebook`: Create a new Jupyter Notebook through description
+- `@workspace /tests`: Create unit tests through selected code
+- `@vscode /api`: Ask questions related to VSCode plugins
+- `@terminal`: Explain how to achieve requirements through the terminal
+
+In addition to using `@` for context, you can also select code and right-click to use the "Inline Chat" feature to specify the snippet you want to ask Copilot about. This way, Copilot can better understand your needs and provide more accurate suggestions.
+
+![Inline Chat](./inline-chat.webp)
+
+## Advanced Operations - Generate Commit Messages
+
+This feature is something I'm still observing and don't use often, because my personal experience shows that the generated results are not particularly good. Additionally, due to work habits, I tend to use Chinese for commits less frequently, but it seems to be a good direction!
+
+![VSCode Git Panel](./generate-commit.webp)
+
+## Summary
+
+Looking forward to more new features from Copilot, Copilot supports a variety of languages and frameworks, but usually, the suggestions for Python, JavaScript, TypeScript, Ruby, Go, C#, and C++ are more complete. It provides the next step code suggestions by analyzing the context of the code and the frameworks used.
+
+### Limitations
+
+- **Limited Scope** - It cannot handle complex program structures, less common programming languages or frameworks. The quality of the answers depends on the diversity of the training data, so Copilot's performance may be poorer with less popular languages or frameworks.
+- **Potential Bias** - Since the existing training data comes from various repositories, human biases and errors may be learned and result in poor code.
+- **Risk Concerns** - Be careful when writing security-sensitive code, and always thoroughly check and test the generated code.
+
+### Key Points
+
+- **Don't Accept Blindly** - The suggestions provided by Copilot should only serve as a general reference. Don't accept them blindly; read carefully and actively verify to ensure you understand the meaning behind each line of code and can explain why it is written that way.
+- **Provide Complete Context and Intent** - Copilot analyzes the currently opened files as context for its responses. Therefore, good naming, comments, and example code can help Copilot provide more accurate suggestions. Specifically, using standardized comment rules like [JSDOC](https://jsdoc.app/) can effectively communicate program requirements to Copilot.
+- **Communicate in English** - This may just be my bias, but to avoid misinterpretation due to language conversion, I usually find that communicating with Copilot in English yields better results.
+
+## Further Reading
+
+- [Quickstart for GitHub Copilot - GitHub](https://docs.github.com/en/copilot/quickstart)
+- [GitHub Copilot - Visual Studio Code](https://code.visualstudio.com/docs/editor/github-copilot)
+- [Copilot Chat in Visual Studio Code - GitHub Universe](https://www.youtube.com/watch?v=a2DDYMEPwbE)
