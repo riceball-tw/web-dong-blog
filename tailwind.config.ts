@@ -91,6 +91,10 @@ export default {
             'h2:first-of-type': {
               marginTop: 0,
             },
+            kbd: {
+              '@apply p-1 bg-primary text-foreground bg-opacity-20 border border-primary border-opacity-40 shadow-none':
+                {},
+            },
             video: {
               borderRadius: theme('borderRadius.lg'),
             },
