@@ -25,6 +25,10 @@ setLanguageTag(Astro.currentLocale as LanguageKey)
 
 <html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
   <head>
+    <!-- Charset declaration is missing or occurs too late in the HTML -->
+    <!-- https://developer.chrome.com/docs/lighthouse/best-practices/charset -->
+    <meta charset="UTF-8">
+    <!--  -->
     <ThemeInit />
     <DefaultHead { ...Astro.props}/>
     <GoogleAnalytic />
