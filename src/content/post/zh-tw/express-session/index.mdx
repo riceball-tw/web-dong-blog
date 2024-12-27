@@ -1,0 +1,196 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:person-rounded
+  title: 人影符號
+subHeadline: Build a Membership System with Express.js Session
+headline: 使用 Express.js Session 實作會員系統
+excerpt: 依照先前的教學我們已經可以創建基本的 CRUD 程式，但基於 HTTP 是無狀態的協議，如果單純實作會員系統用戶將會需要在每次操作登入會員相關的行為時重複驗證，明顯是糟糕的使用體驗。一種解決方案是在請求時伺服器將會建立 Session。
+category: Express.js
+tags:
+  - Auth
+publishDate: 2024-12-27
+---
+
+## 前言
+
+依照先前的教學我們已經可以創建基本的 CRUD 程式，但基於 HTTP 是無狀態的協議，如果單純實作會員系統用戶將會需要在每次操作登入會員相關的行為時重複驗證，明顯是糟糕的使用體驗。
+
+一種解決方案是在請求時伺服器將會建立 Session (存儲在伺服器端的一筆數據)，而用戶會從回應拿到一組 session ID 通常存放於 Cookie 當中，伺服器透過這個 ID 來識別和定位特定用戶的 session 資料，這樣一來伺服器就能記住個別用戶相關的對應資料。
+
+## Session 儲存
+
+具體來說 [express-session](https://www.npmjs.com/package/express-session) 是常用的套件幫助我們實踐伺服器 Session。建議閱讀官方文件進一步設置，像是：
+
+- `name`: 可自訂 cookie 名稱，避免使用預設的 `connect.sid`
+- `cookie.httpOnly`: 預設為 `true`，但建議明確說明
+- `cookie.sameSite`: 建議設為 `strict` 增加安全性
+- ...
+
+## 最小範例
+
+根據 [Express.js 入門](https://www.webdong.dev/post/expressjs-basic-crud-todolist/) 創建一個簡單的後端伺服器，並且安裝 `express-session` 協助我們建構 Session 記憶用戶，預設會儲存在記憶體中，實際可能會連結到文件系統、資料庫或分散式儲存，Session 的儲存機制並沒有一定。
+
+```bash
+npm install express express-session
+```
+
+```js title="index.js"
+import express from 'express';
+import session from 'express-session';
+
+const app = express();
+
+app.use(
+  session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  }),
+);
+
+app.get('/', (req, res) => {
+  if (!req.session.views) {
+    req.session.views = 1;
+  } else {
+    req.session.views++;
+  }
+  res.send(`你已經訪問這個頁面 ${req.session.views} 次`);
+});
+
+app.listen(3000, () => console.log('伺服器運行在 http://localhost:3000'));
+```
+
+如上就是一個最小範例，當用戶訪問首頁時會計算用戶訪問次數，並且將次數存放在 session 中，如果用戶再次訪問時會增加次數。
+
+## 登入系統
+
+1. 註冊頁面 `/register`：用戶輸入帳號和密碼，伺服器驗證帳號是否已存在，若不存在則註冊成功。
+2. 登入頁面 `/login`：使用者輸入帳號和密碼。
+3. 登入處理 `/login`：伺服器驗證帳密，若正確則在 session 中設置 `isLoggedIn` 狀態和 `username`。
+4. 個人資料頁面 `/profile`：根據是否登入來決定是否顯示用戶資料還是跳轉到登入頁。
+5. 登出 `/logout`：銷毀 session 並清除 cookie。
+
+```js title="index.js"
+import express from 'express';
+import session from 'express-session';
+import bodyParser from 'body-parser';
+
+const app = express();
+const PORT = 3000;
+
+// 使用 body-parser 解析 POST 請求的資料
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    secret: 'my-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  }),
+);
+
+const users = [];
+
+app.get('/register', (req, res) => {
+  res.send(`
+    <h1>註冊</h1>
+    <form method="POST" action="/register">
+      <label>使用者名稱: <input type="text" name="username" required /></label><br/>
+      <label>密碼: <input type="password" name="password" required /></label><br/>
+      <button type="submit">註冊</button>
+    </form>
+  `);
+});
+
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+
+  const existingUser = users.find((user) => user.username === username);
+  if (existingUser) {
+    return res.send('<h1>註冊失敗：使用者名稱已存在。</h1><a href="/register">返回註冊頁面</a>');
+  }
+
+  users.push({ username, password });
+  res.send('<h1>註冊成功！</h1><a href="/login">前往登入頁面</a>');
+});
+
+app.get('/login', (req, res) => {
+  res.send(`
+    <h1>登入</h1>
+    <form method="POST" action="/login">
+      <label>使用者名稱: <input type="text" name="username" required /></label><br/>
+      <label>密碼: <input type="password" name="password" required /></label><br/>
+      <button type="submit">登入</button>
+    </form>
+  `);
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find((u) => u.username === username && u.password === password);
+  if (user) {
+    req.session.isLoggedIn = true;
+    req.session.username = username;
+    res.send(`<h1>登入成功！歡迎, ${username}！</h1><a href="/profile">查看個人資料</a>`);
+  } else {
+    res.send('<h1>登入失敗！帳號或密碼錯誤。</h1><a href="/login">回到登入頁面</a>');
+  }
+});
+
+app.get('/profile', (req, res) => {
+  if (req.session.isLoggedIn) {
+    res.send(`<h1>個人資料</h1><p>歡迎, ${req.session.username}！</p><a href="/logout">登出</a>`);
+  } else {
+    res.redirect('/login');
+  }
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('登出失敗');
+    }
+    res.clearCookie('connect.sid');
+    res.send('<h1>登出成功！</h1><a href="/login">重新登入</a>');
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`伺服器運行在 http://localhost:${PORT}`);
+});
+```
+
+我將專案放到 GitHub - [express-in-memory-session](https://github.com/riceball-tw/express-in-memory-session) 上，可以下載下來玩玩看。
+
+## 安全最佳實踐
+
+- 使用 [HTTPS](https://developer.mozilla.org/en-US/docs/Glossary/HTTPS)：加密傳輸過程中的 session ID，避免中間人攻擊。
+- 設定 [HttpOnly](https://owasp.org/www-community/HttpOnly) 和 [Secure Cookie](https://developer.mozilla.org/en-US/docs/Web/Security/Practical_implementation_guides/Cookies#secure)：防止 JavaScript 讀取 session ID，並確保僅 HTTPS 傳輸。
+- Session 過期時間：設置合理的 session 過期時間，例如 15 分鐘未操作後過期。
+- 重新生成 Session ID：在登入和登出時重新生成 session ID，防止 [Session Fixation](https://owasp.org/www-community/attacks/Session_fixation) 攻擊。
+
+### 密碼加密
+
+密碼應儲存為加密形式（例如使用 [bcrypt](https://www.npmjs.com/package/bcrypt)），透過哈希算法將密碼轉換為不可逆的數據，未來驗證時也同樣將用戶輸入的密碼進行哈希後再進行比對，如此一來就算密碼資料庫外洩也不會直接暴露用戶密碼。
+
+```js title="儲存"
+const hashedPassword = await bcrypt.hash(password, 10);
+users.push({ username, password: hashedPassword });
+```
+
+```js title="驗證"
+const targetUser = users.find((user) => user.username === username);
+const isValid = await bcrypt.compare(password, targetUser.password);
+```
+
+為了保護哈希值的唯一性，bcrypt 預設幫你生成一個隨機的「鹽」並附加在密碼後面，這樣即使兩個用戶密碼相同，哈希值也不會相同，提高了破解難度。
+
+## 延伸閱讀
+
+- [Your complete guide to understanding the express-session library - Zach Gollwitzer](https://www.youtube.com/watch?app=desktop&v=J1qXK66k1y4)
+- [HTTP Session 攻擊與防護 - DEVCORE Allen Own](https://devco.re/blog/2014/06/03/http-session-protection/)
+- [寫給網頁開發者的 CSRF 理解與防範 - WebDong](https://www.webdong.dev/post/csrf-for-web-developer/)
