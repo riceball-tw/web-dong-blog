@@ -1,0 +1,34 @@
+---
+headline: What Happens After Entering a URL in the Browser?
+publishDate: 2024-12-28
+category: Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DEG54OnBtiC
+---
+
+What Happens After Entering a URL in the Browser?
+
+- 1. DNS Resolution Phase (Obtain Target Server IP)
+  - Check if there is a DNS cache available
+  - Query the local DNS server provided by the ISP
+- 2. TCP Connection Establishment (Establish Connection with Target Server)
+  - Initiate TCP connection request to the target IP address
+  - Perform TCP three-way handshake (SYN, SYN-ACK, ACK)
+- 3. TLS/SSL Encrypted Connection (Establish Encrypted Connection with Target Server)
+  - Perform handshake and exchange encryption keys
+  - Validate certificates
+- 4. Request and Response (Retrieve Web Content)
+  - The browser sends a request to the server
+  - The server processes the request and returns resources
+  - The browser begins to receive and parse resources
+- 5. Browser Rendering Page (Render Web Page)
+  - Parse HTML to create DOM Tree
+  - Parse CSS to create CSSOM Tree
+  - Combine DOM and CSSOM to create Render Tree
+  - Calculate element positions and sizes (Layout)
+  - Paint the page content (Paint)
+  - Divide the page into multiple layers (Layering)
+  - Convert layers to pixels (Rasterization)
+  - GPU composites multiple layers (Compositing)
+
+Depending on the position, one can gradually identify the areas of interest through communication. For instance, front-end developers may be eager to learn more about how browsers operate. I believe back-end friends also have different focal points on this topic.

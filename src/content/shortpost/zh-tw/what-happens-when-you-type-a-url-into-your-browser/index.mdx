@@ -1,0 +1,34 @@
+---
+headline: 瀏覽器輸入 URL 搜尋後發生了什麼事？
+publishDate: 2024-12-28
+category: Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DEG54OnBtiC
+---
+
+瀏覽器輸入 URL 搜尋後發生了什麼事？
+
+- 一、DNS 解析階段（取得目標伺服器 IP）
+  - 檢查是否有 DNS 快取可使用
+  - 向網路供應商提供的 本地 DNS 伺服器進行查詢請求
+- 二、TCP 連線建立（與目標伺服器建立連線）
+  - 對目標 IP 位址發起 TCP 連線請求
+  - 進行 TCP 三次握手 (SYN, SYN-ACK, ACK)
+- 三、TLS/SSL 加密連線（與目標伺服器建立加密連線）
+  - 進行握手，交換加密金鑰
+  - 驗證憑證
+- 四、請求與響應 (獲取網頁內容)
+  - 瀏覽器發送請求到伺服器
+  - 伺服器處理請求並回傳資源
+  - 瀏覽器開始接收和解析資源
+- 五、瀏覽器渲染頁面 (渲染網頁)
+  - 解析 HTML 建立 DOM Tree
+  - 解析 CSS 建立 CSSOM Tree
+  - 結合 DOM 和 CSSOM 建立 Render Tree
+  - 計算元素位置和大小 (Layout)
+  - 繪製頁面內容 (Paint)
+  - 將頁面分為多個圖層 (Layering)
+  - 將圖層轉換為像素 (Rasterization)
+  - GPU 將多個圖層進行合成 (Compositing)
+
+視職位可以透過溝通逐漸鎖定對方有興趣的區塊，像是面前端可能就會期待對於瀏覽器的運作機制了解更多。相信後端的朋友針對這個主題也有不同著重的點。
