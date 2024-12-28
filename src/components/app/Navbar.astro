@@ -103,19 +103,6 @@ const linkI18n = {
   </Container>
 </nav>
 
-<script>
-  import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/utils/globalTheme.ts';
-
-  const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
-  function setupThemeToggler(targetElement: HTMLElement) {
-    targetElement.addEventListener('click', () => {
-      const localStorageTheme = localStorage.theme;
-      toggleGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-    });
-  }
-  setupThemeToggler(themeToggleButton);
-</script>
-
 <style>
 .active-link::before {
   content: "";

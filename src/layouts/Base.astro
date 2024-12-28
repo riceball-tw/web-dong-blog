@@ -3,7 +3,6 @@ import type { BaseLayout } from '@/types';
 import '@/styles/global.css';
 import GoogleAnalytic from '@/components/app/head/GoogleAnalytic.astro'
 import DefaultHead from '@/components/app/head/DefaultHead.astro'
-import ThemeInit from '@/components/app/head/ThemeInit.astro'
 import GodRay from '@/components/atoms/godray/GodRay.astro'
 import { setLanguageTag } from "@/paraglide/runtime";
 import { type LanguageKey } from '@/utils/i18n.ts';
@@ -13,23 +12,12 @@ export interface Props extends BaseLayout {}
 const { themeColor } = Astro.props;
 setLanguageTag(Astro.currentLocale as LanguageKey)
 ---
-
-<script>
-  import { getCurrentGlobalTheme, setGlobalTheme } from '@/utils/globalTheme.ts';
-
-  const localStorageTheme = localStorage.theme
-  setGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-</script>
-
-
-
 <html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
   <head>
     <!-- Charset declaration is missing or occurs too late in the HTML -->
     <!-- https://developer.chrome.com/docs/lighthouse/best-practices/charset -->
     <meta charset="UTF-8">
     <!--  -->
-    <ThemeInit />
     <DefaultHead { ...Astro.props}/>
     <GoogleAnalytic />
     <slot name="head" />
