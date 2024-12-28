@@ -72,16 +72,15 @@ import { Skeleton } from "@/components/atoms/skeleton/index.ts";
 </style>
 
 <script is:inline>
-  function isDark() {
-    const isSystemPerferDark =
-      !('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isLocalStorageDark = localStorage.theme === 'dark';
-    return isLocalStorageDark || isSystemPerferDark;
-  }
-
   function loadUtterancesScript() {
     return new Promise((resolve, reject) => {
-      const theme = isDark() ? 'github-dark' : 'github-light';
+      const utteranceThemeMap = {
+        'dark': 'github-dark',
+        'light': 'github-light'
+      }
+
+      const theme = window.theme.getTheme() === 'auto' ? utteranceThemeMap[window.theme.getSystemTheme()] : utteranceThemeMap[window.theme.getTheme()]
+
       const script = document.createElement('script');
       script.src = 'https://utteranc.es/client.js';
       script.setAttribute('repo', 'riceball-tw/Blog-comment');
@@ -107,7 +106,8 @@ import { Skeleton } from "@/components/atoms/skeleton/index.ts";
     comment.appendChild(script);
   }
 
-  window.addEventListener('updateTheme', () => {
+  document.addEventListener('theme-changed', () => {
     generateUtterance();
   });
+  generateUtterance();
 </script>

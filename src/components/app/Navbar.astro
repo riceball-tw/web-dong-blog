@@ -6,6 +6,7 @@ import Container from '@/components/atoms/container/Container.astro';
 import { defaultLocale } from '@/utils/i18n.ts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import * as m from "@/paraglide/messages";
+import AppThemeToggleButton from '@/components/app/AppThemeToggleButton.astro'
 
 const mainNav = [
   {
@@ -79,18 +80,7 @@ const linkI18n = {
               )})
             }
             <li class="ml-auto inline-block">
-              <button
-                data-cy="theme-toggle"
-                data-theme-toggle
-                aria-label={m.last_zany_florian_rest()}
-                type="button"
-                class="p-2 inline-flex flex-col gap-0.5 md:p-4 "
-              >
-                <div class="size-6 flex justify-center items-center w-full">
-                  <div class="size-4 hidden bg-primary dark:block mx-auto rounded-full border border-white/20"></div>
-                  <div class="size-4 bg-primary dark:hidden mx-auto rounded-full  border-black/20"></div>
-                </div>
-              </button>
+              <AppThemeToggleButton />
             </li>
         </ul>
         {
@@ -102,19 +92,6 @@ const linkI18n = {
     </div>
   </Container>
 </nav>
-
-<script>
-  import { toggleGlobalTheme, getCurrentGlobalTheme } from '@/utils/globalTheme.ts';
-
-  const themeToggleButton = document.querySelector('[data-theme-toggle]') as HTMLButtonElement;
-  function setupThemeToggler(targetElement: HTMLElement) {
-    targetElement.addEventListener('click', () => {
-      const localStorageTheme = localStorage.theme;
-      toggleGlobalTheme(getCurrentGlobalTheme(localStorageTheme));
-    });
-  }
-  setupThemeToggler(themeToggleButton);
-</script>
 
 <style>
 .active-link::before {
