@@ -91,6 +91,9 @@ export default defineConfig({
     }),
     expressiveCode({
       themes: ['github-light', 'github-dark'],
+      // themeCssSelector
+      // https://expressive-code.com/reference/configuration/#themecssselector
+      themeCssSelector: (theme) => `[data-theme="${theme.type}"]`,
       styleOverrides: {
         codeFontSize: '1rem',
       },

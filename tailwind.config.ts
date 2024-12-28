@@ -6,7 +6,7 @@ import TailwindShadcnConfig from './tailwind-shadcn-config.ts';
 export default {
   presets: [TailwindShadcnConfig],
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './astro.config.mjs'],
-  darkMode: 'class',
+  darkMode: ['selector', '[data-theme="dark"]'],
   important: true,
   theme: {
     fontFamily: {

@@ -5,6 +5,7 @@ module.exports = {
     requestAnimationFrame: true,
     localStorage: true,
     window: true,
+    theme: 'readonly',
   },
   extends: [
     // ...
