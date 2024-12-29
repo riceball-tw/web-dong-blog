@@ -1,0 +1,165 @@
+---
+// Code is modified from astro-theme-catus -> https://github.com/chrismwilliams/astro-theme-cactus/blob/d0caae8ea88bb589e98e447951d6de1834c821e8/src/components/Search.astro
+// Heavy inspiration taken from Astro Starlight -> https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
+
+import "@pagefind/default-ui/css/ui.css";
+import { Button } from '@/components/atoms/button/index.ts'
+import * as m from "@/paraglide/messages";
+---
+
+<site-search class="ms-auto" id="search">
+	<button
+		class="flex h-9 w-9 items-center justify-center rounded-md opacity-60 hover:opacity-100"
+		data-open-modal
+		disabled
+	>
+		<svg aria-label="search" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
+
+	</button>
+	<dialog
+		style="
+		--max-width-dialog: 60vw;
+		--min-height-dialog: 15rem;
+		--max-height-dialog: calc( 100% - 8rem );
+		"
+		aria-label="search"
+		class="h-full max-h-full w-full max-w-full bg-background shadow backdrop:backdrop-blur md:mx-auto md:mb-auto md:mt-16 md:h-max md:max-h-[--max-height-dialog] md:min-h-[--min-height-dialog] md:w-5/6 md:max-w-[--max-width-dialog] md:rounded-md"
+	>
+		<div class="dialog-frame flex flex-col gap-4 p-6 md:p-12">
+
+			<div class="flex justify-between pb-2 font-bold">
+				<h2 class="text-xl">{m.basic_orange_skunk_charm()}</h2>
+				
+				<Button class="self-end" data-close-modal variant="outline" size="lg">
+					{m.loose_mellow_gecko_splash()}
+				</Button>
+			</div>
+
+
+			{
+				import.meta.env.DEV ? (
+					<div class="mx-auto text-center">
+						<p>
+							Search is only available in production builds. <br />
+							Try building and previewing the site to test it out locally.
+						</p>
+					</div>
+				) : (
+					<div class="search-container">
+						<div id="app__search" />
+					</div>
+				)
+			}
+		</div>
+	</dialog>
+</site-search>
+
+<script>
+	class SiteSearch extends HTMLElement {
+		private closeBtn: HTMLButtonElement;
+
+		private dialog: HTMLDialogElement;
+
+		private dialogFrame: HTMLDivElement;
+
+		private openBtn: HTMLButtonElement;
+
+		closeModal = () => {
+			if (this.dialog.open) {
+				this.dialog.close();
+				window.removeEventListener("click", this.onWindowClick);
+			}
+		};
+
+		onWindowClick = (event: MouseEvent) => {
+			// check if it's a link
+			const isLink = "href" in (event.target || {});
+			// make sure the click is either a link or outside of the dialog
+			if (
+				isLink ||
+				(document.body.contains(event.target as Node) &&
+					!this.dialogFrame.contains(event.target as Node))
+			)
+				this.closeModal();
+		};
+
+		onWindowKeydown = (e: KeyboardEvent) => {
+			// check if it's the / key
+			if (e.key === "/" && !this.dialog.open) {
+				this.openModal();
+				e.preventDefault();
+			}
+		};
+
+		openModal = (event?: MouseEvent) => {
+			this.dialog.showModal();
+			this.querySelector("input")?.focus();
+			event?.stopPropagation();
+			window.addEventListener("click", this.onWindowClick);
+		};
+
+		constructor() {
+			super();
+			this.openBtn = this.querySelector<HTMLButtonElement>("button[data-open-modal]")!;
+			this.closeBtn = this.querySelector<HTMLButtonElement>("button[data-close-modal]")!;
+			this.dialog = this.querySelector("dialog")!;
+			this.dialogFrame = this.querySelector(".dialog-frame")!;
+
+			this.openBtn.addEventListener("click", this.openModal);
+			this.openBtn.disabled = false;
+			this.closeBtn.addEventListener("click", this.closeModal);
+		}
+
+		connectedCallback() {
+			// Listen for keyboard shortcut
+			window.addEventListener("keydown", this.onWindowKeydown);
+
+			// only add pagefind in production
+			if (import.meta.env.DEV) return;
+			const onIdle = window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+			onIdle(async () => {
+				// External Code, Ignore lint error
+				// @ts-expect-error
+				const { PagefindUI } = await import("@pagefind/default-ui");
+				// External Code, Ignore lint error
+				// eslint-disable-next-line no-new
+				new PagefindUI({
+					element: "#app__search",
+					ranking: {
+        		pageLength: 0.25
+      		},
+					baseUrl: import.meta.env.BASE_URL,
+					bundlePath: `${import.meta.env.BASE_URL.replace(/\/$/, "")  }/pagefind/`,
+					showSubResults: true,
+					showImages: false,
+					resetStyles: false,
+					excerptLength: 60,
+					sort: { date: "desc" },
+				});
+			});
+		}
+
+		disconnectedCallback() {
+			window.removeEventListener("keydown", this.onWindowKeydown);
+		}
+	}
+
+	customElements.define("site-search", SiteSearch);
+</script>
+
+<style is:inline>
+  #app__search .pagefind-ui__search-input::placeholder {
+    opacity: 0.6;
+    color: var(--pagefind-ui-placeholder);
+    font-weight: normal;
+  }
+  #app__search .pagefind-ui__search-input:focus {
+    outline: none;
+    background-color: var(--pagefind-ui-input-active)
+  }
+
+  #app__search .pagefind-ui__form::before {
+    background-color: var(--pagefind-ui-border);
+  }
+
+</style>
