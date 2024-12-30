@@ -1,0 +1,103 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:manage-search-rounded
+  title: Article Search Icon
+subHeadline: How to Add Search to Any Kind of Static Site Using Pagefind
+headline: How to Add Search to Any Kind of Static Site Using Pagefind
+excerpt: Give your site a custom search powered by WebAssembly. With the release of Pagefind 1.0, I replaced my custom fuse.js search with Pagefind.
+category: Technical Discussion
+publishDate: 2024-04-13
+---
+
+## Introduction
+
+![Original Fuse.js search function in the navigation bar](./fuse-search.webp 'Original Fuse.js search function in the navigation bar')
+
+If you are an early reader of web Dong, you may have noticed that the original search function in the navigation bar is gone. This is because I recently changed the search functionality from using [Fuse.js](https://www.fusejs.io/) (a fuzzy search library) to using [pagefind](https://pagefind.app/) for the website's search functionality.
+
+Fuse.js was actually sufficient for the current search needs of the website, but it was expected that as the site grew, it would encounter bottlenecks. Coincidentally, with the release of Pagefind 1.0, I decided to replace the original search functionality with Pagefind. Of course, there were additional reasons behind this, such as my desire to remove [preact](https://preactjs.com/) used for the original UI.
+
+## About Pagefind
+
+Pagefind is a search library written in Rust and implemented through WebAssembly. Its purpose has been clear from the beginning: to provide a ready-to-use search solution for any static webpage.
+
+- Fast search
+- Provides ready-made UI
+- Supports search in Chinese and Japanese
+- Supports searching any static files
+- Supports [filtering](https://pagefind.app/docs/filtering/), [sorting](https://pagefind.app/docs/sorts/), [custom search data](https://pagefind.app/docs/metadata/), and [index weighting](https://pagefind.app/docs/weighting/)
+
+This made me feel that it is a mature and ready-to-use solution, so I decided to adopt Pagefind to implement the search functionality for this Astro static site.
+
+## Step 1: [Create an Index](https://pagefind.app/docs/running-pagefind/)
+
+The operation principle of Pagefind is very simple; you just need to [create an index for the generated static site](https://pagefind.app/docs/running-pagefind/). The index is essentially a `pagefind` folder filled with the files needed by Pagefind. The process does not require installing any related packages; you just need to run `npx -y pagefind --site public --serve` to download Pagefind and create the index in real-time. I placed this process after [the site is built](https://github.com/riceball-tw/web-dong-blog/blob/e599c15cb93ce08cb5cbbc1a51291ea39b1d35f1/package.json#L9).
+
+After building, you will get results similar to the following, along with an additional `pagefind` folder:
+
+```bash
+Running Pagefind v1.1.0 (Extended)
+Running from: "D:\\USER\\Desktop\\astro-blog"
+Source:       "dist"
+Output:       "dist\\pagefind"
+
+[Walking source directory]
+Found 221 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: zh-hant-tw
+
+[Building search indexes]
+Total:
+  Indexed 1 language
+  Indexed 123 pages
+  Indexed 5640 words
+  Indexed 2 filters
+  Indexed 1 sort
+
+Finished in 1.503 seconds
+```
+
+This uses the `Extended` version, which means this version has special support for languages like Chinese and Japanese, so if the blog uses these languages, pay special attention to using this version.
+
+## Step 2: [Add Search Functionality](https://pagefind.app/docs/)
+
+Pagefind comes with a ready-made search UI and includes a click-to-load feature. You just need to add the following code to the page where you want to add the search functionality:
+
+```html
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    // Replace #search with the element where you want to place the search
+    new PagefindUI({ element: '#search', showSubResults: true });
+  });
+</script>
+```
+
+You can also choose not to use the ready-made UI and simply use Pagefind's search functionality to get search results:
+
+```javascript
+const pagefind = await import('/pagefind/pagefind.js');
+const search = await pagefind.search('static');
+```
+
+## Summary
+
+In less than 3 steps, your website will have a custom search functionality powered by WebAssembly! 🙌🏻 You may want to make some custom settings based on your needs, such as this blog has made some additional settings for Pagefind:
+
+- [Modify default UI styles to match website style](https://pagefind.app/docs/ui-usage/#customising-the-styles)
+- [Sort search results by time](https://pagefind.app/docs/sorts/)
+- [Search classification based on existing classification system](https://pagefind.app/docs/filtering/)
+
+![Web Dong Homepage Search Example](./webdong-homepage.webp)
+
+## Further Reading
+
+- For details on how to add Fuse.js search functionality to a static site, refer to: [Astro 系列文第二十日：實作搜尋功能](/post/astro-search-functionality/)

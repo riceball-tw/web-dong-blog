@@ -1,0 +1,104 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:manage-search-rounded
+  title: 文章搜寻符号
+subHeadline: How to Add Search to Any Kind of Static Site Using Pagefind
+headline: 使用 Pagefind 替任何静态网站添加搜寻功能
+excerpt: 不到 3 步骤让你的网站拥有以 WebAssembly 高效驱动的客制化搜寻功能。静态网站像是部落格、文件、个人网站、公司网站……等这类阅读体验为主的网站通常都有搜寻内容的需求，恰逢 Pagefind 1.0 的推出我把原先自制的fuse.js 搜寻功能换成Pagefind，分享如何在任何静态网站上加入搜寻功能。
+category: Technical Discussion
+publishDate: 2024-04-13
+---
+
+## 前言
+
+![原先存在于导览列的 Fuse.js 搜寻功能](./fuse-search.webp '原先存在于导览列的 Fuse.js 搜寻功能')
+
+如果你是网页东东较早期的读者可能会发现导览列原先的搜寻功能不见了，这是因为近期把使用 [Fuse.js](https://www.fusejs.io/)（模糊搜寻套件）制作的搜寻功能改为使用 [pagefind](https://pagefind.app/) 来实现网站的搜寻功能。
+
+Fuse.js 其实已经足够当前网站的搜寻需求，但可以预期网站大一点就会遇上瓶颈，又碰巧遇上 pagefind 1.0 的推出，就决定把原先的搜寻功能换成 pagefind，当然背后还有一些额外的原因，像是我想移除原先制作 UI 所用到的 [preact](https://preactjs.com/)。
+
+## 关于 pagefind
+
+pagefind 是一个以 Rust 编写并且透过执行 WebAssembly 来实现的搜寻套件，它的诞生原因从一开始就非常明确：替任何静态网页提供现成可用的搜寻方案。
+
+- 搜寻快速
+- 提供现成 UI
+- 支援中日语系搜寻
+- 支援任何静态文件搜寻
+- 支援 [分类](https://pagefind.app/docs/filtering/)、[排序](https://pagefind.app/docs/sorts/)、[自定义搜寻资料](https://pagefind.app/docs/metadata/)、[索引重要程度标注](https://pagefind.app/docs/weighting/)
+
+让我感觉到这是一个足够成熟可即用的解决方案，因此决定采纳 pagefind 来实现这个 Astro 静态网站的搜寻功能。
+
+## 第一步：[建立索引](https://pagefind.app/docs/running-pagefind/)
+
+pagefind 的运作原理十分简单，只需要[对生成好的静态网站建立索引](https://pagefind.app/docs/running-pagefind/)即可，索引其实就是一个`pagefind` 资料夹里面装满了 pagefind 所需要用到的档案，
+过程无须安装相关套件，只需要执行`npx -y pagefind --site public --serve` 就可以及时下载 pagefind 并且建立索引，我将这个流程放置在[建构完成网站之后](https://github.com/riceball-tw/web-dong-blog/blob/e599c15cb93ce08cb5cbbc1a51291ea39b1d35f1/package.json#L9)。
+
+建构完成会得到类似以下的结果，并且多出一个 `pagefind` 资料夹：
+
+```bash
+Running Pagefind v1.1.0 (Extended)
+Running from: "D:\\USER\\Desktop\\astro-blog"
+Source:       "dist"
+Output:       "dist\\pagefind"
+
+[Walking source directory]
+Found 221 files matching **/*.{html}
+
+[Parsing files]
+Found a data-pagefind-body element on the site.
+↳ Ignoring pages without this tag.
+
+[Reading languages]
+Discovered 1 language: zh-hant-tw
+
+[Building search indexes]
+Total:
+  Indexed 1 language
+  Indexed 123 pages
+  Indexed 5640 words
+  Indexed 2 filters
+  Indexed 1 sort
+
+Finished in 1.503 seconds
+```
+
+这里使用 `Extended` 版本，意味着这个版本针对中文与日文这样[特殊语言](https://pagefind.app/docs/multilingual/#specialized-languages)有特别支持，如果博客使用这类语言可以特别留意使用该版本。
+
+## 第二步：[添加搜索功能](https://pagefind.app/docs/)
+
+Pagefind 很贴心的自带现成的搜索 UI，并且包含了点击加载的功能，只需要在想要添加搜索的页面中添加以下代码即可创建搜索功能：
+
+```html
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    // 替换 #search 为你想要放置搜索的元素
+    new PagefindUI({ element: '#search', showSubResults: true });
+  });
+</script>
+```
+
+也可以不使用现成 UI，而是单纯的使用 pagefind 的搜索功能，并取得搜索结果：
+
+```javascript
+const pagefind = await import('/pagefind/pagefind.js');
+const search = await pagefind.search('static');
+```
+
+## 总结
+
+不到 3 步骤你的网站就立刻有以 WebAssembly 高效驱动的客制化搜索功能了 🙌🏻！你可能会想要根据自己的需求进行一些客制化设置，像是这个博客有对 pagefind 做一些额外的设置：
+
+- [修改默认 UI 样式以匹配网站风格](https://pagefind.app/docs/ui-usage/#customising-the-styles)
+- [依照时间分类搜索结果](https://pagefind.app/docs/sorts/)
+- [根据现有分类系统进行搜索分类](https://pagefind.app/docs/filtering/)
+
+![网页东东首页搜索范例](./webdong-homepage.webp)
+
+## 延伸阅读
+
+- 细节如何在静态网站加入 Fuse.js 搜索功能可以参考：[Astro 系列文第二十日：实作搜索功能](/post/astro-search-functionality/)
