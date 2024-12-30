@@ -1,0 +1,81 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:folder-zip-outline-rounded
+  title: Compressed Folder Icon
+subHeadline: Why You need Currying Function?
+headline: Why You need Currying Function?
+excerpt: Currying transforms functions with multiple parameters into a series of functions that take a single parameter, enhancing reusability and debuggability.
+category: Pattern
+tags:
+  - FP
+  - Concept
+publishDate: 2023-04-10
+---
+
+## What is Currying
+
+> Transforming a function that takes multiple parameters into a series of functions that take a single parameter
+
+For example, there is a function to make a sandwich, which builds a sandwich by passing three parameters:
+
+```js
+function makeSandwich(bread, meat, vegetable) {
+  return `Sandwich: ${bread}, ${meat}, ${vegetable}`;
+}
+
+makeSandwich('rye bread', 'beef', 'onion'); // Sandwich: rye bread, beef, onion
+```
+
+Currying this function means breaking it down into three functions, each accepting a single parameter:
+
+```js
+function makeSandwich(bread) {
+  return function (meat) {
+    return function (vegetable) {
+      return `Sandwich: ${bread}, ${meat}, ${vegetable}`;
+    };
+  };
+}
+
+makeSandwich('rye bread')('beef')('onion'); // Sandwich: rye bread, beef, onion
+```
+
+This way of writing is still somewhat hard to read, so we can further simplify it using arrow functions:
+
+```js
+const makeSandwich = (bread) => (meat) => (vegetable) => `Sandwich: ${bread}, ${meat}, ${vegetable}`;
+```
+
+This is currying. Now that you understand this cool pattern, what are the benefits of passing functions one by one instead of passing parameters?
+
+## Benefits of Currying
+
+### Higher Reusability
+
+Using the sandwich example again, if not all parameters are fully passed, for instance, if only `bread` and `meat` are passed, it will return a function indicating that the `vegetable` parameter needs to be provided:
+
+```js
+const ryeBeefSandwich = makeSandwich('rye bread')('beef');
+ryeBeefSandwich(); // vegetable => `Sandwich: ${bread}, ${meat}, ${vegetable}`
+ryeBeefSandwich('onion'); // 'Sandwich: rye bread, beef, onion'
+```
+
+This creates a partially applied function that can be used to build different sandwiches without passing all parameters each time. You must have already noticed that this awesome feature can be immediately applied in actual development, such as opening a sandwich shop to produce different types of sandwiches:
+
+```js
+const whiteBreadBeefSandwich = makeSandwich('white bread')('beef');
+const ryeChickenSandwich = makeSandwich('rye bread')('chicken');
+// ... various sandwich templates
+
+whiteBreadBeefSandwich('lettuce'); // 'Sandwich: white bread, beef, lettuce'
+ryeChickenSandwich('onion'); // 'Sandwich: rye bread, chicken, onion'
+```
+
+<Info type="info">
+  Currying is a pattern to achieve partial application, but it is limited to passing one parameter at a time.
+</Info>
+
+## References
+
+- [Currying in JavaScript Explained with Examples](https://builtin.com/software-engineering-perspectives/currying-javascript)
