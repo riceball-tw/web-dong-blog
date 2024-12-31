@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:refresh-rounded', title: '旋轉箭頭符號' }
-subHeadline: 'How to rewrite a legacy system'
-headline: '如何重寫陳舊系統：就像忒修斯之船'
-excerpt: '近期面對許多陳舊代碼維護的問題，碰巧我翻找到這個部落格：Understand Legacy Code，紀錄一下「重寫」陳舊系統可能會遇到的困境與解套方案。以我自己手上的專案為例，在進行專案升級評估時發現事情比原先想像還要複雜！'
+icon:
+  name: material-symbols:refresh-rounded
+  title: 旋轉箭頭符號
+subHeadline: 'How to Rewrite a Legacy System: The Ship of Theseus'
+headline: 如何重寫陳舊系統：就像忒修斯之船
+excerpt: 近期面對許多陳舊代碼維護的問題，碰巧我翻找到這個部落格：Understand Legacy Code，紀錄一下「重寫」陳舊系統可能會遇到的困境與解套方案。以我自己手上的專案為例，在進行專案升級評估時發現事情比原先想像還要複雜！
 category: Pattern
-tags: ['系統架構', '重寫']
+tags:
+  - Refactoring
 publishDate: 2024-02-12
 ---
 
@@ -46,8 +49,6 @@ publishDate: 2024-02-12
 - 讓新代碼作為舊代碼的代理，用戶使用新系統只是導向到舊系統中。
 - 逐步實踐舊代碼的行為到新代碼當中
 - 漸進的淡出舊代碼，取代上新代碼
-
-![使用忒修斯之船模式前後比較流程圖](./before-and-after.webp '使用忒修斯之船模式前後比較流程圖')
 
 ## 總結
 
