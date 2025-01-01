@@ -1,12 +1,15 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:performance-max-outline-rounded', title: '檢測效能符號' }
-subHeadline: 'Chcek website performance with lighthouse CI'
-headline: '透過 Lighthouse CI 自動化檢測網站效能'
-excerpt: 'Lighthouse 是一款開源的自動化網頁效能檢測工具，通常都是遇上網頁效能問題才一個一個開網頁開來測試效能，手動測試總是會有：單次的測驗結果不穩、耗時費力、不利於團隊開發的問題，今天來嘗試使用 Lighthouse CI 自動化的在每次代碼更動時檢測網頁的效能問題吧！'
-series: '網頁效能大補帖'
+icon:
+  name: material-symbols:performance-max-outline-rounded
+  title: 檢測效能符號
+subHeadline: Chcek Website Performance with Lighthouse CI
+headline: 透過 Lighthouse CI 自動化檢測網站效能
+excerpt: Lighthouse 是一款開源的自動化網頁效能檢測工具，通常都是遇上網頁效能問題才一個一個開網頁開來測試效能，手動測試總是會有：單次的測驗結果不穩、耗時費力、不利於團隊開發的問題，今天來嘗試使用 Lighthouse CI 自動化的在每次代碼更動時檢測網頁的效能問題吧！
+series: Web Performance
 category: Web Performance
-tags: ['Lighthouse']
+tags:
+  - Lighthouse
 publishDate: 2024-04-14
 ---
 
@@ -73,4 +76,4 @@ ci:
 ## 總結
 
 這樣不到 3 步驟就輕鬆替我的網站添加了 Lighthouse CI 來檢測網頁效能，不用再手動測試每個頁面，只要每次提交代碼就能自動檢測效能問題，這樣的方式對於團隊開發來說是一個很好的效能檢測工具，也能讓開發者更快速的修復問題。
-可以參考看看[這則分支](https://github.com/riceball-tw/web-dong-blog/tree/feat-add-lighthouse)來了解我在部落格中添加 Lighthouse CI 的過程。
+可以參考看看[這則 PR](https://github.com/riceball-tw/web-dong-blog/pull/27)來了解我在部落格中添加 Lighthouse CI 的過程。
