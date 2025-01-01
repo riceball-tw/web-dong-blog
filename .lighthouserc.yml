@@ -22,6 +22,7 @@ ci:
       offscreen-images: 'warn' # Optional Optimization
       bf-cache: 'warn' # Optional Optimization
       uses-rel-preconnect: 'warn' # Optional Optimization
+      unused-css-rules: 'warn' # Optional Optimization
 
   upload:
     target: 'temporary-public-storage'
