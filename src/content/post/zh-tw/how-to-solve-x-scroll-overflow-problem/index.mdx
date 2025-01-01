@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:format-text-overflow-rounded', title: '超出界線符號' }
-subHeadline: 'How to solve x-scroll overflow problem?'
-headline: '怎麼解決網頁中莫名其妙出現 x 軸的問題'
-excerpt: '響應式網頁內的內容像水一樣，順應著瀏覽器的尺寸(容器)自動填裝，只要內容擠破容器就會產生 x 軸，因此解決方法無疑就是「找出網頁中超出瀏覽器寬度的元素」。這是大多數人困惑的地方「知道問題點，但是不知道怎麼下手 🥺」。實際上這個問題的解決方法很簡單，本篇文章提供提供兩種解決方案。'
-category: 'CSS'
-tags: ['RWD']
+icon:
+  name: material-symbols:format-text-overflow-rounded
+  title: 超出界線符號
+subHeadline: How to Solve x-scroll Overflow Problem?
+headline: 怎麼解決網頁中莫名其妙出現 x 軸的問題
+excerpt: 響應式網頁內的內容像水一樣，順應著瀏覽器的尺寸(容器)自動填裝，只要內容擠破容器就會產生 x 軸，因此解決方法無疑就是「找出網頁中超出瀏覽器寬度的元素」。這是大多數人困惑的地方「知道問題點，但是不知道怎麼下手 🥺」。實際上這個問題的解決方法很簡單，本篇文章提供提供兩種解決方案。
+category: CSS
+tags:
+  - RWD
 publishDate: 2023-05-12
 ---
 
@@ -37,7 +40,7 @@ publishDate: 2023-05-12
 
 ## 解法三：藏起來法
 
-如果真的不想在網頁中看到 x 軸，只要對 `html` 元素設定 `overflow-x: hidden` 即可，
+如果真的不想在網頁中看到 x 軸，只要對 `html` 元素設定 `overflow-x: hidden` 即可。
 
 <Info type="warning">這麼做並不是實際的解決問題，而是把問題藏起來，請盡量不要使用該解法</Info>
 
