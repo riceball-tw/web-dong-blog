@@ -14,7 +14,7 @@ import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.a
 import { Icon } from 'astro-icon/components'
 import PostSeries from '@/components/post/PostSeries.astro'
 import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
+import { dateSortedPublishedPosts, dateSortedLocaleRelatedPosts } from '@/utils/getPosts.ts'
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 import { type LanguageKey, defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
     return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
   }
-  return dateSortedPublishedPosts.map((post) => {
+  return dateSortedLocaleRelatedPosts(defaultLocale).map((post) => {
     const postsInSeries = getTargetSeriesPosts(dateSortedPublishedPosts, post.data.series);
     return ({
     params: { slug: stripLanguageCode(post.slug) },
