@@ -1,0 +1,65 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:code-blocks-outline-rounded
+  title: 方框上有代码的符号
+subHeadline: JavaScript Conditional(Ternary) Operator
+headline: 如何使用 JavaScript 条件运算子？
+excerpt: 流程控制是程式语言中基础不可少的概念之一，除了使用if、else 之外，JavaScript 还提供一个简洁的写法，就是条件（三元）运算子，顾名思义，由三个片段所组成，分别是：「条件、成功流程与失败流程」。用更精简的语法来撰写流程控制，条件运算子是常见且必学的语法之一
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-06-25
+---
+
+流程控制是程序语言中基础不可少的概念之一，除了使用 `if`、`else` 之外，JavaScript 还提供一个简洁的写法，就是条件（三元）运算子。
+
+顾名思义，由三个片段所组成，分别是：「条件、成功流程与失败流程」。在条件中，会先设置一个条件表达式，如果条件成立，则执行成功流程，否则执行失败流程。概念与 `if`、`else` 类似，由于条件运算子的写法更简洁，并且可以在一行中完成，是个非常流行常用的语法。
+
+```js
+// 传统写法
+const age = 18;
+let result = '';
+
+if (age >= 18) {
+  result = '成年';
+} else {
+  result = '未成年';
+}
+```
+
+```js
+// 条件 ? 成功流程 : 失败流程
+const age = 18;
+const result = age >= 18 ? '成年' : '未成年';
+```
+
+使用条件运算子的写法可以大幅精简程序长度，类似一个迷你版的 `if` `else`。
+
+## 常见错误
+
+除了简单的流程控制之外，**最好不要在太复杂的情境中使用条件运算子，因为会让代码变得难以阅读，精简并不一定代表容易阅读**。
+
+```js
+// 传统写法
+const wallet = 100;
+let result = '';
+
+if (wallet >= 100) {
+  result = '买一个汉堡';
+} else if (wallet >= 50) {
+  result = '买一杯咖啡';
+} else {
+  result = '只能喝水';
+}
+```
+
+```js
+// 条件运算子
+const wallet = 100;
+const result = wallet >= 100 ? '买一个汉堡' : wallet >= 50 ? '买一杯咖啡' : '只能喝水';
+```
+
+## 参考资料
+
+- [条件运算子 - MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Conditional_operator)
