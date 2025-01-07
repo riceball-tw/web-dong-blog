@@ -1,0 +1,44 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:playlist-add-check-circle-outline-rounded
+  title: File Check Symbol
+subHeadline: 2 Ways to Verify if JSON-LD is Working
+headline: 2 Ways to Verify if JSON-LD is Working
+excerpt: JSON-LD is a way to embed additional data to describe web content. This article shares my experience and how to verify JSON-LD is interpreted correctly.
+category: SEO
+publishDate: 2024-03-12
+---
+
+## Introduction
+
+Recently, I have frequently embedded JSON-LD data into web pages for work. This is additional information that can be included in a webpage to describe it, presented in a standardized data format using JSON:
+
+```html
+<head>
+  <!-- Describe JSON-LD within the tag -->
+  <script type="application/ld+json"></script>
+</head>
+```
+
+It's simpler than you might think; you just need to find a way to insert the above data into the `<head>`. This blog is [implemented this way](https://github.com/riceball-tw/web-dong-blog/blob/7fc1bff768600b27ce74b6de605dbd6de765fbde/src/components/app/head/PostJSONLD.astro#L4).
+As for how to check if search engines correctly capture this data? This article shares my experience and how to verify JSON-LD is interpreted correctly.
+
+## Method 1: Using Testing Tools
+
+Google actually provides a [Rich Results Test](https://developers.google.com/search/docs/appearance/structured-data?hl=zh-tw) to check if search engines correctly interpret JSON-LD data. You just need to paste the URL to see if the search engine correctly interprets the JSON-LD data.
+
+If you simply want to check if the JSON-LD is in the correct format, you can also go to [Schema.org's validator](https://validator.schema.org/) and paste the JSON-LD data to see if there are any errors.
+
+## Method 2: Using Automated Testing Tools
+
+I recently discovered that [Google Search Console](https://search.google.com/search-console/about) and [Ahrefs](https://ahrefs.com/) routinely notify if there are errors in the JSON-LD data format. If the website is particularly large, using these automated testing tools to monitor results is a great choice.
+
+![Ahrefs JSON-LD Test Result](./ahrefs.webp 'Ahrefs detected errors in JSON-LD data format')
+![Google Search Console JSON-LD Test Result](./search-console.webp 'Google Search Console detected errors in JSON-LD data format')
+
+## Conclusion
+
+JSON-LD data is actually not complicated. I often go to [Steal Our JSON-LD](https://jsonld.com/) or [Google Search Central](https://developers.google.com/search/docs/appearance/structured-data/search-gallery?hl=zh-tw) to find suitable examples and then modify them into appropriate formats. At the same time, I check the data formats customized by [Schema.org](https://schema.org/) and use the testing methods mentioned above to ensure that search engines can correctly interpret the additional data presented on the page!
+
+If you are new to structured data, you might want to refer to [Google Search Central's introductory document](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data?hl=zh-tw) for more information.
