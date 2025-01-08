@@ -1,0 +1,68 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:calculate-outline-rounded
+  title: 计算符号
+subHeadline: JavaScript Expressions vs Statements
+headline: 了解 JavaScript 陈述式与表达式
+excerpt: 讲解中「表达式」与「陈述式」的区别。表达式会产生一个值，而陈述式则是执行动作。表达式必须存在于某个陈述式中才能被使用。我回过头来才发现表达式与陈述式的重要性，了解 JavaScript 底层的逻辑对我们使用像是 React 这类框架也有帮助。
+category: JavaScript
+tags:
+  - Concept
+publishDate: 2023-04-07
+---
+
+## Expressions 表达式
+
+> 表达式产生一个值
+
+- `1` 产生值 `1`
+- `你好` 产生值 `你好`
+- `5 * 10` 产生值 `50`
+- `age >= 18` 产生值 `true` 或 `false`
+- `isHappy ? "🙂" : "🙁"` 产生值 `🙂` 或 `🙁`
+- `(function () { return 'Hi'; }())` 产生值 `Hi`
+- `({a: 1})` 产生值 `{a: 1}`
+
+## Statements 陈述式
+
+> 执行动作完成任务
+
+陈述式就像是指令，使用它会执行一些预定的动作。有陈述式的地方都可以输入表达式
+
+```js
+// 指派 `5` 到 `age` 变量
+const age = 5;
+```
+
+```js
+// 如果 `age` 大于等于 18，就执行 ...
+if (age >= 18) {
+  // ...
+}
+```
+
+## 表达式与陈述式
+
+表达式会产生一个值，它可以独立存在，也可以作为其他语句的组成部分。此外在特殊的情况下你会需要使用 [`()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Grouping#using_the_grouping_operator_to_eliminate_parsing_ambiguity) 来包覆表达式，否则 JavaScript 会错误的将其当作陈述式。
+
+```js
+// IIFE Immediately Invoked Function Expression
+(function () {
+  // ...
+})();
+```
+
+```js
+// Return Object
+const f = () => ({ a: 1 });
+```
+
+## 总结
+
+还有一个简单的方法辨别表达式与陈述式，就是把它们丢进 `console.log`，如果无语法错误且能执行就是「表达式」，反之就是「陈述式」（或单纯是不合规的语法）。我回过头来才发现表达式与陈述式的重要性，特别是在写 React / JSX 这类框架上的一些奇怪的限制，比如：「只能返回一个元素」、「为什么要用表达式来撰写？」，实际上是 JavaScript 本身运作上的限制。
+
+## 参考文章
+
+- [Statements Vs. Expressions - Josh Comeau](https://www.joshwcomeau.com/javascript/statements-vs-expressions/)
+- [Expressions versus statements in JavaScript - 2ality](https://2ality.com/2012/09/expressions-vs-statements.html)

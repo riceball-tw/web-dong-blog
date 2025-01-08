@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:calculate-outline-rounded', title: '計算符號' }
-subHeadline: 'JavaScript Expressions VS Statements'
-headline: '了解 JavaScript 運算式與表達式'
-excerpt: '講解中「表達式」與「運算式」的區別。表達式會產生一個值，而運算式則是執行動作。表達式必須存在於某個運算式中才能被使用。我回過頭來才發現表達式與運算式的重要性，了解 JavaScript 底層的邏輯對我們使用像是 React 這類框架也有幫助。'
-category: 'JavaScript'
-tags: ['概念']
+icon:
+  name: material-symbols:calculate-outline-rounded
+  title: 計算符號
+subHeadline: JavaScript Expressions vs Statements
+headline: 了解 JavaScript 陳述式與表達式
+excerpt: 講解中「表達式」與「陳述式」的區別。表達式會產生一個值，而陳述式則是執行動作。表達式必須存在於某個陳述式中才能被使用。我回過頭來才發現表達式與陳述式的重要性，了解 JavaScript 底層的邏輯對我們使用像是 React 這類框架也有幫助。
+category: JavaScript
+tags:
+  - Concept
 publishDate: 2023-04-07
 ---
 
@@ -21,11 +24,11 @@ publishDate: 2023-04-07
 - `(function () { return 'Hi'; }())` 產生值 `Hi`
 - `({a: 1})` 產生值 `{a: 1}`
 
-## Statements 運算式
+## Statements 陳述式
 
 > 執行動作完成任務
 
-運算是就像是指令，使用它會執行一些預定的動作。有運算式的地方都可以輸入表達式
+運算是就像是指令，使用它會執行一些預定的動作。有陳述式的地方都可以輸入表達式
 
 ```js
 // 指派 `5` 到 `age` 變數
@@ -39,12 +42,12 @@ if (age >= 18) {
 }
 ```
 
-## 表達式與運算式
+## 表達式與陳述式
 
-表達式本身是個值，並不能單獨的存在，它必須永遠存在於某個運算式中。此外在特殊的情況下你會需要使用 [`()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Grouping#using_the_grouping_operator_to_eliminate_parsing_ambiguity) 來包覆表達式，否則 JavaScript 會錯誤的將其當作運算式。
+表達式會產生一個值，它可以獨立存在，也可以作為其他語句的組成部分。此外在特殊的情況下你會需要使用 [`()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Grouping#using_the_grouping_operator_to_eliminate_parsing_ambiguity) 來包覆表達式，否則 JavaScript 會錯誤的將其當作陳述式。
 
 ```js
-// IIFE
+// IIFE Immediately Invoked Function Expression
 (function () {
   // ...
 })();
@@ -57,7 +60,7 @@ const f = () => ({ a: 1 });
 
 ## 總結
 
-還有一個簡單的方法辨別表達式與運算式，就是把它們丟進 `console.log`，如果無語法錯誤且能執行就是「表達式」，反之就是「運算式」(或單純是不合規的語法)。我回過頭來才發現表達式與運算式的重要性，特別是像在寫 React / JSX 這類框架上的一些奇怪的限制，像是：「只能回傳一個元素」、「為什麼要用表達式來撰寫？」，實際上是 JavaScript 本身運作上的限制。
+還有一個簡單的方法辨別表達式與陳述式，就是把它們丟進 `console.log`，如果無語法錯誤且能執行就是「表達式」，反之就是「陳述式」(或單純是不合規的語法)。我回過頭來才發現表達式與陳述式的重要性，特別是像在寫 React / JSX 這類框架上的一些奇怪的限制，像是：「只能回傳一個元素」、「為什麼要用表達式來撰寫？」，實際上是 JavaScript 本身運作上的限制。
 
 ## 參考文章
 
