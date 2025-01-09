@@ -1,0 +1,72 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:power-plug-outline-rounded
+  title: 插座符号
+subHeadline: 学习使用 Hoppscotch 测试 API
+headline: 学习使用 Hoppscotch 测试 API（附图）
+excerpt: Hoppscotch 是一个线上工具，可以让你在浏览器上迅捷的测试后端提供的 API。很常遇到到后端的文件就直接上手写程式，导致在写程式的时候常常疏漏许多问题，像是请求方式错误、少夹带参数、网址错误、资料不存在……等，因此我都会建议先熟悉怎么用现成的工具来测试 API，使用图形化的介面可以更直观的管理API 们。
+category: Software Testing
+publishDate: 2023-04-14
+---
+
+## 前言
+
+![Hoppscotch 介面](./ui.webp)
+
+鉴于很多同学都一拿到后端的文件就直接上手写程序，导致在写程序的时候常常疏漏许多问题，像是请求方式错误、少夹带参数、网址错误、资料不存在……等，因此我都会建议对方先熟悉怎么用现成的工具来测试 API，使用图形化的界面可以更直观的管理 API，并且将除错的范围局限在一支 API 里面，而不是整个网站。
+
+这篇文章将会用图解教你如何使用 [Hoppscotch](https://github.com/hoppscotch/hoppscotch) 这款热门开源的在线工具来示范测试 API。
+
+## 首次使用
+
+### 登录不是必要的
+
+进入 [Hoppscotch](https://hoppscotch.io/) 网站，会发现并不要求你登录，也没有一大堆繁琐的设置，即开即用是我爱用它的主要原因 🤗。想要登录也可以点击右上角的 Login 来使用 GitHub、Google、Microsoft 或是 Email 登录，登录的账号可以将个性化的设置保存在账号中，而非浏览器的记录内。
+
+![Hoppscotch 网页登录面板](./login.webp '选择你爱用的方式登录')
+
+### 个性化设置
+
+点击左侧齿轮图示，可以进入设置面板设置偏好，例如语言、强调色、字体大小、实验功能……等。有很多种类的语言支持和主题选择，可以根据自己的喜好来调整。
+
+![Hoppscotch 网页设置面板](./setting.webp '调整你的偏好')
+
+## 测试 API
+
+### [创建一个新的请求](https://docs.hoppscotch.io/documentation/getting-started/rest/creating-a-request)
+
+让我们拿官方提供的范例来测试：输入 `https://echo.hoppscotch.io` 到网址栏位，并使用 `GET` 方式，并点击传送请求，就这样你成功的使用 Hoppscotch 打出一个 `GET` 请求了！
+
+![Hoppscotch 请求面板](./get.webp '你的第一支 GET 请求成功！')
+
+### [添加参数](https://docs.hoppscotch.io/documentation/getting-started/rest/using-parameters)
+
+当然前面的 `GET` 是一个很简单的例子，我们可以在请求里面夹带更多资讯，不管是 `body` 的内容还是 `header` 的资讯，都可以在标签内设置，任何请求的细节都可以调整。
+
+![Hoppscotch 设置参数](./parameter.webp '设置参数')
+
+### 生成代码
+
+当你确定请求的内容没有问题，可以点击传送旁边的小箭头 > 显示代码按钮，Hoppscotch 会帮你产生代码，可以直接复制到实际的项目中使用，像在图例中就选择了生成使用 [Axios](https://axios-http.com/) 函式库的请求写法，连写程序都免了！
+
+![Hoppscotch 产生代码面板](./axios.webp '产生 Axios 请求写法的代码')
+
+### 进阶：[收藏请求](https://docs.hoppscotch.io/documentation/getting-started/rest/organizing-your-requests)
+
+有时候一个规模大一点的网站会有很多只 API，每次想要测试的时候都要重新设置是非常繁琐累人的事，因此可以使用收藏(Collection) 的功能管理你的请求，只要点击储存 > 另存为的按钮就可以将该请求给收藏起来，之后就可以在左侧的收藏夹中找到它。特别是在构建大型项目的时候把一只只 API 给收藏分类好，除了测试方便之外心情也感觉很好 😎。
+
+![Hoppscotch 收藏请求面板](./collection.webp '收藏请求')
+
+### 进阶：[使用环境变量](https://docs.hoppscotch.io/documentation/getting-started/rest/environment-variables)
+
+在收藏按钮底下就是环境变量的设置，可以在这里设置一些常用的变量，例如你的 API 服务器网址、API 密钥、用户的 token 等等，这样在测试的时候可以直接使用变量，可以集中管理外比较隐秘的数据也可以收藏在此不怕暴露。
+
+在设置好环境变量之后只要在想要引用变量的地方撰写 `<<变量名称>>` 就可以使用该变量。
+
+![Hoppscotch 环境变量面板](./env.webp '新增环境变量')
+![Hoppscotch 环境变量面板](./env-2.webp '输入环境变量，并且在请求中使用')
+
+## 总结
+
+Hoppscotch 是一个非常好用的开源 API 测试工具，在 GitHub 上已经有 50 k 以上的星星，如果要测试 API 的话这会是我的首选工具。
