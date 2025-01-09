@@ -1,0 +1,60 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:sentiment-satisfied-outline-rounded
+  title: Smiley Icon
+subHeadline: What is the Concept of Optimistic UI?
+headline: What is the Concept of Optimistic UI?
+excerpt: The longer the wait, the more likely users will drop off. Optimistic UI emphasizes immediate, optimistic feedback.
+category: UX
+tags:
+  - Concept
+publishDate: 2023-12-14
+---
+
+## Introduction
+
+Don’t keep users waiting! The longer the wait, the more likely users will drop off. Therefore, providing immediate feedback in applications is a fundamental principle.
+
+People often think this is a technical challenge; after all, creating more efficient and faster programs can solve all problems, right? Not entirely. Besides the higher costs involved, there are limits to performance enhancement. For example:
+
+1. When users have poor device or network conditions, even the most efficient program cannot solve this issue.
+2. The existing technical architecture inevitably has performance bottlenecks, such as the minimum time cost for communication between services.
+
+At this point, improving user experience can achieve timely feedback. After all, "waiting" is an experience that can be manipulated. Through clever design, the discomfort caused by waiting can be alleviated, and Optimistic UI is one such method.
+
+## Traditional UI Loading Process
+
+After a user triggers an action, there is usually an unavoidable waiting period, limited by backend operations such as network requests and database queries. The user interface can only display the results of the action after the operation is verified or new data is successfully returned.
+
+![General UI Loading Process](./loading-ui.svg)
+
+## Optimistic UI Loading Process
+
+To reduce waiting time, Optimistic UI assumes the operation is successful at the moment of triggering and immediately updates the interface, allowing users to receive feedback on their actions right away. This model effectively shortens user waiting time, creating a smoother and more satisfying interaction experience.
+
+![Optimistic UI Loading Process](./optimistic-ui.svg)
+
+## Advantages of Optimistic UI
+
+Clearly, the biggest advantage of Optimistic UI is that it assumes the operation is successful in advance, allowing users to experience "almost no waiting time."
+
+- **Reduced Waiting Time**: Since Optimistic UI updates the interface immediately while assuming the operation is successful, users feel almost no waiting time after triggering an action, enhancing the overall user experience, especially in poor network or system performance conditions.
+- **Smooth Interaction Experience**: Users can see results immediately when they perform actions, making interactions smoother and helping to increase user satisfaction and confidence in the system.
+
+## Disadvantages of Optimistic UI
+
+The downside of Optimistic UI is that when an operation fails, the user interface may not match the actual state. At this point, a robust feedback mechanism (such as pop-up alerts or animations) is needed to inform users of the reason for the failure and allow them to retry.
+
+- **Potential for Confusion**: Because the interface instantly presents the expected result rather than the actual completed result, it may confuse or mislead users.
+- **Need for a Robust Feedback Mechanism**: To avoid confusion, an effective feedback mechanism must be established to inform users of the reasons for operation failures, provide clear information, and guide users to make necessary corrections or retry.
+
+## Conclusion
+
+This article uses a simple favorite status toggle to demonstrate the application of Optimistic UI. However, in practice, any operations involving creation, updating, or deletion can consider using Optimistic UI to improve user experience.
+
+## Further Reading
+
+- [Measure performance with the RAIL model - web.dev](https://web.dev/articles/rail?hl=en)
+- [Cheat Code for a Lightning Fast Front End: Building an Optimistic UI - derekndavis](https://derekndavis.com/posts/lightning-fast-front-end-build-optimistic-ui)
+- [What is the Optimistic UI? - kiwee](https://kiwee.eu/blog/what-is-the-optimistic-ui/)
