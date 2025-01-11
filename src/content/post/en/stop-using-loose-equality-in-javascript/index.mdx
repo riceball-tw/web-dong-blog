@@ -1,0 +1,69 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:code-blocks-outline-rounded
+  title: Symbol of a box with code
+subHeadline: Stop using Loose Equality in JavaScript
+headline: Stop using Loose Equality in JavaScript
+excerpt: Most of the time, you won’t want to use "loose equality"; try using "strict equality" to write your code more rigorously and accurately
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-02-15
+---
+
+## Discovering the Problem
+
+In JavaScript, there are two common methods to compare values:
+
+- [Loose equality ==](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)
+- [Strict equality ===](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Strict_equality)
+
+The difference between the two is that loose equality performs type conversion, while strict equality does not. For example, `1 == '1'` converts the string to a number before comparison, thus returning `true`, while `1 === '1'` strictly compares the types, returning `false`.
+
+So what potential problems can this small difference cause?
+
+Using loose comparisons can make the conditions in your code ambiguous. For instance, in the following code, it is clear that `0` and `''` are not equal. However, because loose comparison is used, this coding style makes the code less rigorous, so it is recommended to use strict comparison.
+
+```javascript
+0 == ''; // true
+0 == '0'; // true
+0 == false; // true
+```
+
+## Summary
+
+Whenever possible, use `===` instead of `==`. It’s better to write stricter conditions from the start. Since `==` does not check types, it often leads to bugs due to JavaScript's automatic type conversion. For example:
+
+```jsx
+const a = 1;
+const b = '1';
+
+typeof a; // Number
+typeof b; // String
+
+a == b; // true
+a === b; // false
+
+// In terms of type, a and b are different, but JavaScript converts them during comparison, so using === is a stricter requirement for "types to be the same."
+```
+
+In most cases, you won’t want to use loose equality, but in certain situations, it might be more convenient, such as when comparing `null` and `undefined`, because their values are equal but their types are different. In this case, using `==` can be more convenient, allowing you to check both `null` and `undefined` at once:
+
+```javascript
+// Write a condition: when a is null or undefined, it will enter the if statement.
+
+// Using loose comparison
+if (a == null) {
+}
+// Using strict comparison
+if (a === null || a === undefined) {
+}
+```
+
+For a detailed comparison of the differences between the two, you can refer to the MDN documentation: [Understanding Equality Comparison](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness#%E7%90%86%E8%A7%A3%E7%9B%B8%E7%AD%89%E6%AF%94%E8%BC%83%E6%A8%A1%E5%9E%8B) which is very comprehensive.
+
+## References
+
+- [Equality Comparisons - MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+- [Stop Using Double Equals In JavaScript - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-08/==-vs-===/)
