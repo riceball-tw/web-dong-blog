@@ -1,0 +1,122 @@
+---
+isDraft: false
+icon:
+  name: simple-icons:tailwindcss
+  title: Tailwind LOGO
+subHeadline: 5 Tailwind Anti-Patterns You Must Avoid
+headline: 5 Tailwind Anti-Patterns You Must Avoid
+excerpt: I've encountered very user-unfriendly Tailwind projects. Some anti-patterns can be easily avoided early on, but become huge issues as the project scales.
+category: CSS
+tags:
+  - Tailwind
+publishDate: 2024-05-05
+lastModifiedDate: 2024-05-05
+---
+
+## Introduction
+
+This article is written because there are some anti-patterns left in the projects I maintain that cause many problems. These issues could have been easily avoided early on. This article will introduce some anti-patterns I've experienced in projects and remind you not to do these things!
+
+As a popular tool, Tailwind has its underlying philosophy. If you don't understand these philosophies (Utility-First, Design Token), it's easy to fall into anti-patterns.
+
+## 1. Poor Use of Component Frameworks
+
+Tailwind is best used with component-based frameworks or template languages, such as React, Vue, Angular, etc. While it's possible to manage styles without components, you will need to rely on [multi-cursor editing](https://tailwindcss.com/docs/reusing-styles#multi-cursor-editing), and adjusting styles will become very difficult as the project scales. Please use Tailwind with [component frameworks or template languages to extract repeated styles whenever possible](https://tailwindcss.com/docs/reusing-styles#extracting-components-and-partials).
+
+## 2. Misuse of `@apply`
+
+Those familiar with native CSS may want to try extracting long, ugly classes and practicing the [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) principle when first encountering Tailwind. Although the intention is good, [don't use `@apply` to create new styles just because it "looks cleaner"](https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction). It breaks the Utility-First philosophy of Tailwind, leading to less flexibility in style modifications, a steeper learning curve for newcomers, and bloated CSS files.
+
+`@apply` is a last resort and should only be considered for extracting some repeated styles when not using components or template frameworks.
+
+## 3. Misuse of Arbitrary Values
+
+Arbitrary values are undoubtedly one of the most loved yet problematic features in Tailwind. They are as convenient and flexible as inline styles, but their extreme flexibility can lead to projects going up in flames and spiraling out of control.
+
+```css
+/* Native CSS */
+<div style="margin-top: 200px;">
+/* ... */
+</div>
+
+/* Tailwind */
+<div class="mt-[200px]">
+/* ... */
+</div>
+```
+
+One reason Tailwind is beloved is that it provides ready-made design variables by default, making future adjustments, expansions, or modifications very convenient. However, using arbitrary values immediately loses all advantages, meaning that "hardcoded magic numbers" are inserted into styles, making the project difficult to maintain.
+
+It's best to clarify the range of unique values and assign meaningful names to ensure the maintainability of the project. For example, in Vue, I can define values using CSS Variables in component styles and use these variables through arbitrary values.
+
+```vue
+<template>
+  <div class="navbar mt-[--navbar-height-mobile] lg:mt-[--navbar-hegiht-desktop]">
+    <!-- ... -->
+  </div>
+</template>
+<style scoped>
+.navbar {
+  --navbar-height-desktop: 30px;
+  --navbar-height-mobile: 60px;
+}
+</style>
+```
+
+This approach retains the flexibility of Tailwind while providing a centralized way to manage and annotate the purpose of values, allowing variables to be defined in local components or template fragments as needed.
+
+## 4. Ignoring Existing Tailwind Settings
+
+I was originally thought that Tailwind could only be written in the class of elements, but in fact, Tailwind parameters can also be referenced in custom CSS snippets! You can refer to [Tailwind Functions](https://tailwindcss.com/docs/functions-and-directives#theme), these functions will be replaced with parameters from the Tailwind configuration file at build time, avoiding hard-coded values.
+
+```css
+/* theme() Example */
+/* Bad */
+.content-area {
+  height: calc(100vh - 10px);
+}
+
+/* Good */
+.content-area {
+  height: calc(100vh - theme(spacing[2.5]));
+}
+
+/* screen Example */
+/* Bad */
+@media (min-width: 1024px) {
+  /* ... */
+}
+
+/* Good */
+@media screen(lg) {
+  /* ... */
+}
+```
+
+This writing style is very useful when writing many special styles not supported by Tailwind or defining CSS Variables.
+
+## 5. Loose Planning and Managing Variables
+
+When using Tailwind, you should also think about how to maintain and manage the design variables of the website. Tailwind provides many useful default base styles, but as the project expands, you will find that you need to define more settings to meet the demands.
+
+**Define "variables in design" clearly as much as possible at the design stage** to avoid issues of inconsistent definitions across different projects and design or development ends of the same brand... Recently, the company I work for has also been standardizing design variables through the introduction of [Figma Variable](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma).
+
+In addition, **try not to define regional styles in global styles**. For example, defining variables that only appear on certain special pages globally will only unnecessarily increase the burden of understanding the project.
+
+## Sidenote: Using Automation Tools to Organize CSS Classes
+
+Even after using Tailwind for a while, I still find it hard to embrace a bunch of style classes stacked together. It is recommended to use automation tools like [Prettier](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier) to help you organize the order of Tailwind classes in your project.
+
+You won't write a style once and never change it again; introducing automation tools to assist in organizing style order is a highly cost-effective investment.
+
+## Summary
+
+- Understand the concepts of Utility-First and Atomic CSS before using Tailwind, and make good use of components or template languages to organize repeated styles.
+- Do not leave magic numbers (unique values lacking explanation or naming).
+- Start from the design end and unify Design Tokens.
+
+If you notice signs of anti-pattern in the project, I hope you can actively bring them up to benefit future developers. The development experience needs to be jointly maintained to remain healthy. If you encounter other anti-patterns, feel free to leave comments for discussion.
+
+## Further Reading
+
+- [5 best practices for preventing chaos in Tailwind CSS](https://evilmartians.com/chronicles/5-best-practices-for-preventing-chaos-in-tailwind-css)

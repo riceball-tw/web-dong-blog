@@ -1,0 +1,122 @@
+---
+isDraft: false
+icon:
+  name: simple-icons:tailwindcss
+  title: Tailwind LOGO
+subHeadline: 5 Tailwind Anti-Patterns You Must Avoid
+headline: 绝对要避免的 5 项 Tailwind 反模式
+excerpt: 撰写这篇文章是因为接手过非常反人类的 Tailwind 项目，一些不应该出现的反模式其实都可以在早期被轻松避免，随着项目规模变大，这些反模式就会变成一个巨大的问题难以修正。本文将介绍一些我在项目中看到的反模式，并提醒你千万不要这样做！
+category: CSS
+tags:
+  - Tailwind
+publishDate: 2024-05-05
+lastModifiedDate: 2024-05-05
+---
+
+## 前言
+
+撰写这篇文章是因为维护的项目中遗留了一些反模式造成很多问题，这些问题其实都可以在早期被轻松避免，本文将介绍一些我在项目中体会到的反模式，并提醒你千万不要这样做！
+
+Tailwind 作为一款流行的工具自然也有其背后的理念，如果不了解这些理念（Utility-First、Design Token），很容易就会深陷反模式当中。
+
+## 一、不善用组件架构框架
+
+Tailwind 最适合被使用在组件架构的框架或是模板语言上，像是：React、Vue、Angular……等，虽然不使用组件来抽离管理样式也是可行的，但你会需要依赖[重复的编辑](https://tailwindcss.com/docs/reusing-styles#multi-cursor-editing)，在项目规模扩大时调整样式也会变得非常困难。请使用 Tailwind 时[尽可能搭配组件框架或模板语言来抽离重复的样式](https://tailwindcss.com/docs/reusing-styles#extracting-components-and-partials)。
+
+## 二、滥用 `@apply`
+
+熟悉原生 CSS 的人刚接触 Tailwind 或多或少都会想要尝试抽离丑陋冗长的 Class 并实践 [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) 原则，虽然出发点很好，但[不要因为「看起来更整洁」](https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction)就使用 `@apply` 创造新样式。它打破了 Tailwind Utility-First 的理念导致样式修改弹性更差、新人接手学习曲线更高、CSS 打包起来更臃肿。
+
+`@apply` 是下下策，只在不使用组件、模板框架时才勉强可以考虑用来抽离一些重复的样式。
+
+## 三、滥用随意值 (Arbitrary Values)
+
+随意值绝对是 Tailwind 中最受到喜爱也最容易出问题的功能，它使用起来和行内 Style 样式一样方便灵活，但也是因为极高的弹性会导致项目失控并迅速恶化。
+
+```css
+/* 原生 CSS */
+<div style="margin-top: 200px;">
+/* ... */
+</div>
+
+/* Tailwind */
+<div class="mt-[200px]">
+/* ... */
+</div>
+```
+
+Tailwind 受人喜爱的原因之一就是因为它预设提供了现成的设计变量，未来就算要调整扩充或修改都非常方便，但当使用随意值时就马上失去了所有优势，意味着在样式中插入一些「写死数值的魔法数字」导致项目难以维护。
+
+最好分清楚独特的数值的范围，并且赋予一个有意义的名称，这样才能确保项目的可维护性，像是在 Vue 中我可以在组件样式中使用 CSS Variable 定义数值，并通过随意值去使用这些变量。
+
+```vue
+<template>
+  <div class="navbar mt-[--navbar-height-mobile] lg:mt-[--navbar-hegiht-desktop]">
+    <!-- ... -->
+  </div>
+</template>
+<style scoped>
+.navbar {
+  --navbar-height-desktop: 30px;
+  --navbar-height-mobile: 60px;
+}
+</style>
+```
+
+这么做既保留了 Tailwind 的灵活性，也有地方统一管理与标注数值的用途，可以视情况将变量定义在局部组件或模板片段当中。
+
+## 四、忽略现有 Tailwind 设置
+
+原先认为 Tailwind 只能被撰写在元素的 class 当中，但实际上就算在客制化的 CSS 片段中也可以引用 Tailwind 的参数！可以参考 [Tailwind Functions](https://tailwindcss.com/docs/functions-and-directives#theme)，这些函数会在构建时被替换成 Tailwind 设置档中的参数，避免使用写死的数值。
+
+```css
+/* theme() Example */
+/* Bad */
+.content-area {
+  height: calc(100vh - 10px);
+}
+
+/* Good */
+.content-area {
+  height: calc(100vh - theme(spacing[2.5]));
+}
+
+/* screen Example */
+/* Bad */
+@media (min-width: 1024px) {
+  /* ... */
+}
+
+/* Good */
+@media screen(lg) {
+  /* ... */
+}
+```
+
+这样的写法在撰写许多 Tailwind 不支持的特殊样式或定义 CSS Variable 时会非常好用。
+
+## 五、松散规划与管控变量
+
+在使用 Tailwind 时就应该同时思考如何维护管理网站的设计变量，Tailwind 提供了许多预设好用的基础样式，但随着项目的扩大，你会发现自己需要定义更多的设置以满足需求。
+
+**尽可能在设计端就定义清楚「设计当中的变量」**，才能避免相同的品牌横跨不同项目不同设计端或开发端接连爆出定义不一致的问题……近期我所在的公司也在通过导入 [Figma Variable](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma)来进行设计变量的统一规范。
+
+此外**区域的样式尽量不要定义在全局的样式中**，举例：只会出现在某些特殊页面的设置变量，定义在全局只会白白增加项目理解负担。
+
+## 补充、使用自动化工具整理 CSS Class
+
+就算是使用 Tailwind 一段时间其实我还是会很看不惯一堆样式 Class 堆叠在一起，建议可以使用像是 [Prettier](https://tailwindcss.com/blog/automatic-class-sorting-with-prettier) 这类自动化工具帮助你整理项目中 Tailwind Class 的顺序。
+
+你不会撰写完一次样式就永远不会再改动，导入自动化工具协助整理样式顺序是 CP 值极高的投资。
+
+## 总结
+
+- 使用 Tailwind 之前先了解 Utility-First、Atomic CSS 的概念，善用组件或模板语言拆分重复样式
+- 不要留下魔法数值（ 缺乏解释或命名的独特数值）
+- 从设计端出发并统一 Design Token
+
+先记录到这里，目前观察遇过的反模式就这几种，包含了自身的经验以及官方文件的建议，如果你发现项目有臭掉的迹象希望能踊跃提出来造福未来的开发者，开发的体验需要共同维护才能保持健全，有遇到其他反模式也欢迎留言讨论。
+
+## 延伸阅读
+
+- [5 best practices for preventing chaos in Tailwind CSS](https://evilmartians.com/chronicles/5-best-practices-for-preventing-chaos-in-tailwind-css)
