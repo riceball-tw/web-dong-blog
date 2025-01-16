@@ -1,0 +1,60 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:error-circle-rounded-outline-sharp
+  title: Warning Icon
+subHeadline: 'Differences in Usage Between @ts-ignore and @ts-expect-error'
+headline: 'Differences in Usage Between @ts-ignore and @ts-expect-error'
+excerpt: While refactoring a project, I encountered type issues that I initially ignored using `@ts-ignore` or `@ts-expect-error`.
+category: TypeScript
+publishDate: 2024-05-19
+lastModifiedDate: 2024-05-19
+---
+
+## Introduction
+
+Recently, while refactoring a project, I encountered type issues that I initially ignored using `@ts-ignore` or `@ts-expect-error`. This article discusses their differences.
+
+## @ts-ignore
+
+By writing `@ts-ignore` in a comment, TypeScript will ignore the type check for the next line. This is usually because the type check for that line would throw an error, but we are sure that the code on that line is correct, so we can use `@ts-ignore` to ignore the type check.
+
+```ts
+// @ts-ignore Some description can be written here
+const foo: number = 'Hello World';
+```
+
+Since a string is assigned to a number, TS will throw an error during static checking, so we use `@ts-ignore` to ignore the type check for that line.
+
+## @ts-expect-error
+
+`@ts-expect-error` serves the same purpose as the previous one, but the difference is that we can be sure that the next line of code will throw an error. **If the line of code does not throw an error, it will throw an error.**
+
+```ts
+// @ts-expect-error Some description can be written here
+const bar: number = 'Hello World';
+```
+
+The code above will throw an error because we are assigning a string to a number, but we are sure that this is incorrect, so we can use `@ts-expect-error` to ensure that the line of code will throw an error.
+
+## Conclusion
+
+> `@ts-ignore` is used to ignore the type check for a certain line, while `@ts-expect-error` is used to ensure that a certain line of code will throw an error before ignoring it. The usage scenarios for these two are different.
+
+`@ts-expect-error` is a new feature added in TypeScript version 3.9. Most of the time, I prefer the more proactive error-checking of `@ts-expect-error`, and I **insist on writing the reasons for ignoring errors to avoid overlooking other issues**.
+
+- **Situations to choose `@ts-ignore`:**
+
+  - There is really no time to decide which option is more appropriate.
+  - The project is large, and new errors that arise do not have a clear owner in the code.
+  - Upgrading between two different versions of TypeScript, where a line of code throws an error in one version but not in another.
+
+- **Situations to choose `@ts-expect-error`:**
+  - Writing test code where I actually want the type system to throw an error for a certain operation.
+  - Expecting the issue to be resolved quickly, so only a temporary solution is needed.
+  - The project is of moderate size, and the team is proactive, aiming to remove suppression comments as soon as the affected code is restored to validity.
+
+## Further Reading
+
+- [@ts-expect-error Comments - TypeScript](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-9.html#-ts-expect-error-comments)
+- [How to use @ts-expect-error](https://www.totaltypescript.com/concepts/how-to-use-ts-expect-error)
