@@ -1,0 +1,92 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:database-outline
+  title: 資料庫符號
+subHeadline: Database Concepts for Backend Beginners
+headline: 後端入門可以了解的資料庫概念
+excerpt: 資料庫就是一個儲存資料的軟體，根據儲存資料性質不同，合適的資料庫種類也會不同。了解 Transaction、ACID、Normalization……等核心概念非常重要。還有更多可以深掘的細節，先單純把學到的知識紀錄一下，未來個別用更多文章詳細描述 :)
+category: Database
+publishDate: 2025-01-17
+---
+
+## 什麼是資料庫？
+
+資料庫就是一個**儲存資料的軟體**，根據儲存資料性質不同，合適的資料庫種類也會不同。就常見的資料庫管理系統（<abbr title="Database Management System">DBMS</abbr>）來說會分成：
+
+- SQL Database = Relational Database
+- NoSQL Database = Non-Relational Database
+
+![MyNote App Schema](mynote-schema.webp)
+
+```sql title="SQL 建構 Schema 範例"
+CREATE SCHEMA IF NOT EXISTS my-note;
+
+CREATE TABLE my-note.notes (
+  id bigint NOT NULL PRIMARY KEY,
+  user_id int NOT NULL,
+  text text,
+  created_at timestamp NOT NULL DEFAULT now(),
+  updated_at timestamp NOT NULL DEFAULT now()
+);
+
+CREATE TABLE my-note.users (
+  id int NOT NULL PRIMARY KEY,
+  email varchar(255) NOT NULL UNIQUE,
+  password varchar(255) NOT NULL
+);
+
+ALTER TABLE my-note.notes ADD CONSTRAINT notes_user_id_users_id_fk FOREIGN KEY (user_id) REFERENCES my-note.users (id);
+```
+
+SQL 資料庫會需要預先用 SQL 語法定義資料格式（Schema），最終資料儲存在類似表單的格式當中，而 NoSQL 的儲存方式就非常多元，儲存於 document、column、graph、key-value ……等方式都有，根據儲存不同類型的資料你會需要選擇不同特性的資料庫。
+
+關聯式資料庫（Relational Database）是最為廣泛且經歷過考驗的資料庫種類，因為它通常保障了資料的正確性藉由遵循 ACID 特性的 Transaction。
+
+## 什麼是 Transaction？
+
+試想一個訂票系統，如果重複的對資料庫資料進行無規劃的更動便可能導致資料不正確，像是購票事件可能相互干擾，由於相互競爭改寫資料導致明明沒票了卻還買得到票的狀況，為了保障資料的正確性才有了 Transaction 的概念。
+
+- **群組行為**：多個資料庫操作行為可以被放入 Transaction 當中，像是新增、更新或刪除。
+- **完全成功或失敗**：遵循完全成功或失敗的結果，如果失敗就完全回滾至執行前的狀態，不存在改寫資料執行一半失敗的問題。
+- **隔離**：Transaction 之間完全隔離或有條件的隔離，讓操作不相互影響。
+
+具體來說 Transaction 會是一個 SQL 語法可以設置以執行嚴謹的資料改動，通常為了在效率與正確性間進行取捨，不同 Transaction 隔離的程度會被採用。
+
+## 什麼是 ACID？
+
+ACID（Atomicity, Consistency, Isolation, and Durability）是資料庫 transaction 可以具備的四大屬性，不同的資料庫對於屬性的實踐方式和程度不同。
+
+- **原子性（Atomicity）** = Transaction 作為操作的最小單位，結果只能成功或失敗。
+- **一致性（Consistency）** = 確保有誤的資料不會影響資料庫，資料只能是遵守規則且合法的形式被儲存。
+- **隔離（Isolation）** = 確保 Transaction 相互隔離就算同時間發生。
+- **持久性（Durability）** = 確保 Transaction 成功結束後資料是永久儲存的。
+
+## 什麼是資料庫正規化（Normalization）
+
+一種資料庫的設計技巧，目的是為了**減少資料庫中重複資料**並**確保資料的一致性**，一般來說，資料庫設計都會盡量滿足 3NF，但有時為了性能考慮，可能會做出一些妥協。
+
+- 第一正規化形式（1NF）： 確保每個欄位都是原子性的，也就是說，每個欄位只能包含一個值，不能包含多個值或一個子表。
+- 第二正規化形式（2NF）： 在滿足 1NF 的基礎上，要求每個非關鍵屬性完全依賴於候選鍵。
+- 第三正規化形式（3NF）： 在滿足 2NF 的基礎上，要求每個非關鍵屬性不依賴於其他非關鍵屬性。
+
+## 我該選擇哪種資料庫
+
+市面上常見的有以下選項：
+
+- MySQL - 開源
+- PostgreSQL - 開源
+- SQLite - 本地輕量級儲存解決方案
+- MSSQL - 想吃 MS 全家桶可以採用
+
+## 總結
+
+以上資料庫議題都很重要且還有更多可以深掘的細節，先單純把學到的知識紀錄一下，未來個別用更多文章詳細描述 :)
+
+## 延伸閱讀
+
+- [ACID - Wikipedia](https://en.wikipedia.org/wiki/ACID)
+- [Wtf is ACID in database transactions? - Tiger Abrodi](https://tigerabrodi.blog/wtf-is-acid-in-database-transactions)
+- [The meaning of ACID - Tiger Abrodi](https://tigerabrodi.blog/the-meaning-of-acid)
+- [Database Transaction & ACID - 莫力全 Kyle Mo](https://oldmo860617.medium.com/database-transaction-acid-156a3b75845e)
+- [ACID Properties in Databases With Examples - ByteByteGo](https://www.youtube.com/watch?v=GAe5oB742dw)
