@@ -69,6 +69,10 @@ import { Skeleton } from "@/components/atoms/skeleton/index.ts";
       grid-area: chat;
     }
   }
+
+  .comment[data-loaded] {
+    display: flex
+  }
 </style>
 
 <script is:inline>
@@ -104,6 +108,7 @@ import { Skeleton } from "@/components/atoms/skeleton/index.ts";
     const [script] = await Promise.all([loadUtterancesScript(), miniumTimer(300)])
     comment.innerHTML = '';
     comment.appendChild(script);
+    comment.setAttribute('data-loaded', true)
   }
 
   document.addEventListener('theme-changed', () => {
