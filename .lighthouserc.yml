@@ -23,6 +23,7 @@ ci:
       bf-cache: 'warn' # Optional Optimization
       uses-rel-preconnect: 'warn' # Optional Optimization
       unused-css-rules: 'warn' # Optional Optimization
+      uses-optimized-images: 'warn' # Optional Optimization
 
   upload:
     target: 'temporary-public-storage'
