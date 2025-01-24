@@ -1,0 +1,268 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:task-alt-rounded
+  title: 打勾圆框符号
+subHeadline: Create a Todo List in JavaScript in Five Steps
+headline: JavaScript 五个步骤制作待办事项
+excerpt: 待办事项是非常常见的习题，其中需求含括了增、删、读、改资料，充分的模拟到未来在操纵资料时会碰上的各种情境与问题。可以说各式各样的软体都是一种客制化的待办事项，透过制作待办事项足以熟悉编写应用的方方面面，跟着步骤写一次来练习基本的应用撰写。
+category: Implementation
+tags:
+  - beginner
+publishDate: 2022-11-15
+lastModifiedDate: 2025-01-24
+---
+
+## 前言
+
+<Info type="info">本篇文章将会练习制作一个可显示、新增、删除的 Javascript 待办事项。</Info>
+
+待办事项是非常常见的习题，其中需求涵括了增、删、读、改资料，充分模拟未来在操纵资料时会碰上的各种情境与问题，可以说各种软件都是一种客制化的待办事项。随着助教写一次，未来写很多应用会轻松得多～
+
+## 解题
+
+### 第一步：制作界面
+
+本步骤要完成的动作如下：
+
+- 提供用户输入界面
+- 使用 JavaScript 选取并监听界面动态
+
+```html
+<!-- 提供用户输入界面 -->
+<div class="todo">
+  <form data-todo-form class="todo__form">
+    <input name="userInput" type="text" placeholder="请输入事项" required />
+    <input type="submit" value="提交" />
+  </form>
+  <ul data-todo-list></ul>
+</div>
+```
+
+常常同学会直接 `<input>` 上绑监听，虽然并不会造成什么问题但助教会更倾向使用现有的 `<form>` 来让用户提交资料，原因是 HTML 原生就支持客户端的资料验证，可以更方便地去检核用户输入的资料对错，也可以更语义化地描述「这是一个表单，等待用户填写内容」，而非「这是画面上随便一个可以输入的栏位」。
+
+```html
+<!-- 使用验证强制要求用户必须输入内容 -->
+<input type="text" required />
+```
+
+接着就是使用 JavaScript 选取并监听界面动态（表单提交与事项清单点击）
+
+```javascript
+// 使用 JavaScript 选取并监听界面动态
+const todoForm = document.querySelector('[data-todo-form]');
+const todoList = document.querySelector('[data-todo-list]');
+
+// 表单当提交时……
+todoForm.addEventListener('submit', (e) => {
+  // 取消浏览器默认行为(跳转页面)
+  e.preventDefault();
+});
+
+// 当事项清单被点击时……
+todoList.addEventListener('click', (e) => {});
+```
+
+### 第二步：显示待办事项
+
+在界面架构好之后就需要于第一次网页加载时将 JavaScript 中的数据显示到画面上，因此先定义一笔待办事项资料（在此填充了假资料，方便同学理解）：
+
+```javascript
+// id = 事项独一无二的识别码
+// name = 事项的名称
+// isCompleted = 事项完成状态
+
+let tasks = [
+  {
+    id: '1',
+    name: 'Learn HTML',
+    isCompleted: false,
+  },
+  {
+    id: '2',
+    name: 'Learn CSS',
+    isCompleted: true,
+  },
+];
+```
+
+之后就是考虑如何显示这笔资料，由于这是一個会频繁执行的动作，制作一个函数将功能包装起来，方便之后引用：
+
+```javascript
+function renderTask(tasks) {
+  // 抓取 task 资料，并用 map 跑过一轮，在每次迭代中把资料取出并放入 HTML 中回传
+  const tasksHTML = tasks.map(
+    (task) => `
+  <li task-id=${task.id}>
+    <input id=${task.id} data-task-toggle type="checkbox" ${task.isCompleted ? 'checked' : ''}>
+    <label for=${task.id}>${task.name}</label>
+    <button data-task-delete>删除</button>
+  </li>
+  `,
+  );
+  todoList.innerHTML = tasksHTML.join('');
+}
+
+renderTask(tasks);
+```
+
+<Info type="warning">
+  使用当前时间作为事项独一无二的识别码大多数时候没有问题，但仍有重复的可能性，更好的方式是使用通用唯一识别码（UUID）。各大浏览器现今已支持
+  [crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) 可以使用。
+</Info>
+
+<Info type="warning">
+  留意以上使用到 `innerHTML` 直接渲染用户输入内容将可能造成 [XSS](https://www.webdong.dev/post/xss-for-web-developer/)
+  问题，最好使用 `appendChild` 等方式[创建好元素再注入 DOM
+  中](https://github.com/riceball-tw/in-memory-todo/blob/7028998945c77e57ea36145a0c9f73c7c25a8c0f/frontend/script.js#L112)，直接无条件渲染用户提供的字符串为
+  HTML 是个风险隐患
+</Info>
+
+可以特别注意这里使用了现有的数据作判断，当「`isCompleted` 为 `true`」就为 input 添加打勾否则不打勾。
+
+```javascript
+<input ${task.isCompleted ? "checked" : ""}>
+```
+
+### 第三步：新增待办事项
+
+后续步骤就简单很多了，新增事项流程上就是：
+
+1. 检测表单被提交
+2. 将新增的事项名称丢给 `addTask` 函式处理
+3. 加入一笔新的资料给 `tasks`
+4. 呼叫 `renderTask` 重新渲染一次
+
+如果不想要因为一个事项改动就触发整个待办事项重新渲染一次，可以作细微的操控去编辑 DOM，不过在本次解题中先采取最简单直观的方式 ：更新完资料就整体刷新再显示。
+
+```javascript
+// 01.检测表单被提交
+todoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // 02.将提交的事项名称传入 addTask 函式
+  addTask(e.target.userInput.value);
+  // 重置表单内容
+  e.target.reset();
+});
+```
+
+```javascript
+function addTask(taskName) {
+  // 03.加入新的资料给 tasks，tasks 等于(旧的 tasks + 新事项)
+  tasks = [
+    ...tasks,
+    {
+      id: Date.now().toString(),
+      name: taskName,
+      isCompleted: false,
+    },
+  ];
+  // 04.重新渲染一次
+  renderTask(tasks);
+}
+```
+
+这里使用 [Date.now()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now) 来得出自 `1970/01/01 00:00:00 UTC` 起经过的毫秒数作为 ID 使用。
+
+```javascript
+Date.now().toString();
+```
+
+### 第四步：删除待办事项
+
+要删除事项，就势必要得知「点击下去的删除按钮是哪项事项」，再根据事项 ID 与目前 `tasks` 数据去交互比对，如果相同就移除这笔资料并重新渲染一次所有事项。
+
+删除事项流程就是：
+
+1. 检测待办清单是否被点击
+2. 确认被点击的是删除按钮
+3. 取出 `task-id` 属性
+4. 传入 `removeTask` 函式中
+5. 在 `removeTask` 函式中比对 `tasks` 中相同 `task-id` 的事项
+6. 删除 `tasks` 中该笔事项
+7. 呼叫 `renderTask` 重新渲染一次
+
+```javascript
+// 监听待办清单是否被点击
+todoList.addEventListener('click', (e) => {
+  // 当被点击时，确认被点击的事项有 "data-task-delete" 属性
+  if (e.target.hasAttribute('data-task-delete')) {
+    // 如果有，将其父元素上的 task-id 属性取出，传入 removeTasks 函式内
+    const taskId = e.target.parentElement.getAttribute('task-id');
+    removeTask(taskId);
+  }
+});
+```
+
+````markdown
+这里助教使用了一个数组方法 `reduce` 来快速剔除不需要的数据(`curr.id === targetId`)。
+
+```javascript
+function removeTask(targetId) {
+  // 比对 tasks 中相同 task-id 的事项，
+  // 最终 tasks 等于(过滤掉删除事项的事项)
+  tasks = tasks.reduce((prev, curr) => {
+    if (curr.id === targetId) {
+      return prev;
+    }
+    return [...prev, curr];
+  }, []);
+  renderTask(tasks);
+}
+```
+````
+
+### 第五步：切换待办事项
+
+切换事项状态的思路和删除事项非常相似，切换事项流程就是：
+
+1. 检测待办清单是否被点击
+2. 确认被点击的是复选框
+3. 取出 `task-id` 属性
+4. 传入 `toggleTask` 函数中
+5. 在 `toggleTask` 函数中比对 `tasks` 中相同 `task-id` 的事项
+6. 切换 tasks 中该笔事项的状态
+
+```javascript
+// 监听待办清单是否被点击
+todoList.addEventListener('click', (e) => {
+  // 当被点击时，确认被点击的事项有 "data-task-toggle" 属性
+  if (e.target.hasAttribute('data-task-toggle')) {
+    // 如果有，将其父元素上的 task-id 属性取出，传入 toggleTask 函数内
+    const taskId = e.target.parentElement.getAttribute('task-id');
+    toggleTask(taskId);
+  }
+});
+```
+
+```javascript
+function toggleTask(targetId) {
+  // 跑过 tasks 中每件事项，如果 id 相同，翻转该事项的完成状态
+  tasks.forEach((task) => {
+    if (task.id === targetId) {
+      task.isCompleted = !task.isCompleted;
+    }
+  });
+}
+```
+
+## 结语
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="rNKzaJm"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/rNKzaJm">Todo vanilla JS</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+以上是助教制作整个待办事项题目的思考历程，同学可以参考但不用奉为宗旨死背或直接复制粘贴，实际操作一次效果最佳～

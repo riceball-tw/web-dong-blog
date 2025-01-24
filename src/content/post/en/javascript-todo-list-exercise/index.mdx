@@ -1,0 +1,270 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:task-alt-rounded
+  title: Check Circle Symbol
+subHeadline: Create a Todo List in JavaScript in Five Steps
+headline: Create a Todo List in JavaScript in Five Steps
+excerpt: Todo lists are common exercises that simulate various scenarios and problems encountered when manipulating data.
+category: Implementation
+tags:
+  - beginner
+publishDate: 2022-11-15
+lastModifiedDate: 2025-01-24
+---
+
+## Introduction
+
+<Info type="info">
+  This article will practice creating a JavaScript todo list that can display, add, and delete tasks.
+</Info>
+
+Todo lists are very common exercises that include the requirements of adding, deleting, reading, and modifying data, effectively simulating various scenarios and problems encountered when manipulating data. It can be said that various types of software are a form of customized todo lists.
+
+## Problem Solving
+
+### Step 1: Create the UI
+
+The actions to be completed in this step are as follows:
+
+- Provide a user input interface
+- Use JavaScript to select and listen to interface events
+
+```html
+<!-- Provide a user input interface -->
+<div class="todo">
+  <form data-todo-form class="todo__form">
+    <input name="userInput" type="text" placeholder="Please enter a task" required />
+    <input type="submit" value="Submit" />
+  </form>
+  <ul data-todo-list></ul>
+</div>
+```
+
+Students often directly bind listeners to the `<input>`, which doesn't cause any issues, but the I prefers to use the existing `<form>` to allow users to submit data. The reason is that HTML natively supports client-side data validation, making it easier to check the correctness of user input, and it can more semantically describe "this is a form waiting for user input" rather than "this is just any input field on the screen."
+
+```html
+<!-- Use validation to require user input -->
+<input type="text" required />
+```
+
+Next, use JavaScript to select and listen to interface events (form submission and task list clicks).
+
+```javascript
+// Use JavaScript to select and listen to interface events
+const todoForm = document.querySelector('[data-todo-form]');
+const todoList = document.querySelector('[data-todo-list]');
+
+// When the form is submitted……
+todoForm.addEventListener('submit', (e) => {
+  // Prevent the browser's default behavior (page redirection)
+  e.preventDefault();
+});
+
+// When the task list is clicked……
+todoList.addEventListener('click', (e) => {});
+```
+
+### Step 2: Display Todo Items
+
+After the interface is structured, we need to display the data from JavaScript on the screen during the first page load. Therefore, we first define a piece of todo item data (dummy data is filled in here for easier understanding):
+
+```javascript
+// id = unique identifier for the task
+// name = name of the task
+// isCompleted = completion status of the task
+
+let tasks = [
+  {
+    id: '1',
+    name: 'Learn HTML',
+    isCompleted: false,
+  },
+  {
+    id: '2',
+    name: 'Learn CSS',
+    isCompleted: true,
+  },
+];
+```
+
+Next, we consider how to display this data. Since this is an action that will be executed frequently, we create a function to encapsulate the functionality for easier reference later:
+
+```javascript
+function renderTask(tasks) {
+  // Get task data and use map to iterate through it, extracting data and returning it in HTML
+  const tasksHTML = tasks.map(
+    (task) => `
+  <li task-id=${task.id}>
+    <input id=${task.id} data-task-toggle type="checkbox" ${task.isCompleted ? 'checked' : ''}>
+    <label for=${task.id}>${task.name}</label>
+    <button data-task-delete>Delete</button>
+  </li>
+  `,
+  );
+  todoList.innerHTML = tasksHTML.join('');
+}
+
+renderTask(tasks);
+```
+
+<Info type="warning">
+  Using the current time as a unique identifier for tasks usually works fine, but there is still a possibility of
+  duplication. A better approach is to use a universally unique identifier (UUID). Major browsers now support
+  [crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) for this purpose.
+</Info>
+
+<Info type="warning">
+  Be aware that using `innerHTML` to directly render user input can lead to
+  [XSS](https://www.webdong.dev/post/xss-for-web-developer/) issues. It's best to use methods like `appendChild` to
+  [create elements before injecting them into the DOM
+  ](https://github.com/riceball-tw/in-memory-todo/blob/7028998945c77e57ea36145a0c9f73c7c25a8c0f/frontend/script.js#L112).
+  Directly rendering user-provided strings as HTML poses a security risk.
+</Info>
+
+It is particularly noted that existing data is used for judgment. When "`isCompleted` is `true`", the input will be checked; otherwise, it will not be checked.
+
+```javascript
+<input ${task.isCompleted ? "checked" : ""}>
+```
+
+### Step 3: Add a Task
+
+The subsequent steps are much simpler. The process for adding a task is as follows:
+
+1. Detect when the form is submitted.
+2. Pass the new task name to the `addTask` function for processing.
+3. Add a new entry to `tasks`.
+4. Call `renderTask` to re-render.
+
+If you don't want the entire task list to re-render just because of one task change, you can make subtle manipulations to edit the DOM. However, for this problem, we will take the simplest and most intuitive approach: refresh the entire display after updating the data.
+
+```javascript
+// 01. Detect when the form is submitted
+todoForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  // 02. Pass the submitted task name to the addTask function
+  addTask(e.target.userInput.value);
+  // Reset the form content
+  e.target.reset();
+});
+```
+
+```javascript
+function addTask(taskName) {
+  // 03. Add new data to tasks, tasks equals (old tasks + new task)
+  tasks = [
+    ...tasks,
+    {
+      id: Date.now().toString(),
+      name: taskName,
+      isCompleted: false,
+    },
+  ];
+  // 04. Re-render
+  renderTask(tasks);
+}
+```
+
+Here, [Date.now()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now) is used to get the number of milliseconds since `1970/01/01 00:00:00 UTC` as the ID.
+
+```javascript
+Date.now().toString();
+```
+
+### Step 4: Delete a Task
+
+To delete a task, you need to know "which task's delete button was clicked." Then, compare the task ID with the current `tasks` data. If they match, remove that task and re-render all tasks.
+
+The process for deleting a task is as follows:
+
+1. Detect if the task list was clicked.
+2. Confirm that the clicked element is the delete button.
+3. Retrieve the `task-id` attribute.
+4. Pass it to the `removeTask` function.
+5. In the `removeTask` function, compare the tasks for the same `task-id`.
+6. Delete target task from `tasks`.
+7. Call `renderTask` to re-render.
+
+```javascript
+// Listen for clicks on the task list
+todoList.addEventListener('click', (e) => {
+  // When clicked, confirm that the clicked task has the "data-task-delete" attribute
+  if (e.target.hasAttribute('data-task-delete')) {
+    // If it does, retrieve the task-id attribute from its parent element and pass it to the removeTasks function
+    const taskId = e.target.parentElement.getAttribute('task-id');
+    removeTask(taskId);
+  }
+});
+```
+
+Here, I uses the array method `reduce` to quickly remove unnecessary data (`curr.id === targetId`).
+
+```javascript
+function removeTask(targetId) {
+  // Compare tasks with the same task-id,
+  // the final tasks equal (filtered out deleted tasks)
+  tasks = tasks.reduce((prev, curr) => {
+    if (curr.id === targetId) {
+      return prev;
+    }
+    return [...prev, curr];
+  }, []);
+  renderTask(tasks);
+}
+```
+
+### Step 5: Toggle Todo Items
+
+The idea of toggling the status of an item is very similar to deleting an item. The process for toggling an item is:
+
+1. Detect if the todo list has been clicked
+2. Confirm that the clicked element is a checkbox
+3. Retrieve the `task-id` attribute
+4. Pass it into the `toggleTask` function
+5. In the `toggleTask` function, compare the items in `tasks` with the same `task-id`
+6. Toggle the status of that item in tasks
+
+```javascript
+// Listen for clicks on the todo list
+todoList.addEventListener('click', (e) => {
+  // When clicked, confirm that the clicked item has the "data-task-toggle" attribute
+  if (e.target.hasAttribute('data-task-toggle')) {
+    // If it does, retrieve the task-id attribute from its parent element and pass it to the toggleTask function
+    const taskId = e.target.parentElement.getAttribute('task-id');
+    toggleTask(taskId);
+  }
+});
+```
+
+```javascript
+function toggleTask(targetId) {
+  // Iterate through each item in tasks, if the id matches, toggle the completion status of that item
+  tasks.forEach((task) => {
+    if (task.id === targetId) {
+      task.isCompleted = !task.isCompleted;
+    }
+  });
+}
+```
+
+## Conclusion
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="result"
+  data-slug-hash="rNKzaJm"
+  data-preview="true"
+  data-editable="true"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/rNKzaJm">Todo vanilla JS</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+
+The above is the thought process of the teaching assistant in creating the entire todo item project. Students can refer to it but should not memorize or directly copy it; practical operation is the best way to learn!
