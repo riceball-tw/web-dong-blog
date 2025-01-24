@@ -1,0 +1,57 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:sentiment-dissatisfied-outline-rounded
+  title: 不高兴表情符号
+subHeadline: Why is CSS so Difficult and Weird to Learn?
+headline: 为什么 CSS 这么难学这么诡异？
+excerpt: 开发者们对 CSS 有不同的意见，有的人说它很简单、有的人说它难以驾驭，这些都是事实。我时常听到苦恼的后端或是与其打交道多年的自己脱口而出：「CSS 真的好诡异阿！」，这篇文章来总结为什么CSS 是一个让人又爱又恨的存在，它为什么这么难学这么诡异？
+series: Web History
+category: CSS
+tags:
+  - Concept
+publishDate: 2024-01-01
+---
+
+## 前言
+
+<div
+  style="font-size: 4rem;
+  border:2px solid currentColor;
+  padding:0px .1rem;
+  width:14rem;
+  "
+>
+  CSS IS AWESOME
+</div>
+
+开发者们对 CSS 有不同的意见，有的人说它很简单、有的人说它难以驾驭，这些都是事实。我时常听到苦恼的后端或是与其打交道多年的自己脱口而出：「CSS 真的好诡异啊！」，这篇文章来总结为什么 CSS 是一个让人又爱又恨的存在，它为什么这么难学这么诡异？
+
+## 观点一：年轻且爆炸成长的网络媒介
+
+网页至今仍是一个非常年轻的传播媒介，不超过 30 年！随着一开始网页用途多是「相互连接的文件」到现在我们习惯的「网络应用程序」像是：游戏、影音平台、社交媒体、博客……任何生意都能在网络上运行，网页的用途与复杂度已经大幅成长，而 CSS 也是在这个过程中不断的演进。
+
+- 早期会依靠[预处理器](/post/the-magic-before-css-preprocessors/)撰写另一语法再转换回 CSS，过程中实践一些 CSS 未支持的功能，像是变量、嵌套规则、混合、继承……等，这些功能随着时间推移也慢慢地出现在原生的 CSS 标准当中。
+- 早期会需要依靠定制化撰写 JavaScript 逻辑的样式也随着 CSS 演化而轻松许多，像是：[Sticky](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning#sticky_positioning)、[clamp()](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp)、[View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)。
+
+从这几点变化可以看出构建网页样式的方式仍在持续改变，开发者们持续地在挑战网页的极限，随着前人修筑的道路，网页开发的可能性不可限量，但也带来许多复杂性。
+
+## 观点二：网页的初衷是平台独立（Platform Agnostic）
+
+根据 [HTML 设计原则](https://info.cern.ch/hypertext/WWW/MarkUp/HTMLConstraints.html)容纳任何浏览器与平台使用为其核心原则。不管是任何网页标准的制定都必须考虑到任何种类的终端用户，网页样式的呈现基于用户的硬件、软件限制之外，还有用户群体的差异，像是视力障碍者、老年人、不同国家的语言、文化……等，这些都是网页样式必须考虑的因素。
+
+因此「设计网页」与常人印象中的「设计」有所不同，常见的设计通常只通过有限的媒介接触有限的群体，而网页的设计必须考虑到无限的媒介接触无限的群体。
+
+## 观点三：CSS 关乎上下文（CSS is Contextual）
+
+与其说开发者们去「定义」网页应当如何呈现，更像是「建议」网页如何呈现，网页最终显示的控制权永远在用户而非开发者手中，这大概是 CSS 会这么让人恼火与难以理解的核心因素了。我们无法强硬的决定网页的呈现，只能提供一些建议，而这些建议会被浏览器解读并且呈现给用户。
+
+有经验的前端开发者将会熟悉与各类浏览器环境互动、巧妙的构建可维护可扩展的架构，而往往过程中都要踩过无数个坑才能建立对应的经验 😅。
+
+## 总结
+
+[优雅降级（Graceful degradation）](https://developer.mozilla.org/zh-CN/docs/Glossary/Graceful_degradation)与[渐进增强（Progressive enhancement）](https://developer.mozilla.org/zh-TW/docs/Glossary/Progressive_Enhancement)深植网页开发的根本，这也是为什么 CSS 这么难学与诡异的原因，它必须考虑到无限的可能性，并且背负着无数的包袱前进。
+
+## 延伸阅读
+
+- [Why Is CSS So Weird - Mozilla Developer](https://www.youtube.com/watch?v=aHUtMbJw8iA)

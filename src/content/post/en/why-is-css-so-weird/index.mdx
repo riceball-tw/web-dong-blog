@@ -1,0 +1,57 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:sentiment-dissatisfied-outline-rounded
+  title: Dissatisfied Emoji
+subHeadline: Why is CSS so Difficult and Weird to Learn?
+headline: Why is CSS so Difficult and Weird to Learn?
+excerpt: Developers have mixed opinions about CSS; some find it simple, others find it hard to master. This article summarizes why CSS is both loved and hated.
+series: Web History
+category: CSS
+tags:
+  - Concept
+publishDate: 2024-01-01
+---
+
+## Introduction
+
+<div
+  style="font-size: 4rem;
+  border:2px solid currentColor;
+  padding:0px .1rem;
+  width:14rem;
+  "
+>
+  CSS IS AWESOME
+</div>
+
+Developers have mixed opinions about CSS; some find it simple, others find it hard to master. I often hear frustrated back-end developers or even myself, who has dealt with it for years, exclaim, "CSS is really strange!" This article summarizes why CSS is a love-hate relationship and why it is so difficult and strange to learn.
+
+## Perspective 1: A Young and Rapidly Growing Medium
+
+The web is still a very young medium for communication, not more than 30 years old! From its early days as "interconnected documents" to the "web applications" we are used to today, such as games, video platforms, social media, blogs... any business can operate online. The uses and complexities of the web have grown significantly, and CSS has evolved throughout this process.
+
+- In the early days, developers relied on [preprocessors](/post/the-magic-before-css-preprocessors/) to write another syntax that would be converted back to CSS, implementing features not supported by CSS, such as variables, nested rules, mixins, inheritance, etc. Over time, these features have gradually appeared in the native CSS standards.
+- Early on, styles often required custom JavaScript logic, but this has become much easier with the evolution of CSS, such as: [Sticky](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning#sticky_positioning), [clamp()](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp), [View Transitions](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API).
+
+These changes show that the way we build web styles is still continuously evolving. Developers are constantly pushing the limits of the web, and with the paths laid by predecessors, the possibilities of web development are limitless, but this also brings many complexities.
+
+## Perspective 2: The Original Intention of the Web is Platform Agnostic
+
+According to the [HTML Design Principles](https://info.cern.ch/hypertext/WWW/MarkUp/HTMLConstraints.html), accommodating any browser and platform is its core principle. Any web standard must consider all types of end users, and the presentation of web styles is based not only on the hardware and software limitations of users but also on the differences among user groups, such as those with visual impairments, the elderly, and different languages and cultures across countries. These are all factors that web styles must consider.
+
+Therefore, "designing a web page" is different from the common perception of "design." Common design typically engages a limited medium with a limited audience, while web design must consider infinite media reaching infinite audiences.
+
+## Perspective 3: CSS is Contextual
+
+Rather than saying developers "define" how a web page should be presented, it is more accurate to say they "suggest" how a web page should be presented. The ultimate control over how a web page is displayed always lies with the user, not the developer. This is likely the core reason why CSS can be so frustrating and difficult to understand. We cannot force a specific presentation of a web page; we can only provide suggestions, which are interpreted by the browser and presented to the user.
+
+Experienced front-end developers are familiar with interacting with various browser environments and skillfully constructing maintainable and scalable architectures, often having to navigate countless pitfalls to build corresponding experience 😅.
+
+## Conclusion
+
+[Graceful degradation](https://developer.mozilla.org/zh-CN/docs/Glossary/Graceful_degradation) and [Progressive enhancement](https://developer.mozilla.org/zh-TW/docs/Glossary/Progressive_Enhancement) are deeply rooted in web development fundamentals, which is also why CSS is so difficult and strange to learn. It must consider infinite possibilities while carrying countless burdens forward.
+
+## Further Reading
+
+- [Why Is CSS So Weird - Mozilla Developer](https://www.youtube.com/watch?v=aHUtMbJw8iA)
