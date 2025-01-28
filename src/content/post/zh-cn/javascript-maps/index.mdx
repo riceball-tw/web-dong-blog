@@ -1,0 +1,130 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:box-outline-rounded
+  title: 箱子符号
+subHeadline: Map in ES6 JavaScript
+headline: 了解 ES6 JavaScript 中的内建数据结构： Map
+excerpt: JavaScript ES6 中有一个用法与对象近似的数据结构我一直不是很清楚用途。—— Map，这篇文章将比较常见的对象与 Map，以辨别 Map 的特性与使用时机。总的来说可以把 Map 当作是用来频繁读写的对象，它具备更好的性能、更明确的语法。
+category: JavaScript
+tags:
+  - Data Structure
+publishDate: 2024-07-17
+---
+
+## 前言
+
+JavaScript ES6 中有一个用法与对象近似的数据结构我一直不是很清楚用途。—— `Map`，这篇文章将比较常见的对象与 `Map` 以辨别 `Map` 的特性与使用时机。
+
+## 语法
+
+```js
+// Init 建立
+const map = new Map([
+  [1, 'apple'],
+  [2, 'orange'],
+]);
+
+// Set - 新增 key 与 value
+map.set(3, 'banana');
+// Get - 根据 key 取 value
+map.get(3);
+// Delete - 根据 key 删除
+map.delete(3);
+// Clear - 清空所有数据
+map.clear();
+// Has - 检查 key 是否存在
+map.has(2);
+// Keys - 获取所有 key
+map.keys();
+// Values - 获取所有 Value
+map.values();
+// Entries - 获取 key-value 组合
+map.entries();
+// Length - 数据长度
+map.size;
+// Iteration for - for 遍历
+for (const [key, value] of map) {
+  console.log({ key, value });
+}
+// Iteration forEach - forEach 遍历
+map.forEach((value, key) => {
+  console.log({ key, value });
+});
+// Swap Keys & Values - 交换 key 与 value
+const swapMap = Array.from(map).reduce((acc, [key, value]) => acc.set(value, key), new Map());
+```
+
+## 相较对象来说 Map 的优点
+
+1. **没有历史遗留问题** ：除了特别储存进去的键之外 `Map` 并不存在任何键，相较于 `Object` 来说更为明确简洁。
+
+```js
+const myMap = {};
+
+myMap.valueOf; // => [Function: valueOf]
+myMap.toString; // => [Function: toString]
+myMap.hasOwnProperty; // => [Function: hasOwnProperty]
+myMap.isPrototypeOf; // => [Function: isPrototypeOf]
+myMap.propertyIsEnumerable; // => [Function: propertyIsEnumerable]
+myMap.toLocaleString; // => [Function: toLocaleString]
+myMap.constructor; // => [Function: Object]
+```
+
+并且在取值时，举例来说 `books[id]` 取值可能会需要担心 `id` 键是否真的存在于 `books` 当中，因此需要在取值前先判断是否存在，像是：
+
+```js
+// 一般检测对象是否具备某个键的方法
+if (books.hasOwnProperty(id)) {
+}
+
+// 应对某些特殊情况
+if (Object.prototype.hasOwnProperty.call(books, id)) {
+}
+```
+
+但在 `Map` 可以直接使用对应的方法去查询，并且可以确保默认没有额外的键存在，看看以下简洁的语法！
+
+```js
+myMap.get(key);
+
+for (const [key, value] of myMap) {
+}
+```
+
+1. **允许任何类型的键** ：`Map` 的键可以是任何类型，包括对象、函数以及原始类型（字符串、数字等）。相较之下，对象的键只能是字符串或符号（[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)）。
+
+2. **明确的顺序** ：Map 保留键值对的插入顺序，这使得迭代时能够按照插入顺序进行，而对象则无法保证。这样明确顺序的特性也让 `Map` 的遍历效率更快更好。详细可以看看 builder.io 的[在线测验](https://perf.builder.io/?q=eyJpZCI6IndkbG1kbG94cm5nIiwidGl0bGUiOiJNYXAgdnMgT2JqZWN0IFBlcmZvcm1hbmNlIiwiYmVmb3JlIjoiY29uc3QgcmFuZG9tS2V5ID0gKCkgPT4gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogMTAwMDAwMDApXG5jb25zdCBkYXRhID0gWy4uLkFycmF5KDEwMDAwKV0ubWFwKHJhbmRvbUtleSlcbmNvbnN0IG9iaiA9IE9iamVjdC5mcm9tRW50cmllcyhkYXRhLm1hcCh4ID0%2BIFt4LCB4XSkpXG5jb25zdCBtYXAgPSBuZXcgTWFwKE9iamVjdC5lbnRyaWVzKG9iaikpIiwidGVzdHMiOlt7Im5hbWUiOiJNYXAiLCJjb2RlIjoiLy8gRnJlZXplIHRoZSBrZXlzIGxpc3QgKHdlIGRvbid0IHdhbnQgdG8gbXV0YXRlIHdoaWxlIGl0ZXJhdGluZylcbmNvbnN0IGtleXMgPSBBcnJheS5mcm9tKG1hcC5rZXlzKCkpXG5mb3IgKGNvbnN0IGtleSBvZiBrZXlzKSB7XG4gIC8vIERlbGV0ZSBrZXlcbiAgbWFwLmRlbGV0ZShrZXkpXG4gIC8vIENyZWF0ZSBhIHJhbmRvbSBuZXcga2V5XG4gIGNvbnN0IG5ld0tleSA9IHJhbmRvbUtleSgpXG4gIG1hcC5zZXQobmV3S2V5LCBuZXdLZXkpXG59IiwicnVucyI6W10sIm9wcyI6MH0seyJuYW1lIjoiT2JqZWN0IiwiY29kZSI6ImNvbnN0IGtleXMgPSBPYmplY3Qua2V5cyhvYmopXG5mb3IgKGNvbnN0IGtleSBvZiBrZXlzKSB7XG4gIC8vIERlbGV0ZSBrZXlcbiAgZGVsZXRlIG9ialtrZXldXG4gIC8vIENyZWF0ZSBhIHJhbmRvbSBuZXcga2V5XG4gIGNvbnN0IG5ld0tleSA9IHJhbmRvbUtleSgpXG4gIG9ialtuZXdLZXldID0gbmV3S2V5XG59IiwicnVucyI6W10sIm9wcyI6MH1dLCJ1cGRhdGVkIjoiMjAyNC0wNy0xOFQxMjoxMjozNC45NzhaIn0%3D)。
+
+3. **安全性** ：设置用户提供的 `键/值` 配对到对象上可能让人恶意向程序中注入恶意构造的对象（[Object Injection Attacts](https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/the-dangers-of-square-bracket-notation.md)），从而改变程序的逻辑或执行未预期的操作，而使用 `Map` 的方法则可以安全的避免这种情况。
+
+## 相较对象来说 Map 的缺点
+
+1. **学习曲线**：虽然 `Map` 使用方法简单，但出现频率相对较少，因此不了解的人可能需要额外的学习成本。
+2. **内存开销**：由于 Map 的实现细节，储存同样数量的键值对时，Map 通常比对象占用更多的内存。
+3. **JSON 支持**：对象能够直接被转换为 JSON 格式，Map 则需要额外的处理才能序列化为 JSON 格式。
+
+```js
+// Object 转换为 JSON
+const obj = { key: 'value' };
+const jsonString = JSON.stringify(obj);
+
+// Map 转换为 JSON
+const map = new Map();
+map.set('key', 'value');
+
+// 需要转换为对象或数组后才能转换为 JSON
+const mapToObject = Object.fromEntries(map);
+const mapToJsonString = JSON.stringify(mapToObject);
+```
+
+## 使用时机
+
+总结来说可以把 `Map` 当作是用来频繁读写的对象，它具备更好的性能、更明确的语法，而对象可以用作存储固定的键值对，在不需要频繁读写的情况下使用。
+
+## 延伸阅读
+
+- [Map - mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+- [Use Maps more and Objects less - builder.io](https://www.builder.io/blog/maps)
+- [You Should Use Maps and Sets in JS - Syntax](https://www.youtube.com/watch?v=De6JOU9yaGM)
+- [Map vs Object in JavaScript - Leigh Halliday](https://www.youtube.com/watch?v=hubQQ3F337A)

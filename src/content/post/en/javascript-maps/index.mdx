@@ -1,0 +1,130 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:box-outline-rounded
+  title: Box Icon
+subHeadline: Map in ES6 JavaScript
+headline: Map in ES6 JavaScript
+excerpt: There is a data structure in JavaScript ES6 similar to objects that I have never fully understood. — Map. Let's compare objects with Map.
+category: JavaScript
+tags:
+  - Data Structure
+publishDate: 2024-07-17
+---
+
+## Introduction
+
+There is a data structure in JavaScript ES6 similar to objects that I have never fully understood. — `Map`. This article mainly compares familiar objects with `Map` to distinguish the characteristics and usage timing of `Map`.
+
+## Syntax
+
+```js
+// Init
+const map = new Map([
+  [1, 'apple'],
+  [2, 'orange'],
+]);
+
+// Set - Add key and value
+map.set(3, 'banana');
+// Get value by key
+map.get(3);
+// Delete by key
+map.delete(3);
+// Clear all data
+map.clear();
+// Check if key exists
+map.has(2);
+// Get all keys
+map.keys();
+// Get all values
+map.values();
+// Get key-value pairs
+map.entries();
+// Get data length
+map.size;
+// Iteration for - for loop
+for (const [key, value] of map) {
+  console.log({ key, value });
+}
+// Iteration forEach - forEach loop
+map.forEach((value, key) => {
+  console.log({ key, value });
+});
+// Swap keys and values
+const swapMap = Array.from(map).reduce((acc, [key, value]) => acc.set(value, key), new Map());
+```
+
+## Advantages of Map Compared to Objects
+
+1. **No Legacy Issues**: Apart from the specially stored keys, `Map` does not have any keys, making it clearer and more concise compared to `Object`.
+
+```js
+const myMap = {};
+
+myMap.valueOf; // => [Function: valueOf]
+myMap.toString; // => [Function: toString]
+myMap.hasOwnProperty; // => [Function: hasOwnProperty]
+myMap.isPrototypeOf; // => [Function: isPrototypeOf]
+myMap.propertyIsEnumerable; // => [Function: propertyIsEnumerable]
+myMap.toLocaleString; // => [Function: toLocaleString]
+myMap.constructor; // => [Function: Object]
+```
+
+Additionally, when retrieving values, for example, `books[id]`, you might need to worry about whether the `id` key actually exists in `books`, so you need to check for existence before retrieving, like this:
+
+```js
+// Method to check if an object has a key
+if (books.hasOwnProperty(id)) {
+}
+
+// Method to check if an object has a key in certain cases
+if (Object.prototype.hasOwnProperty.call(books, id)) {
+}
+```
+
+However, in `Map`, you can directly use the corresponding method to query, and you can ensure that no extra keys exist by default. Check out the following concise syntax!
+
+```js
+myMap.get(key);
+
+for (const [key, value] of myMap) {
+}
+```
+
+1. **Allow any type of key**: The keys of a `Map` can be of any type, including objects, functions, and primitive types (strings, numbers, etc.). In contrast, the keys of an object can only be strings or symbols ([Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)).
+
+2. **Explicit order**: A Map retains the insertion order of key-value pairs, allowing iteration in the order they were inserted, which objects cannot guarantee. This characteristic of explicit order also makes `Map` traversal more efficient. For details, you can check out builder.io's [online quiz](https://perf.builder.io/?q=eyJpZCI6IndkbG1kbG94cm5nIiwidGl0bGUiOiJNYXAgdnMgT2JqZWN0IFBlcmZvcm1hbmNlIiwiYmVmb3JlIjoiY29uc3QgcmFuZG9tS2V5ID0gKCkgPT4gTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpICogMTAwMDAwMDApXG5jb25zdCBkYXRhID0gWy4uLkFycmF5KDEwMDAwKV0ubWFwKHJhbmRvbUtleSlcbmNvbnN0IG9iaiA9IE9iamVjdC5mcm9tRW50cmllcyhkYXRhLm1hcCh4ID0%2BIFt4LCB4XSkpXG5jb25zdCBtYXAgPSBuZXcgTWFwKE9iamVjdC5lbnRyaWVzKG9iaikpIiwidGVzdHMiOlt7Im5hbWUiOiJNYXAiLCJjb2RlIjoiLy8gRnJlZXplIHRoZSBrZXlzIGxpc3QgKHdlIGRvbid0IHdhbnQgdG8gbXV0YXRlIHdoaWxlIGl0ZXJhdGluZylcbmNvbnN0IGtleXMgPSBBcnJheS5mcm9tKG1hcC5rZXlzKCkpXG5mb3IgKGNvbnN0IGtleSBvZiBrZXlzKSB7XG4gIC8vIERlbGV0ZSBrZXlcbiAgbWFwLmRlbGV0ZShrZXkpXG4gIC8vIENyZWF0ZSBhIHJhbmRvbSBuZXcga2V5XG4gIGNvbnN0IG5ld0tleSA9IHJhbmRvbUtleSgpXG4gIG1hcC5zZXQobmV3S2V5LCBuZXdLZXkpXG59IiwicnVucyI6W10sIm9wcyI6MH0seyJuYW1lIjoiT2JqZWN0IiwiY29kZSI6ImNvbnN0IGtleXMgPSBPYmplY3Qua2V5cyhvYmopXG5mb3IgKGNvbnN0IGtleSBvZiBrZXlzKSB7XG4gIC8vIERlbGV0ZSBrZXlcbiAgZGVsZXRlIG9ialtrZXldXG4gIC8vIENyZWF0ZSBhIHJhbmRvbSBuZXcga2V5XG4gIGNvbnN0IG5ld0tleSA9IHJhbmRvbUtleSgpXG4gIG9ialtuZXdLZXldID0gbmV3S2V5XG59IiwicnVucyI6W10sIm9wcyI6MH1dLCJ1cGRhdGVkIjoiMjAyNC0wNy0xOFQxMjoxMjozNC45NzhaIn0%3D).
+
+3. **Security**: Setting user-provided `key/value` pairs on an object may allow malicious injection of crafted objects into the program ([Object Injection Attacks](https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/the-dangers-of-square-bracket-notation.md)), altering the program's logic or executing unintended operations, while using `Map` methods can safely avoid this situation.
+
+## Disadvantages of Map Compared to Objects
+
+1. **Learning curve**: Although `Map` is simple to use, it is less frequently encountered, so those unfamiliar with it may incur additional learning costs.
+2. **Memory overhead**: Due to the implementation details of Map, it typically consumes more memory than objects when storing the same number of key-value pairs.
+3. **JSON support**: Objects can be directly converted to JSON format, while Maps require additional processing to serialize to JSON format.
+
+```js
+// Convert Object to JSON
+const obj = { key: 'value' };
+const jsonString = JSON.stringify(obj);
+
+// Convert Map to JSON
+const map = new Map();
+map.set('key', 'value');
+
+// Needs to be converted to an object or array before converting to JSON
+const mapToObject = Object.fromEntries(map);
+const mapToJsonString = JSON.stringify(mapToObject);
+```
+
+## When to Use
+
+In summary, `Map` can be considered as an object for frequent read and write operations, offering better performance and clearer syntax, while objects can be used to store fixed key-value pairs when frequent read and write is not needed.
+
+## Further Reading
+
+- [Map - mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+- [Use Maps more and Objects less - builder.io](https://www.builder.io/blog/maps)
+- [You Should Use Maps and Sets in JS - Syntax](https://www.youtube.com/watch?v=De6JOU9yaGM)
+- [Map vs Object in JavaScript - Leigh Halliday](https://www.youtube.com/watch?v=hubQQ3F337A)
