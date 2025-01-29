@@ -1,0 +1,100 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:expand-content-rounded
+  title: 扩张符号
+subHeadline: Learn JavaScript Destructuring Syntax Through Examples
+headline: 从动图与实例学会解构语法糖
+excerpt: 通过解构语法可以快速取出当前数组或对象的数据，是个常见且必学的语法糖。通过解构可以快速取出当前数组或对象的数据，并且可以将取出的数据重新命名，让代码更简洁，是个简单方便的语法，举几个实际例子就会发现它的用处很多且很好懂。
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-04-04
+---
+
+## 什么是解构？
+
+<Video
+  width={1200}
+  height={600}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.mp4',
+    },
+  ]}
+></Video>
+
+解构是一种创造新变量的语法糖，可以快速取出当前数组或对象的数据，并且可以将取出的数据重新命名，让代码更简洁。实际上非常简单，举几个实际例子就会发现它的用处很多且很好懂。
+
+## 实际案例
+
+### 来野餐吧
+
+举例来说你现在有一个数组叫 `basket`，里面有三种食物，分别是 `🍎`、`🥪`、`🧃`，想要取出里面的苹果和三明治就可以这样写：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, sandwich] = basket;
+
+console.log(apple, sandwich);
+// 🍎 🥪
+```
+
+这里 `apple` 与 `sandwich` 的名称是可以自行决定的，代表在这个新变量中，会取出 `basket` 数组中的第一个与第二个内容。
+
+### 跳过数据
+
+那假如我们想要取出 `apple` 和 `juice` 这两个食物，除开 `sandwich`，则可以这样写：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, , juice] = basket;
+
+console.log(apple, juice);
+// 🍎 🧃
+```
+
+### 实战练习
+
+#### 观察一：解构参数
+
+举例来说目前有一个 `说生日快乐` 函数，它会接收一个人物对象，并且在函数内部会用到这个人物的 `name` 与 `age` 两个属性，这时候可以这样写：
+
+```js
+function sayHappyBirthday({ name, age }) {
+  return `生日快乐 ${name}！ 你现在是 ${age} 岁了!`;
+}
+```
+
+#### 观察二： 解构返回值
+
+我发现最常会用到解构的地方是在 React 与许多类似的框架中，像 `useState` 它会返回一个数组，第一个元素是当前的状态，第二个元素是可以改变状态的函数，所以很常会这样写，看起来很像魔法但就只是把函数返回的数组解构命名而已：
+
+```js
+const [count, setCount] = useState(0);
+```
+
+```js
+function useState(initialState) {
+  // ...
+  return [state, setState];
+}
+```
+
+## 总结
+
+在传统的写法中，我们通常会这样写：
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const apple = basket[0];
+const sandwich = basket[1];
+const juice = basket[2];
+```
+
+但现在你明白解构语法糖的威力了，快去尝试吧！

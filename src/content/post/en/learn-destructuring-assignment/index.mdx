@@ -1,0 +1,100 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:expand-content-rounded
+  title: Expand Symbol
+subHeadline: Learn JavaScript Destructuring Syntax Through Examples
+headline: Learn JavaScript Destructuring Syntax Through Examples
+excerpt: Destructuring allows quick access to array or object data, making it a common syntax sugar. It simplifies code and renames extracted data for clarity.
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-04-04
+---
+
+## What is Destructuring?
+
+<Video
+  width={1200}
+  height={600}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/learn-destructuring-assignment/destructuring.mp4',
+    },
+  ]}
+></Video>
+
+Destructuring is a syntax sugar that creates new variables, allowing quick access to array or object data, and it can rename the extracted data for cleaner code. It's actually very simple, and you'll find its usefulness through a few practical examples.
+
+## Practical Examples
+
+### Let's Go for a Picnic
+
+For example, you have an array called `basket` containing three types of food: `🍎`, `🥪`, and `🧃`. To extract the apple and sandwich, you can write:
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, sandwich] = basket;
+
+console.log(apple, sandwich);
+// 🍎 🥪
+```
+
+Here, the names `apple` and `sandwich` can be chosen freely, representing the first and second contents of the `basket` array.
+
+### Skipping Data
+
+If we want to extract `apple` and `juice`, skipping `sandwich`, we can write:
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const [apple, , juice] = basket;
+
+console.log(apple, juice);
+// 🍎 🧃
+```
+
+### Practical Exercise
+
+#### Observation 1: Destructuring Parameters
+
+For instance, there is a function `sayHappyBirthday` that takes a person object and uses the `name` and `age` properties inside the function. It can be written like this:
+
+```js
+function sayHappyBirthday({ name, age }) {
+  return `Happy Birthday ${name}! You are now ${age} years old!`;
+}
+```
+
+#### Observation 2: Destructuring Return Values
+
+I find that destructuring is most commonly used in React and similar frameworks. For example, `useState` returns an array where the first element is the current state and the second element is a function to change the state. It is often written like this, which looks like magic but is just destructuring the returned array:
+
+```js
+const [count, setCount] = useState(0);
+```
+
+```js
+function useState(initialState) {
+  // ...
+  return [state, setState];
+}
+```
+
+## Summary
+
+In traditional writing, we usually write:
+
+```js
+const basket = ['🍎', '🥪', '🧃'];
+const apple = basket[0];
+const sandwich = basket[1];
+const juice = basket[2];
+```
+
+But now you understand the power of destructuring syntax sugar, so go ahead and try it out!
