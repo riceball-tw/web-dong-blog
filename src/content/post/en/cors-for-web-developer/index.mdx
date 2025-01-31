@@ -1,0 +1,104 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:security-rounded
+  title: Shield Symbol
+subHeadline: CORS for Web Developer
+headline: CORS for Web Developer
+excerpt: CORS (Cross-Origin Resource Sharing) is a mechanism that determines whether a web page can access resources from other origins.
+series: Web Cybersecurity
+category: Cybersecurity
+publishDate: 2024-09-02
+lastModifiedDate: 2024-09-02
+---
+
+## Introduction
+
+Recently, while dealing with some cybersecurity issues, I found that my knowledge in this area was quite lacking. As a front-end engineer, cybersecurity is usually not a primary focus, but the consequences of vulnerabilities can be disastrous. Therefore, I have been trying to fill in my knowledge gaps in this area.
+
+## What is CORS
+
+CORS (Cross-Origin Resource Sharing) is a mechanism that determines whether a web page can access resources from other origins.
+
+Before discussing CORS, it's essential to understand the browser's Same-Origin Policy, which is a security mechanism that restricts interactions between web pages from different origins. A web page's origin can be defined by three parts:
+
+- Protocol: `http`, `https`
+- Host: `www.example.com`
+- Port: `80`, `443`
+
+Only when all **three parts are the same will the browser consider it the same origin; otherwise, it is cross-origin**. CORS is the protective measure provided by the browser to determine whether to allow cross-origin requests. This setting usually needs to be adjusted on the server side regarding CORS configurations.
+
+## CORS Configuration
+
+CORS settings are made on the server side by configuring HTTP headers to inform the browser whether to allow cross-origin requests. Specifically, the browser categorizes requests into two types:
+
+### Simple Requests
+
+1. Can only be `GET`, `POST`, or `HEAD` methods
+2. Custom headers can only be `Accept`, `Accept-Language`, `Content-Language`, or `Content-Type` (values can only be `application/x-www-form-urlencoded`, `multipart/form-data`, or `text/plain`) according to [Fetch Spec](https://fetch.spec.whatwg.org/#simple-header)
+3. The object making the request does not have registered event listeners
+4. No `ReadableStream` objects are used for uploads in the request
+
+In simple requests, the header will include `Origin` to inform the server of the request's origin.
+
+```http
+GET /doc HTTP/1.1
+Origin: Server-b.com
+```
+
+The server will decide whether to allow cross-origin requests based on this origin. If allowed, the server will include `Access-Control-Allow-Origin` in the response to inform the browser that this origin is permitted.
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+```
+
+### Non-Simple Requests
+
+It was previously mentioned that this is a browser mechanism to block non-same-origin requests. Specifically, some requests, such as `POST`, `PUT`, `DELETE` (or any non-simple requests), can change the server's state just by being sent. Therefore, it is not possible to simply retrieve the request and then decide whether to block it. Instead, these requests will go through a preflight request, which means sending an `OPTIONS` request in advance to ask the server whether the operation is allowed:
+
+```http
+OPTIONS /doc HTTP/1.1
+Origin: http://foo.example
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: X-PINGOTHER, Content-Type
+```
+
+Then the server responds to allow the request:
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://foo.example
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
+Access-Control-Max-Age: 86400
+```
+
+After confirming that the non-simple request can be accepted, the browser will actually send the request:
+
+```http
+POST /doc HTTP/1.1
+X-PINGOTHER: pingpong
+Content-Type: text/xml; charset=UTF-8
+Origin: http://foo.example
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: X-PINGOTHER, Content-Type
+```
+
+And the server responds with the allowed origin:
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://foo.example
+```
+
+## Summary
+
+CORS is an essential security mechanism in modern web applications that effectively prevents unauthorized resource access between different origins. Through CORS, legitimate cross-origin requests can be allowed while protecting user data.
+
+## Further Reading
+
+- [Same-origin policy - mdn](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+- [CORS in 100 Seconds - Fireship](https://www.youtube.com/watch?v=4KHiSt0oLJ0)
+- [I Hate CORS. - Theo - t3.gg](https://www.youtube.com/watch?v=Hifll_y8-HE)
+- [Introduction to Cross-Origin Resource Sharing (CORS) - Li Jia Jun](https://www.youtube.com/watch?v=fcHDAciPPw0)

@@ -1,0 +1,104 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:security-rounded
+  title: 盾牌符号
+subHeadline: CORS for Web Developer
+headline: 写给网页开发者的 CORS 理解
+excerpt: CORS (Cross-Origin Resource Sharing) 跨来源资源共享，是一个机制用来决定网页是否能够存取其他来源的资源，能有效防止不同来源之间的不正当资源存取。透过 CORS，可以在保护用户资料的同时，允许合法的跨来源请求。
+series: Web Cybersecurity
+category: Cybersecurity
+publishDate: 2024-09-02
+lastModifiedDate: 2024-09-02
+---
+
+## 前言
+
+最近在碰一些资安的东西，发现自己对于这一块知识都比较薄弱，身为前端工程师资安通常并不是首要关注的职责，但一旦有漏洞保证后果不堪设想，于是近期来补足一下这方面的知识。
+
+## 什么是 CORS
+
+CORS (Cross-Origin Resource Sharing) 跨来源资源共享，是一个机制用来决定网页是否能够访问其他来源的资源。
+
+在提到 CORS 之前会先需要了解浏览器的同源政策（Same-Origin Policy），同源政策是浏览器的一个安全机制，限制了不同来源的网页之间的互动，网页来源可以被定义为三个部分：
+
+- 协议（Protocol）：`http`、`https`
+- 主机（Host）：`www.example.com`
+- 端口（Port）：`80`、`443`
+
+只有当这**三个部分都相同时，浏览器才会认为是同源，否则就是跨来源**。CORS 就是浏览器提供的防护网用来决定是否允许跨来源的请求。而这一项设置通常会需要在服务器端调整 CORS 相关设置。
+
+## CORS 设置
+
+CORS 设置会在服务器端进行，通过设置 HTTP 头来告诉浏览器是否允许跨来源请求。具体来说浏览器会将请求分为两种：
+
+### 简单请求
+
+1. 只能是 `GET`、`POST` 或 `HEAD` 方法
+2. 自定义的 header 只能是 `Accept`、`Accept-Language`、`Content-Language` 或 `Content-Type`（值只能是 `application/x-www-form-urlencoded`、`multipart/form-data` 或 `text/plain`）根据 [Fetch Spec](https://fetch.spec.whatwg.org/#simple-header)
+3. 发出请求的对象没有注册事件监听器
+4. 请求中没有 `ReadableStream` 的对象被用于上传
+
+简单请求下 header 会带上 `Origin` 来告诉服务器请求的来源
+
+```http
+GET /doc HTTP/1.1
+Origin: Server-b.com
+```
+
+服务器会根据这个来源来决定是否允许跨来源请求，如果允许的话服务器会在响应中加上 `Access-Control-Allow-Origin` 来告诉浏览器这个来源是被允许的。
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+```
+
+### 非简单请求
+
+前面有特别提到这是一项浏览器的机制用来阻挡非同源的请求，特别有些请求是只要送出就可能改变服务器状态像是：`POST`、`PUT`、`DELETE`（或是任何非简单请求），没办法单纯的获取请求后再决定要不要阻挡，因此这类请求会通过预检请求（Preflight Request）也就是预先送出一个 `OPTIONS` 请求询问服务器是否允许操作：
+
+```http
+OPTIONS /doc HTTP/1.1
+Origin: http://foo.example
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: X-PINGOTHER, Content-Type
+```
+
+然后服务器回应允许该请求：
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://foo.example
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
+Access-Control-Max-Age: 86400
+```
+
+確定該非簡單請求是可以被接受的後，瀏覽器才會真正發送請求：
+
+```http
+POST /doc HTTP/1.1
+X-PINGOTHER: pingpong
+Content-Type: text/xml; charset=UTF-8
+Origin: http://foo.example
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: X-PINGOTHER, Content-Type
+```
+
+並且伺服器回應允許的來源：
+
+```http
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: http://foo.example
+```
+
+## 总结
+
+CORS 是现代网页应用中不可或缺的安全机制，能有效防止不同来源之间的不正当资源存取。通过 CORS，可以在保护用户资料的同时，允许合法的跨来源请求。
+
+## 延伸阅读
+
+- [Same-origin policy - mdn](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy)
+- [CORS in 100 Seconds - Fireship](https://www.youtube.com/watch?v=4KHiSt0oLJ0)
+- [I Hate CORS. - Theo - t3.gg](https://www.youtube.com/watch?v=Hifll_y8-HE)
+- [跨来源资源共享（Cross-Origin Resource Sharing, CORS）简介 - 李嘉峻](https://www.youtube.com/watch?v=fcHDAciPPw0)
