@@ -1,0 +1,52 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:box-outline-rounded
+  title: 箱子符号
+subHeadline: Map vs WeakMap in JavaScript
+headline: 了解了 JavaScript Map，但 WeakMap 又是什么东西？
+excerpt: 前面写了一篇文章关于 ES6 JavaScript 当中的内建数据结构： Map，这次来谈谈 WeakMap，它又与 Map 有什么不同呢？会发现 WeakMap 相较 `Map` 少了非常多可用的方法，这是因为它们的根本处理数据的方式不同，Map 是强引用，而 WeakMap 是弱引用。
+category: JavaScript
+tags:
+  - Data Structure
+publishDate: 2024-07-29
+---
+
+## 前言
+
+前面写了一篇文章关于 [了解 ES6 JavaScript 中的内建数据结构： Map](https://www.webdong.dev/zh-cn/post/javascript-maps/)，这次来谈谈 WeakMap，它又与 Map 有什么不同呢？
+
+![Map 与 WeakMap 方法比较](map-vs-weakmap.webp 'WeakMap vs Map 方法比较')
+
+会发现 `WeakMap` 相较 `Map` 少了非常多可用的方法，这是因为它们的根本处理数据的方式不同，`Map` 是强引用，而 `WeakMap` 是弱引用。
+
+## WeakMap 的特点
+
+1. **不阻止键被垃圾回收**：弱引用的机制使得 WeakMap 在处理需要额外关联数据但又不想影响原始对象生命周期的场景中非常有用，例如：[私有变量](https://fitzgeraldnick.com/2014/01/13/hiding-implementation-details-with-e6-weakmaps.html)、[为对象(DOM 元素、Class、库)添加可被自动内存回收的额外信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap#associating_metadata)……
+2. **大致只能使用对象作为 key**：作为一个存放弱指针的集合。原始值（如数字、字符串）在 JavaScript 中是不可变的，并且不以引用的方式存储，因此无法对它们应用弱引用的概念。
+3. **不在乎内容及其状态**：`WeakMap` 无法得知 JavaScript 引擎是否已经内存清除了某个项目，因此无法保证 `WeakMap` 中的所有项目都是有效的，不支持访问所有内容的方式，像是遍历内容。
+
+## 总结
+
+```js
+let foo = { name: 'foo' };
+const map = new Map();
+map.set(foo, 'Hello');
+
+foo = undefined;
+
+map.forEach((value, key) => {
+  console.log(key, value); // { name: 'foo' } 'Hello'
+});
+
+// 结论：就算键被清除了，map 仍然保留 foo 的引用
+// 如果希望随着 foo 被清除，map 也被清除，可以使用 WeakMap
+```
+
+WeakMap 的设计是为了解决 `Map` 存在的特定的问题（避免内存泄漏、允许垃圾回收器自动清理不再需要的数据），可以在合适的场景选用合适的数据结构。
+
+## 延伸阅读
+
+- [WeakMap - mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+- [Map vs WeakMap in javascript - When to use Map vs WeakMap? - Before Semicolon](https://www.youtube.com/watch?v=QYfZ_gXwxBs)
+- [WeakMap and WeakSet - JAVASCRIPT.INFO](https://javascript.info/weakmap-weakset)
