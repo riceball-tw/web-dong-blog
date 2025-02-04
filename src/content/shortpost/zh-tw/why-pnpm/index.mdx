@@ -1,0 +1,24 @@
+---
+headline: 為什麼應該用 pnpm？
+publishDate: 2025-02-03
+category: Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DFm0XZwsXbk
+---
+
+![Vite 安裝選項](vite-install-options.webp)
+
+剛加入 JS 生態系的開發者應該會被多元的選項給弄得頭昏腦脹，要了解這些選項需要回顧它們的歷史：
+
+- npm 是預設的 node 套件管理器
+- Yarn 開始流行主要因為推出了 `yarn.lock`，確保了更好的依賴版本管理，解決了 npm 早期版本無法鎖定確切版本的問題。
+- pnpm 開始流行主要因為使用 symlink（符號連結）策略，大幅改善了效能，並且共享相同的依賴以節省磁碟空間。
+- bun 除了作為套件管理器，也包含了內建的 JavaScript 執行環境，標榜高效能。
+
+就我自己的累積至今的經驗與評價：
+
+- 用過一陣子 Yarn，之後 Yarn 2 改太大很多人跳槽了
+- pnpm 快且成熟，很多開源專案都採用，並且對於 monorepo 支援良好。
+- bun 沒用過，聽說還不太成熟。
+
+總結來說 npm 絕對是最穩妥的選項，最終選擇使用哪款套件管理器差異在大多環境下其實不大，切換的成本也不高，挑選順手且團隊都熟悉的使用即可。

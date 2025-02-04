@@ -1,0 +1,24 @@
+---
+headline: Why You Should Use pnpm?
+publishDate: 2025-02-03
+category: Technical Discussion
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DFm0XZwsXbk
+---
+
+![Vite Installation Options](vite-install-options.webp)
+
+Developers new to the JS ecosystem may feel overwhelmed by the variety of options. To understand these options, we need to review their history:
+
+- npm is the default Node package manager.
+- Yarn became popular mainly due to the introduction of `yarn.lock`, which ensured better dependency version management and solved the issue of early npm versions not being able to lock exact versions.
+- pnpm gained popularity primarily because of its use of symlink strategies, significantly improving performance and sharing the same dependencies to save disk space.
+- Bun, in addition to being a package manager, also includes a built-in JavaScript runtime, build with performance in mind.
+
+Based on my experience so far:
+
+- I used Yarn for a while, but many switched away when Yarn 2 made significant changes.
+- pnpm is fast and mature, widely adopted by many open-source projects, and has good support for monorepos.
+- I haven't used Bun, but I've heard it is still not very mature.
+
+In summary, npm is definitely the safest option. Ultimately, the differences in choosing which package manager to use are not significant in most environments, and the cost of switching is low. Just choose one that feels comfortable and is familiar to the team.
