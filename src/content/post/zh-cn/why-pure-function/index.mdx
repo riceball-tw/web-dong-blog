@@ -1,0 +1,111 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:nest-eco-leaf-outline-rounded
+  title: 叶子符号
+subHeadline: Why Do You Need Pure Functions?
+headline: 为什么你需要纯粹函数 (Pure Function)？
+excerpt: 写程序久了会发现编写干净的可被维护的程序是一件相当困难的事情，其中​​一个造成维护困难的原因是因为「函数除外并返回结果除了过程中产生变化对其他的程序产生影响」，换句话说问题就是「不需要的结果，让程序变得捉摸不定理解难以」，应该纯粹了解函数的定义以及如何使用，以便更进一步编写干净的代码。
+category: Pattern
+publishDate: 2023-03-14
+---
+
+## 为何要了解纯粹函数？
+
+写程序久了会发现撰写干净可维护的程序是一件相当困难的事情，其中一个造成难维护的原因是因为「**函数除了运算并返回结果之外过程中的变化影响到其余的程序**」，换句话说问题就是「**不必要的副作用，让程序变得捉摸不定难以理解**」。本篇文章将会介绍纯粹函数 (Pure Function) 的定义以及如何使用，为了更进一步撰写干净的代码，让我们来了解怎么撰写干净且纯粹的函数。
+
+## 什么是副作用？
+
+一个函数除了运算并返回结果之外，过程中产生变化影响到其余的程序，就可以说这是一个有「副作用」的函数，副作用只是一种描述，并没有负面的意思，但不必要的副作用确实会让程序变得捉摸不定难以理解。
+
+## 怎么迴避副作用？
+
+藉由迴避副作用就能达成撰写干净且纯粹的函数，可以留意以下常见的副作用来改善代码的质量。
+
+### 避免使用函数以外的变量
+
+举以下判断是否年满 18 的函数为例，只要使用到函数以外的变量，就会导致该函数不纯粹，依赖于外部的变量因此输入不是固定的！使用函数区域内的变量能够让函数成为一个真正独立的单元，不依靠外部的状态来运算。
+
+```javascript
+// ❌ Impure Function
+const myAge = 18;
+
+function isAdult() {
+  return myAge >= 18;
+}
+isAdult();
+
+// ✅ Pure Function
+function isAdult(age) {
+  return age >= 18;
+}
+isAdult(myAge);
+```
+
+### 视函数的参数为不可变(immutable)的
+
+举例来说 `Jack` 目前有 `10` 块钱，它选择 `work` 并且又获得了 `10` 块钱，程序是可以正确运作的，但藉由使用 [`...` 展开运算子](/post/spead-operator-rest-operator-the-three-dots-in-javascript/)多复制一份资料并返回来避免更动到原始的资料。
+
+```javascript
+const jack = {
+  wallet: 10,
+};
+
+// ❌ Impure Function
+function work(person) {
+  person.wallet += 10;
+}
+
+work(jack);
+console.log(jack); // { wallet: 20 }
+
+// ✅ Pure Function
+function work(person) {
+  return {
+    ...person,
+    wallet: person.wallet + 10,
+  };
+}
+
+console.log(jack); // { wallet: 10 }
+console.log(work(jack)); // { wallet: 20 }
+```
+
+有许多的原生函数都是不纯粹的，例如 `Array.forEach()`、`Array.sort()`、` Array.push()`……等，都是直接对资料进行操纵，而非返回一个新的结果。如果你想尽可能遵从撰写纯粹函数的原则的话，最好尽量避免并改而使用纯粹的原生函数，例如 `Array.map()`、`Array.filter()`、`Array.reduce()` 等。
+
+```javascript
+const ageList = [1, 5, 19, 30];
+
+// ❌ Impure Function
+let ageIsAdult = [];
+ageList.forEach((age) => {
+  if (age >= 18) {
+    ageIsAdult.push(age);
+  }
+});
+
+// ✅ Pure Function
+function ageIsAdultPure(age) {
+  return age.filter((age) => age >= 18);
+}
+
+console.log(ageIsAdult); // [19, 30]
+console.log(ageIsAdultPure(ageList)); // [19, 30]
+```
+
+## 总结
+
+> 当一个函数给入相同的参数会得到相同的结果，且没有副作用就是纯粹函数
+
+道理很简单，只要函数的输入是固定的，那么输出也是固定的，这样就不会影响到其余的程序，也就能够让程序更容易维护。
+所以我们应该把所有函数都改写成纯粹函数吗？当然是不可能的！但是应当尽可能的把函数改写成纯粹函数，因为纯粹函数的好处是：
+
+- **可快取性**：固定的输入与输出，让函数可以将结果快取起来，下次再输入相同的参数时就可以直接使用快取的结果，而不用再次执行复杂的运算。
+- **可测性**：固定的输入与输出，让函数易于测试。
+- **可移植性 / 本身即文件**：单纯的输入输出，可以让函数更容易移植到其他的程序中，并且不需要额外的文件去描述。
+
+非纯粹函数与纯粹函数之间并没有优劣好坏之分，仅仅是解决问题方法上的差异，但很明显的，只要对撰写函数的方式作一些约束就能很大程度的提升代码的维护性，值得一试！
+
+## 参考资料
+
+- [JavaScript Functional Programming 指南](https://jigsawye.gitbooks.io/mostly-adequate-guide/content/ch3.html)
