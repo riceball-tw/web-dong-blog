@@ -1,0 +1,85 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:compare-arrows-rounded
+  title: Bidirectional Arrow Symbol
+subHeadline: What is Ajax and Why Not Ajaj?
+headline: What is Ajax and Why Not Ajaj?
+excerpt: '"What is Ajax and Why Not Ajaj?" This question has in my mind for a long time. After some research, I wrote this article about the history of Ajax'
+series: Web History
+category: Pattern
+publishDate: 2023-05-13
+---
+
+## What is Ajax
+
+<abbr title="Asynchronous JavaScript And XML">Ajax</abbr> refers to a web development technique, which stands for "Asynchronous
+JavaScript and XML." It primarily addresses the dilemma of traditional web pages needing to request a completely new page
+from the server when updating content.
+
+By using Ajax, JavaScript can asynchronously send requests to the server and retrieve data in formats such as plain text, HTML, XML, or JSON for updating the web page, achieving efficient data updates, real-time interactivity, and a smooth experience.
+
+## Current Ajax
+
+![Ajax Technology Flowchart](./ajax.webp)
+![Traditional Web Page Update Flowchart](./conventional.webp)
+
+In the early days, methods like `XMLHTTP` and `XMLHttpRequest` were used to achieve this purpose, making the name Ajax quite reasonable. Even though XML is rarely used today, this technique is still referred to as "asynchronously using JavaScript to request data."
+
+Even though JSON format is more commonly used for data transmission today, the continued use of the name Ajax can be summarized in several key points:
+
+- Changing the name can lead to confusion
+- Easier pronunciation
+- Even if the name changes, it may not accurately represent its meaning (like <abbr title="Asynchronous JavaScript And JSON">AJAJ</abbr> ……) A more precise name might be <abbr title="Asynchronous JavaScript Http Request">JAHR</abbr>?!
+
+Therefore, we can still refer to it as Ajax today, but the X can now be seen as any type of data. Ultimately, it’s a matter of habit; if something isn’t broken, there’s no need to fix it.
+
+## How to Write Ajax
+
+It is essential to first understand the basics of asynchronous JavaScript development before learning how to write the syntax. You can refer to my other article: [Async JavaScript Visualized With Ease](/post/async-javascript-visualized-with-ease/).
+
+In terms of syntax, instead of using the early `XMLHttpRequest` method, you can now use `fetch` or `async/await` to achieve the same result. Here are three different ways to write it:
+
+```js
+let xhr = new XMLHttpRequest();
+xhr.open('GET', 'send-Ajax-data.php');
+
+xhr.onreadystatechange = function () {
+  const DONE = 4;
+  const OK = 200;
+  if (xhr.readyState === DONE) {
+    if (xhr.status === OK) {
+      console.log(xhr.responseText);
+    } else {
+      console.log('Error: ' + xhr.status);
+    }
+  }
+};
+
+xhr.send(null);
+```
+
+```js
+fetch('send-Ajax-data.php')
+  .then((data) => console.log(data))
+  .catch((error) => console.log('Error:' + error));
+```
+
+```js
+async function doAjax() {
+  try {
+    const res = await fetch('send-Ajax-data.php');
+    const data = await res.text();
+    console.log(data);
+  } catch (error) {
+    console.log('Error:' + error);
+  }
+}
+
+doAjax();
+```
+
+## References
+
+- [Why isn't Ajax called AJAJ?](https://www.quora.com/Why-isnt-Ajax-called-AJAJ)
+- [Ajax(programming)](<https://en.wikipedia.org/wiki/Ajax_(programming)>)
