@@ -1,0 +1,56 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:security-rounded
+  title: 盾牌符号
+subHeadline: XSS for Web Developer
+headline: 写给网页开发者的 XSS 理解与防范
+excerpt: 总结是无论如何都不轻易相信用户输入即能最大程度防范 XSS。最近在碰一些资安的东东，发现自己对这一块知识都比较薄弱，身为前端工程师资安通常并不是首要关注的职责，但一旦有漏洞保证后果不堪设想，于是近期来补足一下这方面的知识。现代齐全的工具与文件帮助下意外执行用户提供的恶意脚本的概率已经大幅降低。
+series: Web Cybersecurity
+category: Cybersecurity
+publishDate: 2024-08-30
+---
+
+## 前言
+
+最近在碰一些资安的东东，发现自己对这一块知识都比较薄弱，身为前端工程师资安通常并不是首要关注的职责，但一旦有漏洞保证后果不堪设想，于是近期来补足一下这方面的知识。
+
+## 什么是 XSS
+
+XSS（Cross-Site Scripting）跨站脚本攻击，意味着**攻击者通过漏洞注入恶意脚本让目标网站执行**。具体恶意脚本可以做的事情包括但不限于：获取敏感信息、修改网页内容、跳转恶意网站……等。具体来说漏洞有以下几种类型，大概念都是**通过不同方式想办法让目标网站执行恶意脚本进而操控网站**。
+
+### 反射型 XSS
+
+主要依靠用户发送恶意请求代码，举例将恶意脚本夹带在链接网址中，当用户点击链接时没有预防的网站会执行恶意脚本。像是以下网址只要被访问就会执行恶意脚本：`alert(1)`：
+
+```
+http://www.example.com/upload.asp?id=<script>alert(1);</script>
+```
+
+这么做恶意脚本不会被存在数据库当中，只要后端疏于检核误将请求代码执行就会造成该漏洞。这种攻击方式通常会通过短网址隐藏其意图，让不知情的用户夹带恶意脚本进入网站。
+
+### 存储型 XSS
+
+与反射型相似，不过通过漏洞将恶意脚本存储在网站的数据库当中，最常见像是在可自订内容的留言板或文章，当其他用户访问网站时会连带执行恶意脚本。
+
+### DOM-based XSS
+
+将恶意脚本通过 DOM 的形式插入到网页中，最常见原因莫属通过 `innerHTML` 直接将任何字符串视为 HTML 插入到 DOM 当中执行。也可以搭配先前两种方式，通过操作 DOM 的方式将恶意脚本插入到网页中执行。
+
+## 防范 XSS
+
+- 防范 XSS 最直接的方式就是「**不要相信任何用户输入内容是安全可被执行的**」，视任何用户输入内容预设为不安全，确定消毒（转换为没有威胁的字符串）过后才能视为程序执行。
+- CSP（Content Security Policy）：通过 CSP 设置来限制网页中可以执行的脚本。
+- HttpOnly：设置 HttpOnly 属性，防止 JavaScript 访问 Cookie。
+- SameSite：设置 SameSite 属性，限制第三方 Cookie 的访问。
+
+## 总结
+
+现代齐全的工具与文件帮助下意外执行用户提供的恶意脚本的概率已经大幅降低，**无论如何都不轻易相信用户输入即能最大程度防范 XSS**。
+
+## 延伸阅读
+
+- [Types of XSS - OWASP](https://owasp.org/www-community/Types_of_Cross-Site_Scripting)
+- [什麼是 XSS 攻擊？如何防範？ - ExplainThis](https://www.explainthis.io/zh-hant/swe/what-is-xss)
+- [零基礎資安系列（二）-認識 XSS（Cross-Site Scripting）-Cymetrics Tech Blog](https://tech-blog.cymetrics.io/posts/jo/zerobased-cross-site-scripting/)
+- [Cross-Site Scripting (XSS) Explained - PwnFunction](https://www.youtube.com/watch?v=EoaDgUgS6QA)
