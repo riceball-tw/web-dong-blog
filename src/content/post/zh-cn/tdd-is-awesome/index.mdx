@@ -1,0 +1,152 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:select-check-box-rounded
+  title: 打勾框符号
+subHeadline: TDD is Awesome You Should Try It! (Tutorial With Example)
+headline: TDD 测试驱动开发超赞可以试试看（附实际操作范例）
+excerpt: TDD 测试驱动开发是一种开发方法论，先写测试再实践代码，应该如何撰写测试？或许听过 TDD 但不清楚与单纯写测试差别在哪？这篇文章详细描述 TDD 的优势与实际操作范例快速了解 TDD 为什么这么赞。TDD 目的便是打造一个工作流程能够验证代码的行为，让开发者能够更有信心的重构、更动代码。
+category: Technical Discussion
+publishDate: 2024-03-17
+---
+
+## 为什么 TDD
+
+> TDD 测试驱动开发是一种开发方法论，先写测试再实践代码
+
+- ✅ **更有效率与目的的开发**：撰写程序前已规划好「期望」
+- ✅ **重构代码时更为方便**：重构程序前重要的片段已经被测试过，如果过程中出错测试会指向哪个环节出错
+- ✅ **程序都是可以被测试的**：测试先于实践代码
+- ✅ **更容易实现 Atomic Commit**：TDD 更容易划清提交的界线，使每个提交只做一件事，尽可能的小但完整
+- ✅ **更松散的耦合**：容易撰写松散耦合的代码
+- ✅ **测试成为文档**：测试可以帮助开发者更好的描述代码的行为
+
+陈旧代码是那些有价值但你害怕改动的代码，为什么害怕改动？因为复杂、没有记载、太久没人碰过，TDD 目的便是打造一个工作流程能够验证代码的行为，让开发者能够更有信心的重构、更动代码。
+
+## TDD 规则与执行流程
+
+- 三个规则：
+
+  1. 在撰写一个单元测试前，不可撰写任何产品程序
+  2. 只撰写刚好无法通过的单元测试，不能编译也算无法通过
+  3. 只撰写刚好能通过当前测试的产品程序
+
+- 三个执行流程：
+  - 红：撰写失败测试
+  - 绿：撰写最低限度的代码使测试通过
+  - 重构：审视代码
+
+## 实际单元测试 TDD： FizzBuzz
+
+### 一、前置准备
+
+- 开发环境：选择一套熟悉的程序语言与测试框架，这里我使用 [Vite](https://vitejs.dev/) TypeScript 与 [Vitest](https://vitest.dev/) 作为范例。
+- 规格文件：简单版 FizzBuzz。
+
+```markdown
+# FizzBuzz 规格文件：
+
+1. 接受数字并输出字符串
+2. 如果输入的数字是 3 的倍数，输出 "Fizz"
+3. 如果输入的数字是 5 的倍数，输出 "Buzz"
+4. 如果输入的数字是 3 和 5 的倍数，输出 "FizzBuzz"
+```
+
+### 二、红灯
+
+根据第一个需求：「输入数字输出字符串」，我们可以先写一个测试作为开端，并可以期望它会失败，因为我们的实践代码还是空白：
+
+```typescript
+test('输入数字_输出字符串', () => {
+  expect(fizzbuzz(1)).toBe('1');
+});
+```
+
+```typescript
+// 实践代码
+export const fizzbuzz = (input) {};
+```
+
+### 三、绿灯
+
+在撰写实践代码后可以期望测试通过「输入数字\_输出字符串」测试：
+
+```typescript
+export const fizzbuzz = (input: number): string => {
+  return input.toString();
+};
+```
+
+### 四、重构
+
+绿灯时就算是达成了产品需求，这时候代码就算达成了需求但可能还不够完美，可以于该阶段进行重构，如果没有要重构则可以继续重复红灯、绿灯、重构的流程。
+
+### 五、最终成果
+
+最终经过 4 次红灯、绿灯、重构的流程后代码如下：
+
+```typescript
+// 实践代码
+export const fizzbuzz = (input: number): string => {
+  // 初始版本
+  // const isFizz = input % 3 === 0
+  // const isBuzz = input % 5 === 0
+  // const isFizzBuzz = isFizz && isBuzz
+  // if (isFizzBuzz) {
+  //   return 'FizzBuzz'
+  // }
+  // if (isFizz) {
+  //   return 'Fizz'
+  // }
+  // if (isBuzz) {
+  //   return 'Buzz'
+  // }
+  // return input.toString()
+
+  // 重构后
+  const fizz = input % 3 === 0 ? 'Fizz' : '';
+  const buzz = input % 5 === 0 ? 'Buzz' : '';
+  const output = `${fizz}${buzz}`;
+  return output || input.toString();
+};
+```
+
+```typescript
+// 單元測試代碼
+test('输入数字_输出字符串', () => {
+  expect(fizzbuzz(1)).toBe('1');
+});
+
+test('输入3的倍数_输出Fizz', () => {
+  expect(fizzbuzz(9)).toBe('Fizz');
+});
+
+test('输入5的倍数_输出Buzz', () => {
+  expect(fizzbuzz(10)).toBe('Buzz');
+});
+
+test('输入3和5的倍数_输出FizzBuzz', () => {
+  expect(fizzbuzz(15)).toBe('FizzBuzz');
+});
+```
+
+## 总结
+
+有良好的自动化测试作为文件可以替代码形成保护网，确保程序的行为被记载与验证。
+
+### TDD 借由测试主导开发流程
+
+并非撰写测试就是 TDD，以上实际撰写过 TDD 就可以体会其目标并不在于撰写测试（测试只是它的副作用）而是在于通过测试主导出良好的软件！
+
+### TDD 着重测试行为（What）而非实践过程(How)
+
+撰写测试于实践代码后，容易使测试与实践代码相互耦合，使用 TDD 强制我们从行为层面去审视需求，避免写出着重在实践过程的测试。
+
+### 好测试的代码与好代码不谋而合
+
+好测试的代码具备相同的特质：高内聚低耦合、关注点分离……借由 TDD 开发的程序自然的需要具备这些特质。
+
+## 延伸阅读
+
+- [Test-Driven Development in JS with Acceptance Tests - Bran van der Meer](https://www.youtube.com/watch?v=ym62X_gvMXs)
+- [Unit Testing Is The BARE MINIMUM - Continuous Delivery](https://www.youtube.com/watch?v=h-4i5N89TUI)
