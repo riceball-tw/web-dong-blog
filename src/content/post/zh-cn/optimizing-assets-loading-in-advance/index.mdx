@@ -1,0 +1,162 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:download-rounded
+  title: 下载符号
+subHeadline: Optimizing Assets (preload/fetch/dns-prefetch/preconnect)
+headline: 使用 preload、prefetch、dns-prefetch、preconnect 最佳化资源加载顺序！
+excerpt: 先前面试时面试官询问到我早期制作的一个 SPA 网站在换页后图片载入体验不太好的问题，当时我把脑袋能想的所有答案都提出来了😅，最终有答到一点边缘知识，但太少用所以回答的不是很确定，因此这次来补齐这方面浏览器提供的机制，主要介绍浏览器如何处理安排资源的加载。
+series: Web Performance
+category: Web Performance
+tags:
+  - Image
+publishDate: 2025-02-15
+---
+
+## 前言
+
+之前面试时面试官询问我早期制作的一个 <abbr title="Single Page App">SPA</abbr> 网站在换页后图片加载体验不太好的问题，当时我把脑袋能想的所有答案都提出来了 😅，最终有答到一点边缘知识，但太少用所以回答的不是很确定，当时回答：
+
+- 图片应设置宽高以避免 [<abbr title="Cumulative Layout Shift">CLS</abbr> （累积布局偏移）](https://www.webdong.dev/zh-cn/post/all-the-performance-metrics-you-need-to-know/#cls---%E7%B4%AF%E7%A7%AF%E5%B8%83%E5%B1%80%E5%81%8F%E7%A7%BB-)
+- 图片可以添加 Skeleton 或 Loader 示意加载中
+- 首先显示较小的图，适当时机再替换实际大张的图
+- 图片可以使用 `fetchpriority` 安排资源加载优先程度
+- 图片内嵌使用 inline SVG 或 data URI
+- 使用 Preload 预先加载关键图片……？
+
+因此这次来补齐这方面浏览器提供的机制，主要介绍浏览器如何处理安排资源的加载。`<head>` 通常是 HTML 加载资源的区块，其中 `<link>` 有特殊的 `rel` 属性可以标示外部资源应当如何加载。
+
+## 问题：加载顺序时机
+
+网页图片只有在加载页面时才会加载，因此换页时一些关键图片没有显现出来会显得很怪异。排开直接内嵌资源的选项有没有方式可以**改变页面的资源加载顺序**以提高用户体验呢？
+
+## 了解 `rel="preload"`
+
+让你在该页面加载时预先声明获取资料的请求，通常是希望页面加载早期就能立即加载的资料：
+
+- CSS 内部指向的资源如：字体或图片
+- JavaScript 请求的资源，如 JSON
+- 各类体积较大的资源
+- ……
+
+举例使用 Google Fonts 时会拿到一份所有字体 `@font-face` 规则的 CSS 文件内指向字体的下载位置，这样就不用一次加载整包字体文件，浏览器会根据页面上出现的文字与这份文件中的 unicode-range 做比对，再去下载相对应的字体子集文件：
+
+```css
+/* latin */
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+```
+
+而如果想要「预先下载特定资源」就可以标示 `preload` 以及类型 `as="font"` 让特定字体文件事先下载。
+
+```html
+<link rel="preload" href="https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXg.woff2" as="font" crossorigin />
+```
+
+其他种类的 Preload 示例：
+
+```html
+<link rel="preload" href="/style/other.css" as="style" />
+<link rel="preload" href="/assets/font.woff2" as="font" />
+<link rel="preload" href="/img/header.png" as="image" />
+```
+
+## 了解 `rel="prefetch"`
+
+相较于 `rel="prefetch"` 专注于优化当前内容的加载，`preload` 主要用在「下载下一页可能会用到的资源」，最明显的用途就是事先加载下一用户可能感兴趣的页面。这样一来用户就不用在换页时及时加载下一页：
+
+```html
+<link rel="prefetch" href="next.html" />
+```
+
+由于加载内容攸关下一页的体验并不是非常的急迫，因此会等浏览器闲置时才执行该操作。适合换页或弹窗才会出现的不紧迫资源使用。
+
+## 了解 `rel="dns-prefetch"`
+
+相较于「预先下载特定资源」，你也可以预先解析目标网址 DNS 进而加快请求发生时的速度。
+
+```html
+<link rel="dns-prefetch" href="https://example.com/" as="document" />
+```
+
+其他種類 Prefetch 範例：
+
+{/* prettier-ignore */}
+```html
+<link rel="prefetch" as="script" href="/date-picker.js" />
+<link rel="prefetch" as="style" href="/date-picker.css" />
+```
+
+## 了解 `rel="preconnect"`
+
+告訴浏览器你想要预先连接到哪个网站，通常是稍后资源会用到的域，让浏览器事先建立连接从而减少延迟。
+
+```html
+<link rel="preconnect" href="https://example.com/" crossorigin />
+```
+
+## `dns-prefetch` vs `preconnect`
+
+`dns-prefetch` 和 `preconnect` 之间的差异在于 `dns-prefetch` 只会执行 DNS 查找，而 preconnect 将执行 DNS 查找、TLS 协商和 TCP 握手。这意味着一旦资源准备好下载，就可以避免额外的 2 回来回通讯延迟。大致来说 `preconnect` 做更多准备且浏览器支持较差。
+
+## 总结
+
+- **preload**
+  - 用途：告诉浏览器目前页面稍后会用到的资源。
+  - 优先顺序：较高，浏览器会尽快载入。
+  - 使用场景：适合预载目前页面关键资源，例如首屏图片、关键 CSS、关键 JavaScript。
+- **prefetch**
+  - 用途：告诉浏览器下一页可能会用到的资源。
+  - 优先顺序：较低，浏览器会在闲置时才载入。
+  - 使用场景：适合预先载入用户可能点击的链接页面资源，例如文章列表页预载文章内容。
+- **dns-prefetch**
+  - 用途：告诉浏览器可能会链接的网址。
+  - 使用场景：预先解析 DNS 地址，加快载入速度。
+- **preconnect**
+  - 用途：告诉浏览器你想要预先连接到哪个网站。
+  - 使用场景：预先建立连接，减少资源载入时的延迟。
+
+须留意载入和执行是独立的行为，载入后可以设置执行采用的动作：
+
+样式执行范例：
+
+```html
+<link
+  rel="preload"
+  as="style"
+  onload="this.rel = 'stylesheet'"
+  href="https://fonts.googleapis.com/css?family=Roboto:100,900|Material+Icons"
+/>
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,600|Material+Icons" />
+</noscript>
+```
+
+脚本执行范例：
+
+```html
+<link rel="preload" href="used-later.js" as="script" />
+<!-- ... -->
+<script>
+  const usedLaterScript = document.createElement('script');
+  usedLaterScript.src = 'used-later.js';
+  document.body.appendChild(usedLaterScript);
+</script>
+```
+
+## 延伸阅读
+
+- [rel=preload - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload)
+- [rel=prefetch - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prefetch)
+- [rel=dns-prefetch - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/dns-prefetch)
+- [rel=preconnect - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preconnect)
+- [Image Inconsistencies: How and When Browsers Download Images - CSS Wizardry](https://csswizardry.com/2018/06/image-inconsistencies-how-and-when-browsers-download-images/)
+- [[web] 內容 Image 預先或延遲載入（preload, lazy load, prefetch） - PJCHENder](https://pjchender.dev/webdev/web-preload-lazyload/#%E5%9C%96%E7%89%87%E7%9B%B8%E9%97%9C-image-related)
+- [preconnect vs dns-prefetch resource hints - stack overflow](https://stackoverflow.com/questions/47273743/preconnect-vs-dns-prefetch-resource-hints)
