@@ -76,7 +76,13 @@ In contrast to `rel="prefetch"`, which focuses on optimizing the loading of the 
 <link rel="prefetch" href="next.html" />
 ```
 
-Since it is not very urgent for the next page's experience, this operation is executed when the browser is idle. It is suitable for non-urgent resources that appear when changing pages or in pop-ups.
+Since it is not very urgent for the next page's experience, this operation is executed when the browser is idle. It is suitable for non-urgent resources that appear when changing pages or in pop-ups. Other Types of Prefetch Examples:
+
+{/* prettier-ignore */}
+```html
+<link rel="prefetch" as="script" href="/date-picker.js">
+<link rel="prefetch" as="style" href="/date-picker.css">
+```
 
 ## Understanding `rel="dns-prefetch"`
 
@@ -84,14 +90,6 @@ In contrast to "pre-downloading specific resources," you can also pre-resolve th
 
 ```html
 <link rel="dns-prefetch" href="https://example.com/" as="document" />
-```
-
-Other Types of Prefetch Examples:
-
-{/* prettier-ignore */}
-```html
-<link rel="prefetch" as="script" href="/date-picker.js">
-<link rel="prefetch" as="style" href="/date-picker.css">
 ```
 
 ## Understanding `rel="preconnect"`

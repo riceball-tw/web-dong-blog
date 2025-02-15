@@ -76,7 +76,13 @@ publishDate: 2025-02-15
 <link rel="prefetch" href="next.html" />
 ```
 
-由于加载内容攸关下一页的体验并不是非常的急迫，因此会等浏览器闲置时才执行该操作。适合换页或弹窗才会出现的不紧迫资源使用。
+由于加载内容攸关下一页的体验并不是非常的急迫，因此会等浏览器闲置时才执行该操作。适合换页或弹窗才会出现的不紧迫资源使用。其他種類 Prefetch 範例：
+
+{/* prettier-ignore */}
+```html
+<link rel="prefetch" as="script" href="/date-picker.js" />
+<link rel="prefetch" as="style" href="/date-picker.css" />
+```
 
 ## 了解 `rel="dns-prefetch"`
 
@@ -84,14 +90,6 @@ publishDate: 2025-02-15
 
 ```html
 <link rel="dns-prefetch" href="https://example.com/" as="document" />
-```
-
-其他種類 Prefetch 範例：
-
-{/* prettier-ignore */}
-```html
-<link rel="prefetch" as="script" href="/date-picker.js" />
-<link rel="prefetch" as="style" href="/date-picker.css" />
 ```
 
 ## 了解 `rel="preconnect"`

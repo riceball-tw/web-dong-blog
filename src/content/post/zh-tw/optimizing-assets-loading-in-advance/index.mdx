@@ -78,20 +78,20 @@ publishDate: 2025-02-15
 
 由於載入內容攸關下一頁的體驗並不是非常的急迫，因此會等瀏覽器閒置時才執行該操作。適合換頁或彈窗才會出現的不緊迫資源使用。
 
-## 了解 `rel="dns-prefetch"`
-
-相較於 「預先下載特定資源」 你也可以預先解析目標網址 DNS 進而加快請求發生時的速度。
-
-```html
-<link rel="dns-prefetch" href="https://example.com/" as="document" />
-```
-
 其他種類 Prefetch 範例：
 
 {/* prettier-ignore */}
 ```html
 <link rel="prefetch" as="script" href="/date-picker.js">
 <link rel="prefetch" as="style" href="/date-picker.css">
+```
+
+## 了解 `rel="dns-prefetch"`
+
+相較於 「預先下載特定資源」 你也可以預先解析目標網址 DNS 進而加快請求發生時的速度。
+
+```html
+<link rel="dns-prefetch" href="https://example.com/" as="document" />
 ```
 
 ## 了解 `rel="preconnect"`
