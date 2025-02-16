@@ -1,0 +1,33 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:magic-exchange-rounded
+  title: Rotating arrow with a star symbol in the middle
+subHeadline: What is React Hook? How is it different from a normal function?
+headline: React Hook vs Normal function?
+excerpt: React Hook is a feature added in React 16.8 that allows you to use React features without writing a class. Explains the differences between Hooks and methods.
+category: React
+publishDate: 2023-04-14
+---
+
+## Introduction
+
+Students from HexSchool Academy asked: "How do you distinguish between Hooks and methods? When is something called a Hook in React? When can it only be called a method?" This article aims to clarify these questions.
+
+## What is React Hook?
+
+You can start by looking at the [official React documentation](https://legacy.reactjs.org/docs/hooks-overview.html#but-what-is-a-hook):
+
+> Allows you to 'hook into' React state and lifecycle features from function components.
+
+In simple terms, React is a big machine, and through the Hook API, we can **interact with internal data and logic**. React simply calls their API Hooks, and that's it 😎. Additionally, besides using the Hooks provided by React, you can also create your own Hooks by creating a JavaScript function that starts with "use" and follows the [rules of Hooks](https://reactjs.org/docs/hooks-rules.html).
+
+For example, if you're tired of using useEffect to call external APIs every time, you can create a custom Hook called [useFetch](https://www.30secondsofcode.org/react/s/use-fetch/) to eliminate repetitive code and organize this part of the logic into a single Hook.
+
+## Conclusion
+
+React Hook is the term for React's API, and a custom React Hook is a function that uses React Hooks.
+
+- Functions within objects are usually referred to as "methods."
+- React Hooks are React's API, used to interact with React.
+- Custom React Hooks are functions that use React Hooks to write custom functionalities.
