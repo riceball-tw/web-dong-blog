@@ -1,0 +1,149 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:format-list-bulleted-rounded
+  title: List Symbol
+subHeadline: Create Accordion with Details and Summary (with Animation!)
+headline: Create Accordion with Details and Summary (with Animation!)
+excerpt: The HTML `<details>` and `<summary>` syntax helps achieve accordion quickly, along with interpolate-size and transition-behavior for smooth animations.
+category: HTML
+publishDate: 2025-02-18
+---
+
+## Introduction
+
+<Info type="warning">
+  At the time of this article's publication, only browsers with the Chromium engine generally support
+  [interpolate-size](https://caniuse.com/mdn-css_properties_interpolate-size) and
+  [::details-content](https://caniuse.com/?search=%3A%3Adetails-content) syntax, so it's normal for animations to fail
+  in other browsers.
+</Info>
+
+An accordion is a common web UI pattern, typically [a series of vertically interactive headings used to toggle the display of further information](https://component.gallery/components/accordion/), and it also has additional names such as:
+
+- Collapsible
+- Details
+- Expandable
+
+In HTML, the new syntax `<details>` and `<summary>` helps us quickly implement similar functionality, along with the new CSS `interpolate-size` and `transition-behavior` for smooth open and close animations.
+
+## Basic Accordion
+
+HTML has added `<details>` to allow us to express expandable sections natively, where `<summary>` represents the title of the section, as shown in the example below:
+
+```html
+<details>
+  <summary>Section Summary Title Here</summary>
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad consectetur nisi repellendus atque. Praesentium mollitia
+  sapiente libero aspernatur. Hic ipsa id eveniet sapiente totam soluta exercitationem iusto, quaerat delectus ratione.
+</details>
+```
+
+<details>
+  <summary>Section Summary Title Here</summary>
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad consectetur nisi repellendus atque. Praesentium mollitia sapiente
+  libero aspernatur. Hic ipsa id eveniet sapiente totam soluta exercitationem iusto, quaerat delectus ratione.
+</details>
+
+## Grouped Accordion
+
+To bind multiple accordion states, you can use the same `name` attribute, which will force only one accordion with the same `name` attribute to be open at a time:
+
+```html
+<details name="exclusive">
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+<details name="exclusive">
+  <summary>Section 2</summary>
+  <p>Content for section 2.</p>
+</details>
+```
+
+<details name="exclusive">
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+<details name="exclusive">
+  <summary>Section 2</summary>
+  <p>Content for section 2.</p>
+</details>
+
+## Default Open Accordion
+
+To set a specific accordion item to be open by default, you can use the `open` attribute:
+
+```html
+<details open>
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+```
+
+<details open>
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+
+## Adding Animation
+
+To select the content of details, you can use the [::details-content](https://developer.mozilla.org/en-US/docs/Web/CSS/::details-content) pseudo-element. By setting different heights and `transition` in the open state, you can animate based on the open and close states.
+
+```css
+details::details-content {
+  background-color: red;
+  height: 0;
+  transition: height 1s;
+}
+
+details[open]::details-content {
+  height: auto;
+}
+```
+
+### Animate Height: `interpolate-size: allow-keyword`
+
+You may find that even with the addition of `transition`, there is no animation for `height` when the element expands or collapses. In the past, this issue was unsolvable, and we could only use JS to calculate the height and change properties to achieve animation effects. Fortunately, there is now a new experimental CSS syntax: `interpolate-size: allow-keywords` that helps us calculate `animation` and `transition` for properties like `auto`, `fit-content`, and `max-content`. It is a style setting that can be inherited by child elements, so it works whether set at the document root or on individual elements:
+
+```css
+:root {
+  interpolate-size: allow-keywords;
+}
+```
+
+### Animate Visibility: `content-visibility`
+
+You may notice that when collapsing, there is no animation, and it simply disappears. This is because the content visibility is set to 'hidden' when the accordion is closed. We also need to set up related animations for this, and it is a [discrete](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties#discrete) animation! This means there are no intermediate states or values, and you need `transition-behavior: allow-discrete` to ensure that the switch occurs only after other animations are completed:
+
+```css
+transition: height 1s, content-visibility 1s;
+transition-behavior: allow-discrete;
+```
+
+## Summary
+
+If you follow the steps above, you will have a minimally functional native accordion with nice open and close animations! Additionally, you can check out Kevin Powell's [more refined practice](https://codepen.io/kevinpowell/pen/OJKWMwO) and his introductory video: [Animate details & summary with a few lines of CSS - Kevin Powell](https://www.youtube.com/watch?v=Vzj3jSUbMtI)
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="html,result"
+  data-slug-hash="NPWGoEb"
+  data-pen-title="details &amp;amp; summary"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/NPWGoEb">details &amp; summary</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://public.codepenassets.com/embed/index.js"></script>
+
+## Further Reading
+
+- [Accordion - the component gallery](https://component.gallery/components/accordion/)
+- [Native HTML: Accordion Revisited - Andrew Bone](https://dev.to/link2twenty/native-html-accordion-revisited-6ai)
+- [This new CSS property just solved animating to height auto - Kevin Powell](https://www.youtube.com/watch?v=JN-nme9oF10&list=WL)
+- [这啥?CSS calc-size 和 interpolate-size,真学不动了 - 鑫空间-鑫生活](https://www.zhangxinxu.com/wordpress/2024/11/css-calc-interpolate-size/)
+- [interpolate-size - MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size)

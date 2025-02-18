@@ -1,0 +1,148 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:format-list-bulleted-rounded
+  title: 清单符号
+subHeadline: Create a Native Accordion with Details and Summary (with Animation!)
+headline: 使用 Details 与 Summary 制作原生手风琴 (含收合动画！)
+excerpt: 手风琴是一种常见的网页 UI 模式，通常是一系列垂直堆叠的标题可以用于展开收合显示不同资讯，在 HTML 当中有项新颖的语法 <details> 和 <summary> 可帮助快速实现类似的功能，并且配合上最新的 interpolate-size 和 transition-behavior 制作滑顺的展开闭合动画。
+category: HTML
+publishDate: 2025-02-18
+---
+
+## 前言
+
+<Info type="warning">
+  本篇文章发布当下大多只有 Chromium 引擎浏览器有支援
+  [interpolate-size](https://caniuse.com/mdn-css_properties_interpolate-size) 和
+  [::details-content](https://caniuse.com/?search=%3A%3Adetails-content) 语法，导致在其他浏览器上动画失效是正常的。
+</Info>
+
+手风琴是一种常见的网页 UI 模式，通常是[一系列垂直堆叠的标题可以用于展开收合显示不同资讯](https://component.gallery/components/accordion/)，也有额外的称呼像是：
+
+- Collapsible
+- Details
+- Expandable
+
+而在 HTML 当中有项新颖的语法 `<details>` 和 `<summary>` 可以帮助我们快速实现类似的功能，并且配合上新的 CSS `interpolate-size` 和 `transition-behavior` 制作滑顺的展开闭合动画。
+
+## 基础手风琴
+
+HTML 添加了 `<details>` 让我们可以用原生的方式表达可被开合的区块，其中 `<summary>` 代表区块的标题，范例如下：
+
+```html
+<details>
+  <summary>Section Summary Title Here</summary>
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad consectetur nisi repellendus atque. Praesentium mollitia
+  sapiente libero aspernatur. Hic ipsa id eveniet sapiente totam soluta exercitationem iusto, quaerat delectus ratione.
+</details>
+```
+
+<details>
+  <summary>Section Summary Title Here</summary>
+  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad consectetur nisi repellendus atque. Praesentium mollitia sapiente
+  libero aspernatur. Hic ipsa id eveniet sapiente totam soluta exercitationem iusto, quaerat delectus ratione.
+</details>
+
+## 群组手风琴
+
+要绑定多个手风琴开合状态的话可以使用相同的 `name` 属性，这样就能强制只能打开单个相同 `name` 属性的手风琴：
+
+```html
+<details name="exclusive">
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+<details name="exclusive">
+  <summary>Section 2</summary>
+  <p>Content for section 2.</p>
+</details>
+```
+
+<details name="exclusive">
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+<details name="exclusive">
+  <summary>Section 2</summary>
+  <p>Content for section 2.</p>
+</details>
+
+## 预设开启手风琴
+
+要预设特定手风琴项目开启的话可以使用 `open` 属性：
+
+```html
+<details open>
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+```
+
+<details open>
+  <summary>Section 1</summary>
+  <p>Content for section 1.</p>
+</details>
+
+## 添加动画
+
+要选择 details 的内容可以使用 [::details-content](https://developer.mozilla.org/en-US/docs/Web/CSS/::details-content) 伪元素，在开启的状态设置不同的高度与 `transition` 就可以根据开合状态进行动画。
+
+```css
+details::details-content {
+  background-color: red;
+  height: 0;
+  transition: height 1s;
+}
+
+details[open]::details-content {
+  height: auto;
+}
+```
+
+### 使高度能被动画： `interpolate-size: allow-keyword`
+
+会发现就算添加 `transition` 指示元素伸展收合时 `height` 也不会有任何的动画，在早期这个问题算是无解了，只能用 JS 去计算高度并更改属性来达成动画效果。幸好如今有全新的实验性 CSS 语法：`interpolate-size: allow-keywords`（尺寸插值变化允许关键字） 协助我们替 `auto`、`fit-content`、`max-content` 这类属性计算 `animation` 与 `transition`。它是一种可以被子元素继承的样式设置，所以就算设定在文件根部或个别使用的元素上都可行：
+
+```css
+:root {
+  interpolate-size: allow-keywords;
+}
+```
+
+### 使显示可被动画： `content-visibility`
+
+会发现在收阖时不会有任何动画而是直接消失，这是因为手风琴关闭时内容显示会被设置为无，针对这点我们也会需要设置相关的动画，并且它是种 [discrete](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties#discrete) 动画！意味着它不会存在中间状态或数值，会需要 `transition-behavior: allow-discrete` 才能让其他动画完成后才进行切换：
+
+```css
+transition: height 1s, content-visibility 1s;
+transition-behavior: allow-discrete;
+```
+
+## 总结
+
+如果依照前面的步骤操作下来，你会得到一个最小可运作的原生手风琴，并且有不错的开阖动画！此外可以参考看看 Kevin Powell [更精致的实践](https://codepen.io/kevinpowell/pen/OJKWMwO)以及他的介绍影片：[Animate details & summary with a few lines of CSS - Kevin Powell](https://www.youtube.com/watch?v=Vzj3jSUbMtI)
+
+<p
+  class="codepen"
+  data-height="300"
+  data-default-tab="html,result"
+  data-slug-hash="NPWGoEb"
+  data-pen-title="details &amp;amp; summary"
+  data-user="riecball"
+  style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;"
+>
+  <span>
+    See the Pen <a href="https://codepen.io/riecball/pen/NPWGoEb">details &amp; summary</a> by Riceball (
+    <a href="https://codepen.io/riecball">@riecball</a>) on <a href="https://codepen.io">CodePen</a>.
+  </span>
+</p>
+<script async src="https://public.codepenassets.com/embed/index.js"></script>
+
+## 延伸阅读
+
+- [Accordion - the component gallery](https://component.gallery/components/accordion/)
+- [Native HTML: Accordion Revisited - Andrew Bone](https://dev.to/link2twenty/native-html-accordion-revisited-6ai)
+- [This new CSS property just solved animating to height auto - Kevin Powell](https://www.youtube.com/watch?v=JN-nme9oF10&list=WL)
+- [这啥?CSS calc-size 和 interpolate-size,真学不动了 - 鑫空间-鑫生活](https://www.zhangxinxu.com/wordpress/2024/11/css-calc-interpolate-size/)
+- [interpolate-size - MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/interpolate-size)
