@@ -31,6 +31,15 @@ export default defineConfig({
     // Typo in post
     '/post/the-dailies-a-good-way-to-eliminate-teaam-learning-debt':
       '/post/the-dailies-a-good-way-to-eliminate-team-learning-debt',
+    // spread-operator-rest-operator-the-three-dots-in-javascript
+    '/post/spead-operator-rest-operator-the-three-dots-in-javascript':
+      '/post/spread-operator-rest-operator-the-three-dots-in-javascript',
+    '/en/post/spead-operator-rest-operator-the-three-dots-in-javascript':
+      '/en/post/spread-operator-rest-operator-the-three-dots-in-javascript',
+    '/zh-cn/post/spead-operator-rest-operator-the-three-dots-in-javascript':
+      '/zh-cn/post/spread-operator-rest-operator-the-three-dots-in-javascript',
+    '/zh-tw/post/spead-operator-rest-operator-the-three-dots-in-javascript':
+      '/zh-tw/post/spread-operator-rest-operator-the-three-dots-in-javascript',
   },
   markdown: {
     rehypePlugins: [
