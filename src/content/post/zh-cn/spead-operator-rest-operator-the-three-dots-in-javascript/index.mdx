@@ -1,0 +1,135 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:resize-rounded
+  title: 缩放符号
+subHeadline: Spread Operator, Rest Operator, The three Dots in JavaScript
+headline: 展开与其余运算子，三个点是什么魔法？
+excerpt: 通过学习 ES6 推出的展开与其余运算子，在许多场合可以更直觉易读的编写相同的代码，通过动图与实际案例来了解它们的用途吧。语法一模一样都是三个点，但在不同的位置会有不同的效果，这篇文章也会介绍展开运算子 (Spread Operator) 与其余运算子 (Rest Operator) 之间的差异。
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-03-27
+---
+
+<Info type="info">
+  本篇文章与理解传值与传址的概念有关，如果对这个概念不熟悉，可以先看看
+  <a href="https://www.webdong.dev/post/value-vs-reference-which-one/">传值与传址，都几咧？</a>。
+</Info>
+
+## 什么是三个点？
+
+`...` 运算子可在数组中使用，是一种实用的语法让数据处理变得更简洁，快速的将内容展开到新的数组中，它有两种用法：
+
+- 展开运算子 (Spread Operator)
+- 其余运算子 (Rest Operator)
+
+语法一模一样都是三个点，但在不同的位置会有不同的效果。
+
+## 展开运算子 (Spread Operator)
+
+<Video
+  width={1200}
+  height={600}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/spread-operator-rest-operator-the-three-dots-in-javascript/spread.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/spread-operator-rest-operator-the-three-dots-in-javascript/spread.mp4',
+    },
+  ]}
+></Video>
+
+可将数组「展开」成个别的值，或是将可迭代(iterable)的对象如：`String`、`Array`、`TypedArray`、`Map`、`Set`、函数中的 [`arguments`](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/arguments)、 DOM 中的 [`HTMLCollection`](https://developer.mozilla.org/zh-TW/docs/Web/API/HTMLCollection) 与 [`NodeList`](https://developer.mozilla.org/zh-TW/docs/Web/API/NodeList) 转变为数组。
+
+### 示例一：将数组展开并相加
+
+```javascript
+const foo = [1, 2, 3];
+const bar = [4, 5, 6];
+const foobar = [...foo, ...bar]; // [1, 2, 3, 4, 5, 6]
+```
+
+展开 `foo` 与 `bar` 数组，并将其合并成 `foobar` 数组，展开是以浅拷贝的形式，也就是说 `foobar` 数组中的值是 `foo` 与 `bar` 数组的**值的复制，而不是引用的复制**，这样展开复制的做法适合用在不想修改原本的数组的情况下产生新数组。
+
+### 示例二：作为函数的参数
+
+```javascript
+function addNumbers(a, b, c) {
+  return a + b + c;
+}
+
+addThreeNumbers(...[0, 1, 2]);
+```
+
+展开的值可以作为函数的参数，这样就不用一个一个的传入参数。
+
+### 示例三：转换类数组或可迭代对象为数组
+
+```html
+<ul id="list">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+</ul>
+```
+
+```javascript
+const list = document.querySelector('#list');
+
+console.log(list.children);
+// HTMLCollection(3) [li, li, li]
+
+console.log([...list.children]);
+// [li, li, li]
+```
+
+或是把一些类数组对象转换成数组，这样可以让不具备数组方法的类数组对象**成为真正的数组并使用数组具备的方法**。
+
+## 其余运算符 (Rest Operator)
+
+<Video
+  width={1600}
+  height={600}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/spread-operator-rest-operator-the-three-dots-in-javascript/rest.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/spread-operator-rest-operator-the-three-dots-in-javascript/rest.mp4',
+    },
+  ]}
+></Video>
+
+其余运算符用途明确，就是用来收集剩余的参数为数组，将「所有剩余」的参数给打包为一个数组，必须在数组参数的最后一位，如果无传入值就会是一个空数组。
+
+```javascript
+function sum(...numbers) {
+  return numbers.reduce((total, number) => total + number, 0);
+}
+
+sum(1, 20, 30, 2); // 53
+```
+
+## 对象的 `rest`、`spread` 属性
+
+数组的 rest、spread 则是 ES6 语法，而对象的 `rest`、`spread` 属性是 ES2018 才有的语法，用法基本相似。
+
+```javascript
+const obj = { a: 1, b: 2, c: 3, d: 4 };
+
+const { a, b, ...rest } = obj;
+console.log(a); // 1
+console.log(b); // 2
+console.log(rest); // { c: 3, d: 4 }
+```
+
+## 参考资料
+
+- [展開運算符與其餘運算符 - 從 ES6 開始的 JavaScript 學習生活](https://eddy-chang.gitbook.io/javascript-start-from-es6/part4/rest_spread)
+- [spread operator and rest operator - Beau teaches JavaScript](https://www.youtube.com/watch?v=iLx4ma8ZqvQ)
