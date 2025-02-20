@@ -1,0 +1,63 @@
+---
+headline: TypeScript 驗證型別是否完全相同的思考（Freshness 概念）
+publishDate: 2025-02-20
+category: TypeScript
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DGRwX-whLoB
+---
+
+```typescript
+type User = {
+  name: string;
+};
+
+function printUser(user: User) {
+  console.log(user);
+}
+
+printUser({ name: 'Joe', email: 'joe@email.com' });
+// ❌ Error: Object literal may only specify known properties, and 'email' does not exist in type 'AllowedType'.
+
+const userData = {
+  name: 'Joe',
+  email: 'joe@email.com',
+};
+
+printUser(userData);
+// ✅ No error
+```
+
+TypeScript 遵循 Structural Type（結構型別系統），意味著如果兩個型別有相同的結構，在這裡的案例指「物件有相同的屬性名稱與類型」會被認為是相同的，即使是不同的型別名稱，因此當傳遞一個變數給函式時，TypeScript 會根據結構來判斷型別相容性，只要變數包含函數所需的所有屬性，就認為它們是相容的。
+
+但當直接傳遞一個物件實字（[Object Literal](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#object_literals)）給函數時，TypeScript 會進行更嚴格的檢查，要求物件字面量完全符合函數參數的型別定義由於 [Freshness](https://basarat.gitbook.io/typescript/type-system/freshness) 的概念，換句話說就是 Strict Object Literal Checking。
+
+這種檢查機制主要是**為了提高程式碼的準確性和可靠性，避免拼寫錯誤**。
+
+如果希望 TypeScript 進行嚴格的型別檢查，這裡是一個 `Exact` 的泛型變通方案可以採用：
+
+```typescript
+type Exact<A, B> = A extends B ? (B extends A ? A : never) : never;
+
+type User = {
+  name: string;
+};
+
+function printUser<T>(user: Exact<T, User>) {
+  console.log(user);
+}
+
+printUser({ name: 'Joe', email: 'joe@email.com' });
+// ❌ Error: Argument of type '{ name: string; email: string; }' is not assignable to parameter of type 'never'.
+
+const userData = {
+  name: 'Joe',
+  email: 'joe@email.com',
+};
+
+printUser(userData);
+// ❌ Error: Argument of type '{ name: string; email: string; }' is not assignable to parameter of type 'never'
+```
+
+延伸閱讀：
+
+- [TypeScript Exact Types](https://www.petermekhaeil.com/til/ts-exact-types/)
