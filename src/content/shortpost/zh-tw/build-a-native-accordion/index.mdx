@@ -1,0 +1,15 @@
+---
+headline: 使用 Details 與 Summary 製作原生手風琴 (含收合動畫！)
+publishDate: 2025-02-19
+category: HTML
+social:
+  threads: https://www.threads.net/@webdong.dev/post/DGQDus7helO
+---
+
+手風琴通常指一系列垂直堆疊標題可用於展開收合不同資訊的 UI 模式，在早期會需要用 JS 製作開合狀態，動畫更是需要計算開合後的高度並製作動畫。
+
+幸虧在 HTML 當中有項新穎的語法 `<details>` 和 `<summary>` 可以幫助我們快速實現類似的功能，並且配合上新的 CSS interpolate-size 和 transition-behavior 製作滑順的展開閉合動畫。
+
+翻了一下相關文件並製作了一個最小可行的手風琴含動畫。要留意動畫相關語法大致只有 Chromium 引擎瀏覽器支援，是個不錯可以漸進增強加入的小功能。
+
+延伸閱讀：[使用 Details 與 Summary 製作原生手風琴 (含收合動畫！)](https://www.webdong.dev/post/build-a-native-accordion-using-html-details-and-summary/)
