@@ -1,0 +1,69 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:label-outline-rounded
+  title: Label Icon
+subHeadline: Build Product From Scratch - Tokens
+headline: Build Product From Scratch - Tokens
+excerpt: Design tokens are a way to manage design properties and values for building UI components. It is essential for anyone involved with design systems.
+category: UI
+publishDate: 2024-01-29
+---
+
+## Introduction
+
+<Video
+  width={800}
+  height={450}
+  data={[
+    {
+      type: 'mp4',
+      src: 'images/posts/build-product-from-scratch-tokens/variables-explain.mp4',
+    },
+  ]}
+></Video>
+
+Design tokens, or simply tokens, are a way to manage design properties and values used to build UI components. Proper use of design tokens can make design systems more flexible and scalable. Anyone involved with design systems should understand the concept of design tokens.
+
+## What are Design Tokens?
+
+Tokens are essentially the concept of "variables," where a name corresponds to a value. Those familiar with programming languages will quickly relate to the concept of tokens, or you can imagine a box that can hold various contents; the box is the design token, and the contents of the box are the values of the design tokens.
+
+Design tokens can hold various design-related values such as: colors, fonts, lengths, border radius... or even point to another design token!
+
+![Token Example](./token.webp 'Component Color Example')
+
+## Why Do We Need Design Tokens?
+
+Using tokens means maintaining a "common language" and a "single source of truth." Describing the same things allows for faster and more efficient updates in design and development. Additionally, the ability of tokens to point to other tokens (Aliasing) makes design more flexible and scalable. Generally, design tokens are divided into three types:
+
+- Primitive Tokens / Global Tokens - Describe which properties and values exist in the design
+- Semantic Tokens - Describe the meaning, purpose, and how tokens should be used
+- Component Tokens - Describe the meaning, purpose, and how tokens should be used within components
+
+### Creating Primitive Tokens
+
+> Describe which properties and values exist in the design
+
+Primitive tokens are the foundation of the system, detailing which properties and values exist in the design. For example, primitive tokens will record all variables in the system and assign corresponding names such as: `yellow-600`, `spacing-2`. According to [Figma's recommendation](https://youtu.be/JyCmacSyDY4?si=flvwjLIdxh9p4i0M&t=287), primitive tokens should only be used to extend other semantic tokens and cannot be used directly in design.
+
+### Creating Semantic Tokens
+
+> Describe the meaning, purpose, and how tokens should be used
+
+Semantic tokens assign meaning to properties, explaining how they should be used. For example, a warning color for the entire site can be named `warning` and assigned a color from the `yellow` series. This way, when changing the warning color in the future, you only need to change the value of the `warning` token, rather than changing the color for each individual component.
+
+Semantic naming is key to the flexibility and scalability of design systems, allowing for the creation of any number of layers of semantic tokens to better define and abstract the meanings in design, making changes much more convenient when needed.
+
+### Creating Component Tokens
+
+> Describe the meaning, purpose, and how tokens should be used within components
+
+Component tokens are fundamentally similar to semantic tokens but are used solely to describe the appearance of components. For example, if a card's title and content use the same text color, a token can be created to manage "the text color of the entire card." This not only eliminates redundancy but also allows for overriding system definitions for specific components in certain scenarios.
+
+Component tokens define the variable interface of components well, increasing the flexibility and scalability of the same component in different scenarios.
+
+## Further Reading
+
+- [Tokens, variables, and styles - Update: Introduction to design systems](https://www.youtube.com/watch?v=JyCmacSyDY4) - Figma
+- [Let's Chat About Design System Tokens](https://jamesiv.es/blog/frontend/design/2023/09/25/lets-chat-about-design-system-tokens#design-token-naming-tool) - JAMES IVES
