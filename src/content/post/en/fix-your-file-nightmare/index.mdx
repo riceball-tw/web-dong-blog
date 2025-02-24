@@ -1,0 +1,142 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:file-copy-outline-rounded
+  title: File Icon
+subHeadline: Fix Your File Organization Nightmare
+headline: Fix Your File Organization Nightmare
+excerpt: We Creating a chaotic mess that needs organizing. This article shares how our team established a system for file management and backup.
+category: Non-Technical Discussion
+publishDate: 2022-06-01
+---
+
+## Why Do We Need File Management?
+
+Every day, we handle a large number of documents, notes, and materials on our computers, which can become as messy as a cluttered room that needs organizing. This article aims to share how our team has established a system to address basic file division and backup processes, thoroughly solving three common problems we might encounter, as illustrated in the following scenarios.
+
+- Standardization — Team file naming is a mess, and it takes a lot of time to find files...
+- Versioning — I think the first version was better; can we go back...?
+- Backup — Computer crashes, hard drive failures, and years of data are lost...
+
+## What Does Good File Management Achieve?
+
+Good file management is traceable and standardized, making collaboration easier and future reviews more effective. The three issues mentioned above stem from a lack of a systematic approach to handling file relationships and neglecting the importance of backing up files. To solve these problems, we can start with the naming of individual files. Let's organize files in three steps.
+
+### Step 1: Annotate File Information
+
+![Comparison of File Organization Before and After](./compare.webp)
+
+Each file can be annotated with the following information upon creation to avoid confusion about when it was created, what version it is, and what changes were made. Let's look at the following examples.
+
+- aaaaaaaa.ai
+- sfsfsfsfsfsf.pdf
+- finalfinalfinal.psd
+- 123.jpg
+
+Have you encountered files like these? Once the moment has passed, it's easy to forget where a file came from. Therefore, good file descriptions are absolutely necessary. For example:
+
+- 20220516v2-0-0-ming-business-card-design-wang.ai
+- 20211212v1-0-0-a-project-presentation-initial-huang.docx
+- 20180304v4-0-0-b-project-directory-modified-lu.indd
+
+![File Naming Method](./naming.webp)
+
+By annotating the information at the time of file creation, you can clearly know the key points about the file for future reference, making it easier to review later. After breaking it down, you might want each file to have the following five basic pieces of information to help you distinguish between different files.
+
+1.  Time —— (Year, Month, Day)
+2.  Version —— (v = version)
+3.  File Name —— (Name of the file)
+4.  Changes Made —— (Changes made in this version)
+5.  Editor —— (Name of the person who made the changes)
+
+### Step 2: Use Organized Folders
+
+![Folder Naming Method](./sort-method.webp)
+
+Regardless of the operating system, such as MacOS, Windows, or Linux, folders can help us organize files systematically. The key is not to over-categorize but also not to leave everything uncategorized; create folders based on needs. Otherwise, layers of folders can become as confusing as Russian nesting dolls, making it tedious to find files.
+
+Therefore, create folders from the bottom up, meaning only categorize when files become too numerous to find easily. Maintain a tidy folder structure to avoid losing patience while organizing files, and don't give up at the start due to the overwhelming number of files to categorize.
+
+For personal use, I categorize files into several levels:
+
+- Level 1: Personal, Work, Temporary
+- Level 2: Type of Work (Graphic Design, Illustration, Photography, Editing...)
+- Level 3: Client Type (Company A, Vendor B, Event C...)
+- Level 4: Project Name (Project A, Project B, Project C...)
+- Level 4, Internal Project
+  - 01_Materials
+  - 02_Output
+  - 20220101_v1-0-0_design_wang.ai
+
+However, for my commonly used small projects, four levels of folders are sufficient for clear categorization. I encourage you to design the folder structure that best suits your needs, remembering that a flatter and simpler file structure is better.
+
+### Step 3: Backup
+
+Backup is the most commonly overlooked step. Backing up doesn't necessarily mean sitting in front of the computer manually moving files, which is time-consuming and easy to forget! I choose [Google Drive](https://www.google.com/drive/download/) to automate the backup of every file while seamlessly collaborating with colleagues on a project.
+
+Of course, aside from the manual method (dragging files to the cloud one by one by hand), a more professional approach might be to set up a NAS to ensure faster file synchronization speed and autonomy. However, using the cloud is a more familiar and accessible method for the general public, and since it has its own unique topic, it won't be covered in this article.
+
+## Summary
+
+Everyone has their own system for organizing files to some extent. The key is not to compare which method is the best or most correct; the best method is the one that suits you and your team. At that time, I was troubled by some issues related to file organization, so I pondered and developed this method for my team. You can give it a try; it might improve your work efficiency!
+
+A well-designed file system is predictable and easy to learn, and its maintenance requires communication and negotiation among users. Sometimes people make mistakes or get lazy, which can gradually increase the overall maintenance cost of the project! Refer to this article to establish a mutual understanding and rules among the team.
+
+## Some pitfalls to avoid and tips for problem prevention
+
+### Use English (ASCII characters) for file naming
+
+- Generally speaking, English is the international common language.
+- Some programs may encounter errors when processing Chinese files due to different encodings.
+
+### Avoid spaces, uppercase letters, and special characters
+
+Do not use spaces, special characters, or easily misread characters in file names, such as: ". ” / \ : ; | = , < ? > & $ # ! ‘ { } ( ).oO0".
+
+- Spaces can be difficult to count.
+- Some programs and command-line interfaces may require special characters or spaces to function, and using spaces can lead to errors.
+- Avoid confusion in case-sensitive environments (e.g., is it About or about? Using all lowercase eliminates this issue).
+
+### Use the first character to manage file order
+
+Using naming to sort will arrange the list as: numbers → letters a~z. Therefore, you can effectively use the first letter to arrange the order of files, as shown below:
+
+- 1_Design
+- 2_Paint
+- 3_Photography
+
+### Keep design files and assets separate
+
+Many software applications have the capability to embed assets. It is recommended to embed them only when handing over for printing. If file management is done well, there is no need to worry about losing image files. The main advantages are:
+
+- Original image files are easy to find; these images may be needed elsewhere, and embedding them would require extracting them one by one for output. Separating them from the start avoids this issue.
+- The same image can be linked into multiple design files, resulting in smaller file sizes.
+- Design files remain uncluttered.
+
+### Avoid vague version annotations
+
+Common vague version annotations include: Final, Update, fix... Do not use fixed adjectives to describe; instead, use the correct version number along with notes on what modifications were made.
+
+## Semantic versioning
+
+![File versioning method](./versioning.webp)
+
+For a more advanced approach, you can refer to the [Semantic Versioning](https://semver.org/) used by engineers next door. In simple terms, this is a naming convention that annotates the development version, features, and bug fixes. You might consider following such a naming standard. The "v" stands for version, so v1 = version 1, the first version. The design and development process is not necessarily linear; there may be versions A, B, C...
+
+For example: v1, v2, v3 → v30, and if needed, you can further annotate it like this: v1-2-3 → Major version 1 - Minor version 2 - Patch version 3.
+
+What do major, minor, and patch versions mean? You can assign corresponding meanings to them. For example, in terms of design layout:
+
+- Major version - Significant changes to layout and visuals
+- Minor version - Partial modifications
+- Patch version - Fixing a small typo
+
+Of course, having too many layers of version annotations can be confusing; it's best to keep it to three layers or fewer.
+
+## References
+
+- [How to keep your design files neat and tidy](https://99designs.com/blog/tips/how-to-keep-your-design-files-neat-and-tidy/)
+- [What technical reasons exist for not using space characters in file names?](https://superuser.com/questions/29111/what-technical-reasons-exist-for-not-using-space-characters-in-file-names)
+- [Is it problematic to include spaces in file names?](https://qanda.digipres.org/1053/is-it-problematic-to-include-spaces-in-file-names)
+- [Naming Standard: File and Folder Names](https://www.csudh.edu/web-services/web-standards/file-folder-naming/)
+- [The complete guide about design systems: Engineering](https://medium.com/ci-t/the-complete-guide-about-design-systems-engineering-cd332cf520f2)
