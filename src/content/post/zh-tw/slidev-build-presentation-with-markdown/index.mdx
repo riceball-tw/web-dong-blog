@@ -1,0 +1,281 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:co-present-rounded
+  title: 簡報符號
+subHeadline: 'Slidev: Build Presentation with markdown'
+headline: 'Slidev：基於網頁的簡報創作方案'
+excerpt: 近期工作研究到使用 Slidev 來呈現簡報，一個基於 Vite + Vue3 的簡報工具整合了大大小小的套件方便用網頁創作簡報，主要以 Markdown 來撰寫內容，這樣的方式讓我們可以專注在內容上，而不用花太多時間在花俏的簡報軟體操作。
+category: Share
+publishDate: 2025-02-24
+---
+
+## 前言
+
+近期工作研究到使用 [Slidev](https://sli.dev/) 來呈現簡報，這是一個基於 Vite + Vue3 的簡報工具，整合了大大小小的套件方便用網頁創作如動畫軟體（Powerpoint/Keynote）的簡報，並且主要以 Markdown 來撰寫內容，這樣的方式讓我們可以專注在內容上，而不用花太多時間在花俏的簡報軟體操作，很適合網頁開發者或 Markdown 重度使用者的一款簡報方案。如果你有以下的需求，那麼 Slidev 是你的好選擇：
+
+1. 覺得 Powerpoint/Keynote 操作繁瑣，想要一個簡單的簡報工具
+2. 喜歡使用 Markdown 語法寫作甚至是製作簡報
+3. 想要一個基於網頁的自由開源簡報工具
+4. 想要易於版本控制的簡報
+
+## 環境建置
+
+如果你身在網頁開發領域應該會非常熟悉和簡單，依照[官方文件建置環境](https://sli.dev/guide/#create-locally)即可。
+
+```bash
+# pnpm
+pnpm create slidev
+
+# NPM
+npm init slidev@latest
+
+# Yarn
+yarn create slidev
+```
+
+安裝完成後它會自動執行，並且列出開發伺服器、簡報者頁面、簡報總覽頁面、輸出簡報頁面等連結，未來要開發可以參考 `package.json` 內的 script 指令執行。
+
+```bash
+√ Project name: ... first
+√ Install and start it now? ... yes
+√ Choose the package manager » pnpm
+
+  Slidev  v51.3.0
+
+  theme       @slidev/theme-seriph
+  css engine  unocss
+  entry       D:\USER\Desktop\first\slides.md
+
+  public slide show   > http://localhost:3030/
+  presenter mode      > http://localhost:3030/presenter/
+  slides overview     > http://localhost:3030/overview/
+  export slides       > http://localhost:3030/export/
+  remote control      > pass --remote to enable
+
+  shortcuts           > restart | open | edit | quit
+```
+
+## 製作第一個簡報
+
+預設會創立 `slides.md` 檔案且預設存在一些範例內容，要直接刪掉重頭開始也可以，建議官方範例先玩過一次看看有那些特殊的功能，向是布局、動畫……等酷東西。語法上可以使用 `---` 代表新的一頁：
+
+```markdown
+# Slide 1
+
+---
+
+# Slide 2
+```
+
+### HeadMatter 與 FrontMatter
+
+每一頁簡報可以有個開頭資料，當遇到被 `---` 包覆的 YAML 資料就意味著這是一頁全新的頁面，這些與頁面關聯的元資料也被稱為 [FrontMatter](https://sli.dev/custom/#frontmatter)，用來記錄頁面相關的資訊，而第一頁簡報則可以設置全局簡報的設定，因而被稱為 [HeadMatter](https://sli.dev/custom/#headmatter)。
+
+```markdown
+---
+transition: fade-out
+---
+
+# Hello World
+```
+
+### 提示筆記
+
+```markdown
+---
+---
+
+<!--
+The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
+-->
+```
+
+簡報者可以在每一頁簡報下一些提示的功能 Slidev 也顧慮到了，每個簡報的最後一個註解都會被視為提示筆記並顯示在簡報者模式當中，支援 Markdown 與 HTML。
+
+![簡報者模式](notes.webp '簡報者模式')
+
+### 修改布局與背景圖片範例
+
+舉例來說內建存在預設的 [layout](https://sli.dev/builtin/layouts) 與 [image](https://sli.dev/builtin/layouts#image-left) 設定可以讓我們快速的調整頁面的布局和使用的圖片：
+
+```markdown
+---
+layout: image-right
+image: images/cat.jpg
+---
+
+# A slide with an image on the right
+```
+
+![layout: image-right + image](layout-image.webp 'layout: image-right + image')
+
+基於不同的 theme 會提供你不同的 layout 屬性參數使用，可以再查閱對應的文件即可，或者是[自製 layout](https://sli.dev/guide/write-layout)，實際上就是創建一個 Vue 元件。
+
+### 客製化結構與樣式
+
+會發現直接在 Markdown 裡面撰寫 HTML 與 CSS 是行得通的，其實和 Vue 的元件非常像，每個簡報都是獨立的元件，可以置入 `style` 並限制為元件內生效 `scoped`：
+
+```vue
+<style scoped>
+h1 {
+  outline: 1px solid red;
+}
+</style>
+```
+
+或是直接撰寫已經整合好的 unoCSS (與 TailwindCSS 相似的 Atomic CSS 框架)也行：
+
+```html
+<div class="text-red-300 text-2xl">Hello World</div>
+```
+
+### (補充) Icon 使用
+
+簡報不可或缺的就是大量的圖示輔助讀者理解，Slidev 也[整合了對應的 Icon 方案](https://sli.dev/features/icons)，只需下載對應的 Icon 包即可，可以到 [Icônes](https://icones.js.org/) 了解更多。
+
+```bash
+pnpm add @iconify-json/[the-collection-you-want]
+```
+
+舉例來說添加對應 icon 庫依賴：[@iconify-json/mdi](https://npmjs.com/package/@iconify-json/mdi) 就可以在簡報引入相關元件：
+
+```html
+<mdi-account-circle />
+```
+
+### (補充) 代碼
+
+和 Markdown 一樣，特別的是撰寫不同語言後語法高光仍會準確顯示：
+
+````markdown
+```css
+h1 {
+  border: 1px solid red;
+}
+```
+
+```html
+<div class="flex gap-4">
+  <div>Syntax highlighting is built-in</div>
+</div>
+```
+
+```javascript
+export function sayHello() {
+  console.log('Hello');
+}
+```
+````
+
+![Codeblock 展示](codeblock.webp 'Codeblock 展示')
+
+這是因為 Slidev 預設也整合了 [Shiki](https://github.com/shikijs/shiki) 語法高光，可以使用任何 Shiki 相關的設定，甚至動畫！ ([Shiki Magic Move](https://sli.dev/features/shiki-magic-move#shiki-magic-move))。
+
+### (補充)標示重點
+
+Slidev 背後使用了 [RoughNotation](https://roughnotation.com/) 用來添加手繪感的標示，可以使用 `v-mark` 指令於元素上設置：
+
+- 觸發時機
+- 客製化顏色
+- 客製化種類
+
+[官方文件 Rough Markers](https://sli.dev/features/rough-marker#rough-markers)有很不錯的描述與介紹影片可以參考。
+
+## 展示
+
+在任何簡報的右下方都會隱藏導覽列，用於操作簡報，官方有[詳細的 UI 文件](https://sli.dev/guide/ui)說明細節。
+
+![Slidev Navigation Bar](navigation-bar.webp '滑鼠滑動到簡報左下方顯示導覽列')
+
+- 全螢幕
+- 上下簡報或動作
+- [簡報總覽](https://sli.dev/guide/ui#quick-overview)
+- 暗色模式
+- [攝影鏡頭](https://cn.sli.dev/features/recording#camera-view) / [錄製工具](https://cn.sli.dev/features/recording)
+- [繪圖與批註](https://sli.dev/features/drawing#drawing-annotations)
+- [演講者模式](https://sli.dev/guide/ui#presenter-mode)、[內嵌編輯器](https://sli.dev/features/side-editor)
+- [輸出檔案](https://sli.dev/guide/exporting#exporting)
+- 簡報訊息
+- 更多選項……
+
+## 部屬
+
+由於 Slidev 就是一個工具用於生成簡報，以往通常會需要建構整個網站後拿生成的網站檔案 (在 Vite 當中通常是 `dist` 資料夾) 並丟上不同的服務。我們試著將它自動化部屬在 [GitHub Pages](https://pages.github.com/) 免費服務上（或[任何其他主持靜態網站的服務上](https://sli.dev/guide/hosting#hosting)）。
+
+具體來說可以透過 GitHub Actions 來自動化 CD 的流程，首先設定專案 GitHub Pages 配置來源：
+
+![GitHub 配置](github.webp)
+
+接著使用[官方提供的部屬腳本](https://sli.dev/guide/hosting#github-pages)可以無痛的設置好 CD 設定，未來只要 `main` 分支有任何更動都會觸發線上簡報網站的更新。
+
+```yml
+name: Deploy pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Setup @antfu/ni
+        run: npm i -g @antfu/ni
+
+      - name: Install dependencies
+        run: nci
+
+      - name: Build
+        run: nr build --base /${{github.event.repository.name}}/
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+## 輸出
+
+如果你對於網頁不感興趣，想要直接隨拿隨用的簡報也可以！Slidev 支援多種輸出格式可以透過指令輸出或左下角的導覽列輸出按鈕調整並輸出：
+
+![輸出簡報](export.webp '輸出簡報')
+
+## 總結
+
+如果你本身是網頁技術人員（特別是前端）那麼 Slidev 絕對適合用於技術上的簡報呈現，深度 Markdown 用戶也可以嘗試看看。更多有趣沒有提到的功能可以查看[官方的功能列表](https://sli.dev/features/)。
+
+## 延伸閱讀
+
+- [Technical presentations with Slidev - Wim Deblauwe](https://www.wimdeblauwe.com/blog/2024/11/05/technical-presentations-with-slidev/)
