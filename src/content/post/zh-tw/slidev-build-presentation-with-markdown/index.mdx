@@ -12,7 +12,7 @@ publishDate: 2025-02-24
 
 ## 前言
 
-近期工作研究到使用 [Slidev](https://sli.dev/) 來呈現簡報，這是一個基於 Vite + Vue3 的簡報工具，整合了大大小小的套件方便用網頁創作如動畫軟體（Powerpoint/Keynote）的簡報，並且主要以 Markdown 來撰寫內容，這樣的方式讓我們可以專注在內容上，而不用花太多時間在花俏的簡報軟體操作，很適合網頁開發者或 Markdown 重度使用者的一款簡報方案。如果你有以下的需求，那麼 Slidev 是你的好選擇：
+近期工作研究到使用 [Slidev](https://sli.dev/) 來呈現簡報，這是一個[基於 Vite + Vue3 的簡報工具](https://sli.dev/guide/#tech-stack)，整合了大大小小的套件方便用網頁創作如動畫軟體（Powerpoint/Keynote）的簡報，並且主要以 Markdown 來撰寫內容，這樣的方式讓我們可以專注在內容上，而不用花太多時間在花俏的簡報軟體操作，很適合網頁開發者或 Markdown 重度使用者的一款簡報方案。如果你有以下的需求，那麼 Slidev 是你的好選擇：
 
 1. 覺得 Powerpoint/Keynote 操作繁瑣，想要一個簡單的簡報工具
 2. 喜歡使用 Markdown 語法寫作甚至是製作簡報
@@ -181,6 +181,32 @@ Slidev 背後使用了 [RoughNotation](https://roughnotation.com/) 用來添加�
 - 客製化種類
 
 [官方文件 Rough Markers](https://sli.dev/features/rough-marker#rough-markers)有很不錯的描述與介紹影片可以參考。
+
+### (補充)動畫
+
+官方有詳細的[動畫指南](https://sli.dev/guide/animations#v-click)，我差不多只是練習並用自己的方式理解並精煉一次。
+
+#### `v-click` 點擊後顯示
+
+最簡單常見的簡報動畫是一個「點擊」行為後觸發畫面元素的顯現，這點可以輕易地使用 `v-click` 元件或指令於元素上來達成。每個簡報都可以透過 `$slidev.nav.clicks` 存取當下簡報點擊過的次數。
+
+```vue
+<!-- 點擊一次 -->
+<v-click>Click Once</v-click>
+<!-- 點擊二次出現 -->
+<div v-click class="text-xl">Click Twice</div>
+{{ $slidev.nav.clicks }}
+```
+
+#### `v-after` 點擊後延續顯示
+
+`v-after` 用於延續上一個 `v-click` 的狀態
+
+```vue
+<!-- 點擊一次 -->
+<div v-click> Hello </div>
+<div v-after> World </div>  <!-- 或 <v-after> World </v-after> -->
+```
 
 ## 展示
 
