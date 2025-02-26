@@ -40,6 +40,11 @@ export default defineConfig({
       '/zh-cn/post/spread-operator-rest-operator-the-three-dots-in-javascript',
     '/zh-tw/post/spead-operator-rest-operator-the-three-dots-in-javascript':
       '/zh-tw/post/spread-operator-rest-operator-the-three-dots-in-javascript',
+    // dom-api-in-one-go
+    '/post/dom-from-the-begineeing': '/post/dom-api-in-one-go',
+    '/en/post/dom-from-the-begineeing': '/en/post/dom-api-in-one-go',
+    '/zh-cn/post/dom-from-the-begineeing': '/zh-cn/post/dom-api-in-one-go',
+    '/zh-tw/dom-from-the-begineeing': '/zh-tw/post/dom-api-in-one-go',
   },
   markdown: {
     rehypePlugins: [
