@@ -2,38 +2,39 @@
 isDraft: false
 icon:
   name: material-symbols:question-exchange-rounded
-  title: 旋轉箭頭中央有問號符號
+  title: Rotating arrow with a question mark symbol
 subHeadline: JavaScript Pass by Value and Reference, The Difference?
-headline: JavaScript 傳值與傳址，都幾咧？
-excerpt: 在程式語言中最基本的問題就是問題就是如何紀錄與操縱資料，牽扯到傳值與傳址的問題，這篇教學使用 JavaScript 搭配圖表幫助你了解它們的差異。了解如何儲存變數有助於更好的操控資料，避免出現改 A 卻動到 B 的狀況。
+headline: JavaScript Pass by Value and Reference, The Difference?
+excerpt: The concepts of pass by value and pass by reference. This tutorial uses JavaScript with diagrams to help you understand their differences.
 category: Technical Discussion
 tags:
   - Concept
 publishDate: 2023-03-14
 ---
 
-## 傳值 (Pass by value)
+## Pass by Value
 
-> 在 JavaScript 中，當變數的值是原生型別時，就是傳值
+> In JavaScript, when the value of a variable is a primitive type, it is pass by value.
 
-如果傳遞的變數是[原生型別](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#primitive_values)時，傳遞的就會是值的複本，而不是傳遞變數的記憶體位置。我們可以使用 `=` 來賦予變數一個值舉以下的例子，分別賦予不同數字給 `a`、`b`：
+When the variable being passed is a [primitive type](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#primitive_values), what gets passed is a copy of the value, not the memory location of the variable. We can use `=` to assign a value to a variable. For example, assigning different numbers to `a` and `b`:
 
 ```js
 const a = 1;
 const b = a + 1;
 ```
 
-可以注意到第 2 行，將 `b` 指定為 `a` 的值 +1，這時候 `c` 的值就會是 `1 + 1 = 2`，非常直覺也很好理解，這就是所謂的「傳值(Pass by value)」
+Notice in line 2, `b` is assigned the value of `a` + 1, so `b` will be `1 + 1 = 2`. This is very intuitive and easy to understand; this is what is known as "pass by value."
 
 <Info type="info">
-  原生型別具體來說有： `String`、`Number`、`Boolean`、`Undefined`、`Null`，這些型別的資料是以「值」的方式來傳遞。
+  Primitive types specifically include: `String`, `Number`, `Boolean`, `Undefined`, `Null`. Data of these types is
+  passed by "value."
 </Info>
 
-## 傳址 (Pass by reference)
+## Pass by Reference
 
-> 在 JavaScript 中，當變數不是原生型別時，就是傳址
+> In JavaScript, when the variable is not a primitive type, it is pass by reference.
 
-當變數是物件或陣列的情況下，JavaScript 會需要額外的紀錄代表其記憶體位置，因此**變數內儲存的並不是實際的內容，而是一個內容所在的記憶體位置**。舉以下圖表為例，圖表中的 `b` 變數實際上持存的是記憶體位址：
+When a variable is an object or an array, JavaScript needs to keep track of its memory location, so **what is stored in the variable is not the actual content, but the memory location of that content**. For example, in the following diagram, the variable `b` actually holds the memory address:
 
 ```js
 const a = 1;
@@ -44,8 +45,8 @@ const b = [1, 2];
   <table style="display: table;">
     <thead>
       <tr>
-        <th>變數</th>
-        <th>值</th>
+        <th>Variable</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -63,8 +64,8 @@ const b = [1, 2];
   <table style="display: table;">
     <thead>
       <tr>
-        <th>記憶體位址</th>
-        <th>值</th>
+        <th>Memory Address</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -76,7 +77,7 @@ const b = [1, 2];
   </table>
 </div>
 
-了解了傳址的概念後，我們來延伸前面的例子，如果這時候有個變數 `c = b` 那麼畫成圖表就會是這樣：
+After understanding the concept of pass by reference, let's extend the previous example. If we have a variable `c = b`, the diagram would look like this:
 
 ```js
 const a = 1;
@@ -88,8 +89,8 @@ const c = b;
   <table style="display: table;">
     <thead>
       <tr>
-        <th>變數</th>
-        <th>值</th>
+        <th>Variable</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -108,11 +109,11 @@ const c = b;
     </tbody>
   </table>
 
-  <table style="display: table;">
+<table style="display: table;">
     <thead>
       <tr>
-        <th>記憶體位址</th>
-        <th>值</th>
+        <th>Memory Address</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -124,21 +125,21 @@ const c = b;
   </table>
 </div>
 
-如此一來 `b` 與 `c` 所指向的記憶體位置都是 `0x01`，因此當我們對 `c` 做修改時，`b` 也會跟著改變：
+As a result, both `b` and `c` point to the memory location `0x01`, so when we modify `c`, `b` will also change:
 
 ```js
 let a = 1;
 let b = [1, 2];
 let c = b;
 b.push(3);
-// 結果：b 與 c 都變成 [ 1, 2, 3 ] 了！
+// Result: both b and c become [ 1, 2, 3 ]!
 ```
 
-這也是為什麼 `b` 與 `c` 的值都會變成 `[1, 2, 3]`，因為 `b` 與 `c` 都指向了同一個記憶體位置。
+This is why the values of `b` and `c` both become `[1, 2, 3]`, because `b` and `c` both point to the same memory location.
 
-## 相等但不相等
+## Equal but Not Equal
 
-了解前面傳值與傳址的差異後，會發現記憶體位置與值是全然不同的東西，一個是指標，一個是內容，實際就像以下圖表範例。
+After understanding the difference between passing by value and passing by reference, we realize that memory locations and values are entirely different things; one is a pointer, and the other is the content, just like the example in the following chart.
 
 ```js
 const a = [1, 2];
@@ -151,8 +152,8 @@ console.log(a === b); // false
   <table style="display: table;">
     <thead>
       <tr>
-        <th>變數</th>
-        <th>值</th>
+        <th>Variable</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -170,8 +171,8 @@ console.log(a === b); // false
   <table style="display: table;">
     <thead>
       <tr>
-        <th>記憶體位址</th>
-        <th>值</th>
+        <th>Memory Address</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -197,8 +198,8 @@ console.log(a === b); // true
   <table style="display: table;">
     <thead>
       <tr>
-        <th>變數</th>
-        <th>值</th>
+        <th>Variable</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -216,8 +217,8 @@ console.log(a === b); // true
   <table style="display: table;">
     <thead>
       <tr>
-        <th>記憶體位址</th>
-        <th>值</th>
+        <th>Memory Address</th>
+        <th>Value</th>
       </tr>
     </thead>
     <tbody>
@@ -229,10 +230,10 @@ console.log(a === b); // true
   </table>
 </div>
 
-## 總結
+## Summary
 
-了解 JavaScript 是如何儲存變數有助於更好的操控資料，避免出現改 A 卻動到 B 的狀況。
+Understanding how JavaScript stores variables helps in better data manipulation, avoiding situations where modifying A inadvertently affects B.
 
-## 參考資料
+## References
 
 - [Reference Vs Value - Most People Don't Understand This](https://blog.webdevsimplified.com/2021-03/js-reference-vs-value/)
