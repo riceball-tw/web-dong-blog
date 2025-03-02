@@ -1,0 +1,64 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:favorite-outline-rounded
+  title: Heart Symbol
+subHeadline: What is Shadcn UI? Why is it so popular?
+headline: What is Shadcn UI? Why is it so popular?
+excerpt: Recently, I used Shadcn for Vue to build web UI. It's a customizable component library based on Tailwind, allowing quick creation of web interfaces.
+category: UI
+publishDate: 2024-04-01
+---
+
+## Introduction
+
+Recently, I used [Shadcn for Vue](https://www.shadcn-vue.com/) to build web UI. It's a customizable component library based on Tailwind, allowing quick creation of web interfaces. This article introduces the issues with existing style libraries and the features of Shadcn UI, explaining its popularity in the frontend community.
+
+## Understanding the Issues with Existing Style Libraries
+
+Before Shadcn, well-known style libraries like [Bootstrap](https://getbootstrap.com/) were widely used. They provide a certain level of uniformity in style, but there are still limitations in customization, which is the biggest difference between them and Shadcn.
+
+When I first joined the frontend world, the first library I used was Bootstrap. It is actually composed of Sass, which is converted into CSS through a preprocessor. Customizing a UI library like Bootstrap requires reading documentation to understand the file structure, the underlying tools (Sass), and naming conventions (<abbr title="Object-Oriented CSS">OOCSS</abbr>). Additionally, every time styles are updated, the entire CSS file needs to be recompiled... it's quite tedious, isn't it? So, I often see two types of Bootstrap usage:
+
+- Directly using Bootstrap's default styles without any customization (boring!)
+- Messy modifications that make Bootstrap look like a garbage dump filled with curses (WTF!)
+
+Traditional style libraries are not without customization possibilities, but they require a lot of effort and prior knowledge to maintain. Some design choices are influenced by outdated considerations, such as Sass and OOCSS, which are no longer necessary or popular. Where can you find people familiar with and supportive of these concepts to maintain them?
+
+Moreover, simple styles cannot meet the demands of modern frontend development. The adaptability of web pages and the standardization of functionality are also important issues. As frontend developers, not everyone has professional UX experience or the time to develop features. The most important thing right now is to quickly launch functionalities, which is why more and more headless frameworks are emerging, such as [Headless UI](https://headlessui.com/), [TanStack Table](https://tanstack.com/table/latest), and [React Hook Form](https://react-hook-form.com/), which focus more on functionality implementation.
+
+Simple ready-made styles can no longer meet the needs of today's web development. We need a consistent, highly flexible, and convenient way for developers to make "doing the right thing" a norm, rather than abandoning the pursuit of usability and user experience under pressure.
+
+## Understanding How Shadcn Solves These Problems
+
+The era of web componentization is the stage for Atomic CSS, which has driven the popularity of Tailwind, and Shadcn has a good level of completeness that makes it a great choice.
+
+### Low Learning Curve
+
+I must say that Tailwind has a naturally gentler learning curve; as long as you are familiar with basic CSS syntax, you can get started. Shadcn builds a complete set of components on top of Tailwind, allowing you to quickly create web interfaces that meet your needs.
+
+Unlike other style libraries, Shadcn is a component library that you can [copy and paste to get it working](https://ui.shadcn.com/docs/installation/vite). You only need to install Tailwind and its required packages ([Tailwind Merge](https://www.npmjs.com/package/tailwind-merge), [clsx](https://github.com/lukeed/clsx), [CVA](https://cva.style/docs)) in advance to get started, so the code exists within your project, and you can change Tailwind's settings or component styles at any time.
+
+### Not Just Solving Style Issues
+
+For example, traditional Bootstrap and open-source Tailwind libraries like [DaisyUI](https://daisyui.com/) are competitors. What additional advantages does Shadcn bring? Combining the previously mentioned headless design philosophy, Shadcn provides a neutral appearance for these components, making it easy for you to customize them to meet your needs.
+
+I found that Shadcn provides a complete set of solutions from [Form](https://www.shadcn-vue.com/docs/components/data-table.html), [Date Picker](https://www.shadcn-vue.com/docs/components/date-picker.html), and [Carousel](https://www.shadcn-vue.com/docs/components/carousel.html), allowing developers to focus more on functionality rather than trivial details.
+
+### The Community is Enthusiastic and Broad
+
+Shadcn can be used with mainstream frameworks - [React](https://ui.shadcn.com/), [Vue](https://www.shadcn-vue.com/), [Angular](https://www.spartan.ng/), and [Svelte](https://www.shadcn-svelte.com/) are worth trying. The community has also created many Shadcn-related [Figma components](https://www.figma.com/community/file/1203061493325953101/shadcn-ui-design-system) for free use.
+
+## Understand Why You Shouldn't Use Shadcn
+
+Choosing a technology always involves different considerations and choices, and Shadcn is not for all case. Here are some situations where you shouldn't use Shadcn:
+
+1. You hate Tailwind
+2. You don't have such high customization needs
+3. Your project doesn't plan to use any UI framework
+
+## Further Reading
+
+- [淺談 Atomic CSS 的發展背景與 Tailwind CSS - Huli's blog](https://blog.huli.tw/2022/05/23/atomic-css-and-tailwind-css/)
+- [How Shadcn/ui ACTUALLY Works - Theo - t3.gg](https://www.youtube.com/watch?v=AqmMx_JidGo)
+- [The anatomy of shadcn/ui](https://manupa.dev/blog/anatomy-of-shadcn-ui)
