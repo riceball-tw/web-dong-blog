@@ -1,0 +1,69 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:keyboard-double-arrow-right-rounded
+  title: 双箭头符号
+subHeadline: Why Do You Need JavaScript Default Parameters?
+headline: 为什么你需要 JavaScript 预设参数？
+excerpt: 在 JavaScript 中函式可以使用任意数量的参数与引数，如果参数没有对应的引数将导致该变数成为未定义，参数（占位符）代表一个值你期望函式所接收；引数（实际值）则是函式呼叫时所传递的值，让我们用预设参数来解决这个问题吧！
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-06-22
+---
+
+## 参数与引数 Parameters and Arguments
+
+参数代表一个值你期望函式所接收；引数则是函式呼叫时所传递的值。概念上很容易理解，但实际上容易混淆 😅，有一个使用斜音开头的方式来记忆它们我觉得蛮有效的：
+
+- 参数（占位符）：P<span style="opacity:0.6">arameter</span> → P<span style="opacity:0.6">laceholder</span>
+- 引数（实际值）：A<span style="opacity:0.6">rgument</span> → A<span style="opacity:0.6">ctual value</span>
+
+```js
+function example(parameter) {
+  // ...
+}
+
+example(argument);
+```
+
+## 发现问题
+
+要了解预设参数，就要从现有的问题说起。在 JavaScript 中函式可以使用任意数量的参数与引数，但如果参数没有对应的引数将导致该变数成为未定义。
+
+```js
+function greeting(message) {
+  console.log(message);
+}
+
+greeting(); // undefined
+```
+
+## 使用预设参数
+
+使用预设参数语法，只需要在参数后面加上等号与预设值即可，当没有引数时就会自动使用参数预设值。
+
+```js
+function greeting(message = '预设打招呼') {
+  console.log(message);
+}
+
+greeting(); // 预设打招呼
+```
+
+如果不使用预设参数，就会需要这样写：
+
+```js
+function greeting(message) {
+  if (typeof message === 'undefined') {
+    message = '预设打招呼';
+  }
+  console.log(message);
+}
+
+greeting(); //预设打招呼
+```
+
+## 参考资料
+
+- ["Parameter" vs "Argument" - stack overflow](https://stackoverflow.com/questions/1788923/parameter-vs-argument/1788926#1788926)

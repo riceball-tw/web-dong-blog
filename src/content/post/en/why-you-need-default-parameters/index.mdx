@@ -1,0 +1,69 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:keyboard-double-arrow-right-rounded
+  title: Double Arrow Symbol
+subHeadline: Why Do You Need JavaScript Default Parameters?
+headline: Why Do You Need JavaScript Default Parameters?
+excerpt: In JavaScript, functions can use any number of parameters and arguments. If a parameter has no corresponding argument, it becomes undefined.
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-06-22
+---
+
+## Parameters and Arguments
+
+Parameters represent a value you expect the function to receive; arguments are the values passed when calling the function. The concept is easy to understand, but it can be confusing in practice 😅. I usually remember them these way:
+
+- Parameter (placeholder): P<span style="opacity:0.6">arameter</span> → P<span style="opacity:0.6">laceholder</span>
+- Argument (actual value): A<span style="opacity:0.6">rgument</span> → A<span style="opacity:0.6">ctual value</span>
+
+```js
+function example(parameter) {
+  // ...
+}
+
+example(argument);
+```
+
+## Discovering the Problem
+
+To understand default parameters, we need to start with existing problems. In JavaScript, functions can use any number of parameters and arguments, but if a parameter has no corresponding argument, it will become undefined.
+
+```js
+function greeting(message) {
+  console.log(message);
+}
+
+greeting(); // undefined
+```
+
+## Using Default Parameters
+
+To use default parameter syntax, simply add an equals sign and a default value after the parameter. When no argument is provided, the default value will be used automatically.
+
+```js
+function greeting(message = 'Default Greeting') {
+  console.log(message);
+}
+
+greeting(); // Default Greeting
+```
+
+If you do not use default parameters, you would need to write it like this:
+
+```js
+function greeting(message) {
+  if (typeof message === 'undefined') {
+    message = 'Default Greeting';
+  }
+  console.log(message);
+}
+
+greeting(); // Default Greeting
+```
+
+## References
+
+- ["Parameter" vs "Argument" - stack overflow](https://stackoverflow.com/questions/1788923/parameter-vs-argument/1788926#1788926)
