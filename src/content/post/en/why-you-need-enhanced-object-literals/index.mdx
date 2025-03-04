@@ -1,0 +1,109 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:data-object-rounded
+  title: JS Object Syntax Symbols
+subHeadline: Why do you need JavaScript Enhanced Object Literals?
+headline: Why do you need JavaScript Enhanced Object Literals?
+excerpt: Utilizing ES6's enhanced object literals in JavaScript can simplify code snippets and even dynamically compute properties within objects!
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-06-22
+---
+
+The enhanced object literals introduced in ES6 make writing objects less cumbersome. A literal refers to a value that represents itself, such as the number `25` or `Hello World`, while enhanced object literals are values used within objects.
+
+## Key Shorthand
+
+```js
+const name = 'Joe';
+const age = 21;
+
+const person = {
+  name: name,
+  age: age,
+};
+```
+
+In the traditional example above, you can see that the keys of the object have the same names as the variable names, so you can use key shorthand to simplify the syntax:
+
+```js
+const name = 'Joe';
+const age = 21;
+
+const person = {
+  name,
+  age,
+};
+```
+
+The results are the same, but key shorthand is more concise and avoids repetition.
+
+## Method Shorthand
+
+Since keys and properties with the same name can use shorthand, is there a corresponding shorthand syntax for methods? Yes!
+
+```js
+const person = {
+  greeting: function () {
+    console.log('Hi!');
+  },
+};
+```
+
+The above is the traditional way to define a function in an object, and now you can use method shorthand to simplify it:
+
+```js
+const person = {
+  greeting() {
+    console.log('Hi!');
+  },
+};
+```
+
+The results are identical, but method shorthand is more concise and avoids repetition, making it a convenient shorthand syntax. Note that if you want to create an arrow function in an object, you cannot use the above syntax and should write it like this:
+
+```js
+const person = {
+  greeting: () => {
+    console.log('Hi!');
+  },
+};
+```
+
+There are still some fundamental differences between regular functions and arrow functions; for details, you can refer to my other article: [Why do you need arrow functions?](/post/why-you-need-arrow-function/)
+
+## Computed Properties
+
+Imagine wanting to dynamically create keys for an object... you couldn't! Before computed properties, you could only declare a variable and then modify the object key:
+
+```js
+const person = {};
+person['name'] = 'Joe';
+```
+
+But now you can use computed properties to simplify:
+
+```js
+const key = 'name';
+const value = 'Joe';
+
+const person = {
+  [key]: value,
+};
+```
+
+```js
+{
+  "name": "Joe"
+}
+```
+
+This allows you to dynamically create keys for an object. If the declared object needs to rely on variables for dynamic creation, it's a good time to use computed properties.
+
+## References
+
+- [Literal MDN](https://developer.mozilla.org/en-US/docs/Glossary/Literal)
+- [Enhanced Object Literals - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-04/use-effect/)
+- [Confusion between constants and literals? - stack overflow](https://stackoverflow.com/questions/44767354/confusion-between-constants-and-literals)
