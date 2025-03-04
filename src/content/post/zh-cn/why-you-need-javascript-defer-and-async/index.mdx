@@ -1,0 +1,158 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:download-rounded
+  title: 下载符号
+subHeadline: Why You Need Script defer and async Attribute
+headline: 从动图了解如何有效使用 defer 和 async 属性加载网页中的外部脚本
+excerpt: 为了优化网页加载顺序，本文通过实际案例说明为什么应该使用 HTML 内建的 `defer` 和 `async` 属性，先从问题出发再到三种解决方案与对比，利用原生 HTML Script 标签属性及能规划脚本的加载顺序。
+category: HTML
+tags:
+  - Syntax
+publishDate: 2023-02-10
+lastModifiedDate: 2023-05-21
+---
+
+## 发现问题
+
+<Video
+  width={1000}
+  height={130}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/normal.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/normal.mp4',
+    },
+  ]}
+></Video>
+
+```html
+<body>
+  <!-- 网页内容 -->
+  <script src="script.js"></script>
+  <!-- 网页内容 -->
+</body>
+```
+
+**问题一：刚进入网页就让浏览器花许多时间下载与解析脚本**：如果在网页中加入脚本的话，会导致网页的渲染需要花更长的时间去完成，这是因为浏览器在加载脚本的时候会停止渲染网页，直到加载并执行完成才会继续。网页渲染到一半被搁置，对用户来说是极差的体验。
+
+```html
+<p>第一个元素</p>
+
+<script>
+  console.log(document.querySelectorAll('p')); // NodeList [ p ]
+</script>
+
+<!-- 上面的脚本选取不到之后的 DOM 内容 -->
+<p>第二个元素</p>
+```
+
+**问题二：脚本之后渲染的 DOM 元素会选取不到**：如果脚本中有选取 DOM 元素的动作，但是 DOM 元素还没有被构建出来，就会出现选取不到的情况。
+
+## 解决方法
+
+现今的浏览器都有支持 HTML 内建的 [defer](https://caniuse.com/?search=defer) 和 [async](https://caniuse.com/script-async) 属性，这两个属性都可以让浏览器在加载脚本的时候不会停止渲染网页，它们的差异主要在于执行时机。下面会介绍三种方法，分别是不使用任何属性、使用 `defer` 属性、使用 `async` 属性。
+
+### 解决方法一：把脚本放在底部
+
+<Video
+  width={1000}
+  height={208}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/after.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/after.mp4',
+    },
+  ]}
+></Video>
+
+```html
+<body>
+  <h1>网页内容</h1>
+  <script src="script.js"></script>
+</body>
+```
+
+这是早期常见也最简单粗暴的做法，但这样会导致需要等到整个网页渲染完才能开始加载脚本，在特长的 HTML 文件或缓慢的网络速度下容易拖慢脚本被执行的速度。
+
+### 解决方法二：defer
+
+<Video
+  width={1028}
+  height={208}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/defer.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/defer.mp4',
+    },
+  ]}
+></Video>
+
+```html
+<head>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <p>第一个元素</p>
+  <p>第二个元素</p>
+</body>
+```
+
+`defer` 就是东西先下载，但晚点再执行的概念，这样做我们可以在网页的开头（通常会在`<head>`中）就向外抓取脚本资源，并在 DOM 渲染完毕时才执行。
+
+### 解决方法三：async
+
+<Video
+  width={1028}
+  height={208}
+  data={[  
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/async.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-javascript-defer-and-async/async.mp4',
+    },
+  ]}
+></Video>
+
+```html
+<script src="script.js" async></script>
+```
+
+## 总结与补充
+
+<Info type="warning">这两个属性只适用于外部脚本，如果是行内脚本则不会有任何效果</Info>
+
+在大多数情况下选择任一个属性都会对网页的载入速度有所改善，但是如果脚本之间有相依性，就需要特别注意了。
+
+### defer 在 DOMContentLoaded 事件之后吗？
+
+「DOMContentLoaded」事件表示 HTML 文件已经完全被载入并被解析。对于「defer」脚本，它可以创建/删除 DOM 元素，因此「DOMContentLoaded」事件只会在所有「defer」脚本执行完成后触发，以确保在「defer」脚本进行所有可能的 DOM 更新后，最终 DOM 树状结构已经准备好。
+
+### 如果同时添加 defer 与 async 会发生什么事？
+
+```html
+<script src="script.js" async defer></script>
+```
+
+两项属性同时使用的情境通常在于支持旧浏览器只支持 `defer` 属性的情况下，如果不支持 `async`，就会使用 `defer`，后描述的属性会被视为备用方案，当首要描述的属性不支持时才会被采用。
+
+## 参考资料
+
+- [JavaScript.info - Scripts: async, defer](https://javascript.info/script-async-defer)
+- [Growing with the Web - async vs defer attributes](https://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html#script)
+
