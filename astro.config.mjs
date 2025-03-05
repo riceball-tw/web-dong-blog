@@ -9,6 +9,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { s } from 'hastscript';
 import expressiveCode from 'astro-expressive-code';
+import remarkMermaid from 'remark-mermaidjs';
 import icon from 'astro-icon';
 import vue from '@astrojs/vue';
 import paraglide from '@inlang/paraglide-astro';
@@ -47,6 +48,16 @@ export default defineConfig({
     '/zh-tw/dom-from-the-begineeing': '/zh-tw/post/dom-api-in-one-go',
   },
   markdown: {
+    remarkPlugins: [
+      [
+        remarkMermaid,
+        {
+          mermaidConfig: {
+            theme: 'neutral',
+          },
+        },
+      ],
+    ],
     rehypePlugins: [
       rehypeSlug,
       [
