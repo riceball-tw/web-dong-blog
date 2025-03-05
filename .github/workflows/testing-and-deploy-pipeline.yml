@@ -90,7 +90,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Setup Playwright
-        uses: ./.github/setup-playwright/setup
+        uses: ./.github/actions/setup-playwright
 
       # 1. List all LFS files
       # 2. Extract the first column (ID)
