@@ -25,3 +25,9 @@ runs:
     - name: Install packages
       run: pnpm install --frozen-lockfile
       shell: bash
+
+    - name: Install Playwright
+      run: pnpm add -D @playwright/test@latest
+
+    - name: Install Playwright Browsers
+      run: pnpm dlx playwright install --with-deps
