@@ -48,7 +48,16 @@ export default defineConfig({
     '/zh-tw/dom-from-the-begineeing': '/zh-tw/post/dom-api-in-one-go',
   },
   markdown: {
-    remarkPlugins: [remarkMermaid],
+    remarkPlugins: [
+      [
+        remarkMermaid,
+        {
+          mermaidConfig: {
+            theme: 'neutral',
+          },
+        },
+      ],
+    ],
     rehypePlugins: [
       rehypeSlug,
       [
