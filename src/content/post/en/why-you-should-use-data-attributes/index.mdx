@@ -1,0 +1,119 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:label-outline-rounded
+  title: Label Icon
+subHeadline: Why You Should Use Data Attributes data-*
+headline: Why You Should Use Data Attributes data-*
+excerpt: HTML elements can have their own attributes. Data attributes are a formal way to store data in HTML elements, allowing JavaScript and CSS to access the data.
+category: HTML
+tags:
+  - Syntax
+publishDate: 2022-11-07
+---
+
+## Introduction to HTML Element Attributes
+
+HTML elements can have their own attributes to express various types of information, such as appearance styles, accessibility information, and various default properties, as shown below:
+
+```html
+<div class="names" role="region" aria-label="Names"></div>
+```
+
+But when it comes to adding custom data to some elements, can we record the state and data of events in HTML? Specifically: the display state of a window, the type of functionality of a button?
+The answer is yes, but it's not as straightforward as directly writing attributes on the tag, as shown below:
+
+```html
+ <!-- `highlight` is not a valid attribute -->
+<div highlight="true"></div>
+
+<!-- `large` is not a valid attribute -->
+<div width="large"></div>
+```
+
+Although the above methods achieve the goal of adding custom data in HTML, several issues arise, and it is strongly discouraged:
+
+- It is invalid HTML syntax, which will cause errors (attributes or values do not exist, or are not allowed)
+- It may cause conflicts in the future (HTML is an evolving language; this custom attribute currently has no meaning in HTML, but that does not mean it won't in the future)
+
+The good news is that by simply adding the [data-\*](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*) prefix, HTML recognizes this as a "custom attribute," resolving the above two issues.
+
+{/* prettier-ignore */}
+```html 
+<!-- Define data however you want -->
+<div
+  data-name-item
+  data-first-name="Joe"
+  data-last-name="Doe"
+  data-active
+></div>
+```
+
+Compared to recording the state of data in id or class, it is recommended to use data attributes for selecting elements and recording data.
+
+## Reading Data Attributes
+
+Continuing from the three custom data points in the `<div>`, you can first select the node with that custom attribute using `querySelector`:
+
+```javascript
+const foobar = document.querySelector('[data-name-item]');
+```
+
+Then use the dataset property to retrieve all custom data attributes (returns an object):
+
+```javascript
+// Input
+console.log(foobar.dataset)
+// Output
+{
+  "nameItem": "",
+  "firstName": "Joe",
+  "lastName": "Doe",
+  "active": ""
+}
+```
+
+You can use dot notation or bracket notation to read this object.
+
+```javascript
+console.log(foobar.dataset.firstName); // Joe
+console.log(foobar.dataset[lastName]); // Doe
+```
+
+Interestingly, the originally kebab-case data values are converted to a lower camel case format. Additionally, data attributes with no value will automatically be assigned an empty string as content, while completely non-existent attributes will return undefined, which should be noted.
+
+## Updating Data Attributes
+
+Changing data attributes is as easy as modifying a regular object, and you can use the two methods mentioned above to change them.
+
+```javascript
+foobar.dataset['firstName'] = 'new';
+foobar.dataset.firstName = 'new';
+```
+
+## Deleting Data Attributes
+
+Deleting a data attribute is as easy as deleting a regular object, and you can use the [delete](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/delete) method.
+
+```javascript
+delete foobar.dataset;
+```
+
+## Summary
+
+Data attributes are a formal way to store data in HTML, allowing both JavaScript and CSS to access the data of elements directly within client-side elements.
+
+- Data attributes can freely embed custom attributes into HTML elements.
+- The attribute names of data attributes must be in lowercase and at least one character long.
+- Data attributes can be added to any HTML element.
+
+<Info type="warning">
+  Before using data attributes, be sure to check for existing attributes (ARIA attributes) or elements that can more
+  accurately describe the purpose of the data. Custom attributes should be considered a last resort.
+</Info>
+
+## References
+
+- [A better alternative to data-target attributes - medium](https://heyoka.medium.com/a-better-alternative-to-data-target-attributes-a499dcd55d6e)
+- [A Complete Guide to Data Attributes - css-tricks](https://css-tricks.com/a-complete-guide-to-data-attributes/)
+- [Data Attributes In JavaScript - Web Dev Simplified Blog](https://blog.webdevsimplified.com/2020-10/javascript-data-attributes/)
