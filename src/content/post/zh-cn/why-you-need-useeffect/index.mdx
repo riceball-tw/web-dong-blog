@@ -1,0 +1,146 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:add-diamond-outline-rounded
+  title: 菱形方框中央有加号符号
+subHeadline: Let's talk about why you need useEffect!
+headline: 来聊聊为什么你需要 useEffect 吧！
+excerpt: useEffect 是 react 中一个相当基础常见的 Hook，要真正学会它就必须要对 React 如何运作有基础的认识才行，它是 React 提供的一个 Hook 用于操作副作用，举例来说：送出请求、操纵 DOM、设定监听器……等都是副作用。
+category: React
+publishDate: 2023-06-26
+---
+
+`useEffect` 是 React 提供的一个 Hook 用于操作[副作用](/post/why-pure-function/#%E4%BB%80%E9%BA%BC%E6%98%AF%E5%89%AF%E4%BD%9C%E7%94%A8)。举例来说：送出请求、操纵 DOM、设定监听器……等都是副作用。
+
+> 副作用就是在函式执行过程中，除了回传以外，还对外部造成了影响，该影响就是副作用。
+
+## 了解现有问题
+
+那么究竟 `useEffect` 与 `Side-Effect` 有什么关联？如果直接在元件中撰写副作用会导致什么问题？需要了解现有问题才能更好的解释为什么会需要使用 `useEffect` Hook。
+
+### 问题一：不纯粹的元件将导致代码的不稳定
+
+不希望函式元件有副作用是为了避免程式的不稳定，你不会希望每次渲染元件时会有不同的结果，这样会让程式难以预测与维护。以下的例子中只要每渲染一次 `Cup` 函式，`guest` 变数就会被更动。
+
+```jsx
+let guest = 0;
+
+function Cup() {
+  // 坏作法: 更动函式以外的变数，造成副作用!
+  guest = guest + 1;
+  return <h2>给访客的茶 #{guest}</h2>;
+}
+
+export default function TeaSet() {
+  return (
+    <>
+      <Cup />
+      <Cup />
+      <Cup />
+    </>
+  );
+}
+```
+
+结果是程式变得很难维护，因为不知道每次呼叫函式会得到什么结果。 [将变数定义为全域变数](/post/understanding-the-use-cases-of-useref/#%E6%96%B9%E6%B3%95%E4%B8%80%E5%AE%9A%E7%BE%A9%E8%AE%8A%E6%95%B8%E5%9C%A8%E5%85%83%E4%BB%B6%E5%A4%96)也是非常糟糕的做法。
+
+### 问题二：元件重新渲染导致副作用重复执行
+
+元件的渲染必须与副作用分离！否则只要元件每次重新渲染，副作用就会被执行导致不必要的效能浪费。举例来说如果程式频繁的重新渲染，渲染会连带执行副作用程式片段，可能导致用户只是填写输入框，但由于 `State` 的改动造成重新渲染，让发出请求（副作用）被执行到爆！
+
+```jsx
+export function App(props) {
+  const [input, setInput] = useState('');
+  function handleChange(e) {
+    setInput(e.target.value);
+  }
+
+  // 坏做法：只要元件渲染将执行副作用！
+  fetch('https://picsum.photos/200/300');
+
+  return (
+    <div className="App">
+      <input type="text" onChange={handleChange} />
+    </div>
+  );
+}
+```
+
+以上的例子来说，只要输入框每更动一个字，就会发送一个请求 ☹。
+
+## 使用 `useEffect`
+
+了解前后文之后，让我们进入正题：`useEffect` 可以如何解决这些问题？可以拆解成三个步骤：
+
+1. **宣告一个副作用函式**：元件内的副作用函式会在元件渲染时执行
+2. **注明副作用的依赖**：为了避免每次渲染都执行副作用，应当注明副作用的依赖，只有当依赖有改变时才去执行副作用
+3. **视情况选择性添加清理函式**：一些副作用需要在元件被移除时清理，举例来说绑定事件监听器，当元件被移除时应该要连带移除监听器就可以将移除的行为写在清理函式中
+
+以上是大致概念，具体让我们试着用 `useEffect` Hook 来撰写，整体的架构如下程序片段：
+
+```jsx
+import { useEffect } from 'react';
+
+useEffect(() => {
+  // 副作用
+  return () => {
+    // 清理函数
+  };
+}, [依赖]);
+```
+
+### 第一步：传入副作用
+
+最基础的用法就是传入一个执行副作用的函数，但`useEffect`并不知道什么时候应该重新执行副作用的片段，因此在以下的例子中副作用还是会随着组件的渲染而被执行。
+
+```jsx
+useEffect(() => {
+  console.log('只要组件渲染时就执行副作用');
+});
+```
+
+### 第二步：注明依赖
+
+我们不会希望每次组件重新渲染就执行副作用，因此可以注明副作用的依赖数组，只有当依赖有变动时才去执行副作用，也就是说如果希望副作用只在组件第一次渲染时执行，可以传入一个空数组。
+
+```jsx
+useEffect(() => {
+  console.log('只有组件第一次渲染时才会被执行');
+}, []);
+```
+
+也可以传入依赖，只有在该依赖有变动时才会执行副作用，举例来说如果期望副作用只在 `name` 改变时执行，可以传入 `name` 作为依赖。
+
+```jsx
+useEffect(() => {
+  document.title = `您好！ 访客： ${name}`;
+}, [name]);
+```
+
+### 第三步：清理函数
+
+清理函数实际上就是在副作用函数中返回一个函数，当组件被移除时或是重新渲染时就会被执行，并不是所有的副作用都需要清理函数，可视情况添加即可。具体来说可以思考：如果副作用被重新执行会造成什么影响，就自然知道是否需要清理函数，举常见的例子来说：如果副作用是绑定事件监听器，那么当组件被移除时应该要连带移除监听器，否则每次组件重新渲染将导致绑定一个新的监听器，造成性能问题。
+
+```jsx
+useEffect(() => {
+  const handler = () => {
+    console.log('鼠标移动了');
+  };
+  window.addEventListener('mousemove', handler);
+  return () => {
+    window.removeEventListener('mousemove', handler);
+  };
+}, []);
+```
+
+以上的例子来说，只会在组件第一次渲染时替 `window` 绑定事件监听，如果这个组件被销毁或重新渲染时都会先执行清理函数。
+
+## 总结
+
+要了解 `useEffect` 就必须对 React 基本底层的机制有一定的认识，通过 `useEffect` 可以让副作用与组件渲染分离，避免不必要的性能浪费与程序不稳定的问题。
+
+## 参考资料
+
+- [Keeping Components Pure - React.dev](https://react.dev/learn/keeping-components-pure)
+- [Synchronizing with Effects - React.dev](https://react.dev/learn/synchronizing-with-effects)
+- [A Simple Explanation of React.useEffect() - Dmitri Pavlutin](https://dmitripavlutin.com/react-useeffect-explanation/)
