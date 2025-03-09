@@ -24,9 +24,9 @@ This is where most people get confused: "I know the problem, but I don't know ho
 
 Press the <kbd>F12</kbd> key to open the browser's developer tools, and use the "Select an element in the page" button in the top left corner to select elements one by one and delete them. Once you delete the element causing the overflow, the x-axis will naturally disappear, revealing which element broke the layout. It's a brute-force method, but it works.
 
-<Info type="info">
+<Sidenote type="info">
   If you accidentally delete the wrong element, you can press <kbd>ctrl</kbd> + <kbd>z</kbd> to undo the last action.
-</Info>
+</Sidenote>
 
 ## Solution 2: [Outline Method](https://devtoolstips.org/tips/en/outline-everything/)
 
@@ -42,9 +42,9 @@ Since you just want to identify the broken element, you can add an outline aroun
 
 If you really don't want to see the x-axis on the web page, you can set `overflow-x: hidden` on the `html` element.
 
-<Info type="warning">
+<Sidenote type="warning">
   This does not actually solve the problem; it merely hides it. Please try to avoid using this method.
-</Info>
+</Sidenote>
 
 ## Conclusion
 

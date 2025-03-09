@@ -14,10 +14,10 @@ publishDate: 2024-12-23
 
 As frontend evolves, we often rely on existing frameworks. Vue is the second most popular option after React, but few tutorials cover how to build a complete project. This post introduces how I would structure a Vue project from scratch in 2025!
 
-<Info type="info">
+<Sidenote type="info">
   Although the focus is on how to build a frontend project within the Vue ecosystem, the same concepts can be applied to
   any ecosystem. You will always need to check the latest documentation for more.
-</Info>
+</Sidenote>
 
 ## Framework Selection
 
@@ -39,10 +39,10 @@ Scaffolding project in ./<your-project-name>...
 Done.
 ```
 
-<Info type="info">
+<Sidenote type="info">
   Another reason to use Vite is that we usually need to convert single-file components (SFCs), which are `.vue` files,
   into JS modules that the browser can understand.
-</Info>
+</Sidenote>
 
 Alternatively, you can initialize a clean [vite project](https://vite.dev/guide/). By default, Vite operates in <abbr title="Single Page Application">SPA</abbr> mode. If you want to modify Vite to <abbr title="Multi Page Application">MPA</abbr> or <abbr title="Server Side Rendering">SSR</abbr> and other rendering modes, that's also possible. Many modern popular frameworks like Nuxt, Astro, Remix, SvelteKit, Vitest, etc., rely on Vite, making it a mature and popular solution.
 

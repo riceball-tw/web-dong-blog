@@ -14,10 +14,10 @@ publishDate: 2024-12-23
 
 随着前端演进，我们时常需要依靠现成的框架轮子协助，而其中 Vue 又是继 React 外第二热门且成熟的选项，但很少有教学提到一个完整的专案该如何建构，以及有哪些模式可以遵循。这次来介绍一下如果从头开始我会怎么建构一个 Vue 专案，在 2025 年！
 
-<Info type="info">
+<Sidenote type="info">
   虽然主轴是介绍如何在 Vue
   生态系内建构一个前端专案，但相同的概念可以拿到任何生态系上，你永远会需要查看最新文件了结更多。
-</Info>
+</Sidenote>
 
 ## 框架选择
 
@@ -39,10 +39,10 @@ Scaffolding project in ./<your-project-name>...
 Done.
 ```
 
-<Info type="info">
+<Sidenote type="info">
   使用 Vite 的另一个原因是因为我们通常需要将 single-file components (SFCs) 也就是 `.vue` 档案转换为浏览器看得懂的 JS
   模组。
-</Info>
+</Sidenote>
 
 或是初始化一个干净的 [vite 专案](https://vite.dev/guide/)，预设 Vite 是<abbr title="Single Page Application">SPA</abbr> 模式，如果你想把 Vite 爆改成<abbr title="Multi Page Application">MPA</abbr> 或<abbr title="Server Side Rendering">SSR</abbr> 与其他渲染模式也是没问题的，像是 Nuxt、Astro、Remix、 SvelteKit、Vitest……等一大票现代热门框架背后都是依靠 Vite，已经是个成熟热门的解决方案。
 

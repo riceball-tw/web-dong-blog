@@ -117,7 +117,7 @@ try {
 
 像是以上的範例，只要 `fetch` 出現錯誤，就會進入 `catch` 中的程式片段，並且可以使用傳入 catch 中的參數來顯示錯誤訊息。
 
-<Info type="warning">
+<Sidenote type="warning">
 `try...catch` 只對 runtime 錯誤（程式被執行時的錯誤）有用。為了要讓 `try...catch` 運作，程式必須要是可被執行的，意思是說程式碼不能有語法錯誤，否則程式引擎將會無法理解代碼並且無法執行。
 
 ```js
@@ -128,9 +128,9 @@ try {
 }
 ```
 
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
 
 `try...catch` 內只能執行同步的程式，如果 `try {...}` 中的程式片段是非同步的，則 `catch {...}` 中的程式片段不會被執行，這是因為當非同步程式出現錯誤時 `try...catch` 已經被執行完畢了，所以 `catch {...}` 中的程式片段不會被執行。如果希望在非同步程式出現錯誤時進入錯誤情境，可以考慮將其撰寫在非同步程式的回呼函式中。
 
@@ -144,7 +144,7 @@ setTimeout(function () {
 }, 1000);
 ```
 
-</Info>
+</Sidenote>
 
 ## 參考資料
 

@@ -15,7 +15,7 @@ lastModifiedDate: 2025-01-24
 
 ## 前言
 
-<Info type="info">本篇文章将会练习制作一个可显示、新增、删除的 Javascript 待办事项。</Info>
+<Sidenote type="info">本篇文章将会练习制作一个可显示、新增、删除的 Javascript 待办事项。</Sidenote>
 
 待办事项是非常常见的习题，其中需求涵括了增、删、读、改资料，充分模拟未来在操纵资料时会碰上的各种情境与问题，可以说各种软件都是一种客制化的待办事项。随着助教写一次，未来写很多应用会轻松得多～
 
@@ -106,17 +106,17 @@ function renderTask(tasks) {
 renderTask(tasks);
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   使用当前时间作为事项独一无二的识别码大多数时候没有问题，但仍有重复的可能性，更好的方式是使用通用唯一识别码（UUID）。各大浏览器现今已支持
   [crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) 可以使用。
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   留意以上使用到 `innerHTML` 直接渲染用户输入内容将可能造成 [XSS](https://www.webdong.dev/post/xss-for-web-developer/)
   问题，最好使用 `appendChild` 等方式[创建好元素再注入 DOM
   中](https://github.com/riceball-tw/in-memory-todo/blob/7028998945c77e57ea36145a0c9f73c7c25a8c0f/frontend/script.js#L112)，直接无条件渲染用户提供的字符串为
   HTML 是个风险隐患
-</Info>
+</Sidenote>
 
 可以特别注意这里使用了现有的数据作判断，当「`isCompleted` 为 `true`」就为 input 添加打勾否则不打勾。
 

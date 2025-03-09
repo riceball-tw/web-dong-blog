@@ -63,7 +63,7 @@ BEM treats any component on the web as a functionally independent, reusable bloc
 
 ### Block
 
-<Info type="info">A block is reusable and the top-level structure</Info>
+<Sidenote type="info">A block is reusable and the top-level structure</Sidenote>
 
 Writing BEM starts with blocks, which is essentially no different from writing regular CSS. It is important to note that blocks should avoid affecting their environment; different blocks should not influence each other, and blocks are equal without a specific hierarchical relationship. For example, a `logo` often appears in a website's `navbar`, but that does not mean it can only exist within the `navbar`. This is the meaning of "no specific hierarchical relationship"; if there is a hierarchical relationship, it should be categorized under [Element](#element).
 
@@ -88,7 +88,7 @@ Writing BEM starts with blocks, which is essentially no different from writing r
 
 ### Element
 
-<Info type="info">Items that belong to a block and cannot be reused are called elements</Info>
+<Sidenote type="info">Items that belong to a block and cannot be reused are called elements</Sidenote>
 
 Elements cannot exist independently and will belong to a block. For example: `navbar` is a block, but the internal `lightSwitch` can only be used within the `navbar`, so it is defined as an element of `navbar` called `navbar__lightSwitch`. This `navbar__lightSwitch` will not appear anywhere outside of the `navbar`, which defines it as an element.
 
@@ -107,7 +107,7 @@ Elements cannot exist independently and will belong to a block. For example: `na
 
 ### Modifier
 
-<Info type="info">Describes the additional appearance styles, states, and behaviors of blocks or elements</Info>
+<Sidenote type="info">Describes the additional appearance styles, states, and behaviors of blocks or elements</Sidenote>
 
 For example, a button's appearance characteristics (size/style) or state (enabled/hidden) can be annotated with modifiers.
 

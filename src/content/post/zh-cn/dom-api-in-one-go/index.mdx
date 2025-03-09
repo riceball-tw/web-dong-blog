@@ -19,9 +19,9 @@ publishDate: 2022-10-29
 
 ![DOM 的树状图表](./dom-tree.webp)
 
-<Info type="success">
+<Sidenote type="success">
   如果对 Javascript 对象有一定的了解，代表你已经差不多会操纵 DOM 了。如果还不熟悉，建议可以先了解后再学习 DOM API。
-</Info>
+</Sidenote>
 
 ## 什么是 DOM 节点？
 
@@ -96,10 +96,10 @@ HTML 的元素之间有辈分关系，这点也体现在 DOM 的结构上，可�
 </script>
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   觉得概念不熟悉的话可以实际操作几次会比看文档还要更有帮助，这里是线上
   [CodePen](https://codepen.io/riecball/pen/VwBMWPy) 模板，可复制一份练习选取元素。
-</Info>
+</Sidenote>
 
 ### 更进阶的选取 DOM 节点
 
@@ -236,10 +236,10 @@ document.getElementById('foobar').innerHTML = '<h1>This is some text</h1>';
 document.getElementById('foobar').innerText = 'This is some text';
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   当使用 `innerHTML` 需特别注意数据来源，恶意的数据来源可以借由 `innerHTML` 夹带执行恶意的程序代码（跨站脚本攻击 <abbr title="Cross Site Scripting">XSS</abbr>）。应当确保注入的数据来源是可信的。
 
-</Info>
+</Sidenote>
 
 ## 三、监听 DOM 节点
 
@@ -324,12 +324,12 @@ element.addEventListener('click', (e) => {
 - 选取多个节点会返回 NodeList ，选取多个元素会返回 HTMLCollection，它们是类数组的对象。
 - 节点有许多默认方法与属性，可以在终端打印出来后查询文档即可。
 
-<Info type="success">
+<Sidenote type="success">
   <a target="_blank" href="/images/posts/dom-from-the-begineeing/dom-cheatsheet-full.webp">
     方法很多，感到困惑？没关系，这里制作了两张懒人包图，欢迎下载参考。
   </a>
   ![DOM 的树状图表](./cheat-sheet-demo.webp)
-</Info>
+</Sidenote>
 
 本篇是我在 [六角学院](https://www.hexschool.com/) JS 直播班针对该主题所出的入门题目，内含解答，有兴趣可以点开来练习：[JS 直播班 - 2022 秋季班 - DOM 操作](https://codepen.io/riecball/pen/XWYrmKz)
 
