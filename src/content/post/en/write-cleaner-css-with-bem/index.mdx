@@ -1,0 +1,139 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:folder-copy-outline-rounded
+  title: Clean Folder Icon
+subHeadline: Write More Maintainable CSS with BEM
+headline: Write More Maintainable CSS with BEM
+excerpt: BEM is a convention for CSS. BEM CSS is simple, effective, and has battletested, making it suitable as a beginner's first CSS management method.
+category: CSS
+publishDate: 2022-08-31
+---
+
+## Why BEM?
+
+BEM is a convention for managing CSS. When writing small websites, future style naming and hierarchy planning are often not a concern, but as the complexity of the website increases, a predictable and extensible convention is needed. [BEM CSS](https://getbem.com/) is simple to understand, effective, and and has battletested, making it suitable as a beginner's first CSS naming convention.
+
+## What Benefits Can BEM Bring?
+
+1. Better **describing the functionality of components**.
+2. Better **explaining the structure of components**.
+3. Better **avoiding CSS specificity issues**.
+
+## Before You Start Learning BEM...
+
+Developers should understand the importance of "semantic naming" and "modular" writing of web pages in order to use BEM for further categorization and management of styles.
+
+### Semantic Naming
+
+```html
+<!-- Incorrect, red-text only describes the appearance of the component -->
+<div class="red-text"></div>
+
+<!-- Correct, error meaningfully describes the component -->
+<div class="error"></div>
+```
+
+All BEM CSS should be named semantically, such as: `button`, `form`, `header`, rather than meaningless names or names that only describe appearance and results, such as: `aaa`, `red`, `center`. Semantic naming helps developers describe the purpose and relationships of components, leading to better long-term maintainable and extensible code.
+
+### Modularization
+
+{/* prettier-ignore */}
+```html
+<!-- Incorrect, styles that cannot be reused -->
+<a href="#" class="button">
+<a href="#" class="button-solid">
+<a href="#" class="button-outlined">
+
+<!-- Correct, split highly repetitive styles for unified management -->
+<a href="#" class="button">
+<a href="#" class="button button-solid">
+<a href="#" class="button button-outlined">
+```
+
+Web pages can be seen as blocks of components. Extract highly repetitive styles. For example, if there are many types of buttons in development, a `button` class should be created, and additional classes should be added based on style functionality, such as: solid, outlined, danger, warning, rather than writing a non-reusable class for each type of button.
+
+## Start Learning BEM
+
+BEM treats any component on the web as a functionally independent, reusable block, using elements to mark indivisible sub-items of the block, or using modifiers to create blocks with different functional styles. Sounds complicated? Let's move on to the next section to understand the differences and uses of these three classifications:
+
+- B - Block
+- E - Element
+- M - Modifier
+
+### Block
+
+<Info type="info">A block is reusable and the top-level structure</Info>
+
+Writing BEM starts with blocks, which is essentially no different from writing regular CSS. It is important to note that blocks should avoid affecting their environment; different blocks should not influence each other, and blocks are equal without a specific hierarchical relationship. For example, a `logo` often appears in a website's `navbar`, but that does not mean it can only exist within the `navbar`. This is the meaning of "no specific hierarchical relationship"; if there is a hierarchical relationship, it should be categorized under [Element](#element).
+
+```html
+<!-- header block -->
+<header class="header">
+  <!-- Nested logo block -->
+  <div class="logo"></div>
+  <!-- Nested search-form block -->
+  <form class="searchForm"></form>
+</header>
+
+<footer class="footer">
+  <!-- logo can still appear in the footer -->
+  <div class="logo"></div>
+</footer>
+```
+
+- There is no hierarchical relationship between blocks.
+- Blocks should not affect the environment; for example: do not use `margin` or `position`. Ensure blocks can be moved and reused.
+- Blocks can be nested within one another, with any number of levels being possible.
+
+### Element
+
+<Info type="info">Items that belong to a block and cannot be reused are called elements</Info>
+
+Elements cannot exist independently and will belong to a block. For example: `navbar` is a block, but the internal `lightSwitch` can only be used within the `navbar`, so it is defined as an element of `navbar` called `navbar__lightSwitch`. This `navbar__lightSwitch` will not appear anywhere outside of the `navbar`, which defines it as an element.
+
+```html
+<!-- navbar block -->
+<nav class="navbar">
+  <!-- lightSwitch element inside navbar -->
+  <button class="navbar__lightSwitch">light</button>
+</nav>
+```
+
+- Elements must be named with two underscores (\_\_) after the block name to indicate this.
+- Elements always belong to a block and cannot be used independently.
+- Elements can be nested within one another, with any number of levels being possible.
+- Elements cannot be doubly nested, for example: `block__elem1__elem2`.
+
+### Modifier
+
+<Info type="info">Describes the additional appearance styles, states, and behaviors of blocks or elements</Info>
+
+For example, a button's appearance characteristics (size/style) or state (enabled/hidden) can be annotated with modifiers.
+
+- Modifiers must be indicated with two hyphens (--) to signify this.
+- Modifiers only describe the styles added to blocks or elements and cannot be used independently.
+
+```html
+<!-- searchForm block in focused state -->
+<button class="button button--large button--active"></button>
+```
+
+## Common BEM Questions
+
+### Can advanced selectors be used?
+
+No. BEM only uses `class` selectors to avoid the problem of increasing specificity levels that become difficult to manage.
+
+### It seems like everyone's BEM looks a bit different?
+
+The core concepts of BEM—Block/Element/Modifier—can be written and distinguished according to personal or development team preferences. All examples in this article include the author's personal preferences ([2 Dashes style](https://en.bem.info/methodology/naming-convention/#two-dashes-style) + [Camel Case Style](https://en.bem.info/methodology/naming-convention/#camelcase-style)), and you can refer to [BEM Naming convention](https://en.bem.info/methodology/naming-convention/) to understand various examples.
+
+### Should I use BEM?
+
+If the project is not that large, then BEM may not be necessary. One of the most criticized aspects of BEM is the overly long and complex class names, as well as the loss of convenience in using various selectors. If the development mode prioritizes Utility-First CSS, then BEM is fundamentally unnecessary, but that is a topic for another article.
+
+## References
+
+- [BEM](https://en.bem.info/methodology/)
+- [BEM Methodology](http://bem.webclown.net/quick-start/#%E4%BB%8B%E7%BB%8D)
