@@ -1,5 +1,4 @@
 ---
-import Clickable from '@/components/app/Clickable.astro';
 import { Icon } from 'astro-icon/components'
 import Container from '@/components/atoms/container/Container.astro';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
@@ -25,30 +24,24 @@ const { copyright, socials } = (await currentLocaleWebsiteConfig(Astro.currentLo
     <div class="mr-4 flex items-center md:mr-0">
       <ul class="flex items-center">
         <li>
-          <Clickable>
-            <LanguagePicker/>
-          </Clickable>
+          <LanguagePicker/>
         </li>
 
         {
           socials.map((social: Social) => (
             <li>
-              <Clickable>
-                <a class="p-4 inline-block" href={social.url}>
-                  <Icon size={16} name={social.iconName} title={social.name} />
-                </a>
-              </Clickable>
+              <a class="p-4 inline-block" href={social.url}>
+                <Icon size={16} name={social.iconName} title={social.name} />
+              </a>
             </li>
           ))
         }
 
 
         <li>
-          <Clickable>
-            <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
-              <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
-            </button>
-          </Clickable>
+          <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
+            <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
+          </button>
         </li>
       </ul>
     </div>

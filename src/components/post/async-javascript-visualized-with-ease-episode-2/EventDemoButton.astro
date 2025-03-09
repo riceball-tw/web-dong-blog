@@ -1,10 +1,7 @@
 ---
-import Clickable from '@/components/app/Clickable.astro';
 ---
 
-<Clickable>
-  <button class="w-full rounded p-4" style="border: 1px solid currentColor" data-demo-button>點擊我觸發事件👆🏻</button>
-</Clickable>
+<button class="hover:opacity-90 active:scale-90 transition w-full rounded p-4" style="border: 1px solid currentColor" data-demo-button>點擊我觸發事件👆🏻</button>
 
 <script is:inline>
   const button = document.querySelector('[data-demo-button]');
