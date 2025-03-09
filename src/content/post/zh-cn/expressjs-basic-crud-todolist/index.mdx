@@ -54,10 +54,10 @@ app.listen(port, () => {
 
 我们将 Express 公开在 `3000` 通讯埠上，因此只要打开浏览器到本机的对应位置 `http://localhost:3000/` 就能看到 Hello World 示例。Express 有许多方法可以调用，翻阅官方文件了解更多像是：[app.get()](http://expressjs.com/en/5x/api.html#app.get)、[res.send()](http://expressjs.com/en/5x/api.html#res.send)。
 
-<Info type="info">
+<Sidenote type="info">
   为了遵循最新语法习惯，这里使用了 ESM 而非 CJS 的引入语法，可以预期 Node 会警告你标示 `"type": "module"` 到
   `package.json` 当中
-</Info>
+</Sidenote>
 
 ## 建构增删查改 API
 

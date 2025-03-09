@@ -15,9 +15,9 @@ lastModifiedDate: 2025-01-24
 
 ## Introduction
 
-<Info type="info">
+<Sidenote type="info">
   This article will practice creating a JavaScript todo list that can display, add, and delete tasks.
-</Info>
+</Sidenote>
 
 Todo lists are very common exercises that include the requirements of adding, deleting, reading, and modifying data, effectively simulating various scenarios and problems encountered when manipulating data. It can be said that various types of software are a form of customized todo lists.
 
@@ -108,19 +108,19 @@ function renderTask(tasks) {
 renderTask(tasks);
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   Using the current time as a unique identifier for tasks usually works fine, but there is still a possibility of
   duplication. A better approach is to use a universally unique identifier (UUID). Major browsers now support
   [crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID) for this purpose.
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   Be aware that using `innerHTML` to directly render user input can lead to
   [XSS](https://www.webdong.dev/post/xss-for-web-developer/) issues. It's best to use methods like `appendChild` to
   [create elements before injecting them into the DOM
   ](https://github.com/riceball-tw/in-memory-todo/blob/7028998945c77e57ea36145a0c9f73c7c25a8c0f/frontend/script.js#L112).
   Directly rendering user-provided strings as HTML poses a security risk.
-</Info>
+</Sidenote>
 
 It is particularly noted that existing data is used for judgment. When "`isCompleted` is `true`", the input will be checked; otherwise, it will not be checked.
 

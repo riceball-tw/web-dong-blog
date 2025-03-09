@@ -11,11 +11,11 @@ publishDate: 2023-02-01
 
 import EventDemoButton from '@/components/post/async-javascript-visualized-with-ease-episode-2/EventDemoButton.astro';
 
-<Info type="info">
+<Sidenote type="info">
   上一章節提到觀念在本文是至關重要的，請先閱讀完：
   <a href="/post/async-javascript-visualized-with-ease/">從動圖輕鬆入門非同步 JavaScript</a>
   再往下觀看學習效果會更好！
-</Info>
+</Sidenote>
 
 ## 回顧上一章節
 
@@ -92,9 +92,9 @@ getSquareArea(2); // 4
 
 ### 回呼函式
 
-<Info type="info">
+<Sidenote type="info">
   「[回呼函式](https://developer.mozilla.org/zh-TW/docs/Glossary/Callback_function)」是一個函式，將其作為參數傳入另外一個函式的時候就可以被稱作是回呼函式。
-</Info>
+</Sidenote>
 
 為什麼要用回呼函式呢？<br/>
 為什麼學非同步和回呼函式有關？
@@ -153,9 +153,9 @@ getRectangleArea(2, (error, result) => {
 
 ### Promise
 
-<Info type="info">
+<Sidenote type="info">
   「[Promise](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise)」是一個代表了未來的數值的物件。
-</Info>
+</Sidenote>
 
 由於前面的寫法具有不可忽略的缺點，像是自由得過於混亂、難閱讀與撰寫……等問題，因此 JavaScript 才會在 ES6 版本推出 Promise 這個語法，把「非同步的程式碼包裝為物件」，並且提供了一個「標準化」的方法來處理非同步的程式碼，這個物件具備兩個屬性：`state(狀態)` 與 `result(結果)`。
 
@@ -248,10 +248,10 @@ getRectangleArea(2)
 
 ### Async / Await
 
-<Info type="info">
+<Sidenote type="info">
   「[Async /
   Await](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Statements/async_function)」是一個語法讓撰寫非同步程式可以享有類似於撰寫同步程式一般的體驗。
-</Info>
+</Sidenote>
 
 Async Await 是在 ES2017 中加入到 JavaScript 語言中的語法，在 Promise 的基礎之上，它提供了一個更簡潔的語法來處理非同步的行為，讓我們可以像撰寫同步程式一樣的撰寫非同步程式。
 

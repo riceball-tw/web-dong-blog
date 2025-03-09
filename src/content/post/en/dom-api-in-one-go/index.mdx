@@ -19,10 +19,10 @@ If we visualize the DOM as a chart, it would appear as a "tree structure," repre
 
 ![DOM Tree Diagram](./dom-tree.webp)
 
-<Info type="success">
+<Sidenote type="success">
   If you have a basic understanding of JavaScript objects, you are almost ready to manipulate the DOM. If not, it's
   recommended to learn that first before diving into the DOM API.
-</Info>
+</Sidenote>
 
 ## What is a DOM Node?
 
@@ -97,11 +97,11 @@ In most situations, you don't need to remember too many selection methods; just 
 </script>
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   If you feel unfamiliar with the concepts, practicing a few times can be more helpful than just reading the
   documentation. Here is an online [CodePen](https://codepen.io/riecball/pen/VwBMWPy) template where you can copy and
   practice selecting elements.
-</Info>
+</Sidenote>
 
 ### More Advanced DOM Node Selection
 
@@ -238,11 +238,11 @@ document.getElementById('foobar').innerHTML = '<h1>This is some text</h1>';
 document.getElementById('foobar').innerText = 'This is some text';
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   When using `innerHTML`, special attention should be paid to the data source. Malicious data sources can execute
   harmful code through `innerHTML` (Cross-Site Scripting <abbr title="Cross Site Scripting">XSS</abbr>). Ensure that the
   injected data source is trustworthy.
-</Info>
+</Sidenote>
 
 ## 3. Listening to DOM Nodes
 
@@ -327,12 +327,12 @@ element.addEventListener('click', (e) => {
 - Selecting multiple nodes returns a NodeList, while selecting multiple elements returns an HTMLCollection; both are array-like objects.
 - Nodes have many default methods and properties that can be queried after printing them in the terminal.
 
-<Info type="success">
+<Sidenote type="success">
   <a target="_blank" href="/images/posts/dom-from-the-begineeing/dom-cheatsheet-full.webp">
     There are many methods, feeling confused? No worries, here are two cheat sheets for reference.
   </a>
   ![DOM Tree Diagram](./cheat-sheet-demo.webp)
-</Info>
+</Sidenote>
 
 This article is based on the introductory topic I covered in the [Hex School](https://www.hexschool.com/) JS live class, which includes answers. If you're interested, feel free to practice here: [JS Live Class - Fall 2022 - DOM Manipulation](https://codepen.io/riecball/pen/XWYrmKz)
 

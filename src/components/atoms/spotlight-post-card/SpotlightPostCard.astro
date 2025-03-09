@@ -1,11 +1,11 @@
 ---
 import type { CategoryList as CategoryListType, TagsList , PostPage } from '@/types'
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
-import CategoryList from '@/components/post/CategoryList.astro';
-import TagList from '@/components/post/TagsList.astro';
+import CategoryList from '@/components/atoms/category-list/CategoryList.astro';
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
+import TagList from '@/components/atoms/tag-list/TagList.astro';
 
 type PostCard = Pick<PostPage, "slug"> & PostPage['data'] & CategoryListType & TagsList & {url?: string};
 type CustomCard = Partial<Pick<PostPage, "slug">> & CategoryListType & TagsList & {

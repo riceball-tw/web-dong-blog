@@ -14,10 +14,10 @@ publishDate: 2024-12-23
 
 隨著前端演進，我們時常需要依靠現成的框架輪子協助，而其中 Vue 又是繼 React 外第二熱門且成熟的選項，但很少有教學提到一個完整的專案該如何建構，以及有哪些模式可以遵循。這次來介紹一下如果從頭開始我會怎麼建構一個 Vue 專案，在 2025 年！
 
-<Info type="info">
+<Sidenote type="info">
   雖然主軸是介紹如何在 Vue
   生態系內建構一個前端專案，但相同的概念可以拿到任何生態系上，你永遠會需要查看最新文件了結更多。
-</Info>
+</Sidenote>
 
 ## 框架選擇
 
@@ -39,10 +39,10 @@ Scaffolding project in ./<your-project-name>...
 Done.
 ```
 
-<Info type="info">
+<Sidenote type="info">
   使用 Vite 的另一個原因是因為我們通常需要將 single-file components (SFCs) 也就是 `.vue` 檔案轉換為瀏覽器看得懂的 JS
   模組。
-</Info>
+</Sidenote>
 
 或是初始化一個乾淨的 [vite 專案](https://vite.dev/guide/)，預設 Vite 是 <abbr title="Single Page Application">SPA</abbr> 模式，如果你想把 Vite 爆改成 <abbr title="Multi Page Application">MPA</abbr> 或 <abbr title="Server Side Rendering">SSR</abbr> 與其他渲染模式也是沒問題的，像是 Nuxt、Astro、Remix、SvelteKit、Vitest……等一大票現代熱門框架背後都是依靠 Vite，已經是個成熟熱門的解決方案。
 

@@ -101,11 +101,11 @@ lastModifiedDate: 2024-05-20
 
 测量网页加载过程中从请求一个资源到第一个字节响应所需的时间，从这项指标中主要可以了解用户获取资源的速度，是在其他指标之前最为根基的指标。越好的 TTFB 代表网页「[正在发生](#happening)」，用户可以越快速的获取资源」。
 
-<Info type="warning">
+<Sidenote type="warning">
   TTFB 并非网页核心指标，建议范围参考即可。如果页面需要 JavaScript 来渲染内容，那么 TTFB
   就极为关键，但如果是纯粹静态内容，TTFB
   就不会像前者一样那么关键，须考量网页的[渲染模式](/zh-cn/post/rendering-pattern/)。
-</Info>
+</Sidenote>
 
 ## <abbr title="First Contentful Paint">FCP</abbr> - 首次内容绘制
 
@@ -127,7 +127,9 @@ lastModifiedDate: 2024-05-20
 
 也就是**测量网页要花多久时间去显示其最大内容**，从这项指标中主要可以了解网页加载时用户的体验，越好的 LCP 越能说服用户网页「[是否有用](#useful)」。
 
-<Info type="info">LCP 与前者 FCP 非常相似，但测量目的不同，差别仅在于 LCP 测量最大内容，FCP 则是测量首个内容。</Info>
+<Sidenote type="info">
+  LCP 与前者 FCP 非常相似，但测量目的不同，差别仅在于 LCP 测量最大内容，FCP 则是测量首个内容。
+</Sidenote>
 
 ## <abbr title="First Input Delay">FID</abbr> - 首次输入延迟(已被 INP 取代) 🌟
 
@@ -224,7 +226,7 @@ INP 在 2024 年 3 月取代 FID，同样是**测量网页要花多久时间去�
 
 网页核心指标旨在简化环境，并帮助网站专注于最重要的指标。如果使用 Google 提供的网站检测工具，像是 [PageSpeed](https://pagespeed.web.dev/)，会使用以上的网页指标： [LCP](#lcp---最大内容绘制) 、 [FID](#fid---首次输入延迟) 或 [CLS](#cls---累积布局偏移) 为网站评分分数，分别从性能、交互性与视觉稳定为衡量基准，来测量该网页的浏览体验。
 
-<Info type="info">它们是必了解的核心指标，也能快速的了解网页的使用体验，在标题用 🌟 特别标注起来哦～</Info>
+<Sidenote type="info">它们是必了解的核心指标，也能快速的了解网页的使用体验，在标题用 🌟 特别标注起来哦～</Sidenote>
 
 ### 网页分数测量基准
 
@@ -243,7 +245,7 @@ INP 在 2024 年 3 月取代 FID，同样是**测量网页要花多久时间去�
 - [Time to Interactive (TTI) - web.dev](https://web.dev/tti/)
 - [Total Blocking Time (TBT) - web.dev](https://web.dev/tbt/)
 
-<Info type="info">
+<Sidenote type="info">
   本文中的部分内容是根据 Google 所建立并分享的内容所进行的修改，并遵循 [创用 CC 4.0
   姓名标示授权条款](https://creativecommons.org/licenses/by/4.0/) 中所述的条款使用。{' '}
-</Info>
+</Sidenote>

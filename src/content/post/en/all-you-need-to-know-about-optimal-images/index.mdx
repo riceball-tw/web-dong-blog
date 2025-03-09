@@ -50,15 +50,15 @@ Evaluating the "characteristics of file formats" and the "level of support neede
 - `.mp4`: Classic video format, standard.
 - [`.webm`](https://caniuse.com/webm): Video format designed for the web, with superior compression ratios.
 
-<Info type="info">
+<Sidenote type="info">
   **Image Recommendation**: If there are no special requirements, it is recommended to use `.svg` for simple line and
   color block images, and for more complex images, using `.webp` format can significantly reduce file size.
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   **Video Recommendation**: It is recommended to use `.webm`. If there are [long animated images, it is advisable to use
   video instead](https://web.dev/replace-gifs-with-videos/) for performance and size considerations.
-</Info>
+</Sidenote>
 
 ### Appropriate Compression
 
@@ -176,11 +176,11 @@ Most browsers now [support native lazy loading](https://caniuse.com/loading-lazy
 <img loading="lazy" src="cat.jpg" alt="An orange cat sleeping in the sun on the sidewalk" />
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   Note [not to use this attribute on images at the top of the page (within the visible range after the page
   loads)](https://web.dev/browser-level-image-lazy-loading/#avoid-lazy-loading-images-that-are-in-the-first-visible-viewport)
   to ensure that images can be loaded as early as possible.
-</Info>
+</Sidenote>
 
 ### Loading Appropriate Sized Images with `src-set` and `sizes`
 
@@ -199,16 +199,16 @@ You can additionally use the `src-set` attribute to load appropriately sized ima
 
 In the above example, when the device width is `100px`, the `100w` image will be used; when the device width is `200px`, the `200w` image will be used, and so on. Not only "device size," but also "pixel density" will be taken into account. For example, the `100w` image will be used at `200px` under a `2x` pixel density.
 
-<Info type="warning">
+<Sidenote type="warning">
 Be careful not to use this attribute for "artistic presentation" purposes. The images must come from the same source but be of different sizes. If there is a need for "artistic presentation," you can use [`<picture>`](http://127.0.0.1:3000/post/all-you-need-to-know-about-optimal-images#%E6%8F%90%E4%BE%9B%E8%97%9D%E8%A1%93%E6%96%B9%E5%90%91%E7%9A%84%E5%9C%96%E7%89%87%E6%9B%BF%E6%8F%9B) to achieve that.
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   Browsers will default to all images set with `srcset` occupying the entire window range, which is `100vw`. You must
   know the size at which the image will be displayed on the page to determine which image is most suitable for this
   scenario. This information about how large the image will be in a certain state can be indicated using the `sizes`
   attribute.
-</Info>
+</Sidenote>
 
 `sizes` consists of a media condition and size value, separated by commas, and its main function is to **let the browser know what size the image will need to be displayed at different device sizes**. For example:
 
@@ -296,9 +296,9 @@ Artistic presentation refers to using different images at different device sizes
 </picture>
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
 The fallback `<img>` must exist within the `<picture>` and after all `<source>` elements.
-</Info>
+</Sidenote>
 
 ## Summary
 

@@ -50,15 +50,15 @@ publishDate: 2023-05-19
 - `.mp4`：老牌影片格式，中規中矩。
 - [`.webm`](https://caniuse.com/webm)：專為網頁而生的影片格式，優越的壓縮比。
 
-<Info type="info">
+<Sidenote type="info">
   **對圖片的建議**：如果沒有特別的要求會建議簡單線條與色塊的圖片使用 `.svg` 向量呈現，複雜一點使用 `.webp`
   格式可以大幅縮減檔案大小。
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   **對影片的建議**：推薦使用 `.webm`。如果有
   [過長的動圖建議使用影片來呈現](https://web.dev/replace-gifs-with-videos/)，為了效能與大小上的考量。
-</Info>
+</Sidenote>
 
 ### 適當的壓縮
 
@@ -176,9 +176,9 @@ ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 <img loading="lazy" src="cat.jpg" alt="一隻橘貓在人行道上曬太陽睡覺" />
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
   注意[不要在頁面開頭（頁面加載後的可視範圍內）使用這項屬性到圖片上](https://web.dev/browser-level-image-lazy-loading/#avoid-lazy-loading-images-that-are-in-the-first-visible-viewport)，確保圖片可以盡早被加載完成。
-</Info>
+</Sidenote>
 
 ### 搭配 `src-set` 與 `sizes` 加載合適尺寸的圖片
 
@@ -197,15 +197,15 @@ ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 
 像是以上範例，當裝置寬度為 `100px` 時就會使用 `100w` 的圖片，當裝置寬度為 `200px` 時就會使用 `200w` 的圖片，以此類推。不只「裝置尺寸」，連「像素密度」也會被納入考量，例如：`100w` 的圖片在 `2x` 的像素密度下就會使用 `200px`。
 
-<Info type="warning">
+<Sidenote type="warning">
 須留意不要將該屬性用於「藝術呈現」方面的用途，圖片來源必須是相同但尺寸不同的圖片。如果有「藝術呈現」的需求可以使用 [`<picture>`](http://127.0.0.1:3000/post/all-you-need-to-know-about-optimal-images#%E6%8F%90%E4%BE%9B%E8%97%9D%E8%A1%93%E6%96%B9%E5%90%91%E7%9A%84%E5%9C%96%E7%89%87%E6%9B%BF%E6%8F%9B) 來達成。
-</Info>
+</Sidenote>
 
-<Info type="warning">
+<Sidenote type="warning">
   瀏覽器會預設所有設置 `srcset` 的圖片會佔據整個窗口範圍也就是
   `100vw`，必須要知道該張圖片在該頁面被顯示的大小才能知道哪張圖片最為合適於此場景，這個指示該圖片在某個狀態下會是多少大小的資訊可以使用
   `sizes` 屬性來註明。
-</Info>
+</Sidenote>
 
 `sizes` 由一個媒體條件和大小值所組成，並用逗號分隔，主要功能是**讓瀏覽器知道該圖片在不同裝置尺寸下會需要呈現大小**，舉例來說：
 
@@ -293,9 +293,9 @@ ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 </picture>
 ```
 
-<Info type="warning">
+<Sidenote type="warning">
 作為後備方案的 `<img>` 必須要存在於 `<picture>` 之中，並且在所有的 `<source>` 之後。
-</Info>
+</Sidenote>
 
 ## 總結
 

@@ -21,7 +21,7 @@ publishDate: 2022-11-18
 
 ### Call Stack：處理事情，就像在吃鬆餅
 
-<Info type="info">瀏覽器引擎將會在這裡一行一行的解析執行函式，調用函式時就會被推入，並在回傳值後離開。</Info>
+<Sidenote type="info">瀏覽器引擎將會在這裡一行一行的解析執行函式，調用函式時就會被推入，並在回傳值後離開。</Sidenote>
 
 回到 JavaScript 引擎本身，當調用一個函式時，函式會被加入到一個叫做：「Call Stack」的 STACK ([堆疊](https://zh.wikipedia.org/zh-tw/%E5%A0%86%E6%A0%88))之中，想像成吃鬆餅一樣，鬆餅(函式)由最上方加入然後再由上方開始吃掉(處理)，代碼由上而下執行將函示推入執行推疊中，當被執行完就會離開。
 
@@ -42,7 +42,9 @@ publishDate: 2022-11-18
 
 ### Web API：瀏覽器提供的非同步好幫手
 
-<Info type="info">由執行環境 (Runtime) 提供，處理非同步事件，並在事件結束後將回呼函式放入 Callback Queue 中。</Info>
+<Sidenote type="info">
+  由執行環境 (Runtime) 提供，處理非同步事件，並在事件結束後將回呼函式放入 Callback Queue 中。
+</Sidenote>
 
 而處理非同步事件很常遇到的：`fetch`、`seTimeout`、`addEventListener` 都是由 Web API 所提供的方法，使用這些方法傳入的回呼函數將會交由 Web API 處理，因此 Call Stack 才能迅速被清空，處理下一個事件，不阻塞 JavaScript 的執行。
 
@@ -63,7 +65,7 @@ publishDate: 2022-11-18
 
 ### Callback Queue：等待入場的隊伍
 
-<Info type="info">存放回呼函式，等待進入 Call Stack 中執行。</Info>
+<Sidenote type="info">存放回呼函式，等待進入 Call Stack 中執行。</Sidenote>
 
 Web API 的事項處理完成後並不會馬上返回 Call Stack 被執行，而是會被放入 Callback Queue 中等待。這樣也造成了像是 `setTimeout` 或 `setInterval` 並不會「準確的」如同描述的時間內被執行，而是單純在描述時間後會被加入 Callback Queue。
 
@@ -84,7 +86,9 @@ Web API 的事項處理完成後並不會馬上返回 Call Stack 被執行，而
 
 ### Event Loop：連結整個流程
 
-<Info type="info">直到 Call Stack 被清空，Event Loop會將最早進入 Callback Queue 的函式放回 Call Stack 中。</Info>
+<Sidenote type="info">
+  直到 Call Stack 被清空，Event Loop會將最早進入 Callback Queue 的函式放回 Call Stack 中。
+</Sidenote>
 
 那麼 Callback Queue 中的事項要如何被執行呢？ 就輪到 Event Loop 出場的時候了，它只有也僅有一個功能：「連接 Callback Queue 與 Call Stack」。具體來說，當 Call Stack 是空的，第一個 Callback Queue 的事項就會被放入 Call Stack 中，
 
