@@ -1,7 +1,7 @@
 ---
 import BlogBase from '@/layouts/BlogBase.astro';
 import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
-import Pagefind from '@/components/app/index/Pagefind.astro'
+import GlobalSearchInput from '@/components/organisms/global-search-input/GlobalSearchInput.astro'
 import Hero from '@/components/molecules/hero/Hero.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import uniqolor from 'uniqolor';
@@ -65,7 +65,7 @@ export async function getStaticPaths() {
           {m.inner_petty_giraffe_drip()}
       </span>
     </div>
-    {import.meta.env.PROD && <Pagefind placeholderText={m.awake_quiet_ape_emerge()}/>}
+    {import.meta.env.PROD && <GlobalSearchInput placeholderText={m.awake_quiet_ape_emerge()}/>}
   </Hero>
 
   <section>
