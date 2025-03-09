@@ -2,7 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import Footer from '@/components/app/Footer.astro';
+import GlobalFooter from '@/components/organisms/global-footer/GlobalFooter.astro';
 import Navbar from '@/components/organisms/global-navbar/GlobalNavbar.astro';
 import YoutubeChannels from '@/components/molecules/youtube-channels/YoutubeChannels.astro';
 import Container from '@/components/atoms/container/Container.astro';
@@ -309,5 +309,5 @@ export async function getStaticPaths() {
       </div>
     </main>
   </div>
-  <Footer />
+  <GlobalFooter />
 </Base>
