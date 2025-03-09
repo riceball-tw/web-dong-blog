@@ -4,7 +4,7 @@ import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import TagsList from '@/components/post/TagsList.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
-import Utteranc from '@/components/app/Utteranc.astro';
+import Comments from '@/components/atoms/comments/Comments.astro';
 import PostJSONLD from '@/components/app/head/PostJSONLD.astro';
 import PostImage from '@/components/post/PostImage.astro';
 import PostBlockquote from '@/components/post/PostBlockquote.astro';
@@ -138,7 +138,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
         </div>
         </aside>
         <Content components={{ Info, Video, img: PostImage, blockquote: PostBlockquote }} />
-        <Utteranc />
+        <Comments />
       </article>
     </main>
   </Container>
