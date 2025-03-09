@@ -8,5 +8,5 @@ runs:
       shell: bash
 
     - name: Install Playwright Browsers
-      run: pnpm dlx playwright install --with-deps
+      run: pnpm exec playwright install --with-deps
       shell: bash
