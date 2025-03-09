@@ -6,7 +6,7 @@ import Container from '@/components/atoms/container/Container.astro';
 import { defaultLocale } from '@/utils/i18n.ts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import * as m from "@/paraglide/messages";
-import AppThemeToggleButton from '@/components/app/AppThemeToggleButton.astro'
+import ThemeToggleButton from '@/components/atoms/theme-toggle-button/ThemeToggleButton.astro'
 import AppSearch from '@/components/app/AppSearch.astro'
 
 const mainNav = [
@@ -81,7 +81,7 @@ const linkI18n = {
               )})
             }
             <li class="ml-auto inline-block">
-              <AppThemeToggleButton />
+              <ThemeToggleButton />
             </li>
             <li>
              <AppSearch/>
