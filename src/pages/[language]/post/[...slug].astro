@@ -2,7 +2,7 @@
 import BlogBase from '@/layouts/BlogBase.astro';
 import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import TagsList from '@/components/post/TagsList.astro';
+import TagList from '@/components/atoms/tag-list/TagList.astro';
 import CategoryList from '@/components/post/CategoryList.astro';
 import Comments from '@/components/atoms/comments/Comments.astro';
 import PostJSONLD from '@/components/utility/PostJSONLD.astro';
@@ -87,7 +87,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
             <div class="flex justify-between">
               <div class="flex md:block">
                 <CategoryList categoryHref={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${category}/`)} {category} />
-                <TagsList {tagHrefs} {tags} />
+                <TagList {tagHrefs} {tags} />
               </div>
             </div>
           </div>
