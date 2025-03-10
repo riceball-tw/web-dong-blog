@@ -1,0 +1,164 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:running-with-errors-rounded
+  title: 进度条错误符号
+subHeadline: Using JavaScript try...catch to Control Errors in Code
+headline: 使用 JavaScript try...catch 来控制程序中的错误
+excerpt: 程序中出现错误是必不可少的，有千万个原因可能造成程序出现错误无法运行，这时候在 JavaScript 中就可以使用 try...catch 语法来处理错误情境，除了拦截错误也可以自行定义与抛出错误，让程序中的错误更容易被理解与管理。
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-07-01
+---
+
+通常程序出现错误时会马上停止执行并且显示错误信息，但有时候会希望程序出现错误时不要马上停止执行，而是采取一些行动时就可以使用 `try...catch` 语法：
+
+```js
+try {
+  // 尝试执行的程序片段
+} catch (错误参数) {
+  // 发生错误时执行的程序片段
+} finally {
+  // 在两者情境都执行完后执行的程序片段
+}
+```
+
+以上语法的执行流程如下：
+
+1. 执行 `try` 中的程序片段
+2. 如果 `try` 中的程序片段出现错误，则执行 `catch` 中的程序片段，其中可选择性的使用「错误参数」来取得错误种类与信息
+3. 当离开 `try` 或 `catch` 前，执行 `finally` 中的程序片段（可选要不要加入）
+
+## 错误对象
+
+当错误发生时 JavaScript 会自动带入一个错误对象，内容包含错误的细节并且会被传入 `catch` 中，默认的错误对象主要有几种属性：`name`、`message`：
+
+- `name`：错误类型的名称
+- `message`：错误的描述信息
+
+举例来说当以下的 `json` 变量被解析时，会出现错误并且会被传入 `catch` 中：
+
+```js
+try {
+  const user = JSON.parse('{ 错误的 JSON 格式 }'); // 当错误发生时就会产生错误对象并带入 catch 中
+} catch (err) {
+  console.error(err); // 打印错误对象参数
+}
+```
+
+## 自定义错误对象
+
+假设希望在程序中出现错误时，可以客制化的抛出错误与错误信息，使用 `throw` 语法来抛出一个自定义的错误对象：
+
+```js
+throw <error object>
+```
+
+理论上错误对象可以是任何种类的数据，但为了与默认错误对象格式保持一致，可以使用 JavaScript 默认的构造函数（`Error`、`SyntaxError`、`ReferenceError`、`TypeError`）来建立新的错误对象：
+
+```js
+const error = new Error(message);
+const syntaxError = new SyntaxError(message);
+const referenceError = new ReferenceError(message);
+const typeError = new TypeError(message);
+```
+
+举前面解析 JSON 的例子来说，如果期望解析的 JSON 数据中一定要有 `name` 属性，可以 `if` 判断有无，并使用 `throw` 语法来抛出相关错误跳至错误情境：
+
+```js
+try {
+  const user = JSON.parse('{"age": 30}');
+  if (!user.name) {
+    throw new Error('未满足资料: 无 name 属性');
+  }
+} catch (err) {
+  console.error('JSON Error: ' + err.message);
+}
+```
+
+## 重复抛出 (Rethrowing)
+
+```js
+try {
+  user = JSON.parse('{ age: 30 }'); // JSON 语法错误 (属性名称未用双引号包覆)
+} catch (err) {
+  console.error('JSON Error: ' + err.message); // JSON Error: Unexpected token a in JSON at position 2
+}
+```
+
+实际上前面的例子所设置的拦截错误情境是有缺陷的，因为它会把所有错误都视为 JSON Error 并打印出来，但实际上有可能是其他的错误，因此最好的做法是在 `catch` 中只处理自己能处理的错误类型，其他未知的错误应使用 `throw` 再次抛出，让外层或全局的错误处理程序来处理，以避免错误被误判或隐藏：
+
+```js
+try {
+  // 这里有两个错误的可能性：
+  // 1. 语法错误 (JSON 语法错误)
+  // 2. 变量未声明错误 (ReferenceError)
+
+  // 先尝试解析一段错误的 JSON 字串
+  const user = JSON.parse('{ age: 30 }'); // JSON 错误：属性名称未用双引号包覆
+  console.log(user.name);
+} catch (err) {
+  if (err instanceof SyntaxError) {
+    // 只处理 JSON 语法错误
+    console.error('JSON 语法错误:', err.message);
+  } else {
+    // 其他未知的错误则再次抛出，避免误判错误种类
+    throw err;
+  }
+}
+```
+
+## finally
+
+虽然 `finally` 的概念很简单，就是不管 `try...catch` 结果如何都会被执行，那么直接把 `finally` 抽取出来放在 `try...catch` 底下不就好了嘛？
+
+是的，但在某些情况下仍然还是需要 `finally`，因为 `finally` 会在 `try...catch` 离开前执行，所以如果 `try...catch` 中有 `return` 语法，则 `finally` 会在 `return` 语法执行前被执行，可以确保 `finally` 中的程序片段一定会被执行到，不会因为 `return` 而被中断。
+
+## 实际范例
+
+要说最常出现例外错误的情境就属取得第三方资料莫属了，所以可以使用 `try...catch` 语法来处理：
+
+```js
+try {
+  const response = await fetch('https://...');
+} catch (error) {
+  console.error(error); // TypeError: NetworkError when attempting to fetch resource.
+}
+```
+
+像是以上的范例，只要 `fetch` 出现错误，就会进入 `catch` 中的程序片段，并且可以使用传入 catch 中的参数来显示错误讯息。
+
+<Sidenote type="warning">
+`try...catch` 只对 runtime 错误（程序被执行时的错误）有效。为了让 `try...catch` 运作，程序必须是可被执行的，意思是说代码不能有语法错误，否则程序引擎将无法理解代码并且无法执行。
+
+```js
+try {
+  {{{
+} catch (err) {
+  alert("引擎无法理解这段代码，它是无效的");
+}
+```
+
+</Sidenote>
+
+<Sidenote type="warning">
+
+`try...catch` 内只能执行同步的程序，如果 `try {...}` 中的程序片段是异步的，则 `catch {...}` 中的程序片段不会被执行，这是因为当异步程序出现错误时 `try...catch` 已经被执行完毕了，所以 `catch {...}` 中的程序片段不会被执行。如果希望在异步程序出现错误时进入错误情境，可以考虑将其撰写在异步程序的回调函数中。
+
+```js
+setTimeout(function () {
+  try {
+    noSuchVariable; // try...catch 处理错误！
+  } catch {
+    alert('错误在这里被捕获！');
+  }
+}, 1000);
+```
+
+</Sidenote>
+
+## 参考资料
+
+- [try...catch - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
+- [Error handling, "try...catch" - JavaScript Info](https://javascript.info/try-catch)

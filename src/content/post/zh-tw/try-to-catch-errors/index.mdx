@@ -1,11 +1,14 @@
 ---
 isDraft: false
-icon: { name: 'material-symbols:running-with-errors-rounded', title: '進度條錯誤符號' }
-subHeadline: 'Try to catch errors'
-headline: '使用 JavaScript try...catch 來控制程式中的錯誤'
-excerpt: '程式中出現錯誤是必不可少的，有千萬個原因可能造成程式出現錯誤無法運行，這時候在 JavaScript 中就可以使用 try...catch 語法來處理錯誤情境，除了攔截錯誤也可以自行定義與拋出錯誤，讓程式中的錯誤更容易被理解與管理。'
-category: 'JavaScript'
-tags: ['語法']
+icon:
+  name: material-symbols:running-with-errors-rounded
+  title: 進度條錯誤符號
+subHeadline: Using JavaScript try...catch to Control Errors in Code
+headline: 使用 JavaScript try...catch 來控制程式中的錯誤
+excerpt: 程式中出現錯誤是必不可少的，有千萬個原因可能造成程式出現錯誤無法運行，這時候在 JavaScript 中就可以使用 try...catch 語法來處理錯誤情境，除了攔截錯誤也可以自行定義與拋出錯誤，讓程式中的錯誤更容易被理解與管理。
+category: JavaScript
+tags:
+  - Syntax
 publishDate: 2023-07-01
 ---
 
@@ -29,7 +32,7 @@ try {
 
 ## 錯誤物件
 
-當錯誤發生時 JavaScript 會自動生成一個錯誤物件，內容包含錯誤的細節並且會被傳入 `catch` 中，預設的錯誤物件主要有幾種屬性：`name`、`message`：
+當錯誤發生時 JavaScript 會自動帶入一個錯誤物件，內容包含錯誤的細節並且會被傳入 `catch` 中，預設的錯誤物件主要有幾種屬性：`name`、`message`：
 
 - `name`：錯誤類型的的名稱
 - `message`：錯誤的描述訊息
@@ -65,12 +68,12 @@ const typeError = new TypeError(message);
 
 ```js
 try {
-  const user = JSON.parse({ age: 30 });
+  const user = JSON.parse('{"age": 30}');
   if (!user.name) {
-    throw new SyntaxError('未滿足資料: 無 name 屬性');
+    throw new Error('未滿足資料: 無 name 屬性');
   }
 } catch (err) {
-  console.error('JSON Error:' + err.message); // JSON Error: 未滿足資料: 無 name 屬性
+  console.error('JSON Error: ' + err.message);
 }
 ```
 
@@ -78,30 +81,39 @@ try {
 
 ```js
 try {
-  user = JSON.parse({ age: 30 }); // 忘記宣告 user 變數
+  user = JSON.parse('{ age: 30 }'); // JSON 語法錯誤 (屬性名稱未用雙引號包覆)
 } catch (err) {
-  console.error('JSON Error: ' + err); // JSON Error: ReferenceError: user is not defined
-  // (實際上並不是預想的 JSON Error)
+  console.error('JSON Error: ' + err.message); // JSON Error: Unexpected token a in JSON at position 2
 }
 ```
 
-實際上前面的例子所設置的攔截錯誤情境是有缺陷的，因為它會把所有錯誤都視為 JSON Error 並打印出來，但實際上有可能是其他的錯誤，因此最好的做法是在 `catch` 中只處理自己預期內的錯誤，而其他的錯誤則拋出去交由另一個 `catch` 來處理，或是完全不處理讓程式停止運作：
+實際上前面的例子所設置的攔截錯誤情境是有缺陷的，因為它會把所有錯誤都視為 JSON Error 並打印出來，但實際上有可能是其他的錯誤，因此最好的做法是在 `catch` 中只處理自己能處理的錯誤類型，其他未知的錯誤應使用 `throw` 再次拋出，讓外層或全域的錯誤處理程序來處理，以避免錯誤被誤判或隱藏：
 
 ```js
 try {
-  user = JSON.parse({ age: 30 }); // 忘記宣告 user 變數
+  // 這裡有兩個錯誤的可能性：
+  // 1. 語法錯誤 (JSON 語法錯誤)
+  // 2. 變數未宣告錯誤 (ReferenceError)
+
+  // 先嘗試解析一段錯誤的 JSON 字串
+  const user = JSON.parse('{ age: 30 }'); // JSON 錯誤：屬性名稱未用雙引號包覆
+  console.log(user.name);
 } catch (err) {
   if (err instanceof SyntaxError) {
-    console.error('JSON Error: ' + err.message);
+    // 只處理 JSON 語法錯誤
+    console.error('JSON 語法錯誤:', err.message);
   } else {
-    throw err; // 再次拋出錯誤
+    // 其他未知的錯誤則再次拋出，避免誤判錯誤種類
+    throw err;
   }
 }
 ```
 
 ## finally
 
-雖然 `finally` 的概念很簡單，就是不管 `try...catch` 結果如何都會被執行，那麼直接把 `finally` 抽取出來放在 `try...catch` 底下不就好了嗎？是的，但在某些情況下仍然還是需要 `finally`，因為 `finally` 會在 `try...catch` 離開前執行，所以如果 `try...catch` 中有 `return` 語法，則 `finally` 會在 `return` 語法執行前被執行，可以確保 `finally` 中的程式片段一定會被執行到，不會因為 `return` 而被中斷。
+雖然 `finally` 的概念很簡單，就是不管 `try...catch` 結果如何都會被執行，那麼直接把 `finally` 抽取出來放在 `try...catch` 底下不就好了嗎？
+
+是的，但在某些情況下仍然還是需要 `finally`，因為 `finally` 會在 `try...catch` 離開前執行，所以如果 `try...catch` 中有 `return` 語法，則 `finally` 會在 `return` 語法執行前被執行，可以確保 `finally` 中的程式片段一定會被執行到，不會因為 `return` 而被中斷。
 
 ## 實際範例
 

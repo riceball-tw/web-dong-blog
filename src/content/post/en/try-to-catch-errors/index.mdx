@@ -1,0 +1,164 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:running-with-errors-rounded
+  title: Progress Bar Error Symbol
+subHeadline: Using JavaScript try...catch to Control Errors in Code
+headline: Using JavaScript try...catch to Control Errors in Code
+excerpt: Errors in programs are inevitable, and JavaScript's try...catch syntax can handle error situations, making errors easier to understand and manage.
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-07-01
+---
+
+When an error occurs in a program, it usually stops execution immediately and displays an error message. However, sometimes you may want the program to take some action instead of stopping immediately when an error occurs. In such cases, you can use the `try...catch` syntax:
+
+```js
+try {
+  // Code block to attempt
+} catch (errorParameter) {
+  // Code block to execute if an error occurs
+} finally {
+  // Code block to execute after both scenarios
+}
+```
+
+The execution flow of the above syntax is as follows:
+
+1. Execute the code block in `try`.
+2. If an error occurs in the `try` block, execute the code block in `catch`, where you can optionally use the "errorParameter" to obtain the type and message of the error.
+3. Before leaving `try` or `catch`, execute the code block in `finally` (optional).
+
+## Error Object
+
+When an error occurs, JavaScript automatically provides an error object, which contains details about the error and is passed into `catch`. The default error object mainly has several properties: `name`, `message`:
+
+- `name`: The name of the error type
+- `message`: The description of the error
+
+For example, when the following `json` variable is parsed, an error will occur and be passed into `catch`:
+
+```js
+try {
+  const user = JSON.parse('{ invalid JSON format }'); // An error object will be created and passed into catch when an error occurs
+} catch (err) {
+  console.error(err); // Print the error object parameter
+}
+```
+
+## Custom Error Object
+
+If you want to customize the error thrown and the error information when an error occurs in the program, you can use the `throw` syntax to throw a custom error object:
+
+```js
+throw <error object>
+```
+
+In theory, the error object can be any type of data, but to maintain consistency with the default error object format, you can use JavaScript's built-in constructors (`Error`, `SyntaxError`, `ReferenceError`, `TypeError`) to create new error objects:
+
+```js
+const error = new Error(message);
+const syntaxError = new SyntaxError(message);
+const referenceError = new ReferenceError(message);
+const typeError = new TypeError(message);
+```
+
+Using the previous example of parsing JSON, if you expect the parsed JSON data to have a `name` property, you can check for its existence with an `if` statement and use the `throw` syntax to throw a related error to jump to the error scenario:
+
+```js
+try {
+  const user = JSON.parse('{"age": 30}');
+  if (!user.name) {
+    throw new Error('Data not satisfied: No name property');
+  }
+} catch (err) {
+  console.error('JSON Error: ' + err.message);
+}
+```
+
+## Rethrowing
+
+```js
+try {
+  user = JSON.parse('{ age: 30 }'); // JSON syntax error (property name not enclosed in double quotes)
+} catch (err) {
+  console.error('JSON Error: ' + err.message); // JSON Error: Unexpected token a in JSON at position 2
+}
+```
+
+In fact, the error handling scenario set up in the previous example is flawed because it treats all errors as JSON errors and prints them out. However, there may be other types of errors. Therefore, the best practice is to handle only the error types you can manage in `catch`, and rethrow other unknown errors using `throw`, allowing outer or global error handlers to manage them, to avoid misclassification or hiding of errors:
+
+```js
+try {
+  // There are two possible errors here:
+  // 1. Syntax error (JSON syntax error)
+  // 2. Variable not declared error (ReferenceError)
+
+  // Try to parse an erroneous JSON string first
+  const user = JSON.parse('{ age: 30 }'); // JSON error: property name not enclosed in double quotes
+  console.log(user.name);
+} catch (err) {
+  if (err instanceof SyntaxError) {
+    // Only handle JSON syntax errors
+    console.error('JSON syntax error:', err.message);
+  } else {
+    // Other unknown errors are thrown again to avoid misjudging the error type
+    throw err;
+  }
+}
+```
+
+## finally
+
+The concept of `finally` is simple: it will be executed regardless of the result of `try...catch`. So why not just extract `finally` and place it below `try...catch`?
+
+Yes, but in some cases, `finally` is still needed because it will execute before leaving the `try...catch`. Therefore, if there is a `return` statement in `try...catch`, `finally` will be executed before the `return` statement, ensuring that the code in `finally` will definitely be executed and not interrupted by `return`.
+
+## Practical Example
+
+The most common scenario for exceptions is fetching third-party data, so you can use `try...catch` to handle it:
+
+```js
+try {
+  const response = await fetch('https://...');
+} catch (error) {
+  console.error(error); // TypeError: NetworkError when attempting to fetch resource.
+}
+```
+
+In the example above, as long as `fetch` encounters an error, it will enter the code block in `catch`, and you can use the parameter passed into catch to display the error message.
+
+<Sidenote type="warning">
+`try...catch` is only useful for runtime errors (errors that occur when the program is executed). For `try...catch` to work, the code must be executable, meaning there cannot be syntax errors; otherwise, the engine will not understand the code and will not execute it.
+
+```js
+try {
+  {{{
+} catch (err) {
+  alert("The engine can't understand this code, it's invalid");
+}
+```
+
+</Sidenote>
+
+<Sidenote type="warning">
+
+Only synchronous code can be executed within `try...catch`. If the code block in `try {...}` is asynchronous, the code block in `catch {...}` will not be executed because `try...catch` has already completed execution when the asynchronous code encounters an error. If you want to handle errors in asynchronous code, consider placing it in the callback function of the asynchronous code.
+
+```js
+setTimeout(function () {
+  try {
+    noSuchVariable; // try...catch handles the error!
+  } catch {
+    alert('error is caught here!');
+  }
+}, 1000);
+```
+
+</Sidenote>
+
+## References
+
+- [try...catch - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
+- [Error handling, "try...catch" - JavaScript Info](https://javascript.info/try-catch)
