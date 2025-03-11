@@ -1,0 +1,185 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:keyboard-double-arrow-right-rounded
+  title: 双箭头符号
+subHeadline: Why You Need Arrow Function in JavaScript?
+headline: 为什么你需要箭头函数
+excerpt: JavaScript 箭头函式是 ES6 版本中新增的语法，能够简洁明了地定义函式，并且已经被广泛的使用当中。于本篇文章中我们将会学习如何使用箭头函式来简化程式码，并且了解这个语法的特性以及要注意的地方，以及它可以被使用在那些场合当中。
+category: JavaScript
+tags:
+  - Syntax
+publishDate: 2023-02-27
+---
+
+## 前言
+
+箭头函数是 ES6 版本中新增的语法，如今已经非常广泛地被使用，读完这篇文章可以帮助你认识箭头函数，并且了解这个语法的特性以及要注意的地方。
+
+<Video
+  width={1108}
+  height={720}
+  data={[
+    {
+      type: 'webm',
+      src: 'images/posts/why-you-need-arrow-function/example.webm',
+    },
+    {
+      type: 'mp4',
+      src: 'images/posts/why-you-need-arrow-function/example.mp4',
+    },
+  ]}
+></Video>
+
+## 语法
+
+要使用箭头函数，如字面上的意思就是会使用长得像箭头的符号 `=>` 来定义函数。以下是箭头函数的语法范例：
+
+{/* prettier-ignore */}
+```js
+// 一般函数
+function functionName(parameter) {
+  // ...
+}
+
+// 无参数
+const functionName = () => {
+  // ...
+};
+
+// 一个参数(可省略小括弧)
+const functionOne = parameter => {
+  // ...
+};
+
+// 有多个参数(需添加括弧)
+const functionTwo = (parameter, parameterTwo) => {
+  // ...
+};
+
+// 解构参数(需添加括弧)
+const functionTwo = ({parameter}) => {
+  // ...
+};
+
+// 有默认参数(需添加括弧)
+const functionTwo = (parameter = {}) => {
+  // ...
+};
+```
+
+`functionName` 为函数的名称，`parameter` 为函数的参数，可以有多个参数，如果没有参数，则使用空括号 `()` 代替。
+
+## 特性
+
+箭头函数具备一些有趣的特性，可以留意一下。
+
+### 隐晦回传 (Implicit Return)
+
+一般函数都需要回传值，使用 `return` 关键字，如果没有回传值，则会回传 `undefined`。箭头函数有一个特性，就是可以使用隐晦的方式来回传值，顾名思义，就是不需要使用 `return` 关键字来回传值，可参考以下范例：
+
+{/* prettier-ignore */}
+```javascript
+// 单行
+const implicit = (value) => value;
+
+// 多行(使用小括弧框起来)
+const implicit = (value) => (
+  value
+);
+
+// 错误写法(对象必须用小括号包起来，避免被误解为函数的开头)
+const implicit = () => {
+  value: 'Hello';
+};
+implicit(); // undefined
+
+// 回传对象正确写法
+const implicit = () => ({ value: 'Hello' });
+implicit(); // { value: "Hello" }
+```
+
+### 不存在 `arguments`
+
+箭头函数没有 `arguments` 参数是因其继承了其父作用域的 `arguments` 对象。这意味着当在箭头函数中引用 `arguments` 时，实际上是引用其父作用域中的 `arguments`。我们可以使用以下的方式来获得所有传入匿名函数的参数。
+
+```javascript
+const myFunction = (...args) => {
+  console.log(args);
+};
+
+myFunction(1, 2, 3); // 输出 [1, 2, 3]
+```
+
+### 不存在自身的 `this`
+
+箭头函数并没有 `this`，因此如果访问 `this`，则会从外层作用域中继承 `this`。
+
+```javascript
+const bar = '全域苹果';
+const foo = {
+  bar: '区域橘子',
+  normalFunction: function () {
+    // 传统函数，以此为基准产生一个作用域
+    console.log('1', this.bar); // 1 全域苹果
+    setTimeout(() => {
+      console.log('2', this.name); // 2 区域橘子
+      console.log('3', this); // 3 foo
+    }, 1000);
+  },
+  arrowFunction: () => {
+    // 如果使用箭头函数，this 指向外层的作用域
+    console.log('4', this.name); // 4 全域苹果
+    setTimeout(() => {
+      console.log('5', this.name); // 5 全域苹果
+      console.log('6', this); // 6 window
+    }, 1000);
+  },
+};
+
+foo.normalFunction();
+foo.arrowFunction();
+```
+
+## 实际用途
+
+### 场合一：简化代码
+
+最常见的使用箭头函数的方式就是可以让代码更为精简，但需要注意**精简的代码并不总是代表更好的可读性**。在适当的情况下，使用箭头函数来简化代码是可行的，并没有一个硬性的规则，端看偏好习惯。
+
+```js
+// 一般函数的例子：
+function add(a, b) {
+  return a + b;
+}
+
+// 使用箭头函数来简化代码：
+const add = (a, b) => a + b;
+```
+
+```js
+// 一般函数的例子：
+document.getElementById('increment').addEventListener('click', function () {
+  count++;
+});
+
+// 使用箭头函数来简化代码：
+document.getElementById('increment').addEventListener('click', () => {
+  count++;
+});
+```
+
+```jsx
+// 将一个数组中的每个元素转换成 li 标签
+// 结果：[ "<li>John</li>", "<li>Mary</li>", "<li>Peter</li>" ]
+const persons = ['John', 'Mary', 'Peter'];
+persons.map((person) => `<li>${person}</li>`);
+```
+
+### 场合二： 让 `this` 指向外层作用域
+
+就像前面全域苹果和区域橘子的范例一样，适当的使用箭头函数可以让 `this` 指向外层作用域，达成特定的目的。
+
+## 总结
+
+活用箭头函数除了可以让代码变得更加精简外，本身也具备一些独特的属性值得探索！
