@@ -1,0 +1,183 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:colorize-outline-rounded
+  title: 选色器符号
+subHeadline: How to Build Digital Products from Scratch - Color
+headline: 记录如何从头打造数字产品 - 颜色篇
+excerpt: 近期公司购买了设计相关的课程，期望透过研究改良目前的设计来提升与开发合作的效率，恰好我之前的工作领域也与设计相关，而且我很早就想跨领域多写与网页相关的文章！因此打算特地开一系列文章记录课程笔记以及我自己补充的想法与资源。
+category: Design
+publishDate: 2024-01-23
+---
+
+## 前言
+
+近期公司购买了设计相关的课程，期望通过研究改良目前的设计来提升与开发合作的效率，因此打算开一系列文章记录课程笔记以及我自己补充的想法与资源。
+
+## 选择色域
+
+![HSL vs RGB in Figma](./hsl-vs-rgb.webp 'HSL vs RGB in Figma')
+
+当前彩色屏幕主流都是依靠 [三原色光](https://zh.wikipedia.org/zh-tw/%E4%B8%89%E5%8E%9F%E8%89%B2%E5%85%89%E6%A8%A1%E5%BC%8F) 通过混合色光来显示出各种颜色，但使用一些更贴近人类直觉的色域有助于选择颜色，像是 [HSL](https://zh.wikipedia.org/zh-tw/HSL%E5%92%8CHSV%E8%89%B2%E5%BD%A9%E7%A9%BA%E9%97%B4) (色相, 彩度, 明度)。
+
+- 色相：色彩的颜色种类
+- 彩度：色彩的鲜艳程度
+- 明度：色彩的明暗程度
+
+相较于看到 RGB 以三个数字呈现像是 `RGB(222, 55, 55)` 反而更常会看到以 HEX 方式显示的色码像是：`#de3737`，其实就是 16 进制的 RGB 显示方式，每两个字符代表一个颜色，它们是相同的东西不过以不同方式记录不同颜色通道的数值。
+
+| 说明 | Hex | 值  |
+| ---- | --- | --- |
+| 红   | de  | 222 |
+| 绿   | 37  | 55  |
+| 蓝   | 37  | 55  |
+
+由于硬件上的呈现限制，**开发数字产品基本主流使用 RGB 色域**，但如果要从其他色域转换过来也 OK，只需要整个团队有共识统一管理即可。
+
+## 选择颜色
+
+选择颜色关乎各种理论，这里我研究了各大公司（Apple、Adobe、Google）的设计系统或手段，并统整出可以留意的几个原则。
+
+### 60/30/10 色彩比例规则
+
+<div class="flex py-4" style="min-height: 200px;">
+  <div class="p-4" style="width: 60%; background-color: #ffffff; color: black;">
+    <span class="hidden md:inline">60%</span>
+  </div>
+  <div class="p-4" style="width: 30%; background-color: #f79a1f; color: black;">
+    <span class="hidden md:inline">30%</span>
+  </div>
+  <div class="p-4" style="width: 10%; background-color: #eb4f47; color: black;">
+    <span class="hidden md:inline">10%</span>
+  </div>
+</div>
+
+[电影](https://www.youtube.com/watch?v=CYRyaY-9F_g)、[设计](https://www.youtube.com/watch?v=QkCVrNoqcBU&list=PLroLjS4HDi0BLMx3d7mzROMfm7bC9ZQuc)、[绘画](https://www.youtube.com/watch?v=p0rVUhXnmpY)……用户界面设计，这些与视觉相关的领域各自都有对颜色的见解，但最广泛通用的规则即是 60:30:10 的颜色比例规则，分别是主要色、次要色与强调色。
+
+- 主要色：营造整体环境的大氛围
+- 次要色：辅助主要色
+- 强调色：强调场景中最重要的内容
+
+![Realtime Colors 网站范例 60/30/10 配色原则](./realtime-colors-website.webp 'Realtime Colors 网站范例 60/30/10 配色原则')
+
+特别对 UI 产品来说我特别喜欢 [Juxtoposed](https://www.youtube.com/@juxtopposed) 制作的 [Realtime Colors](https://www.realtimecolors.com)，她制作了[两支影片](https://www.youtube.com/watch?v=HAlIWRcldoc)描述身为 UI 设计师处理颜色到抓狂的过程，以及根据 60/30/10 色彩比例规则打造一个 Mockup 用的网站产品。
+
+还有一些以工具可以帮助我们快速产生色阶，根据不同的颜色调配原则（类比、单色、三色群、补色……），可以根据品牌调性去分配颜色之间的关系：
+
+- [Adobe Color](https://color.adobe.com/zh/create/color-wheel) - Adobe
+- [The super fast color palettes generator](https://uicolors.app/create) - coolors
+
+### 彩度影响明度 - Helmholtz-Kohlrausch 效应
+
+![Helmholtz-Kohlrausch 效应范例图](./helmholtz-kohlrausch-effect-visualized.png 'Helmholtz-Kohlrausch 效应范例图，上下皆为相同的明度但不同彩度')
+
+根据 [Adobe Spectrum](https://spectrum.adobe.com/page/color-fundamentals/#Chromatic-luminance) 随着彩度的提升人们对于颜色明亮的感知也会不同，因此留意彩度对明度所带来的影响十分重要，然而对颜色不敏感人士（色盲、色弱）来会受到不同程度的影响，因此设计时为了无障碍的考量也需多留意是否彩度影响了设计者对明度的判断。
+
+相较于肉眼决定色彩的无障碍程度，[依靠公认的色彩验证标准](https://huetone.ardov.me/)如：APCA、WCAG，来推行颜色确保设计可以被各族群所解读。
+
+### 史蒂文斯幂律 - Stevens' power law
+
+![Adobe Spectrum 色阶系统根据幂定律来制作感知上一致的色阶](./color-foundation-perception-stevens-power-law.webp 'Adobe Spectrum 色阶系统根据幂定律来制作感知上一致的色阶')
+
+人眼亮度感知的非线性会导致亮度阶梯的不平均，因此在 [Adobe Spectrum](https://spectrum.adobe.com/page/color-fundamentals/#Stevens-power-law) 色阶系统中有针对此定律调整，遵循感知上的色阶平均。
+
+### 色适应 - Chromatic Adaptation
+
+![Adobe Spectrum 色阶系统根据幂定律来制作感知上一致的色阶](./color-foundation-perception-chromatic-adaptation.webp 'Adobe Spectrum 色阶系统根据幂定律来制作感知上一致的色阶')
+
+人类根据环境设置补偿颜色。 例如，大脑会淡化傍晚光线中出现的粉红色和橙色，以便识别视野中物体的真实颜色。这称为色彩适应（也称为颜色恒常性）。
+
+在范例影像中，水果的排列显示为蓝色光源的外观。水果的大部分局部颜色似乎都完好无损，橙色看起来是橘色的。但仔细一看，橘色的实际颜色是绿色。由于蓝色环境中的色彩适应，这些绿色呈现橙色。
+
+[Adobe Spectrum](https://spectrum.adobe.com/page/color-system/#Grays) 使用「完全去饱和的灰色来防止因用户界面引起的色彩适应而对颜色产生误解」，觉得含蛮特别的，因为在[绘画中会尽量避免纯粹不自然的「无色彩灰」](https://youtu.be/YOtwCG7BLSA?si=gqafHphHz15wbHuY&t=254)也很少于自然界中存在纯粹的灰色，但在 UI 设计上它们采取了相反的道路为了让灰阶保持色彩中立。
+
+## 选择色阶
+
+![Tailwind Color Step](./color-step-tailwind.webp 'Tailwind Color Step')
+
+单只有一种色调除了给人感觉单调之外，用户也无从得知资讯的重要层度，但随意新增颜色到界面当中也会造成难以维护与不一致的问题，因此色阶就是事先定义好的选项，赋予颜色不同的层度与意涵。以下是一些工具可以帮助我们快速产生色阶：
+
+- [Scale](https://hihayk.github.io/scale/) - 颜色比例生成器
+- [Tailwind CSS Color Generator](https://uicolors.app/create) - uicolors
+
+色阶的数量并没有绝对正确的答案，不过我个人认为可以从不多不少 10 个出发，原因是因为人们能根据 0 ~ 10 阶在心中对色阶有个直觉的概念，方便沟通交流，或是也可以尝试询问当前团队是否现有习惯的样式库或准备导入的标准直接采纳以节省切换习惯所需的成本，例如： [Tailwind 内建的样式](https://tailwindcss.com/docs/customizing-colors)。
+
+## 颜色命名
+
+经过调查设计系统内拥有三种颜色命名模式可以满足与应对大多数需求：
+
+- **全局颜色**：基础颜色，通常依照 `颜色-色阶` 的方式命名。
+- **全局语义颜色**：被赋予意涵的全局颜色。
+- **组件颜色**：被赋予意涵且在组件内的颜色。
+
+### 「全局语义颜色」或「组件颜色」的意义？
+
+如果都依照 `颜色名称-色阶` 来命名例如：`yellow-300`、`green-400`，这样的做法只在设计组件尚不复杂情况下可行，随着复杂程度应当适当的抽离出颜色的意涵并归类。
+
+- **语义颜色作为范例：**
+  - 目前所有设计都使用全局颜色来制作，但如果全站的风格要调整呢？例如品牌色从蓝改成紫，那会需要到每一个使用到相关颜色的地方重新定义，因此预定一些语义化的颜色，方便日后维护与修改顺畅，像是对主色调创立新的 `primary` 「全局语义」颜色，这样未来改主色调都会轻松许多。
+- **组件颜色作为范例：**
+  - 与语义颜色的概念相同，只是范围局限在组件上。
+  - 如果组件有许多种「颜色状态」可以考虑建立组件颜色并且统一管理。举例一个组件使用到许多相同的全局颜色，未来要更改将会需要一一选择并调整，因此可以将组件颜色做包装
+
+![组件颜色范例](./component-color.webp '组件颜色范例')
+
+- 还有一种使用情境是你发现组件内的颜色没有必要存在于系统当中，但又需要在组件中使用，可能是因为这个颜色是动态生成或决定的，这时候也能定义组件颜色定义。(举例：根据图片生成的背景颜色)
+  最后建议是不用想得太复杂，先从全局颜色出发即可。
+
+通用颜色可以使用色相名称-色阶来命名，作为最底层可运用的颜色。
+
+### 依照角色命名
+
+<Video
+width={800}
+height={450}
+data={[
+{
+type: 'mp4',
+src: 'images/posts/build-product-from-scratch-color/variables-explain.mp4',
+},
+]}
+
+> </Video>
+
+以「角色」作为颜色的名称，例如 `primary`、`error`、`success` ，这么做是为了**让颜色与用途紧密牵连**，避免颜色调整更换时却与意涵不吻合，举例来说：品牌主色如果都用 `blue-xxx` 来命名，如果未来如果要调整为紫色呢？为了避免与颜色意涵脱钩的情况发生，在颜色与用途紧密关联的情况下请以颜色的角色用途来命名为佳。
+
+## 颜色风格模式
+
+随着 UI 的客制化个性化以及考虑到各类族群的需求(色盲、色弱)，举例来说：
+
+- [Apple 规范同意特定情景下，考虑使用暗色样式的界面，举例来说：在一个深度沉浸的影片预览情境使用暗色界面有助于人们专注在内容当中](https://developer.apple.com/design/human-interface-guidelines/dark-mode#Best-practices)
+- Figma 新推出的 variable 功能特别强化了[颜色变量可以具备「多种状态」](https://help.figma.com/hc/en-us/articles/15343816063383-Modes-for-variables)，像是暗色模式也可以使用同一个颜色变量，这样的好处是颜色可以根据模式状态切换。
+- CSS 新推出的「[偏好高对比模式](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast)」
+
+## 管理颜色
+
+目前所在的团队也在考虑如何同步产品或是部门间如何协调颜色，像是 [Figma Variable](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma)、[Tokens Studio](https://tokens.studio/)。
+
+### 不要自创颜色
+
+![自创颜色错误范例](./no-custom-color.jpg "Adobe Spectrum (图源：Don't create your own colors)")
+
+任何颜色都应当被规范后才能使用，以确保横跨不同产品与团队也能保持一致，
+
+### 不要只使用颜色作为沟通手段
+
+![只使用颜色作为沟通手段错误范例](./communicating-with-color.jpg 'Adobe Spectrum (图源：Communicating with color)')
+
+颜色是一种视觉上的沟通手段，但**不是唯一应该仰赖的手段**，请适当的添加额外的文字或图示确保不同族群都能理解。
+
+### 不要使用透明度只为了呈现特定颜色
+
+透明度与颜色是两种完全不同目的的属性，为了显示特定颜色而调整透明度与自创颜色无异，请只在特定用途才采用透明度，例如：阴影、背景覆盖效果、高光显示。
+
+## 总结
+
+颜色是一个很广泛的议题，探索不同设计系统团队对颜色的看法与规范意外发现许多有趣的知识，随着与我的团队讨论与演进，期待这篇文章会再持续更新～
+
+## 延伸阅读
+
+- [Spectrum - Adobe](https://spectrum.adobe.com/page/color-fundamentals)
+- [Color System - Material Design 3](https://m3.material.io/styles/color/system/overview)
+- [Color and Typography - Design system 動手做系列直播](https://www.youtube.com/watch?v=E7pXCA0oqds)
+- [The difference between variables and styles - Figma](https://help.figma.com/hc/en-us/articles/15871097384471-The-difference-between-variables-and-styles)
