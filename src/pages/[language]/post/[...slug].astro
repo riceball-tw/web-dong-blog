@@ -19,6 +19,7 @@ import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 import { type LanguageKey, languages, defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import SupportMe from '@/components/atoms/support-me/SupportMe.astro';
 
 export async function getStaticPaths() {
   function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
@@ -138,6 +139,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
         </div>
         </aside>
         <Content components={{ Sidenote, Video, img: PostImage, blockquote: PostBlockquote }} />
+        <SupportMe />
         <Comments />
       </article>
     </main>
