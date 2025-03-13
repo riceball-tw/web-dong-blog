@@ -1,0 +1,111 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:service-toolbox-outline-rounded
+  title: Toolbox Icon
+subHeadline: How to Manage Utility Functions
+headline: How to Manage Utility Functions
+excerpt: I found many common functions scattered throughout the project. So, I took the opportunity to organize a unified structural rule for the team to use.
+category: Technical Discussion
+publishDate: 2024-08-14
+---
+
+## Introduction
+
+Recently, while maintaining a project, I found many common functions scattered throughout the project. So, I took the opportunity to organize a unified structural rule for the team to use. Many times, our impression of these common utility functions **only stays at the idea of moving them to a certain folder, but we don't have much thought on how to manage or maintain these functions, leading to many chaotic situations** such as:
+
+- **Excessive abstraction**: The logic has been abstracted, but it seems to have little meaning, instead increasing the cost of understanding and maintenance.
+- **Ambiguous naming**: Because they are too generic, the names are also very vague.
+- **God-level functions**: A single function does too many things, making it difficult to maintain.
+
+<Sidenote type="info">
+  The project I am working on uses a Monorepo structure, so there is a more complex development environment, but the
+  general concept should not differ too much.
+</Sidenote>
+
+## Facing Real-World Problems
+
+Based on the issues I encountered in the project:
+
+- Some functions are not commonly used but are specifically abstracted into a global function library for management, resulting in useless abstraction.
+- Some legacy code is named `parse.ts`, `format.ts`, etc., which obviously has an overly vague classification, making it difficult to find the desired functionality in the future.
+- Functions that theoretically could be split into smaller functions are all written as a lump for convenience.
+
+I must say that besides random naming, other issues likely have trade-offs behind them. Different people have different starting points and unknown backgrounds. I hope to establish a unified development rule so that team members can follow the rules and more easily find the desired utility functions to enhance the development experience.
+
+During the process, I studied the organizational methods of different utility libraries, such as: [lodash](https://github.com/lodash/lodash/tree/main/src), [radash](https://github.com/sodiray/radash/tree/master/src), [underscore](https://github.com/jashkenas/underscore/tree/master/modules), [vueuse](https://github.com/vueuse/vueuse/tree/main/packages/core). The common point is that they are all very elegant and pure 😅. They may not be able to provide suggestions for projects mixed with too much business logic, but I still observed, learned, and summarized the patterns.
+
+## Definition of Utility Functions
+
+- Small, reusable functions that perform specific common tasks.
+- Functions that do not depend on specific contexts or states ([pure functions](/post/why-pure-function/)).
+
+## When to Abstract Utility Functions
+
+When you find that the actions performed by a function are repeated in different places, please abstract the function and manage it in the corresponding level repository, and import it when needed for unified management and tracking.
+
+## Key Points for Managing Utility Functions
+
+1. File names and function names should be named using camelCase.
+2. Function names should clearly express the function's purpose.
+3. Encourage pure functions and encourage adding tests.
+4. At most one folder level to describe the function group.
+5. Single responsibility and use verbs to describe functionality, split into small files for easy preview of functionality from the file name.
+6. Make good use of existing utility libraries (`Lodash`, `date.js`), do not reinvent the wheel.
+7. As little abstraction as possible.
+   1. If it is not expected to be used very often, there is no need to abstract it.
+   2. If it is expected to be used only in project `A`, only abstract it to the utility library of project `A`, do not abstract it to the global function library.
+8. Must provide detailed comments documenting the function's purpose and record types through TypeScript.
+
+## Practical Examples
+
+Here are some examples for quick reference, which can give you a general understanding of the concept; actual applications may be more complex.
+
+### How Utility Functions Should Be Defined
+
+```ts
+// libs/shared/utility/src/lib/thousandth.ts
+
+/**
+ * Convert a positive integer to a string with thousands separators
+ *
+ * @param number - integer, if no input is given, default is 0
+ * @returns a string with thousands separators
+ * @example thousandth(1000) // '1,000'
+ */
+
+export function thousandth(number: number) {
+  const isInteger = Number.isInteger(number);
+  if (isInteger) {
+    return number.toString().replace(/\B(?=(\d{3})+$)/g, ',');
+  } else {
+    throw new RangeError('Input must be an integer');
+  }
+}
+```
+
+### Overall Folder Structure
+
+I considered whether to place similar functionalities in the same file for unified output, but ultimately decided to keep them distinct. The reasons are:
+
+1. It won't take too much time.
+2. You can find the desired functionality just by looking at the folder structure.
+
+```bash
+lib/
+├── dialog/
+│   ├── showDialog.ts
+│   └── hideDialog.ts
+├── date/
+│   └── transformToYYYYMMDD.ts
+├── cookie/
+│   └── getCookieExpiredAbsoluteTime.ts
+├── localStorage/
+│   ├── getLocalStorage.ts
+│   ├── setLocalStorage.ts
+│   └── removeLocalStorage.ts
+├── shadcn/
+│   └── cn.ts
+└── tanstackTableVue/
+    └── valueUpdater.ts
+```

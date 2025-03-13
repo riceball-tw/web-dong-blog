@@ -1,0 +1,108 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:service-toolbox-outline-rounded
+  title: 工具箱符號
+subHeadline: How to Manage Utility Functions
+headline: 如何管理工具函数
+excerpt: 近期维护项目时发现有许多通用的函数散乱的分布在项目当中，于是趁有空时整理出一个统一的结构规则以便团队使用。很多时候我们对这些通用工具函数的印象只停留在要抽离到某个文件夹，至于要怎么管理或是维护这些函数就没有太多想法，导致许多乱象产生，像是：过度抽象、意义不明的命名、神级函数。
+category: Technical Discussion
+publishDate: 2024-08-14
+---
+
+## 前言
+
+近期维护项目时发现有许多通用的函数散乱的分布在项目当中，于是趁有空时整理出一个统一的结构规则以便团队使用。很多时候我们对这些通用工具函数的印象**只停留在要抽离到某个文件夹，至于要怎么管理或是维护这些函数就没有太多想法，导致许多乱象产生**，像是：
+
+- **过度抽象**：逻辑抽离是抽离了，但好像意义也不大，反而增加理解维护成本
+- **意义不明的命名**：因为太过于通用，所以名称也取得很笼统
+- **神级函数**：一个函数做太多事情，导致难以维护
+
+<Sidenote type="info">我所在的项目使用 Monorepo 架构，因此有更复杂的开发环境，不过大概念是不差太多的</Sidenote>
+
+## 面对真实世界问题
+
+根据我在项目中实际遇到的问题：
+
+- 有的函数算不上常用，但却被特地抽离到全局函数库当中管理，造成毫无用途的抽象
+- 一些陈旧代码命名为 `parse.ts`、`format.ts`……等，明显超笼统的分类方式，导致未来很难找到想要的功能
+- 理论上可以拆为更小功能的函数因为方便所以都写成一坨
+
+必须说除了胡乱命名之外其他问题背后大概都有取舍，不同人有不同的出发点和未知的背景，希望可以透过定调一个统一开发规则，让团队成员可以遵循规则更容易的找到想要的通用函数以提升开发体验。
+
+过程中研究了不同通用库的组织方式，像是：[lodash](https://github.com/lodash/lodash/tree/main/src)、[radash](https://github.com/sodiray/radash/tree/master/src)、[underscore](https://github.com/jashkenas/underscore/tree/master/modules)、[vueuse](https://github.com/vueuse/vueuse/tree/main/packages/core)，可以发现共通点是他们都非常优雅纯粹 😅，可能没办法替参杂太多商业逻辑的项目提供建议，但我还是观察学习一下并总结出规律。
+
+## 通用函数定义
+
+- 执行特定通用任务的小型可重复使用之函数
+- 不依赖于特定上下文或状态之函数（[纯粹函数](/zh-cn/post/why-pure-function/)）
+
+## 什么时候抽离通用函数
+
+发现函数执行的动作在不同地方重复，请将函数抽离出来于对应层级仓库中管理，并在需要时引入，方便统一管理与追踪。
+
+## 管理通用函数要点
+
+1. 文件名与函数名需依小驼峰命名法命名
+2. 函数名称需能清楚表达函数功能
+3. 鼓励纯粹函数，鼓励添加测试
+4. 最多一层文件夹描述功能群组
+5. 职责单一且用动词形容功能，拆分为小文件方便从文件名就能预览其功能
+6. 善用现有通用函数库 (`Lodash`、`date.js`)，不要自己造轮子
+7. 尽可能少的抽象
+   1. 如果预期不会很常使用，干脆不需要抽离
+   2. 如果预期只会用在 `A` 项目，只抽离到 `A` 项目通用函数库，不要抽离到全局函数库
+8. 必须详细注解记录函数用途，并透过 TypeScript 记录类型。
+
+## 实际案例
+
+以下是一些可以快速参照的范例，可以大致了解概念即可，实际应用可能会更复杂。
+
+### 通用函数应该如何定义
+
+```ts
+// libs/shared/utility/src/lib/thousandth.ts
+
+/**
+ * 将正整数转换成具有千位分隔符的字串
+ *
+ * @param number - 整数，如无输入预设为 0
+ * @returns 具有千位分隔符的字串
+ * @example thousandth(1000) // '1,000'
+ */
+
+export function thousandth(number: number) {
+  const isInteger = Number.isInteger(number);
+  if (isInteger) {
+    return number.toString().replace(/\B(?=(\d{3})+$)/g, ',');
+  } else {
+    throw new RangeError('输入必须是整数');
+  }
+}
+```
+
+### 整体文件夹结构
+
+有考虑过要不要将相似的功能都放置在相同的文件统一输出过，不过最终还是决定分清楚，原因是因为：
+
+1. 不会耗费太多时间
+2. 单看文件夹结构便能找到想要的功能
+
+```bash
+lib/
+├── dialog/
+│   ├── showDialog.ts
+│   └── hideDialog.ts
+├── date/
+│   └── transformToYYYYMMDD.ts
+├── cookie/
+│   └── getCookieExpiredAbsoluteTime.ts
+├── localStorage/
+│   ├── getLocalStorage.ts
+│   ├── setLocalStorage.ts
+│   └── removeLocalStorage.ts
+├── shadcn/
+│   └── cn.ts
+└── tanstackTableVue/
+    └── valueUpdater.ts
+```
