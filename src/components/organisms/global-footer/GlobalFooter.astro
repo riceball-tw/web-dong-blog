@@ -30,37 +30,7 @@ const { copyright, socials } = (await currentLocaleWebsiteConfig(Astro.currentLo
             </li>
           ))
         }
-
-
-        <li>
-          <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
-            <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
-          </button>
-        </li>
       </ul>
     </div>
   </footer>
 </Container>
-
-<script is:inline>
-  document.querySelector('[data-share-btn]').addEventListener('click', () => {
-    const { title } = document;
-    const url = document.querySelector('link[rel=canonical]')
-      ? document.querySelector('link[rel=canonical]').href
-      : document.location.href;
-    if (navigator.share) {
-      navigator
-        .share({
-          title,
-          url,
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-        });
-    } else {
-      // eslint-disable-next-line no-alert
-      alert("Your Browser currently don't Support Navigator API. 瀏覽器尚未支援分享功能");
-    }
-  });
-</script>
