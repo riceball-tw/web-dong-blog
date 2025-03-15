@@ -13,7 +13,7 @@ import { stripLanguageCode, localeParams, translateCategory, type LanguageKey , 
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
-const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
+const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
   type: category,
   posts: dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey)

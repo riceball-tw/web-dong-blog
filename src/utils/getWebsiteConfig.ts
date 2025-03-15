@@ -1,6 +1,8 @@
 import { getEntry } from 'astro:content';
-import type { LanguageKey } from '@/utils/i18n.ts';
 
 // eslint-disable-next-line import/prefer-default-export
-export const currentLocaleWebsiteConfig = (currentLocale: LanguageKey) =>
-  getEntry('website', `${currentLocale}/config`);
+export const currentLocaleWebsiteConfig = (currentLocale: string | undefined) => {
+  const websiteConfig = getEntry('website', `${currentLocale}/config`);
+  if (!websiteConfig) throw Error('Website config not found');
+  return websiteConfig;
+};
