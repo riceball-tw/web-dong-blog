@@ -46,7 +46,7 @@ const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
 const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
-const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale as LanguageKey)).data.setting;
+const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.setting;
 const isSubheadlineEqualHeadline = subHeadline === headline
 ---
 
