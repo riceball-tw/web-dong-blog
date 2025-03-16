@@ -9,6 +9,7 @@ import * as m from "@/paraglide/messages";
 import ThemeToggleButton from '@/components/atoms/theme-toggle-button/ThemeToggleButton.astro'
 import GlobalSearch from '@/components/organisms/global-search/GlobalSearch.astro'
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
+import LanguagePicker from '@/components/atoms/language-picker/LanguagePicker.astro'
 
 const { navigation } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
 const {pathname} = new URL(Astro.request.url);
@@ -47,11 +48,14 @@ const currentPath = pathname.slice(1);
                 </li>
               )})
             }
-            <li class="ml-auto inline-block">
-              <ThemeToggleButton />
+            <li class="size-7 ml-auto inline-block">
+              <ThemeToggleButton/>
             </li>
-            <li>
+            <li class="size-7 -mr-1 -mb-1 inline-block">
              <GlobalSearch/>
+            </li>
+            <li class="size-7">
+              <LanguagePicker/>
             </li>
         </ul>
         {
