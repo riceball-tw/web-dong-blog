@@ -42,22 +42,18 @@ const footerSections = [
     <!-- Footer Sections -->
     <div class="flex flex-wrap gap-10">
       {
-        footerSections.map(section => {
-          return <div>
+        footerSections.map(section => <div>
         <div class="tracking-widest px-4 font-bold mb-4">
           {section.title}
         </div>
         <ul>
           {
-            section.links.map(link => {
-              return <li>
+            section.links.map(link => <li>
                 <a class="text-xs p-4 py-2 inline-block" href={link.url}>{link.name}</a>
-              </li>
-            })
+              </li>)
           }
         </ul>
-      </div> 
-        })
+      </div>)
       }
     </div>
   </div>
