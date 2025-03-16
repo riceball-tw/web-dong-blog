@@ -8,43 +8,11 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import * as m from "@/paraglide/messages";
 import ThemeToggleButton from '@/components/atoms/theme-toggle-button/ThemeToggleButton.astro'
 import GlobalSearch from '@/components/organisms/global-search/GlobalSearch.astro'
+import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 
-const mainNav = [
-  {
-    iconName: 'material-symbols:home-outline-rounded',
-    name: 'home',
-    url: '',
-    isShownOnMobile: true,
-  },
-  {
-    iconName: 'material-symbols:article-outline-rounded',
-    name: 'post',
-    url: 'post',
-    isShownOnMobile: true,
-  },
-  {
-    iconName: 'material-symbols:service-toolbox-outline-rounded',
-    name: 'toolbox',
-    url: 'toolbox',
-    isShownOnMobile: true,
-  },
-  {
-    iconName: 'material-symbols:quick-phrases-rounded',
-    name: 'shortpost',
-    url: 'shortpost',
-    isShownOnMobile: true,
-    subText: 'New',
-  },
-] as const
+const { navigation } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
 const {pathname} = new URL(Astro.request.url);
 const currentPath = pathname.slice(1);
-
-const linkI18n = {
-	home: m.proud_left_kestrel_pride,
-	post: m.many_knotty_badger_drop,
-	toolbox: m.funny_best_cougar_reap,
-	shortpost: m.left_honest_larva_care,
-} as const
 ---
 
 <nav
@@ -64,18 +32,17 @@ const linkI18n = {
         </a>
         <ul style="height: var(--mainNav-height);" class="font-medium items-center rounded-full flex gap-2 sm:gap-4 justify-center bg-navbar text-navbar-foreground px-4 shadow-lg md:bg-transparent md:border-none md:shadow-none w-auto md:w-full overflow-x-auto overflow-y-hidden">
             {
-              mainNav.map((navbarLink) => {
+              navigation.map((navbarLink) => {
                 const firstRoutePathWithoutLocale = currentPath.split('/')[0] === Astro.currentLocale ? currentPath.split('/')[1] : currentPath.split('/')[0];
                 const isNavItemActive = firstRoutePathWithoutLocale === navbarLink.url
-                const currentLinkI18n = linkI18n[navbarLink.name]();
 
                 return (
-                <li class={`transition-opacity h-full ${navbarLink.isShownOnMobile ? '' : 'hidden md:inline-block'} ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
+                <li class={`transition-opacity h-full ${isNavItemActive ? 'active-link relative opacity-100' : 'opacity-60 hover:opacity-100'}`}>
                   <a data-astro-prefetch
                   href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, navbarLink.url)}
                   class="relative h-full p-2 flex justify-center flex-col gap-0.5 md:p-4 ">
-                    <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={currentLinkI18n} size={24} />
-                    <span class="text-sm whitespace-nowrap">{currentLinkI18n}</span>
+                    <Icon class="mx-auto md:hidden" name={navbarLink.iconName} title={navbarLink.name} size={24} />
+                    <span class="text-sm whitespace-nowrap">{navbarLink.name}</span>
                   </a>
                 </li>
               )})
