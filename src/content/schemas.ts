@@ -70,6 +70,7 @@ export const websiteSchema = z.object({
     slogan: z.string(),
     description: z.string(),
     themeColor: z.string(),
+    email: z.string().email(),
     thumbnail: z.object({
       width: z.number(),
       height: z.number(),
@@ -89,6 +90,13 @@ export const websiteSchema = z.object({
       }),
     ),
   }),
+  navigation: z.array(
+    z.object({
+      iconName: z.string(),
+      name: z.string(),
+      url: z.string(),
+    }),
+  ),
 });
 
 export const characterSchema = z.object({

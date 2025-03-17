@@ -1,66 +1,60 @@
 ---
-import { Icon } from 'astro-icon/components'
-import Container from '@/components/atoms/container/Container.astro';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import LanguagePicker from '@/components/atoms/language-picker/LanguagePicker.astro';
+import Logo from '@/components/atoms/logo/Logo.astro';
+import Logomark from '@/components/atoms/logomark/Logomark.astro';
+import * as m from "@/paraglide/messages";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale } from '@/utils/i18n.ts';
 
-const { copyright, socials } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.brand;
+const globalWebsiteConfig = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data
+const { socials: globalWebsiteSocial, name: websiteName, copyright: websiteCopyright, slogan: websiteSlogan, email: websiteEmail } = globalWebsiteConfig.brand;
+const { navigation: globalWebsiteNavigation } = globalWebsiteConfig
+
+const footerSections = [
+  {
+    title: m.swift_steep_lobster_push(),
+    links: globalWebsiteSocial
+  },
+  {
+    title: m.maroon_awful_flea_twirl(),
+    links: globalWebsiteNavigation
+  },
+]
 ---
-
-<Container>
-  <footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] flex flex-wrap items-center justify-between md:mb-0 relative z-40">
-    <!-- Copyrihgt -->
-    <div class="flex p-4 opacity-60 md:text-base md:opacity-100">
-      <a class="hover:underline" href={copyright.url}>
-        {copyright.title}
-      </a>
+<footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] md:mb-0 relative z-40 py-8 px-4 gap-4 bg-gradient-to-t to-90% from-primary/10">
+  <div class="flex flex-wrap justify-between container mx-auto">
+    <div class="p-4 flex flex-col justify-between">
+      <div>
+        <a
+        data-astro-prefetch
+        title={m.funny_small_coyote_chop()}
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}
+        class="inline-flex items-center gap-1"
+        >
+          <Logo />
+          <Logomark />
+        </a>
+        <p class="tracking-wider text-xs">{ websiteSlogan }</p>
+      </div>
+      <small class="max-w-prose text-muted-foreground tracking-widest">{m.weak_kind_cowfish_hint({websiteName})} <a class="underline" href={websiteCopyright.url}>{ websiteCopyright.title }</a> {m.north_that_shrimp_fold()} <a class="underline" href={`mailto:${websiteEmail}`}>email</a></small>
     </div>
-    <div class="mr-4 flex items-center md:mr-0">
-      <ul class="flex items-center">
-        <li>
-          <LanguagePicker/>
-        </li>
 
-        {
-          socials.map((social) => (
-            <li>
-              <a class="p-4 inline-block" href={social.url}>
-                <Icon size={16} name={social.iconName} title={social.name} />
-              </a>
-            </li>
-          ))
-        }
-
-
-        <li>
-          <button class="p-4" aria-label="網頁分享 Share This Website" data-share-btn type="button">
-            <Icon size={16} name='material-symbols:share-outline' title='分享符號' />
-          </button>
-        </li>
-      </ul>
+    <!-- Footer Sections -->
+    <div class="flex flex-wrap gap-10">
+      {
+        footerSections.map(section => <div>
+        <div class="tracking-widest px-4 font-bold mb-4">
+          {section.title}
+        </div>
+        <ul>
+          {
+            section.links.map(link => <li>
+                <a class="text-xs p-4 py-2 inline-block" href={link.url}>{link.name}</a>
+              </li>)
+          }
+        </ul>
+      </div>)
+      }
     </div>
-  </footer>
-</Container>
-
-<script is:inline>
-  document.querySelector('[data-share-btn]').addEventListener('click', () => {
-    const { title } = document;
-    const url = document.querySelector('link[rel=canonical]')
-      ? document.querySelector('link[rel=canonical]').href
-      : document.location.href;
-    if (navigator.share) {
-      navigator
-        .share({
-          title,
-          url,
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.error(err);
-        });
-    } else {
-      // eslint-disable-next-line no-alert
-      alert("Your Browser currently don't Support Navigator API. 瀏覽器尚未支援分享功能");
-    }
-  });
-</script>
+  </div>
+</footer>
