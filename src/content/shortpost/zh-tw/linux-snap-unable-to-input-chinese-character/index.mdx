@@ -1,0 +1,13 @@
+---
+headline: Linux Snap (VSCode) 無法輸入中文字
+publishDate: 2025-03-19
+category: Technical Discussion
+---
+
+近期整修電腦裝上了 Ubuntu 做為日常用途，並用 App Center ([Snap](https://ivonblog.com/posts/linux-snap-pros-and-cons/)) 安裝常用的 App 如 VSCode，事後才發覺中文字都沒辦法正確輸入……
+
+基於它獨特的沙盒機制導致其 App 沒辦法正確取得系統設定，看起來要整包重新建構才能解決，或許這也是為什麼 VSCode [相關問題](https://github.com/microsoft/vscode/issues/96041)討論從 2020 開啟到至今都還未解決。Firefox 或 Discord 就沒這樣的問題。
+
+另外試試水溫的 [Zed 編輯器](https://zed.dev/) 也有無法輸入中文的問題，又是一個坑要填……
+
+- [Multilingual Issues with Snap Applications on Linux](https://leimao.github.io/blog/Multilingual-Issues-Snap-Applications-Linux/)
