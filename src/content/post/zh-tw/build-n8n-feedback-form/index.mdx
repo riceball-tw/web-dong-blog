@@ -1,0 +1,71 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:article-shortcut-outline-rounded
+  title: 文章上有箭頭符號
+subHeadline: Build n8n Feedback Form
+headline: 簡單自架 n8n 回饋表單小試水深
+excerpt: UI 介面當中文字佔據了絕大多數的內容，文字充斥在設計的每個角落，它們是最有威力的設計元素之一，以極為精簡的形式傳遞深刻的意涵。這篇文章想分享設計與內容可以是相輔相成的概念，並且討論設計者在沒有內容的情況下設計可能造成什麼樣的問題。
+category: n8n
+publishDate: 2025-03-20
+---
+
+## 前言
+
+> n8n: nodemation = node + automation
+
+近期在熟悉 [n8n](https://github.com/n8n-io/n8n) 流程自動化的工具，發現值得推薦給任何人（特別是軟體工程師）n8n 算是一種 low-code / no-code 解決方案可以幫助任何人透過現有的整合來快速實踐流程自動化的目的。
+
+- 對於一般大眾縮短透過 n8n 可以快速的串接各種服務，不需要寫程式碼透過拖拉的圖形界面就可以完成簡單甚至進階的自動化流程。
+- 對於開發者更是得心應手，可以將問題解決於架構層面，低層次實踐（資料怎串通）都交給 n8n 即可。
+
+## 實際案例
+
+- 背景：網站沒有回饋機制蒐集與紀錄使用者意見。
+- 問題：沒有方便匿名的管道讓使用者可以回饋意見。
+- 解方：
+  - （輸入）使用網頁表單或 Email。
+  - （儲存）透過 Google Sheet 或 Airtable 等資料庫紀錄使用者意見。
+  - （輸出）透過 Email 或 Slack 等即時通訊軟體通知使用者意見。
+
+頭疼的是每個平台都有各自的優劣和接口，學習曲線也參差不齊，常常時間被磨耗在讀了老半天文件明白如何串接後…
+
+- 對方接口又更新了
+- 文件又不完整
+- 需求又改了或舊架構無法滿足需求
+
+也是因為這樣很多問題因為成本或風險太高不值得導入自動化。
+
+## 所以 n8n 有什麼好？
+
+- 降低成本
+  - 開源可自架的自動化工具
+  - 提供了可視化的界面輕鬆地設計和管理自動化流程
+  - 支援多種應用程式和服務的集成包括 Google Sheets、Slack、Trello、GitHub……等 [400+ 應用程式](https://n8n.io/integrations/)
+
+## 怎麼開始 n8n？
+
+n8n 有[雲服務](https://n8n.io/)適合試水深的用戶或一般大眾，網頁上註冊即可馬上使用。對於進階用戶也有[自架的選項](https://docs.n8n.io/hosting/#self-hosting-n8n)，通常用 [Docker 安裝](https://docs.n8n.io/hosting/installation/docker/) 是最簡單的方式，甚至一些 <abbr title="Platform as a Service">PasS</abbr> 服務也有提供 n8n 的現成模板，這裡推 [zeabur](https://zeabur.com/templates/W2H4RW) 可以一鍵部屬試水溫。
+
+### 大概念
+
+細節描述 n8n 如何操作沒有太大意義，隨著時間推移可能界面或功能會有變化，因此提供大概念：
+
+![n8n 範例](./n8n-demo.webp 'n8n 範例')
+
+- n8n 的自動化流程是由一系列的節點組成，每個節點代表一個操作。
+- 觸發器節點是自動化流程的起點，可以是定時觸發、表單提交、Webhook 或單純點擊……各種現成觸發節點。
+- 每個節點可以配置不同參數，以滿足特定的需求。
+- 節點之間可以進行連接，以定義工作流程的執行順序。
+
+![n8n Google Sheets 範例](./n8n-sheet.webp 'n8n Google Sheets 範例')
+
+進入節點後會有上個節點的輸入（左方）與現有節點的輸出（右方）呈現，可以透過脫拽的方式將上個節點的資料連結作為本節點參數。並且 `{{ }}` 實際上就是執行 JavaScript 的區域，可以在 n8n 中使用 JavaScript 來處理資料與邏輯。
+
+## 總結
+
+了解大概念後會發現只剩下各類節點應用上需要熟悉以及不同平台授權的問題，事實上大多時間我都在和過時和複雜的的平台授權文件搏鬥 😅，n8n 自動化本身是真的很好理解和上手值得一試。
+
+## 延伸閱讀
+
+- [Master n8n in 2 Hours: Complete Beginner’s Guide for 2025 ](https://www.youtube.com/watch?v=AURnISajubk)
