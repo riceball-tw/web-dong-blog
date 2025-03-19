@@ -97,7 +97,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
         <aside 
         style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
         
-        <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
+        <div style="height: calc(100dvh - var(--mainNav-height))" class="overflow-y-auto divide-y divide-border"> 
           <PostTableOfContent {headings} />
           {
             postsInSeries.length ? 
