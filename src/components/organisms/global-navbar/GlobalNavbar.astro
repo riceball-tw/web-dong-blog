@@ -2,7 +2,6 @@
 import Logo from '@/components/atoms/logo/Logo.astro';
 import Logomark from '@/components/atoms/logomark/Logomark.astro';
 import { Icon } from 'astro-icon/components'
-import Container from '@/components/atoms/container/Container.astro';
 import { defaultLocale } from '@/utils/i18n.ts';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import * as m from "@/paraglide/messages";
@@ -18,10 +17,9 @@ const currentPath = pathname.slice(1);
 
 <nav
   style="padding-bottom: env(safe-area-inset-bottom);"
-  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack border-border md:border-b"
 >
-  <Container>
-    <div class="flex justify-center md:justify-start md:border-b border-border gap-2">
+    <div class="flex justify-center md:justify-start gap-2 container mx-auto">
         <a
         data-astro-prefetch
         title={m.funny_small_coyote_chop()}
@@ -65,7 +63,6 @@ const currentPath = pathname.slice(1);
           </div>
         }
     </div>
-  </Container>
 </nav>
 
 <style>
