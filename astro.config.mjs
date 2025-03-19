@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -17,6 +17,9 @@ import { languages, prefixDefaultLocale, defaultLocale, baseUrl } from './src/ut
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    service: passthroughImageService() // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
+  },
   i18n: {
     defaultLocale,
     locales: Object.keys(languages),
