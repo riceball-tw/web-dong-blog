@@ -85,4 +85,12 @@ describe('Post is effective', () => {
       });
     });
   });
+
+  it('Feedback form link is avaliable', () => {
+    cy.dataCy('feedback-form-link')
+      .should('have.attr', 'href')
+      .then((href) => {
+        cy.request(`${href}`).its('status').should('eq', 200);
+      });
+  });
 });
