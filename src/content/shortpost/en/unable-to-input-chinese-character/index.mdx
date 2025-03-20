@@ -1,0 +1,14 @@
+---
+headline: Linux Snap (VSCode) Cannot Input Chinese Characters
+publishDate: 2025-03-19
+category: Technical Discussion
+---
+
+Recently, I refurbished my computer and installed Ubuntu for daily use, and used App Center ([Snap](https://ivonblog.com/posts/linux-snap-pros-and-cons/)) to install commonly used apps like VSCode. Later, I realized that I couldn't input Chinese characters correctly...
+
+Due to its unique sandbox mechanism, its apps cannot properly access system settings. It seems that a complete rebuild is necessary to resolve this issue, which might explain why the [related issue](https://github.com/microsoft/vscode/issues/96041) discussion for VSCode has been ongoing since 2020 and remains unresolved. Firefox and Discord do not have this problem.
+
+Additionally, trying out the [Zed editor](https://zed.dev/) also encountered issues with inputting Chinese characters, yet another pit to fill...
+
+- [Multilingual Issues with Snap Applications on Linux](https://leimao.github.io/blog/Multilingual-Issues-Snap-Applications-Linux/)
+
