@@ -1,0 +1,73 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:article-shortcut-outline-rounded
+  title: 文章上有箭頭符號
+subHeadline: Start Build a n8n Feedback Form
+headline: 简单自架 n8n 回馈表单小试水深
+excerpt: 近期在熟悉 n8n 流程自动化的工具，发现值得推荐给任何人（特别是软件工程师）n8n 算是一种 low-code / no-code 解决方案可以帮助任何人通过现有的整合来快速实践流程自动化的目的。这次教学通过简单的串接 Google 服务来展现它的灵活性和强大功能。
+category: n8n
+publishDate: 2025-03-20
+---
+
+## 前言
+
+> n8n: nodemation = node + automation
+
+近期在熟悉 [n8n](https://github.com/n8n-io/n8n) 流程自动化的工具，发现值得推荐给任何人（特别是软件工程师）n8n 算是一种 low-code / no-code 解决方案可以帮助任何人通过现有的整合来快速实践流程自动化的目的。
+
+- 对于一般大众缩短通过 n8n 可以快速的串接各种服务，不需要写代码通过拖拉的图形界面就可以完成简单甚至进阶的自动化流程。
+- 对于开发者更是得心应手，可以将问题解决于架构层面，低层次实践（数据怎么串通）都交给 n8n 即可。
+
+更多可以参考 n8n 的[官方实际范例模板](https://n8n.io/workflows/)。
+
+## 实际案例
+
+- 背景：网站没有反馈机制收集与记录用户意见。
+- 问题：没有方便匿名的管道让用户可以反馈意见。
+- 解方：
+  - （输入）使用网页表单或 Email。
+  - （储存）通过 Google Sheet 或 Airtable 等数据库记录用户意见。
+  - （输出）通过 Email 或 Slack 等即时通讯软件通知用户意见。
+
+头疼的是每个平台都有各自的优劣和接口，学习曲线也参差不齐，常常时间被磨耗在读了老半天文件明白如何串接后…
+
+- 对方接口又更新了
+- 文件又不完整
+- 需求又改了或旧架构无法满足需求
+
+也是因为这样很多问题因为成本或风险太高不值得导入自动化。
+
+## 所以 n8n 有什么好？
+
+- 降低成本
+  - 开源可自架的自动化工具
+  - 提供了可视化的界面轻松地设计和管理自动化流程
+  - 支持多种应用程序和服务的集成包括 Google Sheets、Slack、Trello、GitHub……等 [400+ 应用程序](https://n8n.io/integrations/)
+
+## 怎么开始 n8n？
+
+n8n 有[云服务](https://n8n.io/)适合试水深的用户或一般大众，网页上注册即可马上使用。对于进阶用户也有[自架的选项](https://docs.n8n.io/hosting/#self-hosting-n8n)，通常用 [Docker 安装](https://docs.n8n.io/hosting/installation/docker/) 是最简单的方式，甚至一些 <abbr title="Platform as a Service">PasS</abbr> 服务也有提供 n8n 的现成模板，这里推 [zeabur](https://zeabur.com/templates/W2H4RW) 可以一键部署试水温。
+
+### 大概念
+
+细节描述 n8n 如何操作没有太大意义，随着时间推移可能界面或功能会有变化，因此提供大概念：
+
+![n8n 示例](./n8n-demo.webp 'n8n 示例')
+
+- n8n 的自动化流程是由一系列的节点组成，每个节点代表一个操作。
+- 触发器节点是自动化流程的起点，可以是定时触发、表单提交、Webhook 或单纯点击……各种现成触发节点。
+- 每个节点可以配置不同参数，以满足特定的需求。
+- 节点之间可以进行连接，以定义工作流程的执行顺序。
+
+![n8n Google Sheets 示例](./n8n-sheet.webp 'n8n Google Sheets 示例')
+
+进入节点后会有上个节点的输入（左方）与现有节点的输出（右方）呈现，可以通过拖拽的方式将上个节点的数据链接作为本节点参数。并且 `{{ }}` 实际上就是执行 JavaScript 的区域，可以在 n8n 中使用 JavaScript 来处理数据与逻辑。
+
+## 总结
+
+了解大概念后会发现只剩下各类节点应用上需要熟悉以及不同平台授权的问题，事实上大多时间我都在和过时和复杂的平台授权文件搏斗 😅，n8n 自动化本身是真的很好理解和上手值得一试。
+
+## 延伸阅读
+
+- [Master n8n in 2 Hours: Complete Beginner’s Guide for 2025 ](https://www.youtube.com/watch?v=AURnISajubk)

@@ -1,0 +1,73 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:article-shortcut-outline-rounded
+  title: Article has an arrow symbol
+subHeadline: Start Build a n8n Feedback Form
+headline: Start Build a n8n Feedback Form
+excerpt: n8n is a low-code / no-code solution that helps anyone quickly implement automation. This tutorial demonstrates through a simple integration.
+category: n8n
+publishDate: 2025-03-20
+---
+
+## Introduction
+
+> n8n: nodemation = node + automation
+
+Recently, while familiarizing myself with the [n8n](https://github.com/n8n-io/n8n) workflow automation tool, I found it worth recommending to anyone (especially software engineers). n8n is a low-code / no-code solution that helps anyone quickly implement workflow automation through existing integrations.
+
+- For the general public, n8n allows for quick integration of various services without needing to write code; simple and even advanced automation workflows can be completed through a drag-and-drop graphical interface.
+- For developers, it is even more user-friendly, allowing them to solve problems at the architectural level, while low-level implementations (connect data between services) can be left to n8n.
+
+More can be referenced in the [official practical example templates](https://n8n.io/workflows/) of n8n.
+
+## Practical Case
+
+- Background: The website lacks a feedback mechanism to collect and record user opinions.
+- Problem: There is no convenient anonymous channel for users to provide feedback.
+- Solution:
+  - (Input) Use a web form or Email.
+  - (Storage) Record user opinions through databases like Google Sheets or Airtable.
+  - (Output) Notify user opinions through Email or instant messaging software like Slack.
+
+The headache is that each platform has its own strengths and weaknesses and interfaces, with varying learning curves. Often, time is consumed reading documentation for a long time to understand how to integrate, only to find that...
+
+- The other services interface has been updated
+- The documentation is incomplete
+- The requirements have changed or the old architecture cannot meet the needs
+
+Because of this, many issues are not worth automating due to high costs or risks.
+
+## So, what’s good about n8n?
+
+- Reduces costs
+  - An open-source automation tool that can be self-hosted
+  - Provides a visual interface to easily design and manage automation workflows
+  - Supports integration with various applications and services, including Google Sheets, Slack, Trello, GitHub, and more than [400+ applications](https://n8n.io/integrations/)
+
+## How to get started with n8n?
+
+n8n has a [cloud service](https://n8n.io/) suitable for users who want to experiment or the general public; you can register on the website and start using it immediately. For advanced users, there is also a [self-hosting option](https://docs.n8n.io/hosting/#self-hosting-n8n), and usually, installing via [Docker](https://docs.n8n.io/hosting/installation/docker/) is the simplest way. Some <abbr title="Platform as a Service">PasS</abbr> services also provide ready-made templates for n8n; here I recommend [zeabur](https://zeabur.com/templates/W2H4RW) for one-click deployment to test the waters.
+
+### Concept
+
+Describing the details of how to operate n8n is not very meaningful, as the interface or features may change over time. Therefore, here is the big concept:
+
+![n8n Example](./n8n-demo.webp 'n8n Example')
+
+- The automation workflow in n8n consists of a series of nodes, each representing an operation.
+- The trigger node is the starting point of the automation workflow, which can be time-based triggers, form submissions, Webhooks, or simple clicks... various ready-made trigger nodes.
+- Each node can be configured with different parameters to meet specific needs.
+- Nodes can be connected to define the execution order of the workflow.
+
+![n8n Google Sheets Example](./n8n-sheet.webp 'n8n Google Sheets Example')
+
+Entering a node will show the input from the previous node (on the left) and the output of the current node (on the right). You can link the data from the previous node as parameters for the current node by dragging and dropping. The `{{ }}` is actually the area for executing JavaScript, allowing you to use JavaScript to handle data and logic within n8n.
+
+## Conclusion
+
+After understanding the big concept, you will find that the only remaining tasks are to familiarize yourself with the various node applications and the issues of setup different platforms credentials. In fact, most of the time, I have been battling outdated and complex platform credential related documents 😅. The automation of n8n is genuinely easy to understand and worth trying.
+
+## Further Reading
+
+- [Master n8n in 2 Hours: Complete Beginner’s Guide for 2025](https://www.youtube.com/watch?v=AURnISajubk)
