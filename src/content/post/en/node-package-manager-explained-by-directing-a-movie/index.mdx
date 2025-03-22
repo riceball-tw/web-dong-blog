@@ -1,0 +1,88 @@
+---
+isDraft: false
+icon:
+  name: material-symbols:folder-managed-outline-rounded
+  title: File and Gear Icon
+subHeadline: Explained Node Package Manager by Directing a Movie
+headline: Explained Node Package Manager by Directing a Movie
+excerpt: NPM is a package manager that is essential in JS development environment. NPM is like a platform where you can find many ready-made actors.
+category: Technical Discussion
+publishDate: 2023-06-30
+---
+
+## Packages = Actors
+
+Writing code is like filming a movie. You can design and manage the actors or hire others who have already designed them. [NPM](https://www.npmjs.com/) is like a platform where you can find many ready-made actors, which are the packages. Most of the packages available are free and open-source, helping projects achieve desired functionalities quickly and efficiently.
+
+In a modern environment with detailed division of labor, there is usually a whole team behind each actor, such as makeup artists, hairstylists, agents, etc. They can be referred to as the dependencies of the project. When you hire an actor, NPM will also bring in all the team members needed for the actor, as it takes a whole team to support an actor's performance.
+
+With that said, isn't developing software like training an actor? Yes, the software you develop can also be published on NPM for people around the world to use.
+
+```bash
+npm init
+```
+
+[Download Node.js + NPM](https://nodejs.org/en) and run the `init` command to start looking for the packages you want to use!
+
+## `node_modules` = Actor's Lounge
+
+To add a new package to the project, simply run `npm install package-name` in the terminal, and NPM will automatically download and install it into the project. Specifically, all local project packages will be placed in the `node_modules` folder. For example, to install the React package:
+
+```bash
+# Install React package
+npm install react
+```
+
+You can also remove the package, just like firing an actor:
+
+```bash
+# Remove React package
+npm uninstall react
+```
+
+<Sidenote type="warning">
+  Unless there is a specific reason, it is best not to include the `node_modules` folder in the version control system,
+  as this folder can be very large, and its contents can be restored through `package.json`. Edit `.gitignore` to ignore
+  this folder.
+</Sidenote>
+
+## `package.json` = Actors List
+
+When filming a movie, the director has a "cast list," and projects using NPM also have a similar file that records the project's name, version, and dependencies. The `dependencies` field in `package.json` records all the packages used in the project:
+
+```json
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^17.0.2"
+  }
+}
+```
+
+## `package-lock.json` = Super Detailed Actor List
+
+Although `package.json` already records the project's dependencies, the version numbers it records are "rough" and do not include the versions of the dependencies' dependencies. Since software iterations often encounter compatibility issues with older versions, `package-lock.json` is needed. It will detail the packages':
+
+1. Exact version numbers
+2. Source URLs
+3. Hash values
+4. Which library requested them
+
+This file is regenerated every time packages are updated, so there is no need to edit it manually. If necessary, it can be deleted to allow NPM to regenerate it.
+
+## dependencies vs devDependencies Like Actors on Stage and Behind-the-Scenes Staff
+
+The previous explanations only covered the project's dependencies, but what are `devDependencies`? Imagine packages that your project may not necessarily use in production, such as preprocessing, bundling, testing, etc. These tasks are only used during development, so these packages can be classified as `devDependencies`. These packages are like actors on stage and behind-the-scenes staff; they are all dependencies of the project but are used at different times.
+
+```json
+{
+  "devDependencies": {
+    "webpack": "^5.38.1"
+  }
+}
+```
+
+## References
+
+- [Node Package Manager (NPM) Explained by Directing A Movie - CodeAnalogies Blog](https://blog.codeanalogies.com/2018/09/24/node-package-manager-npm-explained-by-directing-a-movie/)
