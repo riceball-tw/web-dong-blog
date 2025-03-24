@@ -20,7 +20,7 @@ const { headline, description, publishDate, keywords, author, articleSection } =
 const mySite = await getEntry('character', 'my-site');
 const me = await getEntry('character', 'me');
 
-if (!(mySite && me)) throw Error("No site author or site info in content collection")
+if (!(mySite && me)) throw new Error("No site author or site info in content collection")
 
 const defaultOrganization = {
   "@type": "Organization",
