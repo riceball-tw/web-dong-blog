@@ -1,8 +1,8 @@
 ---
-import type { themeColor as themeColorType } from '@/types';
+import type { ThemeColor } from '@/types/layouts';
 import uniqolor from 'uniqolor';
 
-interface Props extends themeColorType {}
+interface Props extends ThemeColor {}
 const { themeColor } = Astro.props
 
 function getThemeColor(lightness: number = 60): string {
