@@ -1,5 +1,8 @@
+// Astro TypeScript Doc: https://docs.astro.build/en/guides/typescript/
 {
   "extends": "astro/tsconfigs/strictest",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
