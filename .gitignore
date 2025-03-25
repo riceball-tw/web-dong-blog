@@ -29,3 +29,6 @@ public/pagefind
 
 # CI Generated LFS Cached ID list
 .lfs-assets-id
+
+# Skip Symbolic link file
+src/content/post
