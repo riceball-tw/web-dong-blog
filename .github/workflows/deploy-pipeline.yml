@@ -20,7 +20,7 @@ jobs:
         with:
           repository: riceball-tw/obsidian-sync
           ref: main
-          path: src/content/
+          path: src/content/blog/
           token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
 
       - name: Environment Setup
