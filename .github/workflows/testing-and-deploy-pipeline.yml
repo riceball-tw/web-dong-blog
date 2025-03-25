@@ -58,6 +58,9 @@ jobs:
           path: src/content/blog/
           token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
 
+      - name: Merge content without overwriting
+        run: rsync -av --ignore-existing src/blog/ src/content/
+
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
