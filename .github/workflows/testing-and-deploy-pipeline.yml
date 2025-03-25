@@ -52,7 +52,7 @@ jobs:
           lfs: true
 
       - name: Merge content without overwriting
-        run: rsync -av --ignore-existing src/content-temp src/content/
+        run: rsync -av --ignore-existing src/content-temp/ src/content/
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -108,7 +108,7 @@ jobs:
           lfs: true
 
       - name: Merge content without overwriting
-        run: rsync -av --ignore-existing src/content-temp src/content/
+        run: rsync -av --ignore-existing src/content-temp/ src/content/
 
       - name: Environment Setup
         uses: ./.github/actions/setup
