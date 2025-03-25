@@ -13,14 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout content
-        uses: actions/checkout@v4
-        with:
-          repository: riceball-tw/obsidian-sync
-          ref: main
-          path: src/content/
-          token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
-
       - name: Environment Setup
         uses: ./.github/actions/setup
 
@@ -37,6 +29,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout content
+        uses: actions/checkout@v4
+        with:
+          repository: riceball-tw/obsidian-sync
+          ref: main
+          path: src/content/
+          token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
+
       - name: Environment Setup
         uses: ./.github/actions/setup
 
@@ -49,6 +49,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout content
+        uses: actions/checkout@v4
+        with:
+          repository: riceball-tw/obsidian-sync
+          ref: main
+          path: src/content/
+          token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -93,6 +101,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout content
+        uses: actions/checkout@v4
+        with:
+          repository: riceball-tw/obsidian-sync
+          ref: main
+          path: src/content/
+          token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
 
       - name: Environment Setup
         uses: ./.github/actions/setup
