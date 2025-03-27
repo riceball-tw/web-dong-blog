@@ -85,10 +85,13 @@ const isSubheadlineEqualHeadline = subHeadline === headline
           </div>
         </header>
     
+        <!-- Why add grid-row-end: 200? -->
+        <!-- fix: toc overlaps the page footer -->
+        <!-- https://github.com/riceball-tw/web-dong-blog/pull/170 -->
         <aside 
-        style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
+        style="top: var(--mainNav-height); grid-row-end: 200;" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose h-fit w-fit">
         
-        <div style="height: calc(100dvh - var(--mainNav-height))" class="absolute top-0 overflow-y-auto divide-y divide-border"> 
+        <div class="overflow-y-auto divide-y divide-border"> 
           <PostTableOfContent {headings} />
           {
             postsInSeries.length ? 
