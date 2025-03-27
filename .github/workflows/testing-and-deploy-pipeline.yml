@@ -2,8 +2,6 @@ name: Testing and Deploy Pipeline
 
 on:
   push:
-    branches-ignore:
-      - main
 
 jobs:
   # ESLint + Prettier
