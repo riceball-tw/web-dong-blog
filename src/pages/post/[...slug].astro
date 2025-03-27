@@ -40,7 +40,6 @@ const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
 const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
-const { postLastModifiedDateUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.setting;
 const isSubheadlineEqualHeadline = subHeadline === headline
 ---
 
@@ -112,12 +111,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
             </div>
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
               <span>{m.extra_ago_ladybug_animate()}</span>
-              <a
-                data-pagefind-ignore="all"
-                href={`${postLastModifiedDateUrl}/${slug}.mdx`}
-                class=""
-              >
-                <span>
+                <span data-pagefind-ignore="all">
                 {
                   lastModifiedDate ?
                   lastModifiedDate
@@ -126,7 +120,6 @@ const isSubheadlineEqualHeadline = subHeadline === headline
                     : m.strong_best_tapir_pop()
                 }
                 </span>
-              </a>
             </div>
           </div>
         </div>

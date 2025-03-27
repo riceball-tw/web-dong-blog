@@ -1,7 +1,6 @@
 {
   "setting": {
-    "projectUpdateBadgeUrl": "https://github.com/riceball-tw/astro-blog/commits/main",
-    "postLastModifiedDateUrl": "https://github.com/riceball-tw/web-dong-blog/commits/main/src/content/post"
+    "projectUpdateBadgeUrl": "https://github.com/riceball-tw/astro-blog/commits/main"
   },
   "brand": {
     "name": "網頁東東",
