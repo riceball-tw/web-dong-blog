@@ -15,29 +15,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Checkout external content
+        uses: actions/checkout@v4
+        with:
+          repository: riceball-tw/obsidian-sync
+          ref: main
+          path: src/content-temp/
+          token: ${{ secrets.CHECKOUT_GITHUB_CONTENT_PAT }}
+          lfs: true
+
+      - name: Merge local and external content folder
+        run: rsync -av --ignore-existing src/content-temp/ src/content/
+
       - name: Environment Setup
         uses: ./.github/actions/setup
 
       - name: Setup Playwright
         uses: ./.github/actions/setup-playwright
-
-      # 1. List all LFS files
-      # 2. Extract the first column (ID)
-      # 3. Sort the IDs
-      # 4. Save the IDs to a file named .lfs-assets-id
-      - name: Create LFS file list
-        run: git lfs ls-files --long | cut -d ' ' -f1 | sort > .lfs-assets-id
-
-      - name: LFS Cache
-        uses: actions/cache@v4
-        with:
-          path: .git/lfs/objects
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            ${{ runner.os }}-lfs-
-
-      - name: Git LFS Pull
-        run: git lfs pull
 
       - name: Build
         run: pnpm build
