@@ -50,10 +50,15 @@ pnpm run dev
 ### Build
 
 ```bash
+# a. Locally
 # Deploy the contents of the `./dist` folder wherever you like.
 pnpm install
 pnpm build
 pnpm preview
+
+# b. Build docker image
+docker build -t <your-astro-image-name> .
+docker run -p <local-port>:<container-port> <your-astro-image-name>
 ```
 
 ## License
