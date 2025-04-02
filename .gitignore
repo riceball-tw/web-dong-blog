@@ -32,3 +32,5 @@ public/pagefind
 
 # Skip Symbolic link file
 src/content/post
+src/content/shortpost
+src/content/toolbox
