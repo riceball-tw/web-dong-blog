@@ -1,6 +1,8 @@
 describe('Post categories page is effective', () => {
+  const locale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
-    cy.visit('/post/categories');
+    cy.visit(`${locale}/post/categories`);
   });
 
   it('Category links is working', () => {
