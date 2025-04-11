@@ -2,6 +2,8 @@ import { languages, baseUrl } from '../../../src/utils/i18n.ts';
 
 Object.keys(languages).forEach((locale) => {
   describe(`locale ${locale} should work`, () => {
+    const defaultLocale = Cypress.env('defaultLocale');
+
     beforeEach(() => {
       cy.visit(`/${locale}`);
     });
@@ -18,7 +20,7 @@ Object.keys(languages).forEach((locale) => {
       });
 
       // <link rel="alternate" hreflang="x" href="y"> should exist and correct
-      cy.get(`link[rel="alternate"][hreflang="x-default"]`).should('have.attr', 'href', `${baseUrl}/`);
+      cy.get(`link[rel="alternate"][hreflang="x-default"]`).should('have.attr', 'href', `${baseUrl}/${defaultLocale}/`);
       cy.get(`link[rel="alternate"][hreflang="${locale}"]`).should('have.attr', 'href', `${baseUrl}/${locale}/`);
     });
 

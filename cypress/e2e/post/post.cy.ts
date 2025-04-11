@@ -1,6 +1,8 @@
 describe('All post page is effective', () => {
+  const locale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
-    cy.visit('/post/');
+    cy.visit(`${locale}/post/`);
   });
 
   it('Post taxonomy links should work', () => {

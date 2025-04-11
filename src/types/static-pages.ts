@@ -1,7 +1,5 @@
-import type { InferGetStaticPropsType } from 'astro';
-import { getStaticPaths as PostGetStaticPaths } from '@/pages/post/[...slug].astro';
-import { getStaticPaths as ShortpostGetStaticPaths } from '@/pages/shortpost/[...slug].astro';
+import type { CollectionEntry } from 'astro:content';
 
-export type PostPage = InferGetStaticPropsType<typeof PostGetStaticPaths>['post'];
+export type PostPage = CollectionEntry<'post'>;
 
-export type ShortpostPage = InferGetStaticPropsType<typeof ShortpostGetStaticPaths>['shortpost'];
+export type ShortpostPage = CollectionEntry<'shortpost'>;

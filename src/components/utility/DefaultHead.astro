@@ -1,7 +1,7 @@
 ---
 import { SEO } from 'astro-seo';
 import type { GlobalHead } from '@/types/layouts';
-import { languageTags, regionTags, prefixDefaultLocale } from '@/utils/i18n.ts';
+import { languageTags, regionTags, prefixDefaultLocale, defaultLocale } from '@/utils/i18n.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 import ThemeManager from '@/components/utility/ThemeManager.astro'
 
@@ -66,6 +66,7 @@ function getPathnameWithoutLocale(pathname: string) {
             rel: "alternate",
             hreflang: "x-default",
             href: new URL(
+              defaultLocale + 
             getPathnameWithoutLocale(Astro.url.pathname) ,
               Astro.site
             ).toString()
@@ -88,7 +89,7 @@ function getPathnameWithoutLocale(pathname: string) {
           ...Object.keys(languageTags).map(tag => ({
             rel: "alternate",
             hreflang: tag,
-            href: new URL(!prefixDefaultLocale 
+            href: new URL(prefixDefaultLocale 
                 ? tag + getPathnameWithoutLocale(Astro.url.pathname) 
                 : Astro.url.pathname,
               Astro.site
