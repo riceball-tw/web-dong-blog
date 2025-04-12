@@ -29,11 +29,11 @@
     "@astrojs/react": "^4.1.2",
     "@astrojs/rss": "^4.0.10",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/tailwind": "^5.1.4",
     "@astrojs/vue": "^5.0.3",
     "@inlang/paraglide-astro": "^0.2.2",
     "@monaco-editor/react": "^4.6.0",
     "@pagefind/default-ui": "^1.3.0",
+    "@tailwindcss/vite": "^4.1.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@vercel/og": "^0.6.2",
@@ -43,7 +43,7 @@
     "astro-seo": "^0.8.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-vue-next": "^0.395.0",
+    "lucide-vue-next": "^0.487.0",
     "markdown-it": "^14.1.0",
     "playwright": "^1.50.1",
     "radix-vue": "^1.8.3",
@@ -56,10 +56,11 @@
     "remark-mermaidjs": "^7.0.0",
     "sanitize-html": "^2.11.0",
     "sharp": "^0.31.3",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss": "^3.3.3",
+    "tailwind-merge": "^3.2.0",
+    "tailwindcss": "^4.1.3",
     "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-fluid-type": "^2.0.3",
+    "tailwindcss-fluid-type": "3.0.0--.beta.2",
+    "tw-animate-css": "^1.2.5",
     "typescript": "^5.4.3",
     "uniqolor": "^1.1.0",
     "vue": "^3.4.29"
@@ -70,7 +71,7 @@
     "@iconify-json/simple-icons": "^1.1.99",
     "@inlang/paraglide-js": "1.11.2",
     "@lhci/cli": "^0.13.0",
-    "@tailwindcss/typography": "^0.5.8",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/markdown-it": "^14.1.1",
     "@types/sanitize-html": "^2.11.0",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
@@ -91,5 +92,6 @@
     "prettier": "^2.8.2",
     "prettier-plugin-astro": "^0.7.2",
     "prettier-plugin-tailwindcss": "^0.2.7"
-  }
+  },
+  "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b"
 }
