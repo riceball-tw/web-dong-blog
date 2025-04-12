@@ -197,10 +197,10 @@
 html[data-theme='light'],
 html[data-theme='dark'] {
   --pagefind-ui-scale: 1;
-  --pagefind-ui-primary: hsla(var(--primary));
+  --pagefind-ui-primary: var(--primary);
   --pagefind-ui-text: var(--foreground);
   --pagefind-ui-background: transparent;
-  --pagefind-ui-border: hsla(var(--primary) / 0.6);
+  --pagefind-ui-border: color-mix(in oklch, var(--primary) 60%, transparent);
   --pagefind-ui-tag: #eeeeee;
   --pagefind-ui-border-width: 1px;
   --pagefind-ui-border-radius: 9999px;
@@ -208,16 +208,16 @@ html[data-theme='dark'] {
   --pagefind-ui-image-box-ratio: 3 / 2;
   --pagefind-ui-font: sans-serif;
   /* Custom Pagefind UI Strat */
-  --pagefind-ui-input-active: hsla(var(--primary) / 0.1);
-  --pagefind-ui-placeholder: hsla(var(--primary) / 0.8);
+  --pagefind-ui-input-active: color-mix(in oklch, var(--primary) 10%, transparent);
+  --pagefind-ui-placeholder: color-mix(in oklch, var(--primary) 80%, transparent);
   /* Custom Pagefind UI End */
 }
 
 html[data-theme='dark'] {
-  --pagefind-ui-border: hsla(var(--primary) / 0.6);
+  --pagefind-ui-border: color-mix(in oklch, var(--primary) 60%, transparent);
   /* Custom Pagefind UI Strat */
-  --pagefind-ui-input-active: hsla(var(--primary) / 0.2);
-  --pagefind-ui-placeholder: hsla(var(--primary) / 0.8);
+  --pagefind-ui-input-active: color-mix(in oklch, var(--primary) 20%, transparent);
+  --pagefind-ui-placeholder: color-mix(in oklch, var(--primary) 80%, transparent);
   /* Custom Pagefind UI End */
 }
 /* Overwrite pagefind default style End */
