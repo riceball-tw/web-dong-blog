@@ -30,15 +30,6 @@ export const prefixDefaultLocale = false;
 export type LanguageKey = keyof typeof languages;
 export type LanguageValue = (typeof languages)[LanguageKey];
 
-/**
- * Get locale parms for Astro's `getStaticPaths` function
- * @returns - The list of locale params
- * @see https://docs.astro.build/en/guides/routing/#dynamic-routes
- */
-export const localeParams = Object.keys(languages).map((language) => ({
-  params: { language },
-}));
-
 export function stripLanguageCode(str: string) {
   return str.replace(/^[a-z]{2}(-[a-z]{2})?\//i, '');
 }
