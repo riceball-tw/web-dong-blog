@@ -18,7 +18,7 @@ const currentPath = pathname.slice(1);
 
 <nav
   style="padding-bottom: env(safe-area-inset-bottom);"
-  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full before:backdrop-blur-none md:before:backdrop-blur-xl before:backdrop-hack"
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full backdrop-blur-none md:backdrop-blur-xl"
 >
   <Container>
     <div class="flex justify-center md:justify-start md:border-b border-border gap-2">
@@ -68,16 +68,18 @@ const currentPath = pathname.slice(1);
   </Container>
 </nav>
 
-<style>
+<style >
+.active-link {
+}
 .active-link::before {
-  content: "";
+  content: "asdasd";
   position: absolute;
   bottom: 0;
   left: 50%;
   width: 100%;
   height: 2px;
   filter: blur(1px);
-  background: linear-gradient(90deg,transparent,hsla(var(--primary)),transparent);
+  background: linear-gradient(90deg,transparent, var(--primary) ,transparent);
   transform: translate(-50%);
 }
 </style>

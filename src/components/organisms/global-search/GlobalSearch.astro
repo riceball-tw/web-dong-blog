@@ -9,7 +9,7 @@ import * as m from "@/paraglide/messages";
 
 <site-search class="ms-auto" id="search">
 	<button
-		class="flex items-center justify-center rounded-md opacity-60 hover:opacity-100"
+		class="cursor-pointer flex items-center justify-center rounded-md opacity-60 hover:opacity-100"
 		data-open-modal
 		disabled
 	>
@@ -23,14 +23,14 @@ import * as m from "@/paraglide/messages";
 		--max-height-dialog: calc( 100% - 8rem );
 		"
 		aria-label="search"
-		class="h-full max-h-full w-full max-w-full bg-background shadow backdrop:backdrop-blur md:mx-auto md:mb-auto md:mt-16 md:h-max md:max-h-[--max-height-dialog] md:min-h-[--min-height-dialog] md:w-5/6 md:max-w-[--max-width-dialog] md:rounded-md"
+		class="h-full max-h-full w-full max-w-full bg-background shadow-sm backdrop:backdrop-blur md:mx-auto md:mb-auto md:mt-16 md:h-max md:max-h-[--max-height-dialog] md:min-h-[--min-height-dialog] md:w-5/6 md:max-w-[--max-width-dialog] md:rounded-md"
 	>
 		<div class="dialog-frame flex flex-col gap-4 p-6 md:p-12">
 
 			<div class="flex justify-between pb-2 font-bold">
 				<h2 class="text-xl">{m.basic_orange_skunk_charm()}</h2>
 				
-				<Button class="self-end" data-close-modal variant="outline" size="lg">
+				<Button class="self-end cursor-pointer" data-close-modal variant="outline" size="lg">
 					{m.loose_mellow_gecko_splash()}
 				</Button>
 			</div>

@@ -39,14 +39,14 @@ const uniqueCategories = youtubeChannels
 <ul class="mb-8 flex flex-wrap gap-4 whitespace-nowrap" data-category-container>
   <li>
     <Badge>
-      <button disabled class="disabled:opacity-60" data-category-filter="all" type="button">全部</button>
+      <button disabled class="disabled:opacity-60 cursor-pointer disabled:cursor-auto" data-category-filter="all" type="button">全部</button>
     </Badge>
   </li>
   {
     uniqueCategories.map((category: string) => (
         <li>
           <Badge>
-            <button class="disabled:opacity-60" data-category-filter={category} type="button">
+            <button class="disabled:opacity-60 cursor-pointer disabled:cursor-auto" data-category-filter={category} type="button">
               {category}
             </button>
           </Badge>
