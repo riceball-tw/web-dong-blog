@@ -1,8 +1,8 @@
-import { defaultLocale } from '../../../src/utils/i18n.ts';
-
 describe('Post is effective', () => {
+  const locale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
-    cy.visit(`${defaultLocale}/post/demo-post`);
+    cy.visit(`${locale}/post/demo-post`);
   });
 
   it('Header should visible and working', () => {

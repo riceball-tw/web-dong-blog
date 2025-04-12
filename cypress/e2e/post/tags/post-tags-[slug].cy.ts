@@ -1,7 +1,9 @@
 describe('Tag page is effective', () => {
+  const locale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
     const categorySlug = 'TagOne';
-    cy.visit(`post/tags/${categorySlug}`);
+    cy.visit(`${locale}/post/tags/${categorySlug}`);
   });
 
   it('Tags link is working', () => {

@@ -1,0 +1,7 @@
+/             /zh-tw/                      301
+/post         /zh-tw/post                  301
+/post/*       /zh-tw/post/:splat           301
+/toolbox      /zh-tw/toolbox               301
+/toolbox/*    /zh-tw/toolbox/:splat        301
+/shortpost    /zh-tw/shortpost             301
+/shortpost/*  /zh-tw/shortpost/:splat      301
