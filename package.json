@@ -57,7 +57,7 @@
     "sanitize-html": "^2.11.0",
     "sharp": "^0.31.3",
     "tailwind-merge": "^3.2.0",
-    "tailwindcss": "^4.1.3",
+    "tailwindcss": "4.0.9",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-fluid-type": "3.0.0--.beta.2",
     "tw-animate-css": "^1.2.5",
