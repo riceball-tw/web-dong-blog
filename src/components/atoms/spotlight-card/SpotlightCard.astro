@@ -8,12 +8,12 @@ export interface Props extends HTMLAttributes<'div'> {
 }
 
 const { themeColor, class: className, ...attrs } = Astro.props;
-const cardDefaultBorderColor = themeColor ? hexToRgba(themeColor, 0.2) : 'hsla(var(--primary) / 0.2)';
-const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.6) : 'hsla(var(--primary) / 0.6)';
-const cardFillColor = themeColor ? hexToRgba(themeColor, 1) : 'hsla(var(--primary) / 1)';
-const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.1) : 'hsla(var(--primary) / 0.05)';
-const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'hsla(var(--primary) / 0.1)';
-const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'hsla(var(--primary) / 0.2)';
+const cardDefaultBorderColor = themeColor ? hexToRgba(themeColor, 0.2) : 'color-mix(in oklch, var(--primary) 20%, transparent)';
+const cardBorderColor = themeColor ? hexToRgba(themeColor, 0.6) : 'color-mix(in oklch, var(--primary) 60%, transparent)';
+const cardFillColor = themeColor ? hexToRgba(themeColor, 1) : 'color-mix(in oklch, var(--primary) 100%, transparent)';
+const cardShadowColor = themeColor ? hexToRgba(themeColor, 0.1) : 'color-mix(in oklch, var(--primary) 5%, transparent)';
+const cardHoverFillColor = themeColor ? hexToRgba(themeColor, 0.1) : 'color-mix(in oklch, var(--primary) 10%, transparent)';
+const cardHoverActiveColor = themeColor ? hexToRgba(themeColor, 0.2) : 'color-mix(in oklch, var(--primary) 20%, transparent)';
 const cardAnimationCurve = 'ease-[cubic-bezier(0.30,0.70,0.40,0.10)]'
 const cardActiveDuraction = 'active:duration-[34ms]'
 const borderRadius = '8px'

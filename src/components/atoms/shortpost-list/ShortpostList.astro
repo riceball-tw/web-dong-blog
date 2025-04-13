@@ -52,7 +52,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
           </a>
           {/* Content */}
           {
-            isActiveShort ? <div class="prose md:prose-2xl"><slot /></div> : ''
+            isActiveShort ? <div class="prose md:prose-2xl max-w-[65ch]"><slot /></div> : ''
           }
           {/* Social */}
           {shortpost.data?.social ? <div class={`pt-4 ${(isActiveShort) ? '' : 'hidden'}`}>

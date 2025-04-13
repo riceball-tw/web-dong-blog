@@ -1,5 +1,5 @@
 import { defineConfig, passthroughImageService } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
@@ -18,7 +18,7 @@ import { languages, prefixDefaultLocale, defaultLocale, baseUrl } from './src/ut
 // https://astro.build/config
 export default defineConfig({
   image: {
-    service: passthroughImageService() // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
+    service: passthroughImageService(), // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
   },
   i18n: {
     defaultLocale,
@@ -115,11 +115,6 @@ export default defineConfig({
     },
   },
   integrations: [
-    tailwind({
-      config: {
-        applyBaseStyles: false,
-      },
-    }),
     expressiveCode({
       themes: ['github-light', 'github-dark'],
       // themeCssSelector
@@ -151,4 +146,7 @@ export default defineConfig({
       outdir: './src/paraglide',
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
