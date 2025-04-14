@@ -64,7 +64,7 @@ const isSubheadlineEqualHeadline = subHeadline === headline
   <Container>
     <main class="mt-0 pt-8 px-2 sm:mt-[var(--mainNav-height)]">
       <article
-        data-pagefind-body={Astro.currentLocale !== defaultLocale || undefined}
+        data-pagefind-body={Astro.currentLocale}
         data-article
         data-cy="post-content"
         class=`article-grid [grid-template-columns:1fr_min(65ch,_100%)_1fr] lg:px-auto prose mb-16 block w-full max-w-none md:prose-xl lg:grid ${rehypeAutoLinkStyle}`

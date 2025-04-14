@@ -8,10 +8,9 @@ import * as m from "@/paraglide/messages";
 export type Props = {
   shortposts: ShortpostPage[]
   currentSlug?: string
-  isSearchAble?: boolean
 } 
 
-const { shortposts, currentSlug, isSearchAble } = Astro.props
+const { shortposts, currentSlug } = Astro.props
 const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
 ---
 <ul class="space-y-4 md:space-y-8">
@@ -31,7 +30,8 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
         {/* Index */}
         <div class={`hidden sm:block ${isActiveShort ? 'font-bold' : ''}`}>#{shortposts.length - index}</div>
-        <div class="w-full" data-pagefind-body={isSearchAble && isActiveShort  || undefined}>
+        {/* When it's falsy value, || undefined is necessary for hide whole attribute, to avoid pagefind index  */}
+        <div class="w-full" data-pagefind-body={isActiveShort || undefined}>
           {/* Title */}
           <a class={`hover:opacity-100 
             ${isActiveShort ? 'opacity-100 mb-4 inline-block' : ''}
