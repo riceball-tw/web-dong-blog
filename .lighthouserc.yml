@@ -3,11 +3,11 @@ ci:
     numberOfRuns: 1
     startServerCommand: astro preview
     url:
-      - http://localhost:4321/
-      - http://localhost:4321/post
-      - http://localhost:4321/post/rendering-pattern/ # Complex post demo
-      - http://localhost:4321/toolbox
-      - http://localhost:4321/shortpost
+      - http://localhost:4321/zh-tw/
+      - http://localhost:4321/zh-tw/post
+      - http://localhost:4321/zh-tw/post/rendering-pattern/ # Complex post demo
+      - http://localhost:4321/zh-tw/toolbox
+      - http://localhost:4321/zh-tw/shortpost
 
   assert:
     preset: 'lighthouse:no-pwa'

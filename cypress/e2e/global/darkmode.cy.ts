@@ -1,7 +1,9 @@
 describe('Darkmode is effective', () => {
+  const defaultLocale = Cypress.env('defaultLocale');
+
   // Manually toggle, preference should be remembered after revisit
   it('Toggle Theme', () => {
-    cy.visit('/');
+    cy.visit(`/${defaultLocale}/`);
     cy.get('html').as('theme-element');
 
     // 1. Manually Toggle Theme should work
@@ -19,7 +21,7 @@ describe('Darkmode is effective', () => {
     cy.get('@theme-element').should('have.attr', 'data-theme', 'light');
 
     // 4. After switch to different page toggle should work
-    cy.visit('/post');
+    cy.visit(`/${defaultLocale}/post`);
     cy.dataCy('theme-toggle').shadow().find('[data-cy="theme-toggle-button"]').click();
     cy.get('@theme-element').should('have.attr', 'data-theme', 'dark');
   });

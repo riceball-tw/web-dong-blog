@@ -1,6 +1,8 @@
 describe('Home page should work', () => {
+  const defaultLocale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit(`/${defaultLocale}/`);
   });
 
   it('Last update link should work', () => {

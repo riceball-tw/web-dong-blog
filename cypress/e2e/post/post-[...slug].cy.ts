@@ -1,6 +1,6 @@
-import { defaultLocale } from '../../../src/utils/i18n.ts';
-
 describe('Post is effective', () => {
+  const defaultLocale = Cypress.env('defaultLocale');
+
   beforeEach(() => {
     cy.visit(`${defaultLocale}/post/demo-post`);
   });

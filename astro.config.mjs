@@ -25,13 +25,12 @@ export default defineConfig({
     locales: Object.keys(languages),
     routing: {
       prefixDefaultLocale,
+      redirectToDefaultLocale: false,
     },
   },
   site: baseUrl,
   prefetch: true,
   redirects: {
-    '/short': '/shortpost',
-    '/short/[...slug]': '/shortpost/[...slug]',
     // Typo in post
     '/post/the-dailies-a-good-way-to-eliminate-teaam-learning-debt':
       '/post/the-dailies-a-good-way-to-eliminate-team-learning-debt',
