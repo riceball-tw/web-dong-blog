@@ -25,6 +25,7 @@ export default defineConfig({
     locales: Object.keys(languages),
     routing: {
       prefixDefaultLocale,
+      redirectToDefaultLocale: false,
     },
   },
   site: baseUrl,
