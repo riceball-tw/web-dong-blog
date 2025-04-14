@@ -49,16 +49,16 @@ export function getStaticPaths() {
       <span class="text-primary">
         <!-- Edit -->
         <span class="relative inline-flex">
-          <span id="draggable" style="--selection: hsl(var(--primary))" class="inline-flex border border-[--selection] whitespace-nowrap cursor-move">
+          <span id="draggable" style="--selection: var(--primary)" class="inline-flex border border-(--selection) whitespace-nowrap cursor-move">
             {m.nice_equal_wallaby_slide()}
-            <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
-            <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-[--selection]"></span>
+            <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+            <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
           </span>
         </span>
           {m.equal_stock_newt_aid()}
@@ -125,6 +125,7 @@ export function getStaticPaths() {
     </Container>
   </section>
 </BlogBase>
+
 
 
 <script is:inline>
