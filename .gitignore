@@ -34,3 +34,7 @@ public/pagefind
 src/content/post
 src/content/shortpost
 src/content/toolbox
+
+# Cloudflare wrangler
+.wrangler
+functions/types.d.ts
