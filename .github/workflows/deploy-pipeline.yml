@@ -76,6 +76,9 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
+      - name: Environment Setup
+        uses: ./.github/actions/setup
+
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3.14.1
         with:
