@@ -30,6 +30,7 @@
     "@astrojs/rss": "^4.0.10",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/vue": "^5.0.3",
+    "@cloudflare/pages-plugin-vercel-og": "^0.1.2",
     "@inlang/paraglide-astro": "^0.2.2",
     "@monaco-editor/react": "^4.6.0",
     "@pagefind/default-ui": "^1.3.0",
@@ -63,7 +64,9 @@
     "tw-animate-css": "^1.2.5",
     "typescript": "^5.4.3",
     "uniqolor": "^1.1.0",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "wrangler": "^4.10.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@iconify-json/devicon-plain": "^1.1.36",
