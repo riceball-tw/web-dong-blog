@@ -73,6 +73,9 @@ jobs:
           name: dist
           path: dist
 
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
       - name: Publish to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3.14.1
         with:
