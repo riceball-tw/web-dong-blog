@@ -36,10 +36,10 @@ export default app.get('/', async (c) => {
     // Font Configuration
 
     // ********************** Google Fonts ********************** //
-    const font = await Promise.all([
-      googleFont(`${mainText ?? ''}`, 'Noto Sans TC', 900, 'normal'),
-      googleFont(`${description ?? ''}`, 'Noto Sans TC', 500, 'normal'),
-    ]);
+    // const font = await Promise.all([
+    //   googleFont(`${mainText ?? ''}`, 'Noto Sans TC', 900, 'normal'),
+    //   googleFont(`${description ?? ''}`, 'Noto Sans TC', 500, 'normal'),
+    // ]);
 
     // ********************** Github Fonts ********************** //
     // const font = await githubFonts();
@@ -56,13 +56,13 @@ export default app.get('/', async (c) => {
     // const font = await getLocalFont(c, 'Poppins-Regular.ttf', 400, 'normal');
 
     // ********************** Local Fonts ********************** //
-    // const font = await getLocalFonts(c, [
-    //   { path: 'Poppins-Regular.ttf', weight: 400 },
-    //   { path: 'Poppins-Medium.ttf', weight: 500 },
-    //   { path: 'Poppins-SemiBold.ttf', weight: 600 },
-    //   { path: 'Poppins-Bold.ttf', weight: 700 },
-    //   { path: 'Poppins-Black.ttf', weight: 900 },
-    // ]);
+    const font = await getLocalFonts(c, [
+      { path: 'NotoSansTC-Bold.ttf', weight: 900 },
+      { path: 'NotoSansTC-Regular.ttf', weight: 500 },
+      // { path: 'Poppins-SemiBold.ttf', weight: 600 },
+      // { path: 'Poppins-Bold.ttf', weight: 700 },
+      // { path: 'Poppins-Black.ttf', weight: 900 },
+    ]);
 
     // END Font Configuration
 
