@@ -9,16 +9,15 @@ const app = new Hono();
 
 export default app.get('/', async (c) => {
   try {
-    const { mainText, description } = c.req.query();
+    const { title, content } = c.req.query();
 
     // Add input validation
-    if (!mainText || !description) {
+    if (!title || !content) {
       throw new Error('Missing required query parameters');
     }
 
     const SocialCardTemplate = await (async () => {
       const style = c.req.query('style');
-      console.log('Selected style:', style);
 
       switch (style) {
         // case '2':
@@ -28,7 +27,10 @@ export default app.get('/', async (c) => {
         // case '4':
         //   return Style4();
         default:
-          return styleDefault();
+          return styleDefault({
+            title,
+            content,
+          });
       }
     })();
 
@@ -69,8 +71,8 @@ export default app.get('/', async (c) => {
     // console.log(font);
     // -----------------------------------------
 
-    function styleDefault() {
-      // http://127.0.0.1:8787/og?mainText=Building%20the%20Future%20of%20Web%20Development&description=Explore%20modern%20frameworks,%20serverless%20architecture,%20and%20cutting-edge%20tools%20that%20power%20the%20next%20generationof%20web%20applications&footerText=%F0%9F%9A%80%20Powered%20by%20Next.js%20%E2%80%A2%20TypeScript%20%E2%80%A2%20Tailwind%20CSS&style=1
+    function styleDefault({ title, content }: { title: string; content: string; themeColor: string }) {
+      // localhost:8788/api/og?title=foo&content=bar
 
       return (
         <div
@@ -101,25 +103,97 @@ export default app.get('/', async (c) => {
               flex: 1,
               display: 'flex',
               flexDirection: 'column',
-              padding: '48px',
+              padding: '3rem',
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               borderRadius: '1rem',
               border: '2px solid rgba(255, 255, 255, 0.2)',
             }}
           >
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                position: 'absolute',
+                top: '-2rem',
+                left: '3rem',
+                width: '8rem',
+                height: '8rem',
+                borderRadius: '1rem',
+                backgroundSize: '8rem 8rem',
+                backgroundRepeat: 'no-repeat',
+              }}
+            >
+              <svg style={{ width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+                <defs>
+                  <radialGradient
+                    id="prefix__a"
+                    cx="29.57"
+                    cy="-147.74"
+                    r="39.06"
+                    fx="29.57"
+                    fy="-147.74"
+                    gradientTransform="translate(0 204.88)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset=".26" stop-color="#b887f7" stop-opacity=".8" />
+                    <stop offset=".84" stop-color="#534af7" stop-opacity=".8" />
+                  </radialGradient>
+                  <radialGradient
+                    id="prefix__c"
+                    cx="29.65"
+                    cy="-152.73"
+                    r="31.87"
+                    fx="29.65"
+                    fy="-152.73"
+                    gradientTransform="translate(0 204.88)"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop offset=".26" stop-color="#b887f7" stop-opacity=".8" />
+                    <stop offset=".84" stop-color="#534af7" stop-opacity=".8" />
+                  </radialGradient>
+                  <linearGradient id="prefix__b" x1="30" x2="30" y1="53.14" y2="6.93" gradientUnits="userSpaceOnUse">
+                    <stop offset="0" stop-color="#b887f7" stop-opacity="0" />
+                    <stop offset="1" stop-color="#fff" stop-opacity=".4" />
+                  </linearGradient>
+                  <clipPath id="prefix__d">
+                    <path d="M20.01 20.46l7.72-4.49 11.12 6.42-7.73 4.48-11.11-6.41z" fill="none" />
+                  </clipPath>
+                </defs>
+                <path
+                  d="M54.45 35.73L51.7 24.41c-.29-1.05-.5-2.11-.71-3.2-.22-1.24-1.02-2.33-2.21-3.01L32.45 9.04a5.046 5.046 0 00-4.91 0l-16.33 9.14A4.465 4.465 0 009 21.19c-.21 1.07-.4 2.14-.71 3.2L5.56 35.73c-.29 1.76.52 3.42 2.14 4.35l19.23 10.78a6.254 6.254 0 006.13 0l19.22-10.8c1.64-.92 2.44-2.57 2.16-4.34z"
+                  fill="url(#prefix__a)"
+                />
+                <path
+                  d="M29.99 8.41c.85 0 1.69.21 2.45.64l16.33 9.16c1.19.67 1.99 1.76 2.21 3.01.21 1.09.41 2.14.71 3.2l2.75 11.32c.28 1.76-.52 3.42-2.16 4.34l-19.22 10.8c-.95.54-2.01.8-3.07.8s-2.12-.27-3.07-.8L7.69 40.1c-1.62-.93-2.44-2.59-2.14-4.35l2.73-11.34c.31-1.05.5-2.13.71-3.2a4.518 4.518 0 012.21-3.01l16.33-9.14a5.09 5.09 0 012.45-.64m0-1.48c-1.11 0-2.21.28-3.17.82L10.48 16.9c-1.51.85-2.58 2.3-2.94 4l-.08.42c-.18.93-.35 1.81-.6 2.66v.04l-.02.04L4.11 35.4v.05l-.02.05c-.4 2.38.7 4.64 2.86 5.88L26.2 52.17c1.15.65 2.46.99 3.79.99s2.64-.34 3.79-.99l19.21-10.8c2.16-1.21 3.27-3.45 2.9-5.86v-.06l-.02-.06-2.75-11.32c-.29-1.04-.48-2.03-.69-3.12-.3-1.66-1.37-3.13-2.94-4.02L33.16 7.77c-.97-.54-2.07-.82-3.18-.82z"
+                  fill="url(#prefix__b)"
+                />
+                <path
+                  d="M49.95 34.68l-2.24-9.24c-.24-.86-.41-1.72-.58-2.61-.18-1.02-.83-1.9-1.8-2.45L32 12.91a4.123 4.123 0 00-4 0l-13.33 7.46c-.96.54-1.59 1.44-1.8 2.45-.17.87-.32 1.75-.58 2.61l-2.23 9.25c-.24 1.44.42 2.79 1.75 3.55l15.69 8.8c1.55.87 3.45.87 5.01 0l15.68-8.81c1.34-.75 1.99-2.1 1.76-3.54z"
+                  fill="url(#prefix__c)"
+                />
+                <g clip-path="url(#prefix__d)">
+                  <path
+                    d="M38.85 22.39l-2.04-1.18-6.76 2.62 4.3-4.04-2.09-1.2-7 2.47 4.5-3.92-2.03-1.17-5.75 5.63 2.29 1.32 6.37-2.21-3.84 3.67 2.3 1.32 9.75-3.31"
+                    fill="#fff"
+                  />
+                </g>
+              </svg>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div
                 style={{
+                  marginTop: '3.5rem',
+                  display: 'flex',
                   fontWeight: 900,
                   lineHeight: 1.1,
                   color: 'white',
                 }}
                 tw="text-7xl"
               >
-                使用 preload、prefetch、dns源載入順序！
+                {title}
               </div>
               <div
                 style={{
+                  display: 'flex',
                   fontWeight: 500,
                   marginTop: '2rem',
                   lineHeight: 1.5,
@@ -128,8 +202,7 @@ export default app.get('/', async (c) => {
                 }}
                 tw="text-2xl"
               >
-                近期看到 Web Dev Simplified
-                推出的教學促使我趕緊打開這篇文章記錄其中提到的網頁無障礙需要留意的地方，並且補充上一些我自己實驗有幫助的資訊。無障礙一直是我想重視但實際開發時優先順序總是排在最後的要求，差勁的無障礙對某些使用者來說會嚴重影響到網頁互動的體驗，身為前端讓網頁保持良好的無障礙是基本責任。
+                {content}
               </div>
             </div>
           </div>

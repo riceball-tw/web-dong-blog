@@ -40,15 +40,21 @@ export async function getStaticPaths() {
 
 const { post, postsInSeries } = Astro.props;
 const { icon, subHeadline, headline, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
-const { slug } = post;
 const { Content, headings } = await post.render();
 const author = post.data.author && (await getEntry('character', post.data.author?.id));
 const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
 const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
 const isSubheadlineEqualHeadline = subHeadline === headline
+const ogImage = {
+  title: headline,
+  content: excerpt,
+}
+const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`
+
+const ogImageUrl = `/api/og?${query}`
 ---
 
-<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: `/post/${stripLanguageCode(slug)}`, alt: `${headline}` }}>
+<BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <PostJSONLD
     slot="head"
     headline={post.data.headline}
