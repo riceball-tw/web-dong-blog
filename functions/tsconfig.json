@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext"],
+    "types": ["./types.d.ts"],
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "@/*": ["../src/*"],
+      "@public/*": ["../public/*"]
+    }
+  }
+}

@@ -13,7 +13,7 @@ const seoTitle = `${title || brand.slogan } - ${ brand.name }`;
 const seoDescription = description || brand.description;
 const seoImage = {
   src: thumbnail?.src
-    ? new URL(`${thumbnail.src}/og.png`, Astro.url)
+    ? new URL(`${thumbnail.src}`, Astro.url)
     : new URL(brand.thumbnail.src, Astro.url),
   width: thumbnail?.width ?? brand.thumbnail.width,
   height: thumbnail?.height ?? brand.thumbnail.height,

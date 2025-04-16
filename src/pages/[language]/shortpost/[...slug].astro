@@ -26,8 +26,17 @@ const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.
   .flat()
   .join(' ')
   .substring(0, maxLength)
+const excerpt = createExcerpt(shortpost.body)
+
+const ogImage = {
+  title: headline,
+  content: excerpt
+}
+
+const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`
+const ogImageUrl = `/api/og?${query}`
 ---
-<BlogBase title={headline} description={createExcerpt(shortpost.body)} thumbnail={{ src: `/shortpost/${shortpost.slug}`, alt: `${headline}` }}>
+<BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
       <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
