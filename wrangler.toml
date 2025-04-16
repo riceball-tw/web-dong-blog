@@ -1,3 +1,6 @@
 name = "astro-blog"
 compatibility_date = "2025-04-14"
 pages_build_output_dir = "./dist"
+
+[limits]
+cpu_ms = 100_000
