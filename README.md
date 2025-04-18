@@ -11,9 +11,6 @@ I was a frontend teaching assistant before, to share learning for students so I 
 ## Getting Started
 
 > [!NOTE]
->
-> - Q: Why is every page has 2 version, one in `src/pages` folder and one in `src/pages/[language]` folder?
->   - A: To support i18n, we need to have a `src/pages/[language]` folder to generate different pages of languages. In the future they will be merge together, user will be redirect to related lang. For smooth i18n transition and avoid too much breaking changes(redirect). That's the workaround for now.
 > - Q: Why is i18n key naming so random?
 >   - A: [human readable and random ids for messages by default](https://github.com/opral/monorepo/issues/1892#issuecomment-1858038586)
 
