@@ -5,12 +5,13 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import { translateCategory, defaultLocale, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 
+type ShortpostPage = CollectionEntry<'shortpost'>;
+
 export type Props = {
   shortposts: ShortpostPage[]
   currentSlug?: string
 } 
 
-type ShortpostPage = CollectionEntry<'shortpost'>;
 
 const { shortposts, currentSlug } = Astro.props
 const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
