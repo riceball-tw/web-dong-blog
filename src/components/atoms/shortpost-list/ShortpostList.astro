@@ -1,5 +1,5 @@
 ---
-import type { ShortpostPage } from '@/types/static-pages'
+import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { translateCategory, defaultLocale, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
@@ -9,6 +9,8 @@ export type Props = {
   shortposts: ShortpostPage[]
   currentSlug?: string
 } 
+
+type ShortpostPage = CollectionEntry<'shortpost'>;
 
 const { shortposts, currentSlug } = Astro.props
 const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
