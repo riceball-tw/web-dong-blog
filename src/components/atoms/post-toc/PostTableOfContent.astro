@@ -62,25 +62,27 @@ const { headings } = Astro.props
 </style>
 
 <script>
-  function setTocObserver() {
-    const tocLinks = document.querySelectorAll('[data-toc-link]');
-    const observerOptions = { threshold: 1, rootMargin: '-5% 0% -5% 0%'}
-    return new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          tocLinks.forEach((link) => {
-            const isHeadingAndTocLinkContentMatched = entry.target.textContent === link?.textContent?.trim()
-            link.classList.remove('toc-active-link');
-            link.classList.add('toc-link');
-            if (isHeadingAndTocLinkContentMatched) {
-              link.classList.add('toc-active-link');
-              link.classList.remove('toc-link');
-            }
-          });
-        }
-      });
-    }, observerOptions);
-  }
+function setTocObserver() {
+  const tocLinks = document.querySelectorAll('[data-toc-link]');
+  const observerOptions = { threshold: 1, rootMargin: '-5% 0% -5% 0%' }
+
+  return new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach((link) => {
+          if (!(link instanceof HTMLAnchorElement)) return;
+          const isMatched = decodeURIComponent(link.hash.slice(1)) === entry.target.id;
+          link.classList.remove('toc-active-link');
+          link.classList.add('toc-link');
+          if (isMatched) {
+            link.classList.add('toc-active-link');
+            link.classList.remove('toc-link');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+}
 
   function tocInit() {
     const avaliableHeadings = document.querySelectorAll<HTMLHeadingElement>('[data-article] h2, h3');
