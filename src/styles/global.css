@@ -232,4 +232,32 @@ html[data-theme='dark'] {
     background-color: hsla(var(--primary));
     color: hsla(var(--primary-foreground));
   }
+
+  /* Some kind of Mermaid graph is unreadable in darkmode #185 */
+  /* Since mermaid diagrams are pre-generated, force style on client is the cheapeast way to fix */
+  /* Solution from: https://github.com/ratatui/ratatui-website/blob/main/src/tailwind.css */
+  svg[aria-roledescription='sequence'] .messageText {
+    fill: currentColor !important;
+  }
+  svg[aria-roledescription='sequence'] line,
+  svg[aria-roledescription='sequence'] path,
+  svg[aria-roledescription='sequence'] .flowchart-link {
+    stroke: currentColor !important;
+  }
+  svg[aria-roledescription='flowchart-v2'] .arrowMarkerPath {
+    fill: currentColor;
+  }
+  svg[aria-roledescription='flowchart-v2'] line,
+  svg[aria-roledescription='flowchart-v2'] path,
+  svg[aria-roledescription='flowchart-v2'] .flowchart-link {
+    stroke: currentColor !important;
+  }
+  svg[aria-roledescription='stateDiagram'] {
+    line-height: normal;
+  }
+  svg[aria-roledescription='stateDiagram'] line,
+  svg[aria-roledescription='stateDiagram'] path,
+  svg[aria-roledescription='stateDiagram'] circle {
+    stroke: currentColor !important;
+  }
 }
