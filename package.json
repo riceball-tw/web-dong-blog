@@ -66,7 +66,7 @@
     "uniqolor": "^1.1.0",
     "vue": "^3.4.29",
     "wrangler": "^4.10.0",
-    "zod": "^3.24.2"
+    "zod": "^3.25.1"
   },
   "devDependencies": {
     "@iconify-json/devicon-plain": "^1.1.36",
