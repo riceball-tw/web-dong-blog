@@ -23,9 +23,14 @@ export default defineConfig({
   i18n: {
     defaultLocale,
     locales: Object.keys(languages),
+    fallback: {
+      'zh-cn': 'zh-tw',
+      en: 'zh-tw',
+    },
     routing: {
       prefixDefaultLocale,
       redirectToDefaultLocale: false,
+      fallbackType: 'rewrite',
     },
   },
   site: baseUrl,
