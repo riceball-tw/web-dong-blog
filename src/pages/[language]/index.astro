@@ -129,32 +129,48 @@ export function getStaticPaths() {
 
 
 <script is:inline>
-const draggable = document.getElementById('draggable');
-
-let posX = 0;
-let posY = 0;
-let mouseX = 0;
-let mouseY = 0;
-
-function moveElement(e) {
-  mouseX = e.clientX - posX;
-  mouseY = e.clientY - posY;
-  draggable.style.left = `${mouseX}px`;
-  draggable.style.top = `${mouseY}px`;
-}
-
-function mouseDown(e) {
-  e.preventDefault();
-  e.target.style.position = 'absolute';
-  posX = e.clientX - draggable.offsetLeft;
-  posY = e.clientY - draggable.offsetTop;
-  window.addEventListener('mousemove', moveElement, false);
-}
-
-function mouseUp() {
-  window.removeEventListener('mousemove', moveElement, false);
-}
-
-draggable.addEventListener('mousedown', mouseDown, false);
-window.addEventListener('mouseup', mouseUp, false);
-</script>
+  const draggable = document.getElementById('draggable');
+  
+  let posX = 0;
+  let posY = 0;
+  let startX = 0;
+  let startY = 0;
+  
+  function getClientX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX;
+  }
+  
+  function getClientY(e) {
+    return e.touches ? e.touches[0].clientY : e.clientY;
+  }
+  
+  function moveElement(e) {
+    e.preventDefault();
+    const x = getClientX(e) - posX;
+    const y = getClientY(e) - posY;
+    draggable.style.left = `${x}px`;
+    draggable.style.top = `${y}px`;
+  }
+  
+  function dragStart(e) {
+    e.preventDefault();
+    draggable.style.position = 'absolute';
+    posX = getClientX(e) - draggable.offsetLeft;
+    posY = getClientY(e) - draggable.offsetTop;
+  
+    window.addEventListener('mousemove', moveElement, false);
+    window.addEventListener('touchmove', moveElement, { passive: false });
+  }
+  
+  function dragEnd() {
+    window.removeEventListener('mousemove', moveElement, false);
+    window.removeEventListener('touchmove', moveElement, false);
+  }
+  
+  draggable.addEventListener('mousedown', dragStart, false);
+  draggable.addEventListener('touchstart', dragStart, { passive: false });
+  
+  window.addEventListener('mouseup', dragEnd, false);
+  window.addEventListener('touchend', dragEnd, false);
+  </script>
+  
