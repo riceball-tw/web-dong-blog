@@ -49,7 +49,7 @@ const { icon, headline, excerpt, publishDate, themeColor,tagHrefs, tags, categor
         {slug && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(slug)}/`)}>{headline}</a>}
         {!url && !slug && headline}
       </h2>
-      <p class="line-clamp-3 text-sm">{excerpt}</p>
+      <p class="line-clamp-3 prose">{excerpt}</p>
     </div>
     <div class="flex flex-wrap items-center justify-between">
       {
