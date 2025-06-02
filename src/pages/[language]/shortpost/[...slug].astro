@@ -38,7 +38,7 @@ const ogImageUrl = `/api/og?${query}`
 ---
 <BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <Container>
-    <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 sm:mt-[var(--mainNav-height)]">
+    <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 px-6 sm:mt-[var(--mainNav-height)]">
       <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
         <Content components={{ img: PostImage }}  />
       </ShortpostList>
