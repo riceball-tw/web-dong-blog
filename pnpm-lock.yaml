@@ -32,6 +32,9 @@ importers:
       '@cloudflare/pages-plugin-vercel-og':
         specifier: ^0.1.2
         version: 0.1.2
+      '@fontsource-variable/inter':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@inlang/paraglide-astro':
         specifier: ^0.2.2
         version: 0.2.2(astro@5.8.1(@types/node@18.17.17)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.41.1)(typescript@5.4.3)(yaml@2.6.1))
@@ -1074,6 +1077,9 @@ packages:
 
   '@floating-ui/vue@1.0.6':
     resolution: {integrity: sha512-EdrOljjkpkkqZnrpqUcPoz9NvHxuTjUtSInh6GMv3+Mcy+giY2cE2pHh9rpacRcZ2eMSCxel9jWkWXTjLmY55w==}
+
+  '@fontsource-variable/inter@5.2.5':
+    resolution: {integrity: sha512-TrWffUAFOnT8zroE9YmGybagoOgM/HjRqMQ8k9R0vVgXlnUh/vnpbGPAS/Caz1KIlOPnPGh6fvJbb7DHbFCncA==}
 
   '@formatjs/ecma402-abstract@1.18.2':
     resolution: {integrity: sha512-+QoPW4csYALsQIl8GbN14igZzDbuwzcpWrku9nyMXlaqAlwRBgl5V+p0vWMGFqHOw37czNXaP/lEk4wbLgcmtA==}
@@ -8198,6 +8204,8 @@ snapshots:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
+
+  '@fontsource-variable/inter@5.2.5': {}
 
   '@formatjs/ecma402-abstract@1.18.2':
     dependencies:
