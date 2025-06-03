@@ -12,6 +12,7 @@ import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
 import { stripLanguageCode, languages, translateCategory, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import { Icon } from 'astro-icon/components'
 
 const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
@@ -24,8 +25,6 @@ const categoriesLists = sortedPostCategoryies.map((category) => ({
 const currentTime = new Date()
   .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
   .replace(/\//g, '-');
-
-const {currentLocale} = Astro
 
 export function getStaticPaths() {
   return Object.keys(languages).map(language => ({
@@ -42,30 +41,35 @@ export function getStaticPaths() {
     <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={projectUpdateBadgeUrl}>
       <Badge class="text-center">{`${m.north_tense_hedgehog_inspire()} ${currentTime}`}</Badge>
     </a>
-    <div slot="headline" style={`max-width: ${currentLocale === 'en' ? '1600' : '1400'}px`}>
-      <span>{m.vivid_quick_giraffe_read()}</span>
-      <span class="text-primary">{m.each_main_toucan_dine()}</span>
-      <span>{m.same_tasty_swallow_cuddle()}</span>
-      <span class="text-primary">
-        <!-- Edit -->
-        <span class="relative inline-flex">
-          <span id="draggable" style="--selection: var(--primary)" class="inline-flex border border-(--selection) whitespace-nowrap cursor-move">
-            {m.nice_equal_wallaby_slide()}
-            <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
-            <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-(--selection)"></span>
+    <div class="container mx-auto tracking-tight leading-tight text-center" slot="headline" >
+        <!-- Line-1 -->
+        <div><span>Webdong.dev</span> <span class="whitespace-nowrap">{m.away_trite_antelope_drip()}</span></div>
+        <!-- Line-2 -->
+        <div>
+          <!-- Design -->
+          <span class="relative inline-flex">
+            <span id="draggable" class="translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
+              <Icon class="lg:inline" style="width: 5vw; height:5vw; max-width: 84px; max-height: 84px; min-width: 48px; min-height: 48px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
+              {m.nice_equal_wallaby_slide()}
+              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+            </span>
           </span>
-        </span>
-          {m.equal_stock_newt_aid()}
-          <!-- </> -->
-          <span class="whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>'] " contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
-          {m.inner_petty_giraffe_drip()}
-      </span>
+            &
+          <!-- <develop/> -->
+            <span class="font-mono whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>']" style="font-kerning: auto;" contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
+        </div>
+
+        <!-- Line-3 -->
+          <div>
+             {m.pretty_key_guppy_amuse()}<span class="italic [&:lang(zh-cn)]:not-italic [&:lang(zh-tw)]:not-italic">{m.inner_petty_giraffe_drip()}</span><Icon style="width: 5vw; height:5vw; max-width: 96px; max-height: 96px; min-width: 32px; min-height: 32px;" class="hidden lg:inline animate-bounce" size={96} name={'material-symbols:sentiment-excited-outline-rounded'}  />
+          </div>
     </div>
     {import.meta.env.PROD && <GlobalSearchInput placeholderText={m.awake_quiet_ape_emerge()}/>}
   </Hero>
@@ -126,8 +130,6 @@ export function getStaticPaths() {
   </section>
 </BlogBase>
 
-
-
 <script is:inline>
   const draggable = document.getElementById('draggable');
   
@@ -153,6 +155,7 @@ export function getStaticPaths() {
   function dragStart(e) {
     e.preventDefault();
     draggable.style.position = 'absolute';
+    draggable.style.cursor = 'grabbing';
     posX = getClientX(e) - draggable.offsetLeft;
     posY = getClientY(e) - draggable.offsetTop;
   
@@ -161,6 +164,7 @@ export function getStaticPaths() {
   }
   
   function dragEnd() {
+    draggable.style.cursor = 'grab';
     window.removeEventListener('mousemove', moveElement, false);
     window.removeEventListener('touchmove', moveElement, false);
   }
