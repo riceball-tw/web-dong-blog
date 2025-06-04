@@ -150,6 +150,7 @@ export function getStaticPaths() {
   
   let posX = 0;
   let posY = 0;
+  const grabbingStyle = ['bg-primary/20', 'text-primary', '-rotate-2']
   
   function getClientX(e) {
     return e.touches ? e.touches[0].clientX : e.clientX;
@@ -169,17 +170,17 @@ export function getStaticPaths() {
   
   function dragStart(e) {
     e.preventDefault();
-    draggable.style.position = 'absolute';
     draggable.style.cursor = 'grabbing';
+    draggable.classList.add(...grabbingStyle);
     posX = getClientX(e) - draggable.offsetLeft;
     posY = getClientY(e) - draggable.offsetTop;
   
     window.addEventListener('mousemove', moveElement, false);
     window.addEventListener('touchmove', moveElement, { passive: false });
   }
-  
   function dragEnd() {
     draggable.style.cursor = 'grab';
+    draggable.classList.remove(...grabbingStyle);
     window.removeEventListener('mousemove', moveElement, false);
     window.removeEventListener('touchmove', moveElement, false);
   }
