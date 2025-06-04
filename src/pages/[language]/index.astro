@@ -48,7 +48,22 @@ export function getStaticPaths() {
         <div>
           <!-- Design -->
           <span class="relative inline-flex">
-            <span id="draggable" class="translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
+            <!-- !Hack: Since change element to absolute will cause layout rebuild and weird first grab position, so I create 2 same element here, one is invisible for layout, another one is absolute positioned for user to grab -->
+            <!-- Placeholder -->
+            <span class="invisible translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
+              <Icon class="lg:inline" style="width: 5vw; height:5vw; max-width: 84px; max-height: 84px; min-width: 48px; min-height: 48px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
+              {m.nice_equal_wallaby_slide()}
+              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+            </span>
+            <!-- Real -->
+            <span id="draggable" class="absolute translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
               <Icon class="lg:inline" style="width: 5vw; height:5vw; max-width: 84px; max-height: 84px; min-width: 48px; min-height: 48px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
               {m.nice_equal_wallaby_slide()}
               <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
