@@ -45,45 +45,45 @@ export function getStaticPaths() {
         <!-- Line-1 -->
         <div><span>Webdong.dev</span> <span class="whitespace-nowrap">{m.away_trite_antelope_drip()}</span></div>
         <!-- Line-2 -->
-        <div>
+        <div class="inline-flex justify-center items-baseline-last gap-2 flex-wrap">
           <!-- Design -->
           <span class="relative inline-flex">
             <!-- !Hack: Since change element to absolute will cause layout rebuild and weird first grab position, so I create 2 same element here, one is invisible for layout, another one is absolute positioned for user to grab -->
             <!-- Placeholder -->
-            <span class="invisible translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
-              <Icon class="lg:inline" style="width: 5vw; height:5vw; max-width: 84px; max-height: 84px; min-width: 48px; min-height: 48px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
+            <span class="invisible hover:-rotate-2 inline-flex items-center gap-1 md:gap-2 border md:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
+              <Icon class="md:inline" style="width: 8vw; height:8vw; max-width: 84px; max-height: 84px; min-width: 32px; min-height: 32px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
               {m.nice_equal_wallaby_slide()}
-              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
             </span>
             <!-- Real -->
-            <span id="draggable" class="absolute translate-y-2 hover:-rotate-2 inline-flex items-center gap-2 border lg:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
-              <Icon class="lg:inline" style="width: 5vw; height:5vw; max-width: 84px; max-height: 84px; min-width: 48px; min-height: 48px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
+            <span id="draggable" class="absolute hover:-rotate-2 inline-flex items-center gap-1 md:gap-2 border md:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
+              <Icon class="md:inline" style="width: 8vw; height:8vw; max-width: 84px; max-height: 84px; min-width: 32px; min-height: 32px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
               {m.nice_equal_wallaby_slide()}
-              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
-              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 lg:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 -translate-x-1/2 left-0 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute top-1/2 right-0 translate-x-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
+              <span class="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
             </span>
           </span>
             &
           <!-- <develop/> -->
-            <span class="font-mono whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>']" style="font-kerning: auto;" contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
+            <span class="font-mono whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>']" contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
         </div>
 
         <!-- Line-3 -->
           <div>
-             {m.pretty_key_guppy_amuse()}<span class="italic [&:lang(zh-cn)]:not-italic [&:lang(zh-tw)]:not-italic">{m.inner_petty_giraffe_drip()}</span><Icon style="width: 5vw; height:5vw; max-width: 96px; max-height: 96px; min-width: 32px; min-height: 32px;" class="hidden lg:inline animate-bounce" size={96} name={'material-symbols:sentiment-excited-outline-rounded'}  />
+             {m.pretty_key_guppy_amuse()}<span class="[&:lang(en)]:italic">{m.inner_petty_giraffe_drip()}</span><Icon style="width: 5vw; height:5vw; max-width: 96px; max-height: 96px; min-width: 32px; min-height: 32px;" class="hidden md:inline animate-bounce" size={96} name={'material-symbols:sentiment-excited-outline-rounded'}  />
           </div>
     </div>
     {import.meta.env.PROD && <GlobalSearchInput placeholderText={m.awake_quiet_ape_emerge()}/>}
@@ -97,7 +97,7 @@ export function getStaticPaths() {
           {
             categoriesLists.map((categoriesList) => categoriesList.posts.length ? (
               <SpotlightCard themeColor={uniqolor.random({ saturation: 90, lightness: [70, 90] }).color} class="group">
-                <div class="mb-8 flex flex-row items-center justify-between gap-2 xl:flex-col xl:items-start">
+                <div class="mb-8 flex flex-row items-center justify-between gap-2 md:flex-col md:items-start">
                   <h2
                     class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                   >
