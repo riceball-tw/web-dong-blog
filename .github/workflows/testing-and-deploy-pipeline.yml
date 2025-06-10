@@ -142,6 +142,9 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Run Lighthouse CI
+        env:
+          LHCI_TOKEN: ${{ secrets.LHCI_TOKEN }}
+          LHCI_BASE_URL: ${{ vars.LHCI_BASE_URL }}
         run: pnpm lighthouse
 
   deploy:
