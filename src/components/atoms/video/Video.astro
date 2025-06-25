@@ -14,7 +14,7 @@ const { width, height, data } = Astro.props;
 <video class="col-span-full mx-auto z-10" width={width} height={height} autoplay muted playsinline loop>
   {
     data.map((source: { src: string; type: string }) => (
-      <source src={import.meta.env.BASE_URL + source.src} type={`video/${source.type}`} />
+      <source src={source.src.startsWith('http') ? source.src : import.meta.env.BASE_URL + source.src} type={`video/${source.type}`} />
     ))
   }
   <p>你的瀏覽器不支援影片，請更新瀏覽器。</p>
