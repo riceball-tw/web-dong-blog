@@ -73,6 +73,7 @@ const ogImageUrl = `/api/og?${query}`
         data-pagefind-body={Astro.currentLocale}
         data-article
         data-cy="post-content"
+        style="grid-template-rows: 1fr 0"
         class=`article-grid [grid-template-columns:1fr_min(65ch,_100%)_1fr] lg:px-auto prose mb-16 block w-full max-w-none md:prose-xl lg:grid ${rehypeAutoLinkStyle}`
       >
         <header class="not-prose mb-16 col-start-2">
@@ -98,11 +99,7 @@ const ogImageUrl = `/api/og?${query}`
           </div>
         </header>
 
-        <!-- Why add grid-row-end: 200? -->
-        <!-- fix: toc overlaps the page footer -->
-        <!-- https://github.com/riceball-tw/web-dong-blog/pull/170 --> 
-        <aside 
-        style="top: var(--mainNav-height); grid-row-end: 200;" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose h-fit w-fit">
+        <aside style="top: var(--mainNav-height);" class="col-start-3 sticky row-start-2 ml-4 hidden xl:block not-prose">
         
         <div class="overflow-y-auto divide-y divide-border"> 
           <PostTableOfContent {headings} />
@@ -139,6 +136,11 @@ const ogImageUrl = `/api/og?${query}`
           </div>
         </div>
         </aside>
+
+        <!-- parent grid setting: grid-template-rows: 1fr 0 -->
+        <!-- Empty non-size element as grid row placeholder, to avoid being stretch with aside -->
+        <!-- #217 Post image cause weird spacing: https://github.com/riceball-tw/web-dong-blog/issues/217 -->
+        <div></div>
         <Content components={{ Sidenote, Video, img: PostImage, blockquote: PostBlockquote }} />
         <SupportMe />
         <Comments />
