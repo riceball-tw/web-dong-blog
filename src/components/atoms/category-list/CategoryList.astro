@@ -1,6 +1,6 @@
 ---
 import type { CategoryList } from '@/types/category-list'
-import toSnakeCase from '@/utils/toSnakeCase';
+import toSnakeCase from '@/utils/toSnakeCase.ts';
 import * as m from "@/paraglide/messages";
 
 export interface Props extends CategoryList {}
@@ -14,10 +14,10 @@ const translatedCategory = (() => {
   const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
   if (typeof categoryI18n === 'function') {
     return categoryI18n();
-  } else {
-    console.warn(`Category translation not found: ${category}`);
-    return category;
   }
+  // eslint-disable-next-line no-console
+  console.warn(`Category translation not found: ${category}`);
+  return category;
 })()
 ---
 

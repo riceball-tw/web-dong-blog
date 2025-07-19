@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
-import toSnakeCase from '@/utils/toSnakeCase';
+import toSnakeCase from '@/utils/toSnakeCase.ts';
 
 type ShortpostPage = CollectionEntry<'shortpost'>;
 
@@ -35,10 +35,10 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
         const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
         if (typeof categoryI18n === 'function') {
           return categoryI18n();
-        } else {
-          console.warn(`Category translation not found: ${shortpost.data.category}`);
-          return shortpost.data.category;
         }
+        // eslint-disable-next-line no-console
+        console.warn(`Category translation not found: ${shortpost.data.category}`);
+        return shortpost.data.category;
       })()
 
       return (

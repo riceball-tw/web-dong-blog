@@ -110,10 +110,10 @@ export function getStaticPaths() {
                           const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
                           if (typeof categoryI18n === 'function') {
                             return categoryI18n();
-                          } else {
-                            console.warn(`Category translation not found: ${categoriesList.type}`);
-                            return categoriesList.type;
                           }
+                          // eslint-disable-next-line no-console
+                          console.warn(`Category translation not found: ${categoriesList.type}`);
+                          return categoriesList.type;
                         })()
                       }
                     </a>
