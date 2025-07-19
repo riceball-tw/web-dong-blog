@@ -1,13 +1,24 @@
 ---
 import type { CategoryList } from '@/types/category-list'
-import { translateCategory, type LanguageKey } from '@/utils/i18n.ts';
+import toSnakeCase from '@/utils/toSnakeCase';
 import * as m from "@/paraglide/messages";
 
 export interface Props extends CategoryList {}
 
 const { category, categoryHref } = Astro.props;
 const CategoryElement = categoryHref ? 'a' : 'div';
-const translatedCategory = translateCategory(category || Astro.currentLocale as LanguageKey, Astro.currentLocale as LanguageKey)
+
+const translatedCategory = (() => {
+  const snakedCategoryType = toSnakeCase(category || '')
+  const categoryI18nMethodName = `category_${snakedCategoryType}`;
+  const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
+  if (typeof categoryI18n === 'function') {
+    return categoryI18n();
+  } else {
+    console.warn(`Category translation not found: ${category}`);
+    return category;
+  }
+})()
 ---
 
 <CategoryElement

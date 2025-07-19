@@ -72,38 +72,6 @@ export function changeLanguage(
   return constructNewPath(targetLocale, cleanedPath, isDefaultLocalePrefixed);
 }
 
-export function translateCategory(categoryKey: string, currentLocale?: LanguageKey) {
-  const categoryTranslationMap: Record<string, Record<string, string>> = {
-    'zh-cn': {
-      Share: '分享',
-      Team: '团队',
-      Implementation: '实作',
-      'Technical Discussion': '技术讨论',
-      Pattern: '模式',
-      'Software Testing': '软件测试',
-      'Web Performance': '网站性能',
-      Cybersecurity: '网络安全',
-      'Non-Technical Discussion': '非技术讨论',
-      Frontend: '前端',
-      Accessibility: '无障碍',
-    },
-    'zh-tw': {
-      Share: '分享',
-      Team: '團隊',
-      Implementation: '實作',
-      'Technical Discussion': '技術討論',
-      Pattern: '模式',
-      'Software Testing': '軟體測試',
-      'Web Performance': '網站效能',
-      Cybersecurity: '網路安全',
-      'Non-Technical Discussion': '非技術討論',
-      Frontend: '前端',
-      Accessibility: '無障礙',
-    },
-  };
-  return (currentLocale && categoryTranslationMap[currentLocale]?.[categoryKey]) || categoryKey;
-}
-
 // Get Locale code from slug
 export function getLocaleCode(str: string) {
   const match = str.match(/^[a-z]{2}(-[a-z]{2})?/i);
