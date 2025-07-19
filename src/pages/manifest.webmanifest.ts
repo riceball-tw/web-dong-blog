@@ -15,7 +15,7 @@ export const GET: APIRoute = () =>
         { src: 'images/brand/favicon/icon-512.png', type: 'image/png', sizes: '512x512' },
         { src: 'images/brand/favicon/maskable-icon-512.png', type: 'image/png', sizes: '512x512', purpose: 'maskable' },
       ],
-      start_url: '/post',
+      start_url: '/',
       display: 'fullscreen',
       theme_color: themeColor,
       background_color: themeColor,
