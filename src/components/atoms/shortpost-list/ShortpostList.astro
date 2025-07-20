@@ -2,8 +2,9 @@
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components'
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import { translateCategory, defaultLocale, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
+import toSnakeCase from '@/utils/toSnakeCase.ts';
 
 type ShortpostPage = CollectionEntry<'shortpost'>;
 
@@ -28,6 +29,17 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
       const distanceToCurrentShort = Math.abs(activeShortpostIndexs - index);
       const harmonicFactor = 2 / (distanceToCurrentShort + 1);
       const headingOpacity = Math.min(Math.max(harmonicFactor * maxOpacity, minOpacity), 100);
+      const translatedCategory = (() => {
+        const snakedCategoryType = toSnakeCase(shortpost.data.category || '')
+        const categoryI18nMethodName = `category_${snakedCategoryType}`;
+        const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
+        if (typeof categoryI18n === 'function') {
+          return categoryI18n();
+        }
+        // eslint-disable-next-line no-console
+        console.warn(`Category translation not found: ${shortpost.data.category}`);
+        return shortpost.data.category;
+      })()
 
       return (
       <li class="flex text-xl md:text-2xl gap-2 md:gap-4">
@@ -47,7 +59,7 @@ const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug
               data-publish-date={shortpost.data.publishDate
                 .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
                 .replace(/\//g, '-')} 
-              data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translateCategory(shortpost.data.category || Astro.currentLocale as LanguageKey, Astro.currentLocale as LanguageKey)}`}
+              data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translatedCategory}`}
               data-pagefind-sort="date[data-publish-date]" 
               style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.slug)}>
               <span>{shortpost.data.headline}</span>

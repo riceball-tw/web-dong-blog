@@ -5,9 +5,10 @@ import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
 import Container from '@/components/atoms/container/Container.astro';
 import { sortedPostCategoryies } from '@/utils/getPosts.ts';
-import { languages, defaultLocale, translateCategory, type LanguageKey } from '@/utils/i18n.ts';
+import { languages, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import toSnakeCase from '@/utils/toSnakeCase.ts';
 
 export function getStaticPaths() {
   return Object.keys(languages).map(language => ({
@@ -24,12 +25,26 @@ export function getStaticPaths() {
   <Container>
     <SpotlightCardsGallery>
       {
-        sortedPostCategoryies.map((tag) => (
+        sortedPostCategoryies.map((category) => (
           <ul>
             <li class="text-3xl">
               <SpotlightCard>
                 <a data-cy="category-link" data-astro-prefetch 
-                href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${tag}/`)}>{translateCategory(tag, Astro.currentLocale as LanguageKey)}</a>
+                href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${category}/`)}>
+                               {
+                        (() => {
+                          const snakedCategoryType = toSnakeCase(category)
+                          const categoryI18nMethodName = `category_${snakedCategoryType}`;
+                          const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
+                          if (typeof categoryI18n === 'function') {
+                            return categoryI18n();
+                          }
+                          // eslint-disable-next-line no-console
+                          console.warn(`Category translation not found: ${category}`);
+                          return category;
+                        })()
+                      }
+                  </a>
               </SpotlightCard>
             </li>
           </ul>

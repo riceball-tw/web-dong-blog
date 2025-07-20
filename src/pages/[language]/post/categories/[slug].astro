@@ -6,9 +6,10 @@ import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightP
 import { Badge } from '@/components/atoms/badge/index.ts'
 import Container from '@/components/atoms/container/Container.astro';
 import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
-import { translateCategory, type LanguageKey, languages, defaultLocale } from '@/utils/i18n.ts';
+import { type LanguageKey, languages, defaultLocale } from '@/utils/i18n.ts';
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import toSnakeCase from '@/utils/toSnakeCase.ts'
 
 export async function getStaticPaths() {
   return sortedPostCategoryies.flatMap((category) => Object.keys(languages).map((language) => ({
@@ -23,10 +24,20 @@ const avaliableCurrentCategoryPosts = posts
   .filter((post) => post.data.category === slug)
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 
-  
+const translatedCategory = (() => {
+  const snakedCategoryType = toSnakeCase(slug)
+  const categoryI18nMethodName = `category_${snakedCategoryType}`;
+  const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
+  if (typeof categoryI18n === 'function') {
+    return categoryI18n();
+  }
+  // eslint-disable-next-line no-console
+  console.warn(`Category translation not found: ${slug}`);
+  return slug;
+})()
 ---
 
-<BlogBase title={`${m.grassy_smart_sheep_tickle()}${slug}`} description={`m.fluffy_active_earthworm_feel()`}>
+<BlogBase title={`${m.grassy_smart_sheep_tickle()}${translatedCategory}`} description={`m.fluffy_active_earthworm_feel()`}>
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
@@ -40,7 +51,7 @@ const avaliableCurrentCategoryPosts = posts
       </Badge>
     </div>
     <Fragment slot="headline">
-      {m.grassy_smart_sheep_tickle()}<span>{translateCategory(slug, Astro.currentLocale as LanguageKey)}</span>
+      {m.grassy_smart_sheep_tickle()}<span>{translatedCategory}</span>
     </Fragment>
   </Hero>
   <Container>

@@ -9,7 +9,8 @@ import Container from '@/components/atoms/container/Container.astro';
 import { Badge } from '@/components/atoms/badge/index.ts'
 import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
 import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { stripLanguageCode, languages, translateCategory, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
+import { stripLanguageCode, languages, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
+import toSnakeCase from '@/utils/toSnakeCase.ts'
 import * as m from "@/paraglide/messages";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components'
@@ -101,7 +102,21 @@ export function getStaticPaths() {
                   <h2
                     class="text-3xl font-bold opacity-90 group-hover:opacity-100 "
                   >
-                    <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${categoriesList.type}/`)}>{translateCategory(categoriesList.type, Astro.currentLocale as LanguageKey)}</a>
+                    <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${categoriesList.type}/`)}>
+                      {
+                        (() => {
+                          const snakedCategoryType = toSnakeCase(categoriesList.type)
+                          const categoryI18nMethodName = `category_${snakedCategoryType}`;
+                          const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
+                          if (typeof categoryI18n === 'function') {
+                            return categoryI18n();
+                          }
+                          // eslint-disable-next-line no-console
+                          console.warn(`Category translation not found: ${categoriesList.type}`);
+                          return categoriesList.type;
+                        })()
+                      }
+                    </a>
                   </h2>
                   <span class="opacity-60 transition-opacity group-hover:opacity-100">
                     {categoriesList.posts.length} 
