@@ -1,21 +1,22 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import { Icon } from 'astro-icon/components'
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
 import * as m from "@/paraglide/messages";
-import toSnakeCase from '@/utils/toSnakeCase.ts';
+import { defaultLocale, stripLanguageCode } from "@/utils/i18n.ts";
+import toSnakeCase from "@/utils/toSnakeCase.ts";
 
-type ShortpostPage = CollectionEntry<'shortpost'>;
+type ShortpostPage = CollectionEntry<"shortpost">;
 
 export type Props = {
-  shortposts: ShortpostPage[]
-  currentSlug?: string
-} 
+	shortposts: ShortpostPage[];
+	currentSlug?: string;
+};
 
-
-const { shortposts, currentSlug } = Astro.props
-const activeShortpostIndexs = shortposts.findIndex((shortpost) => shortpost.slug === currentSlug)
+const { shortposts, currentSlug } = Astro.props;
+const activeShortpostIndexs = shortposts.findIndex(
+	(shortpost) => shortpost.slug === currentSlug,
+);
 ---
 <ul class="space-y-4 md:space-y-8">
   {

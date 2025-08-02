@@ -1,11 +1,12 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import { Button } from '@/components/atoms/button/index.ts'
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Button } from "@/components/atoms/button/index.ts";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { defaultLocale } from '@/utils/i18n.ts';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { defaultLocale } from "@/utils/i18n.ts";
 
-const title = '404';
+const title = "404";
+
 const description = m.dizzy_minor_samuel_embrace();
 ---
 

@@ -1,12 +1,15 @@
 ---
-import { Badge } from '@/components/atoms/badge/index.ts'
-import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
+import { Badge } from "@/components/atoms/badge/index.ts";
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
 import * as m from "@/paraglide/messages";
 
 const { youtubeChannels } = Astro.props;
 const uniqueCategories = youtubeChannels
-  .map((channel: { category: string }) => channel.category)
-  .filter((category: string, index: number, self: [category: string]) => self.indexOf(category) === index);
+	.map((channel: { category: string }) => channel.category)
+	.filter(
+		(category: string, index: number, self: [category: string]) =>
+			self.indexOf(category) === index,
+	);
 ---
 
 <script>

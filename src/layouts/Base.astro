@@ -1,17 +1,17 @@
 ---
-import '@fontsource-variable/inter';
-import type { BaseLayout } from '@/types/layouts';
-import '@/styles/global.css';
-import GoogleAnalytic from '@/components/utility/GoogleAnalytic.astro'
-import DefaultHead from '@/components/utility/DefaultHead.astro'
-import GodRay from '@/components/atoms/godray/GodRay.astro'
+import "@fontsource-variable/inter";
+import type { BaseLayout } from "@/types/layouts";
+import "@/styles/global.css";
+import GodRay from "@/components/atoms/godray/GodRay.astro";
+import DefaultHead from "@/components/utility/DefaultHead.astro";
+import GoogleAnalytic from "@/components/utility/GoogleAnalytic.astro";
 import { setLanguageTag } from "@/paraglide/runtime";
-import { type LanguageKey } from '@/utils/i18n.ts';
+import { type LanguageKey } from "@/utils/i18n.ts";
 
 export interface Props extends BaseLayout {}
 
 const { themeColor } = Astro.props;
-setLanguageTag(Astro.currentLocale as LanguageKey)
+setLanguageTag(Astro.currentLocale as LanguageKey);
 ---
 <html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
   <head>

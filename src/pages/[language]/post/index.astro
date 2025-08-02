@@ -1,21 +1,24 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import Hero from '@/components/molecules/hero/Hero.astro';
-import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
-import { Badge } from '@/components/atoms/badge/index.ts'
-import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedLocaleRelatedPosts, sortedPostCategoryies, sortedPostTags } from '@/utils/getPosts.ts';
-import { languages, defaultLocale } from '@/utils/i18n.ts';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Badge } from "@/components/atoms/badge/index.ts";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { type LanguageKey } from '@/utils/i18n.ts';
+import {
+	dateSortedLocaleRelatedPosts,
+	sortedPostCategoryies,
+	sortedPostTags,
+} from "@/utils/getPosts.ts";
+import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(language => ({
-    params: { language }
-  }))
-};
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
 
 const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
 ---

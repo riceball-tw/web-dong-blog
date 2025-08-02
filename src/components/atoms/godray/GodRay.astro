@@ -1,19 +1,19 @@
 ---
-import type { ThemeColor } from '@/types/layouts';
-import uniqolor from 'uniqolor';
+import uniqolor from "uniqolor";
+import type { ThemeColor } from "@/types/layouts";
 
 interface Props extends ThemeColor {}
-const { themeColor } = Astro.props
+const { themeColor } = Astro.props;
 
 function getThemeColor(lightness: number = 60): string {
-  return uniqolor.random({ saturation: 70, lightness: [lightness] }).color;
+	return uniqolor.random({ saturation: 70, lightness: [lightness] }).color;
 }
 
-const defaultMainThemeColor = getThemeColor()
-const mainThemeColor = themeColor || defaultMainThemeColor
-const themeColorA = getThemeColor()
-const themeColorB = getThemeColor()
-const themeColorC = getThemeColor()
+const defaultMainThemeColor = getThemeColor();
+const mainThemeColor = themeColor || defaultMainThemeColor;
+const themeColorA = getThemeColor();
+const themeColorB = getThemeColor();
+const themeColorC = getThemeColor();
 ---
 
 <div class="absolute inset-0 -z-10 overflow-hidden">
