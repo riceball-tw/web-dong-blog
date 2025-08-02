@@ -1,18 +1,18 @@
 ---
-import Accordion from '@/components/atoms/accordion/Accordion.astro'
+import Accordion from "@/components/atoms/accordion/Accordion.astro";
 import * as m from "@/paraglide/messages";
 
 interface Heading {
-  depth: number;
-  slug: string;
-  text: string;
+	depth: number;
+	slug: string;
+	text: string;
 }
 
 interface Props {
-  headings: Heading[];
+	headings: Heading[];
 }
 
-const { headings } = Astro.props
+const { headings } = Astro.props;
 ---
 
 {

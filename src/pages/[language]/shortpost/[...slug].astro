@@ -1,40 +1,56 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import ShortpostList from '@/components/atoms/shortpost-list/ShortpostList.astro'
-import PostImage from '@/components/atoms/post-image/PostImage.astro';
-import MarkdownIt from 'markdown-it';
-import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedLocaleRelatedShortposts } from '@/utils/getShortposts.ts';
-import { languages, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import MarkdownIt from "markdown-it";
+import Container from "@/components/atoms/container/Container.astro";
+import PostImage from "@/components/atoms/post-image/PostImage.astro";
+import ShortpostList from "@/components/atoms/shortpost-list/ShortpostList.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
+import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
+import {
+	type LanguageKey,
+	languages,
+	stripLanguageCode,
+} from "@/utils/i18n.ts";
 
 export async function getStaticPaths() {
-  return Object.keys(languages).flatMap((language) => dateSortedLocaleRelatedShortposts(language as LanguageKey).map((shortpost) => ({
-    params: { slug: stripLanguageCode(shortpost.slug), language },
-    props: { shortpost, shortposts: dateSortedLocaleRelatedShortposts(language as LanguageKey) }
-  })));
+	return Object.keys(languages).flatMap((language) =>
+		dateSortedLocaleRelatedShortposts(language as LanguageKey).map(
+			(shortpost) => ({
+				params: { slug: stripLanguageCode(shortpost.slug), language },
+				props: {
+					shortpost,
+					shortposts: dateSortedLocaleRelatedShortposts(
+						language as LanguageKey,
+					),
+				},
+			}),
+		),
+	);
 }
 
 const { shortpost, shortposts } = Astro.props;
 const { headline } = shortpost.data;
 const { Content } = await shortpost.render();
-const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`
+const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`;
 // How to Create Excerpts With Astro
 // https://www.paulie.dev/posts/2023/09/how-to-create-excerpts-with-astro/#creating-the-substring
-const markdownParser = new MarkdownIt()
-const createExcerpt = (body: string, maxLength: number = 160) => markdownParser.render(body).split('\n').slice(0, 6)
-  .map((str: string) => str.replace(/<\/?[^>]+(>|$)/g, '').split('\n'))
-  .flat()
-  .join(' ')
-  .substring(0, maxLength)
-const excerpt = createExcerpt(shortpost.body)
+const markdownParser = new MarkdownIt();
+const createExcerpt = (body: string, maxLength: number = 160) =>
+	markdownParser
+		.render(body)
+		.split("\n")
+		.slice(0, 6)
+		.flatMap((str: string) => str.replace(/<\/?[^>]+(>|$)/g, "").split("\n"))
+		.join(" ")
+		.substring(0, maxLength);
+const excerpt = createExcerpt(shortpost.body);
 
 const ogImage = {
-  title: headline,
-  content: excerpt
-}
+	title: headline,
+	content: excerpt,
+};
 
-const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`
-const ogImageUrl = `/api/og?${query}`
+const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`;
+const ogImageUrl = `/api/og?${query}`;
 ---
 <BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <Container>

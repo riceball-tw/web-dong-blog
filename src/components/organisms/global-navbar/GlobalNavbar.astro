@@ -1,18 +1,19 @@
 ---
-import Logo from '@/components/atoms/logo/Logo.astro';
-import Logomark from '@/components/atoms/logomark/Logomark.astro';
-import { Icon } from 'astro-icon/components'
-import Container from '@/components/atoms/container/Container.astro';
-import { defaultLocale } from '@/utils/i18n.ts';
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Container from "@/components/atoms/container/Container.astro";
+import LanguagePicker from "@/components/atoms/language-picker/LanguagePicker.astro";
+import Logo from "@/components/atoms/logo/Logo.astro";
+import Logomark from "@/components/atoms/logomark/Logomark.astro";
+import ThemeToggleButton from "@/components/atoms/theme-toggle-button/ThemeToggleButton.astro";
+import GlobalSearch from "@/components/organisms/global-search/GlobalSearch.astro";
 import * as m from "@/paraglide/messages";
-import ThemeToggleButton from '@/components/atoms/theme-toggle-button/ThemeToggleButton.astro'
-import GlobalSearch from '@/components/organisms/global-search/GlobalSearch.astro'
-import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import LanguagePicker from '@/components/atoms/language-picker/LanguagePicker.astro'
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import { defaultLocale } from "@/utils/i18n.ts";
 
-const { navigation } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
-const {pathname} = new URL(Astro.request.url);
+const { navigation } = (await currentLocaleWebsiteConfig(Astro.currentLocale))
+	.data;
+const { pathname } = new URL(Astro.request.url);
 const currentPath = pathname.slice(1);
 ---
 

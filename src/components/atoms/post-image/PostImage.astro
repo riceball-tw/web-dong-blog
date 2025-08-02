@@ -1,25 +1,25 @@
 ---
+import { Image } from "astro:assets";
 /**
  * This component is for replacing mdx img component
  * mdx components document: https://mdxjs.com/table-of-components/
  */
-import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
-import { Icon } from 'astro-icon/components'
+import type { ImageMetadata } from "astro";
+import { Icon } from "astro-icon/components";
 
 type ImageInput = string | ImageMetadata;
 type Props = {
-  src: ImageInput;
-  alt: string;
-  title?: string;
+	src: ImageInput;
+	alt: string;
+	title?: string;
 };
 
 const { src: imageInput, alt, title } = Astro.props;
 function isExternalImage(image: ImageInput): image is string {
-  return typeof image === 'string';
+	return typeof image === "string";
 }
 
-const ImageWrapper = title ? 'figure' : 'div';
+const ImageWrapper = title ? "figure" : "div";
 ---
 
 <ImageWrapper style={{

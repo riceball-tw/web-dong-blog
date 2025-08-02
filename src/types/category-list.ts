@@ -1,4 +1,4 @@
 export interface CategoryList {
-  categoryHref?: string;
-  category?: string;
+	categoryHref?: string;
+	category?: string;
 }

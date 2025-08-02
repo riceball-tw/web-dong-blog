@@ -1,20 +1,20 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import Hero from '@/components/molecules/hero/Hero.astro';
-import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
-import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import Container from '@/components/atoms/container/Container.astro';
-import { sortedPostCategoryies } from '@/utils/getPosts.ts';
-import { languages, defaultLocale } from '@/utils/i18n.ts';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import toSnakeCase from '@/utils/toSnakeCase.ts';
+import { sortedPostCategoryies } from "@/utils/getPosts.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+import toSnakeCase from "@/utils/toSnakeCase.ts";
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(language => ({
-    params: { language }
-  }))
-};
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
 ---
 
 <BlogBase title={m.salty_kind_crossbill_support()} description={m.swift_sweet_tiger_gasp()}>

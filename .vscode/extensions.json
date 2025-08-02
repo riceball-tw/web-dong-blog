@@ -1,7 +1,8 @@
 {
-  "recommendations": [
-    "astro-build.astro-vscode",
-    "inlang.vs-code-extension"
-  ],
-  "unwantedRecommendations": []
+	"recommendations": [
+		"astro-build.astro-vscode",
+		"inlang.vs-code-extension",
+		"biomejs.biome"
+	],
+	"unwantedRecommendations": []
 }

@@ -1,4 +1,4 @@
 export interface TagsList {
-  tagHrefs?: string[] | undefined;
-  tags?: string[];
+	tagHrefs?: string[] | undefined;
+	tags?: string[];
 }

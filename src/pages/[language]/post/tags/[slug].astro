@@ -1,27 +1,35 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import Hero from '@/components/molecules/hero/Hero.astro';
-import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
-import { Badge } from '@/components/atoms/badge/index.ts'
-import Container from '@/components/atoms/container/Container.astro';
-import { sortedPostTags, dateSortedLocaleRelatedPosts } from '@/utils/getPosts.ts'
-import { languages, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Badge } from "@/components/atoms/badge/index.ts";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import {
+	dateSortedLocaleRelatedPosts,
+	sortedPostTags,
+} from "@/utils/getPosts.ts";
+import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
 
 export async function getStaticPaths() {
-  return sortedPostTags.flatMap((tag) => Object.keys(languages).map((language) => ({
-      params: { slug: tag, language },
-      props: { posts: dateSortedLocaleRelatedPosts(language as LanguageKey), tags: sortedPostTags }
-    })));
+	return sortedPostTags.flatMap((tag) =>
+		Object.keys(languages).map((language) => ({
+			params: { slug: tag, language },
+			props: {
+				posts: dateSortedLocaleRelatedPosts(language as LanguageKey),
+				tags: sortedPostTags,
+			},
+		})),
+	);
 }
 
 const { slug } = Astro.params;
 const { posts, tags } = Astro.props;
 const avaliableCurrentTagPosts = posts
-  .filter((post) => post.data.tags.includes(slug as string))
-  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+	.filter((post) => post.data.tags.includes(slug as string))
+	.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
 <BlogBase title={m.late_nice_flea_gasp()+slug} description={m.glad_sound_nils_create()}>

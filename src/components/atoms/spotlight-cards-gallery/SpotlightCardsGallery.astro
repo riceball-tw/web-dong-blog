@@ -1,7 +1,7 @@
 ---
 interface Props {
-  minCardWidth?: number;
-  class?: string;
+	minCardWidth?: number;
+	class?: string;
 }
 const minCardWidth = `${Astro.props.minCardWidth ?? 500}px`;
 const { class: className, ...attrs } = Astro.props;

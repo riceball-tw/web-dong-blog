@@ -1,62 +1,63 @@
 ---
-import { getEntry } from 'astro:content';
-import sanitizeHtml from 'sanitize-html';
+import { getEntry } from "astro:content";
+import sanitizeHtml from "sanitize-html";
 
 interface Props {
-  headline: string;
-  description: string;
-  publishDate: Date;
-  keywords: string[];
-  articleSection: string;
-  author:
-    | {
-        nameTC: string;
-        url: string | undefined;
-      }
-    | undefined;
+	headline: string;
+	description: string;
+	publishDate: Date;
+	keywords: string[];
+	articleSection: string;
+	author:
+		| {
+				nameTC: string;
+				url: string | undefined;
+		  }
+		| undefined;
 }
 
-const { headline, description, publishDate, keywords, author, articleSection } = Astro.props;
-const mySite = await getEntry('character', 'my-site');
-const me = await getEntry('character', 'me');
+const { headline, description, publishDate, keywords, author, articleSection } =
+	Astro.props;
+const mySite = await getEntry("character", "my-site");
+const me = await getEntry("character", "me");
 
-if (!(mySite && me)) throw new Error("No site author or site info in content collection")
+if (!(mySite && me))
+	throw new Error("No site author or site info in content collection");
 
 const defaultOrganization = {
-  "@type": "Organization",
-  "name": mySite.data.nameTC,
-  "url": mySite.data?.social?.url
-  }
+	"@type": "Organization",
+	name: mySite.data.nameTC,
+	url: mySite.data?.social?.url,
+};
 const postAuthor = {
-    "author": {
-    "@type": "Person",
-    "name": author?.nameTC,
-    "url": author?.url,
-  }
-}
-
-const defaultAuthor = {
-  "author": {
-    "@type": "Person",
-    "name": me.data.nameTC,
-    "url": me.data?.social?.url,
-  }
-}
-
-const postSchema = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "url": Astro.url,
-  "image": new URL(`og.png`, Astro.url),
-  "headline": headline,
-  "description": description,
-  "keywords": keywords,
-  "datePublished": new Date(publishDate).toISOString(),
-  "publisher": defaultOrganization,
-  "articleSection": articleSection,
-  ...(author ? postAuthor : defaultAuthor),
+	author: {
+		"@type": "Person",
+		name: author?.nameTC,
+		url: author?.url,
+	},
 };
 
+const defaultAuthor = {
+	author: {
+		"@type": "Person",
+		name: me.data.nameTC,
+		url: me.data?.social?.url,
+	},
+};
+
+const postSchema = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	url: Astro.url,
+	image: new URL(`og.png`, Astro.url),
+	headline: headline,
+	description: description,
+	keywords: keywords,
+	datePublished: new Date(publishDate).toISOString(),
+	publisher: defaultOrganization,
+	articleSection: articleSection,
+	...(author ? postAuthor : defaultAuthor),
+};
 ---
 
 <script type="application/ld+json" set:html={sanitizeHtml(JSON.stringify(postSchema))}></script>

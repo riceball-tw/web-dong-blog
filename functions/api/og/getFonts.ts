@@ -1,7 +1,7 @@
-import type { Context } from 'hono';
+import type { Context } from "hono";
 
 // Define font weights and styles (matching types from getFonts.ts)
-type Style = 'normal' | 'italic';
+type Style = "normal" | "italic";
 type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
 type FontConfig = {
@@ -29,12 +29,13 @@ type FontConfig = {
  *
  */
 export const githubFonts = async () => {
-	const base = 'https://raw.githubusercontent.com/google/fonts/main/ofl/inriasans/';
+	const base =
+		"https://raw.githubusercontent.com/google/fonts/main/ofl/inriasans/";
 
 	// Define font files to fetch with their properties
 	const list = [
-		['InriaSans-Regular.ttf', 'Inria Sans', 500, 'normal' as Style] as const,
-		['InriaSans-Bold.ttf', 'Inria Sans', 700, 'normal' as Style] as const,
+		["InriaSans-Regular.ttf", "Inria Sans", 500, "normal" as Style] as const,
+		["InriaSans-Bold.ttf", "Inria Sans", 700, "normal" as Style] as const,
 	];
 
 	// Map each font definition to a fetch promise with caching
@@ -92,26 +93,28 @@ export async function googleFont(
 	text: string,
 	font: string,
 	weight: Weight = 400,
-	style: Style = 'normal'
+	style: Style = "normal",
 ): Promise<{ data: ArrayBuffer; name: string; style: Style; weight: Weight }> {
-	const fontFamilyFetchName = font.replace(/ /g, '+');
+	const fontFamilyFetchName = font.replace(/ /g, "+");
 	const API = `https://fonts.googleapis.com/css2?family=${fontFamilyFetchName}:ital,wght@${
-		style === 'italic' ? '1' : '0'
+		style === "italic" ? "1" : "0"
 	},${weight}&text=${encodeURIComponent(text)}`;
 
 	const css = await (
 		await fetch(API, {
 			headers: {
-				'User-Agent':
-					'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1',
+				"User-Agent":
+					"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
 			},
 		})
 	).text();
 	// console.log(API, css);
-	const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/);
+	const resource = css.match(
+		/src: url\((.+)\) format\('(opentype|truetype)'\)/,
+	);
 	// console.log('resource', resource);
 	if (!resource) {
-		throw new Error('Failed to fetch font');
+		throw new Error("Failed to fetch font");
 	}
 
 	const res = await fetch(resource[1]);
@@ -156,8 +159,13 @@ export const directFont = async (
 	url: string,
 	name: string,
 	weight: Weight = 400,
-	style: Style = 'normal'
-): Promise<{ data: ArrayBuffer; name: string; style: Style; weight: Weight }> => {
+	style: Style = "normal",
+): Promise<{
+	data: ArrayBuffer;
+	name: string;
+	style: Style;
+	weight: Weight;
+}> => {
 	try {
 		const cache = caches.default;
 		const cacheKey = url;
@@ -215,36 +223,42 @@ export const directFont = async (
  */
 export const getLocalFonts = async (
 	c: Context,
-	fonts: FontConfig[]
-): Promise<Array<{ data: ArrayBuffer; name: string; style: Style; weight: Weight }>> => {
+	fonts: FontConfig[],
+): Promise<
+	Array<{ data: ArrayBuffer; name: string; style: Style; weight: Weight }>
+> => {
 	try {
-		const fontPromises = fonts.map(async ({ path, weight, style = 'normal' }) => {
-			const name = 'font-family';
+		const fontPromises = fonts.map(
+			async ({ path, weight, style = "normal" }) => {
+				const name = "font-family";
 
-			// Use c.req.url as the base URL
-			const fontUrl = new URL(`/fonts/${path}`, c.req.url).toString();
-			const response = await c.env.ASSETS.fetch(fontUrl);
+				// Use c.req.url as the base URL
+				const fontUrl = new URL(`/fonts/${path}`, c.req.url).toString();
+				const response = await c.env.ASSETS.fetch(fontUrl);
 
-			if (!response.ok) {
-				throw new Error(
-					`Failed to load font: ${path} - Status: ${response.status} ${response.statusText}. URL: ${fontUrl}
-					}`
-				);
-			}
+				if (!response.ok) {
+					throw new Error(
+						`Failed to load font: ${path} - Status: ${response.status} ${response.statusText}. URL: ${fontUrl}
+					}`,
+					);
+				}
 
-			const data = await response.arrayBuffer();
+				const data = await response.arrayBuffer();
 
-			return {
-				data,
-				name,
-				style,
-				weight,
-			};
-		});
+				return {
+					data,
+					name,
+					style,
+					weight,
+				};
+			},
+		);
 
 		return Promise.all(fontPromises);
 	} catch (error: unknown) {
-		throw new Error(`Failed to load fonts: ${error instanceof Error ? error.message : String(error)}`);
+		throw new Error(
+			`Failed to load fonts: ${error instanceof Error ? error.message : String(error)}`,
+		);
 	}
 };
 
@@ -265,7 +279,12 @@ export const getLocalFonts = async (
  * @example
  * const font = await getLocalFont(c, 'Inter-Regular.ttf', 400, 'normal');
  */
-export const getLocalFont = async (c: Context, fontPath: string, weight: Weight = 400, style: Style = 'normal') => {
+export const getLocalFont = async (
+	c: Context,
+	fontPath: string,
+	weight: Weight = 400,
+	style: Style = "normal",
+) => {
 	const fonts = await getLocalFonts(c, [{ path: fontPath, weight, style }]);
 	return fonts[0];
 };

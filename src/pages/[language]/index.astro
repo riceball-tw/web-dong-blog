@@ -1,37 +1,53 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import SpotlightCard from '@/components/atoms/spotlight-card/SpotlightCard.astro';
-import GlobalSearchInput from '@/components/organisms/global-search-input/GlobalSearchInput.astro'
-import Hero from '@/components/molecules/hero/Hero.astro';
-import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import uniqolor from 'uniqolor';
-import Container from '@/components/atoms/container/Container.astro';
-import { Badge } from '@/components/atoms/badge/index.ts'
-import { dateSortedLocaleRelatedPosts, sortedPostCategoryies } from '@/utils/getPosts.ts';
-import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import { stripLanguageCode, languages, defaultLocale, type LanguageKey } from '@/utils/i18n.ts';
-import toSnakeCase from '@/utils/toSnakeCase.ts'
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import uniqolor from "uniqolor";
+import { Badge } from "@/components/atoms/badge/index.ts";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import GlobalSearchInput from "@/components/organisms/global-search-input/GlobalSearchInput.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { Icon } from 'astro-icon/components'
+import {
+	dateSortedLocaleRelatedPosts,
+	sortedPostCategoryies,
+} from "@/utils/getPosts.ts";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import {
+	defaultLocale,
+	type LanguageKey,
+	languages,
+	stripLanguageCode,
+} from "@/utils/i18n.ts";
+import toSnakeCase from "@/utils/toSnakeCase.ts";
 
-const { projectUpdateBadgeUrl } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data.setting;
+const { projectUpdateBadgeUrl } = (
+	await currentLocaleWebsiteConfig(Astro.currentLocale)
+).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
-  type: category,
-  posts: dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey)
-    .filter((post) => post.data.category === category)
-    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()),
+	type: category,
+	posts: dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey)
+		.filter((post) => post.data.category === category)
+		.sort(
+			(a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
+		),
 }));
 
 const currentTime = new Date()
-  .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
-  .replace(/\//g, '-');
+	.toLocaleDateString("zh-TW", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+	})
+	.replace(/\//g, "-");
 
 export function getStaticPaths() {
-  return Object.keys(languages).map(language => ({
-    params: { language }
-  }))
-};
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
 ---
 <BlogBase>
   <slot name="head">

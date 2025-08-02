@@ -1,57 +1,82 @@
 ---
-import BlogBase from '@/layouts/BlogBase.astro';
-import { getEntry } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import TagList from '@/components/atoms/tag-list/TagList.astro';
-import CategoryList from '@/components/atoms/category-list/CategoryList.astro';
-import Comments from '@/components/atoms/comments/Comments.astro';
-import PostJSONLD from '@/components/utility/PostJSONLD.astro';
-import PostImage from '@/components/atoms/post-image/PostImage.astro';
-import PostBlockquote from '@/components/atoms/post-blockquote/PostBlockquote.astro';
-import Sidenote from '@/components/atoms/sidenote/Sidenote.astro'
-import Video from '@/components/atoms/video/Video.astro';
-import PostTableOfContent from '@/components/atoms/post-toc/PostTableOfContent.astro';
-import { Icon } from 'astro-icon/components'
-import PostSeries from '@/components/atoms/post-series/PostSeries.astro'
-import Container from '@/components/atoms/container/Container.astro';
-import { dateSortedLocaleRelatedPosts } from '@/utils/getPosts.ts'
-import { type LanguageKey, languages, defaultLocale, stripLanguageCode } from '@/utils/i18n.ts';
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import CategoryList from "@/components/atoms/category-list/CategoryList.astro";
+import Comments from "@/components/atoms/comments/Comments.astro";
+import Container from "@/components/atoms/container/Container.astro";
+import PostBlockquote from "@/components/atoms/post-blockquote/PostBlockquote.astro";
+import PostImage from "@/components/atoms/post-image/PostImage.astro";
+import PostSeries from "@/components/atoms/post-series/PostSeries.astro";
+import PostTableOfContent from "@/components/atoms/post-toc/PostTableOfContent.astro";
+import Sidenote from "@/components/atoms/sidenote/Sidenote.astro";
+import SupportMe from "@/components/atoms/support-me/SupportMe.astro";
+import TagList from "@/components/atoms/tag-list/TagList.astro";
+import Video from "@/components/atoms/video/Video.astro";
+import PostJSONLD from "@/components/utility/PostJSONLD.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import SupportMe from '@/components/atoms/support-me/SupportMe.astro';
+import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
+import {
+	defaultLocale,
+	type LanguageKey,
+	languages,
+	stripLanguageCode,
+} from "@/utils/i18n.ts";
 
 export async function getStaticPaths() {
-  function getTargetSeriesPosts(posts: CollectionEntry<'post'>[], targetSeries?: string) {
-    return targetSeries ? posts.filter((post) => post.data.series === targetSeries) : [];
-  }
-  return Object.keys(languages).flatMap(language =>
-  {
-    const posts = dateSortedLocaleRelatedPosts(language as LanguageKey)
-    return posts.map((post) => {
-      const postsInSeries = getTargetSeriesPosts(posts, post.data.series);
-      return {
-        params: { language, slug: stripLanguageCode(post.slug) },
-        props: { post, postsInSeries },
-      };
-    })
-  }
-  )
+	function getTargetSeriesPosts(
+		posts: CollectionEntry<"post">[],
+		targetSeries?: string,
+	) {
+		return targetSeries
+			? posts.filter((post) => post.data.series === targetSeries)
+			: [];
+	}
+	return Object.keys(languages).flatMap((language) => {
+		const posts = dateSortedLocaleRelatedPosts(language as LanguageKey);
+		return posts.map((post) => {
+			const postsInSeries = getTargetSeriesPosts(posts, post.data.series);
+			return {
+				params: { language, slug: stripLanguageCode(post.slug) },
+				props: { post, postsInSeries },
+			};
+		});
+	});
 }
 
 const { post, postsInSeries } = Astro.props;
-const { icon, subHeadline, headline, publishDate, excerpt, themeColor, tags, category, lastModifiedDate } = post.data;
+const {
+	icon,
+	subHeadline,
+	headline,
+	publishDate,
+	excerpt,
+	themeColor,
+	tags,
+	category,
+	lastModifiedDate,
+} = post.data;
 const { Content, headings } = await post.render();
-const author = post.data.author && (await getEntry('character', post.data.author?.id));
-const tagHrefs = tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`));
-const rehypeAutoLinkStyle = '[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100'
-const isSubheadlineEqualHeadline = subHeadline === headline
+const author =
+	post.data.author && (await getEntry("character", post.data.author?.id));
+const tagHrefs = tags.map((tag) =>
+	getRelativeLocaleUrl(
+		Astro.currentLocale || defaultLocale,
+		`/post/tags/${tag}/`,
+	),
+);
+const rehypeAutoLinkStyle =
+	"[&>h2:hover>.rehype-auto-link]:opacity-100 [&>h3:hover>.rehype-auto-link]:opacity-100 [&>h4:hover>.rehype-auto-link]:opacity-100 [&>h5:hover>.rehype-auto-link]:opacity-100 [&>h6:hover>.rehype-auto-link]:opacity-100";
+const isSubheadlineEqualHeadline = subHeadline === headline;
 const ogImage = {
-  title: headline,
-  content: excerpt,
-}
-const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`
+	title: headline,
+	content: excerpt,
+};
+const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`;
 
-const ogImageUrl = `/api/og?${query}`
+const ogImageUrl = `/api/og?${query}`;
 ---
 
 <BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>

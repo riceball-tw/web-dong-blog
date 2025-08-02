@@ -1,62 +1,62 @@
 {
-  "setting": {
-    "projectUpdateBadgeUrl": "https://github.com/riceball-tw/astro-blog/commits/main"
-  },
-  "brand": {
-    "name": "网页东东",
-    "slogan": "亲切简单描述如何建构网页",
-    "description": "是什么原因导致网页建构上遭遇瓶颈？以及如何突破？网页东东用最亲切简单的方式描述如何设计与架构网页，着重于图像化以及实例操作，累积教学上的经验降低每次学习新事物的成本",
-    "themeColor": "#0d0a28",
-    "email": "webdongdev@gmail.com",
-    "thumbnail": {
-      "width": 1200,
-      "height": 630,
-      "src": "/images/brand/default-og.jpg",
-      "alt": "网页东东横幅"
-    },
-    "copyright": {
-      "title": "CC BY-NC 4.0",
-      "url": "https://creativecommons.org/licenses/by-nc/4.0/deed.zh_TW"
-    },
-    "socials": [
-      {
-        "name": "Threads",
-        "iconName": "simple-icons:threads",
-        "url": "https://www.threads.net/@webdong.dev"
-      },
-      {
-        "name": "GitHub",
-        "iconName": "simple-icons:github",
-        "url": "https://github.com/riceball-tw/web-dong-blog"
-      },
-      {
-        "name": "RSS",
-        "iconName": "simple-icons:rss",
-        "imgUrl": "/images/global/social/rss.svg",
-        "url": "/rss.xml"
-      }
-    ]
-  },
-  "navigation": [
-    {
-      "iconName": "material-symbols:home-outline-rounded",
-      "name": "首页",
-      "url": ""
-    },
-    {
-      "iconName": "material-symbols:article-outline-rounded",
-      "name": "文章",
-      "url": "post"
-    },
-    {
-      "iconName": "material-symbols:service-toolbox-outline-rounded",
-      "name": "工具",
-      "url": "toolbox"
-    },
-    {
-      "iconName": "material-symbols:quick-phrases-rounded",
-      "name": "短文",
-      "url": "shortpost"
-    }
-  ]
+	"setting": {
+		"projectUpdateBadgeUrl": "https://github.com/riceball-tw/astro-blog/commits/main"
+	},
+	"brand": {
+		"name": "网页东东",
+		"slogan": "亲切简单描述如何建构网页",
+		"description": "是什么原因导致网页建构上遭遇瓶颈？以及如何突破？网页东东用最亲切简单的方式描述如何设计与架构网页，着重于图像化以及实例操作，累积教学上的经验降低每次学习新事物的成本",
+		"themeColor": "#0d0a28",
+		"email": "webdongdev@gmail.com",
+		"thumbnail": {
+			"width": 1200,
+			"height": 630,
+			"src": "/images/brand/default-og.jpg",
+			"alt": "网页东东横幅"
+		},
+		"copyright": {
+			"title": "CC BY-NC 4.0",
+			"url": "https://creativecommons.org/licenses/by-nc/4.0/deed.zh_TW"
+		},
+		"socials": [
+			{
+				"name": "Threads",
+				"iconName": "simple-icons:threads",
+				"url": "https://www.threads.net/@webdong.dev"
+			},
+			{
+				"name": "GitHub",
+				"iconName": "simple-icons:github",
+				"url": "https://github.com/riceball-tw/web-dong-blog"
+			},
+			{
+				"name": "RSS",
+				"iconName": "simple-icons:rss",
+				"imgUrl": "/images/global/social/rss.svg",
+				"url": "/rss.xml"
+			}
+		]
+	},
+	"navigation": [
+		{
+			"iconName": "material-symbols:home-outline-rounded",
+			"name": "首页",
+			"url": ""
+		},
+		{
+			"iconName": "material-symbols:article-outline-rounded",
+			"name": "文章",
+			"url": "post"
+		},
+		{
+			"iconName": "material-symbols:service-toolbox-outline-rounded",
+			"name": "工具",
+			"url": "toolbox"
+		},
+		{
+			"iconName": "material-symbols:quick-phrases-rounded",
+			"name": "短文",
+			"url": "shortpost"
+		}
+	]
 }
