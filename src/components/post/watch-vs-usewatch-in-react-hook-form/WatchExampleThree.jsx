@@ -10,11 +10,7 @@ function FirstNameWatched({ control }) {
 
 	childRender += 1;
 
-	return (
-		<>
-			<p>子元件渲染次數: {childRender}</p>
-		</>
-	);
+	return <p>子元件渲染次數: {childRender}</p>;
 }
 
 // eslint-disable-next-line import/prefer-default-export

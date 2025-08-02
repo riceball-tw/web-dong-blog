@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/a11y/noLabelWithoutControl: Demo Code */
+/** biome-ignore-all lint/correctness/useJsxKeyInIterable: Demo Code */
 import { useForm } from "react-hook-form";
 
 // eslint-disable-next-line import/prefer-default-export

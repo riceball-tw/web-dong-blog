@@ -1,16 +1,9 @@
 /* eslint-disable no-inner-declarations */
+/** biome-ignore-all lint/a11y/noSvgWithoutTitle: For OG Generation */
 
 import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
-import { Context, Hono } from "hono";
-import React from "react";
-import {
-	directFont,
-	getLocalFont,
-	getLocalFonts,
-	githubFonts,
-	googleFont,
-} from "./getFonts";
-import { loadImage } from "./loadImage";
+import { Hono } from "hono";
+import { getLocalFonts } from "./getFonts";
 
 const app = new Hono();
 
