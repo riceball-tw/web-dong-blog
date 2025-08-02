@@ -17,6 +17,7 @@
 		"typecheck": "astro check",
 		"lint": "biome lint --write",
 		"lint:fix": "biome check --write",
+		"lint:ci": "biome ci",
 		"lighthouse": "lhci autorun",
 		"cypress:open": "cypress open",
 		"cypress:run": "cypress run",
