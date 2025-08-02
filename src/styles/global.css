@@ -192,8 +192,8 @@
 	/* Scale */
 	--mainNav-height: 80px;
 	--mainNav-device-gap: 16px;
-	/* biome-ignore lint/correctness/noUnknownFunction: Biome not support tailwind */
-	--accordion-summary-height: theme(spacing.16);
+	/* biome-ignore lint/correctness/noUnknownFunction: Tailwind syntax, gets processed during build */
+	--accordion-summary-height: theme("spacing.16");
 	--accordion-max-height: 600px;
 }
 
