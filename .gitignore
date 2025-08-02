@@ -38,3 +38,6 @@ src/content/toolbox
 # Cloudflare wrangler
 .wrangler
 functions/types.d.ts
+
+# Cypress
+cypress/screenshots
