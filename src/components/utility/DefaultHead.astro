@@ -1,27 +1,32 @@
 ---
-import { SEO } from 'astro-seo';
-import type { GlobalHead } from '@/types/layouts';
-import { languageTags, regionTags, prefixDefaultLocale, defaultLocale } from '@/utils/i18n.ts';
-import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import ThemeManager from '@/components/utility/ThemeManager.astro'
+import { SEO } from "astro-seo";
+import ThemeManager from "@/components/utility/ThemeManager.astro";
+import type { GlobalHead } from "@/types/layouts";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import {
+	defaultLocale,
+	languageTags,
+	prefixDefaultLocale,
+	regionTags,
+} from "@/utils/i18n.ts";
 
 export interface Props extends GlobalHead {}
 
 const { title, description, thumbnail } = Astro.props;
 const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
-const seoTitle = `${title || brand.slogan } - ${ brand.name }`;
+const seoTitle = `${title || brand.slogan} - ${brand.name}`;
 const seoDescription = description || brand.description;
 const seoImage = {
-  src: thumbnail?.src
-    ? new URL(`${thumbnail.src}`, Astro.url)
-    : new URL(brand.thumbnail.src, Astro.url),
-  width: thumbnail?.width ?? brand.thumbnail.width,
-  height: thumbnail?.height ?? brand.thumbnail.height,
-  alt: thumbnail?.alt ?? brand.thumbnail.alt,
+	src: thumbnail?.src
+		? new URL(`${thumbnail.src}`, Astro.url)
+		: new URL(brand.thumbnail.src, Astro.url),
+	width: thumbnail?.width ?? brand.thumbnail.width,
+	height: thumbnail?.height ?? brand.thumbnail.height,
+	alt: thumbnail?.alt ?? brand.thumbnail.alt,
 };
 
 function getPathnameWithoutLocale(pathname: string) {
-  return pathname.replace(`/${Astro.currentLocale}`, '').replace(/\/?$/, '/');
+	return pathname.replace(`/${Astro.currentLocale}`, "").replace(/\/?$/, "/");
 }
 ---
 

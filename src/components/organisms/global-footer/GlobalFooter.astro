@@ -1,25 +1,33 @@
 ---
-import { currentLocaleWebsiteConfig } from '@/utils/getWebsiteConfig.ts';
-import Logo from '@/components/atoms/logo/Logo.astro';
-import Logomark from '@/components/atoms/logomark/Logomark.astro';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Logo from "@/components/atoms/logo/Logo.astro";
+import Logomark from "@/components/atoms/logomark/Logomark.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale } from '@/utils/i18n.ts';
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import { defaultLocale } from "@/utils/i18n.ts";
 
-const globalWebsiteConfig = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data
-const { socials: globalWebsiteSocial, name: websiteName, copyright: websiteCopyright, slogan: websiteSlogan, email: websiteEmail } = globalWebsiteConfig.brand;
-const { navigation: globalWebsiteNavigation } = globalWebsiteConfig
+const globalWebsiteConfig = (
+	await currentLocaleWebsiteConfig(Astro.currentLocale)
+).data;
+const {
+	socials: globalWebsiteSocial,
+	name: websiteName,
+	copyright: websiteCopyright,
+	slogan: websiteSlogan,
+	email: websiteEmail,
+} = globalWebsiteConfig.brand;
+const { navigation: globalWebsiteNavigation } = globalWebsiteConfig;
 
 const footerSections = [
-  {
-    title: m.swift_steep_lobster_push(),
-    links: globalWebsiteSocial
-  },
-  {
-    title: m.maroon_awful_flea_twirl(),
-    links: globalWebsiteNavigation
-  },
-]
+	{
+		title: m.swift_steep_lobster_push(),
+		links: globalWebsiteSocial,
+	},
+	{
+		title: m.maroon_awful_flea_twirl(),
+		links: globalWebsiteNavigation,
+	},
+];
 ---
 <footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] md:mb-0 relative z-40 py-8 px-4 gap-4 bg-gradient-to-t to-90% from-primary/10 bg-background">
   <div class="flex flex-wrap justify-between container mx-auto">

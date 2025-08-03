@@ -1,19 +1,18 @@
 ---
-import type { GetStaticPaths } from 'astro'
-import BlogBase from '@/layouts/BlogBase.astro';
-import SpotlightPostCard from '@/components/atoms/spotlight-post-card/SpotlightPostCard.astro';
-import SpotlightCardsGallery from '@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro';
-import Hero from '@/components/molecules/hero/Hero.astro';
-import { dateSortedPublishedPosts } from '@/utils/getPosts.ts'
-import { languages, defaultLocale } from '@/utils/i18n.ts';
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { GetStaticPaths } from "astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
-import { getRelativeLocaleUrl } from 'astro:i18n';
+import { dateSortedPublishedPosts } from "@/utils/getPosts.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
 
-
-export const getStaticPaths = (async ({ paginate }) => Object.keys(languages)
-.flatMap(language => paginate(dateSortedPublishedPosts, 
-{ pageSize: 15, params: { language } })
-)) satisfies GetStaticPaths
+export const getStaticPaths = (async ({ paginate }) =>
+	Object.keys(languages).flatMap((language) =>
+		paginate(dateSortedPublishedPosts, { pageSize: 15, params: { language } }),
+	)) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
 ---

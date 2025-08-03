@@ -23,8 +23,6 @@ Replace pnpm with your choice of npm / yarn
 | `pnpm dev`         | Starts local dev server at `localhost:4321`                                                             |
 | `pnpm build`       | Build your production site to `./dist/`, also generating [pagefind](https://pagefind.app/) search index |
 | `pnpm typecheck`   | Run type-checking                                                                                       |
-| `pnpm lint`        | Run ESLint check                                                                                        |
-| `pnpm prettier`    | Run Prettier check                                                                                      |
 | `pnpm lighthouse`  | Run [lighthouse](https://github.com/GoogleChrome/lighthouse) check                                      |
 | `pnpm postinstall` | Run [pagefind](https://pagefind.app/) search index                                                      |
 

@@ -1,12 +1,12 @@
 ---
-import { Icon } from 'astro-icon/components'
+import { Icon } from "astro-icon/components";
 
 interface Props {
-  summary: string;
-  iconName: string;
-  isOpened?: boolean;
+	summary: string;
+	iconName: string;
+	isOpened?: boolean;
 }
-const { summary, iconName } = Astro.props
+const { summary, iconName } = Astro.props;
 ---
 
 <details style="max-width: 400px;" class="w-full" open>

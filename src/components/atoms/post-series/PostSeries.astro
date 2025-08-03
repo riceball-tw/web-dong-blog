@@ -1,23 +1,31 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import Accordion from '@/components/atoms/accordion/Accordion.astro'
-import { Icon } from 'astro-icon/components';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { defaultLocale, getLanguageCode, stripLanguageCode, type LanguageKey } from '@/utils/i18n.ts';
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Accordion from "@/components/atoms/accordion/Accordion.astro";
 import * as m from "@/paraglide/messages";
+import {
+	defaultLocale,
+	getLanguageCode,
+	type LanguageKey,
+	stripLanguageCode,
+} from "@/utils/i18n.ts";
 
 export interface Props {
-  currentLocale: LanguageKey 
-  currentPost: CollectionEntry<'post'>;
-  postsInSeries: CollectionEntry<'post'>[];
+	currentLocale: LanguageKey;
+	currentPost: CollectionEntry<"post">;
+	postsInSeries: CollectionEntry<"post">[];
 }
-const { currentPost, postsInSeries, currentLocale } = Astro.props
-const currentLocalePostsInSeries = postsInSeries.reduce((total: CollectionEntry<'post'>[], curr) => {
-  if (getLanguageCode(curr.slug) === currentLocale) {
-    return [...total, curr]
-  } 
-    return total
-}, [])
+const { currentPost, postsInSeries, currentLocale } = Astro.props;
+const currentLocalePostsInSeries = postsInSeries.reduce(
+	(total: CollectionEntry<"post">[], curr) => {
+		if (getLanguageCode(curr.slug) === currentLocale) {
+			return [...total, curr];
+		}
+		return total;
+	},
+	[],
+);
 ---
 
 <div data-cy="series-summary" data-pagefind-ignore="all">
