@@ -11,14 +11,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Environment Setup
-        uses: ./.github/actions/setup
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
 
-      - name: Run paraglide i18n compiler
-        run: npx @inlang/paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
-
-      - name: Run Lint
-        run: pnpm lint:ci
+      - name: Run Biome
+        run: biome ci .
 
   # TypeScript Check
   typecheck:
