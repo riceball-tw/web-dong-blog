@@ -4,6 +4,8 @@
 import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 import { Hono } from "hono";
 import { getLocalFonts } from "./getFonts";
+// biome-ignore lint/correctness/noUnusedImports: React is actually used in image generation
+import React from 'react';
 
 const app = new Hono();
 
