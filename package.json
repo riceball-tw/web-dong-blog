@@ -67,7 +67,7 @@
 		"uniqolor": "^1.1.0",
 		"vue": "^3.4.29",
 		"wrangler": "^4.10.0",
-		"zod": "^3.24.2"
+		"zod": "^4.1.11"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.1.3",
