@@ -105,5 +105,6 @@
 	"category_ui": "User Interface",
 	"category_ux": "User Experience",
 	"category_vue": "Vue",
-	"category_web_performance": "Web Performance"
+	"category_web_performance": "Web Performance",
+	"category_functional_programming": "Functional Programming"
 }
