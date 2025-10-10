@@ -26,6 +26,7 @@ module.exports = {
 				"uses-rel-preconnect": "warn", // Optional Optimization
 				"unused-css-rules": "warn", // Optional Optimization
 				"uses-optimized-images": "warn", // Optional Optimization
+				"link-text": "warn" // Optional Optimization
 			},
 		},
 		upload: {
