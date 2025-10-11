@@ -3,8 +3,12 @@ runs:
   using: composite
   steps:
     - run: pnpm add -D @playwright/test@latest
+      shell: bash
+
     - uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright
+
     - run: pnpm exec playwright install --with-deps
+      shell: bash
