@@ -18,11 +18,14 @@ const currentPath = pathname.slice(1);
 ---
 
 <nav
-  style="padding-bottom: env(safe-area-inset-bottom);"
-  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full backdrop-blur-none md:backdrop-blur-xl"
+  style="
+  padding-bottom: env(safe-area-inset-bottom);
+  mask: linear-gradient(0deg, transparent 0px, #000 calc(var(--mainNav-height) / 3)
+  "
+  class="gap-2 fixed md:bottom-auto top-auto md:top-0 bottom-4 z-50 w-full backdrop-blur-none md:backdrop-blur mask:none"
 >
   <Container>
-    <div class="flex justify-center md:justify-start md:border-b border-border gap-2">
+    <div class="flex justify-center md:justify-start gap-2">
         <a
         data-astro-prefetch
         title={m.funny_small_coyote_chop()}
@@ -73,9 +76,9 @@ const currentPath = pathname.slice(1);
 .active-link {
 }
 .active-link::before {
-  content: "asdasd";
+  content: "";
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 50%;
   width: 100%;
   height: 2px;
