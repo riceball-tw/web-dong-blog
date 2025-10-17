@@ -106,5 +106,6 @@
 	"category_ux": "使用者体验",
 	"category_vue": "Vue",
 	"category_web_performance": "网页效能",
-	"category_functional_programming": "函式程式设计"
+	"category_functional_programming": "函式程式设计",
+	"category_functional_git": "Git"
 }
