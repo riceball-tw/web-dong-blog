@@ -30,10 +30,10 @@ module.exports = {
 			},
 		},
 		upload: {
-			// target: 'temporary-public-storage',
-			target: "lhci",
-			serverBaseUrl: process.env.PUBLIC_LHCI_BASE_URL,
-			token: process.env.LHCI_TOKEN,
+			target: 'temporary-public-storage',
+			// target: "lhci",
+			// serverBaseUrl: process.env.PUBLIC_LHCI_BASE_URL,
+			// token: process.env.LHCI_TOKEN,
 		},
 		server: {
 			// server options here
