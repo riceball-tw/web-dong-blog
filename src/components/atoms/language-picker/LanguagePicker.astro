@@ -1,23 +1,31 @@
 ---
 import * as m from "@/paraglide/messages";
-import { changeLanguage, type LanguageKey, languages, removeLanguagePrefix } from "@/utils/i18n.ts";
 import { publishedPosts } from "@/utils/getPosts.ts";
 import { shortposts } from "@/utils/getShortposts.ts";
+import {
+	changeLanguage,
+	type LanguageKey,
+	languages,
+	removeLanguagePrefix,
+} from "@/utils/i18n.ts";
 
 function checkLinkValidity(cleanPath: string, langKey: string) {
-  // Check Post
-  if (cleanPath.match(/^post\/.+/) && !cleanPath.match(/^post\/(tags|categories)\//)) {
-    const slug = cleanPath.replace(/^post\//, "").replace(/\/$/, "");
-    const expectedSlug = `${langKey}/${slug}`;
-    return publishedPosts.some((p) => p.slug === expectedSlug);
-  }
-  // Check Shortpost
-  if (cleanPath.match(/^shortpost\/.+/)) {
-    const slug = cleanPath.replace(/^shortpost\//, "").replace(/\/$/, "");
-    const expectedSlug = `${langKey}/${slug}`;
-    return shortposts.some((p) => p.slug === expectedSlug);
-  }
-  return true;
+	// Check Post
+	if (
+		cleanPath.match(/^post\/.+/) &&
+		!cleanPath.match(/^post\/(tags|categories)\//)
+	) {
+		const slug = cleanPath.replace(/^post\//, "").replace(/\/$/, "");
+		const expectedSlug = `${langKey}/${slug}`;
+		return publishedPosts.some((p) => p.slug === expectedSlug);
+	}
+	// Check Shortpost
+	if (cleanPath.match(/^shortpost\/.+/)) {
+		const slug = cleanPath.replace(/^shortpost\//, "").replace(/\/$/, "");
+		const expectedSlug = `${langKey}/${slug}`;
+		return shortposts.some((p) => p.slug === expectedSlug);
+	}
+	return true;
 }
 ---
 <button data-cy="change-language" title={m.clear_helpful_toad_accept()} class="cursor-pointer rounded-full opacity-60 hover:opacity-100" popovertarget="i18n-menu" type="button">
