@@ -41,22 +41,22 @@
 		{
 			"iconName": "material-symbols:home-outline-rounded",
 			"name": "Home",
-			"url": ""
+			"url": "https://www.webdong.dev/en/"
 		},
 		{
 			"iconName": "material-symbols:article-outline-rounded",
 			"name": "Post",
-			"url": "post"
+			"url": "https://www.webdong.dev/zh-tw/post/"
 		},
 		{
 			"iconName": "material-symbols:service-toolbox-outline-rounded",
 			"name": "Toolbox",
-			"url": "toolbox"
+			"url": "https://www.webdong.dev/zh-tw/toolbox/"
 		},
 		{
 			"iconName": "material-symbols:quick-phrases-rounded",
 			"name": "Shortpost",
-			"url": "shortpost"
+			"url": "https://www.webdong.dev/zh-tw/shortpost/"
 		}
 	]
 }
