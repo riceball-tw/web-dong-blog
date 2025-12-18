@@ -41,22 +41,22 @@
 		{
 			"iconName": "material-symbols:home-outline-rounded",
 			"name": "首頁",
-			"url": "https://www.webdong.dev/zh-tw/"
+			"url": ""
 		},
 		{
 			"iconName": "material-symbols:article-outline-rounded",
 			"name": "文章",
-			"url": "https://www.webdong.dev/zh-tw/post/"
+			"url": "post"
 		},
 		{
 			"iconName": "material-symbols:service-toolbox-outline-rounded",
 			"name": "工具",
-			"url": "https://www.webdong.dev/zh-tw/toolbox/"
+			"url": "toolbox"
 		},
 		{
 			"iconName": "material-symbols:quick-phrases-rounded",
 			"name": "短文",
-			"url": "https://www.webdong.dev/zh-tw/shortpost/"
+			"url": "shortpost"
 		}
 	]
 }
