@@ -55,12 +55,12 @@ const footerSections = [
           {section.title}
         </div>
         <ul>
-          {
-            section.links.map(link => <li>
-                <a class="text-xs p-4 py-2 inline-block"
-                   href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, link.url)}>{link.name}</a>
-              </li>)
-          }
+           {
+             section.links.map(link => <li>
+                 <a class="text-xs p-4 py-2 inline-block"
+                    href={link.url.startsWith('http') ? link.url : getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, link.url)}>{link.name}</a>
+               </li>)
+           }
         </ul>
       </div>)
       }
