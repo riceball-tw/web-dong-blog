@@ -76,7 +76,7 @@ const ogImage = {
 };
 const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`;
 
-const ogImageUrl = `https://astro-blog-og.workers.dev/?${query}`;
+const ogImageUrl = `https://astro-blog-og.bottle200918.workers.dev/?${query}`;
 ---
 
 <BlogBase title={headline} description={excerpt} themeColor={themeColor} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
