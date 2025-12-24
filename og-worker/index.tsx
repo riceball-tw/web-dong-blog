@@ -1,6 +1,5 @@
-import { Hono } from "hono";
 import { ImageResponse } from "@vercel/og";
-import React from "react";
+import { Hono } from "hono";
 
 type Env = {
 	OG_LIMITER: {
@@ -209,7 +208,7 @@ app.use("*", async (c, next) => {
 		console.error("Rate limiter error:", e);
 		// Fail open if rate limiter fails
 	}
-	await next();
+	return await next();
 });
 
 app.get("/", async (c) => {
