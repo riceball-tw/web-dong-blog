@@ -171,6 +171,9 @@ jobs:
           command: pages deploy --branch=${{ github.ref_name }}
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install OG Worker dependencies
+        run: cd og-worker && pnpm install --frozen-lockfile
+
       - name: Deploy OG Worker
         uses: cloudflare/wrangler-action@v3.14.1
         with:
