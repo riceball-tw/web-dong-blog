@@ -18,7 +18,7 @@ const getLocalFonts = async (
 		const name = "font-family";
 
 		// Fetch from main site (assume deployed to Pages)
-		const baseUrl = "www.webdong.dev";
+		const baseUrl = "https://www.webdong.dev";
 		const response = await fetch(`${baseUrl}/fonts/${path}`);
 
 		if (!response.ok) {
