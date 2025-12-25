@@ -1,0 +1,12 @@
+name = "astro-blog-og"
+compatibility_date = "2025-04-14"
+main = "index.tsx"
+
+[limits]
+cpu_ms = 100_000
+
+[[unsafe.bindings]]
+name = "OG_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }

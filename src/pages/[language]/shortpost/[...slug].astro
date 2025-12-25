@@ -50,7 +50,7 @@ const ogImage = {
 };
 
 const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`;
-const ogImageUrl = `/api/og?${query}`;
+const ogImageUrl = `https://astro-blog-og.workers.dev/?${query}`;
 ---
 <BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <Container>

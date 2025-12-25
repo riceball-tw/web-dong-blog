@@ -1,13 +1,44 @@
-/* eslint-disable no-inner-declarations */
-/** biome-ignore-all lint/a11y/noSvgWithoutTitle: For OG Generation */
-
 import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 import { Hono } from "hono";
-// biome-ignore lint/correctness/noUnusedImports: React is actually used in image generation
-import React from "react";
-import { getLocalFonts } from "./getFonts";
 
-const app = new Hono();
+type Env = {
+	OG_LIMITER: {
+		limit: (options: { key: string }) => Promise<{ success: boolean }>;
+	};
+	ASSETS: any;
+};
+
+// Adapted getLocalFonts for Worker
+const getLocalFonts = async (
+	fonts: { path: string; weight: number; style?: string }[],
+): Promise<
+	Array<{ data: ArrayBuffer; name: string; style: string; weight: number }>
+> => {
+	const fontPromises = fonts.map(async ({ path, weight, style = "normal" }) => {
+		const name = "font-family";
+
+		// Fetch from main site (assume deployed to Pages)
+		const baseUrl = "https://www.webdong.dev";
+		const response = await fetch(`${baseUrl}/fonts/${path}`);
+
+		if (!response.ok) {
+			throw new Error(
+				`Failed to load font: ${path} - Status: ${response.status} ${response.statusText}`,
+			);
+		}
+
+		const data = await response.arrayBuffer();
+
+		return {
+			data,
+			name,
+			style,
+			weight,
+		};
+	});
+
+	return Promise.all(fontPromises);
+};
 
 const Logo = () => (
 	<div
@@ -23,6 +54,7 @@ const Logo = () => (
 			backgroundRepeat: "no-repeat",
 		}}
 	>
+		{/** biome-ignore lint/a11y/noSvgWithoutTitle: generate for og image */}
 		<svg
 			style={{ width: "100%", height: "100%" }}
 			xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +195,23 @@ const OGCard = ({ title, content }: { title: string; content: string }) => (
 	</div>
 );
 
-export default app.get("/", async (c) => {
+const app = new Hono<{ Bindings: Env }>();
+
+app.use("*", async (c, next) => {
+	const ip = c.req.header("cf-connecting-ip") ?? "anonymous";
+	try {
+		const { success } = await c.env.OG_LIMITER.limit({ key: ip });
+		if (!success) {
+			return c.json({ error: "Rate limit exceeded" }, 429);
+		}
+	} catch (e) {
+		console.error("Rate limiter error:", e);
+		// Fail open if rate limiter fails
+	}
+	return await next();
+});
+
+app.get("/", async (c) => {
 	try {
 		const { title, content } = c.req.query();
 
@@ -171,7 +219,7 @@ export default app.get("/", async (c) => {
 			throw new Error("Missing required query parameters");
 		}
 
-		const fonts = await getLocalFonts(c, [
+		const fonts = await getLocalFonts([
 			{ path: "NotoSansTC-Bold.ttf", weight: 900 },
 			{ path: "NotoSansTC-Regular.ttf", weight: 500 },
 		]);
@@ -179,7 +227,7 @@ export default app.get("/", async (c) => {
 		return new ImageResponse(<OGCard title={title} content={content} />, {
 			width: 1200,
 			height: 630,
-			fonts: Array.isArray(fonts) ? [...fonts] : [fonts],
+			fonts: fonts as any,
 		});
 	} catch (error: any) {
 		console.error("OG Image generation error:", error);
@@ -189,3 +237,5 @@ export default app.get("/", async (c) => {
 		);
 	}
 });
+
+export default app;

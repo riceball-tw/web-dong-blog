@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ES2021",
+		"lib": ["ES2021"],
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"allowJs": true,
+		"strict": true,
+		"noEmit": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"jsx": "react-jsx"
+	}
+}
