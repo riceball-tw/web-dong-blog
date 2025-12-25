@@ -54,12 +54,12 @@ const Logo = () => (
 			backgroundRepeat: "no-repeat",
 		}}
 	>
-		<svg
+		{/** biome-ignore lint/a11y/noSvgWithoutTitle: generate for og image */}
+<svg
 			style={{ width: "100%", height: "100%" }}
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 60 60"
 		>
-			<title>Logo</title>
 			<defs>
 				<radialGradient
 					id="prefix__a"
