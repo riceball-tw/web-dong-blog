@@ -38,7 +38,7 @@
 		"@types/react": "^18.0.21",
 		"@types/react-dom": "^18.0.6",
 		"@vercel/og": "^0.6.2",
-		"astro": "^5.8.1",
+		"astro": "^5.17.1",
 		"astro-expressive-code": "^0.32.4",
 		"astro-icon": "^1.1.0",
 		"astro-seo": "^0.8.3",
