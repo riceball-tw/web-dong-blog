@@ -27,6 +27,7 @@ module.exports = {
 				"unused-css-rules": "warn", // Optional Optimization
 				"uses-optimized-images": "warn", // Optional Optimization
 				"link-text": "warn", // Optional Optimization
+				"deprecations": "warn" // Optional Optimization
 			},
 		},
 		upload: {
