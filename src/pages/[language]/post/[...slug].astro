@@ -9,6 +9,7 @@ import Container from "@/components/atoms/container/Container.astro";
 import PostBlockquote from "@/components/atoms/post-blockquote/PostBlockquote.astro";
 import PostImage from "@/components/atoms/post-image/PostImage.astro";
 import PostSeries from "@/components/atoms/post-series/PostSeries.astro";
+import PostTable from "@/components/atoms/post-table/PostTable.astro";
 import PostTableOfContent from "@/components/atoms/post-toc/PostTableOfContent.astro";
 import Sidenote from "@/components/atoms/sidenote/Sidenote.astro";
 import SupportMe from "@/components/atoms/support-me/SupportMe.astro";
@@ -166,7 +167,7 @@ const ogImageUrl = `https://astro-blog-og.bottle200918.workers.dev/?${query}`;
         <!-- Empty non-size element as grid row placeholder, to avoid being stretch with aside -->
         <!-- #217 Post image cause weird spacing: https://github.com/riceball-tw/web-dong-blog/issues/217 -->
         <div></div>
-        <Content components={{ Sidenote, Video, img: PostImage, blockquote: PostBlockquote }} />
+        <Content components={{ Sidenote, Video, img: PostImage, blockquote: PostBlockquote, table: PostTable }} />
         <SupportMe />
         <Comments />
       </article>
