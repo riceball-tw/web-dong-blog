@@ -31,7 +31,6 @@
 		"@astrojs/sitemap": "^3.7.0",
 		"@astrojs/vue": "^5.1.4",
 		"@cloudflare/pages-plugin-vercel-og": "^0.1.2",
-		"@fontsource-variable/inter": "^5.2.8",
 		"@inlang/paraglide-astro": "^0.2.6",
 		"@pagefind/default-ui": "^1.4.0",
 		"@tailwindcss/vite": "^4.1.18",
