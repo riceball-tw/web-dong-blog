@@ -33,7 +33,7 @@
 				"name": "RSS",
 				"iconName": "simple-icons:rss",
 				"imgUrl": "/images/global/social/rss.svg",
-				"url": "/rss.xml"
+				"url": "https://www.webdong.dev/rss.xml"
 			}
 		]
 	},
