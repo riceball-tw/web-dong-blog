@@ -1,7 +1,6 @@
 name: Testing and Deploy Pipeline
 
 on:
-  push:
   pull_request:
 
 jobs:
