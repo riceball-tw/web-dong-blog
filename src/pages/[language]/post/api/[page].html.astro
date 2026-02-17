@@ -25,9 +25,8 @@ export function getStaticPaths() {
 }
 
 const { posts, hasNext, locale } = Astro.props;
-
-Astro.response.headers.set("X-Has-Next", String(hasNext));
 ---
+<div data-has-next={String(hasNext)} style="display:none"></div>
 {posts.map((post) => (
   <SpotlightPostCard
     post={{

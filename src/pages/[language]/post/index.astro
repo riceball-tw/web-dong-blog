@@ -97,10 +97,10 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
         loading = true;
         try {
           const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
-          const hasNext = res.headers.get('X-Has-Next') === 'true';
           const html = await res.text();
           const temp = document.createElement('div');
           temp.innerHTML = html;
+          const hasNext = temp.querySelector('[data-has-next]')?.getAttribute('data-has-next') === 'true';
           temp.querySelectorAll('[data-spotlight-card]').forEach(card => gallery?.appendChild(card));
           nextPage = hasNext ? nextPage + 1 : null;
         } catch {
