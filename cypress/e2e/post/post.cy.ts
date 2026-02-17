@@ -20,13 +20,15 @@ describe("All post page is effective", () => {
 	});
 
 	it("Infinite scroll loads next page", () => {
-		cy.get('[data-spotlight-card]').then($cards => {
+		cy.get("[data-spotlight-card]").then(($cards) => {
 			const initialCount = $cards.length;
 
-			cy.get('#infinite-scroll-trigger').scrollIntoView();
+			cy.get("#infinite-scroll-trigger").scrollIntoView();
 
-			cy.get('[data-spotlight-card]')
-				.should('have.length.greaterThan', initialCount);
+			cy.get("[data-spotlight-card]").should(
+				"have.length.greaterThan",
+				initialCount,
+			);
 		});
 	});
 });
