@@ -99,29 +99,37 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
     const locale = trigger?.dataset.locale || 'en';
     let loading = false;
 
-    const observer = new IntersectionObserver(async (entries) => {
-      if (entries[0]?.isIntersecting && nextPage && !loading) {
-        loading = true;
-        loadingSkeletons.forEach(el => el.classList.remove('hidden'));
-        try {
-          const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
-          const html = await res.text();
-          const temp = document.createElement('div');
-          temp.innerHTML = html;
-          const hasNext = temp.querySelector('[data-has-next]')?.getAttribute('data-has-next') === 'true';
-          temp.querySelectorAll('[data-spotlight-card]').forEach(card => gallery?.appendChild(card));
-          loadingSkeletons.forEach(el => gallery?.appendChild(el));
-          nextPage = hasNext ? nextPage + 1 : null;
-        } catch {
-          nextPage = null;
-        } finally {
-          loading = false;
-          loadingSkeletons.forEach(el => el.classList.add('hidden'));
-        }
+    const loadMore = async () => {
+      if (!nextPage || loading) return;
+      loading = true;
+      loadingSkeletons.forEach(el => el.classList.remove('hidden'));
+      try {
+        const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
+        const html = await res.text();
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        const hasNext = temp.querySelector('[data-has-next]')?.getAttribute('data-has-next') === 'true';
+        temp.querySelectorAll('[data-spotlight-card]').forEach(card => gallery?.appendChild(card));
+        loadingSkeletons.forEach(el => gallery?.appendChild(el));
+        nextPage = hasNext ? nextPage + 1 : null;
+      } catch {
+        nextPage = null;
+      } finally {
+        loading = false;
+        loadingSkeletons.forEach(el => el.classList.add('hidden'));
       }
+    };
+
+    const observer = new IntersectionObserver(async (entries) => {
+      if (entries[0]?.isIntersecting) loadMore();
     });
 
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) loadMore();
+    };
+
     if (trigger) observer.observe(trigger);
+    window.addEventListener('scroll', handleScroll);
   </script>
 )}
 
