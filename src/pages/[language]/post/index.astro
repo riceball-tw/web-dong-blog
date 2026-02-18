@@ -15,6 +15,7 @@ import {
 	sortedPostTags,
 } from "@/utils/getPosts.ts";
 import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
+import SpotlightPostCardSkeleton from "@/components/atoms/spotlight-post-card/SpotlightPostCardSkeleton.astro";
 
 export const getStaticPaths = (() =>
 	Object.keys(languages).map((language) => ({
@@ -74,9 +75,14 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
           )
           })
         }
+        {hasNext && Array.from({length: PAGINATION_PAGE_SIZE}, () => {
+          return <div data-loading-skeleton class="hidden"><SpotlightPostCardSkeleton /></div>
+        })}
       </SpotlightCardsGallery>
       {hasNext && (
-        <div id="infinite-scroll-trigger" data-next-page="2" data-locale={Astro.currentLocale || defaultLocale}></div>
+        <>
+          <div id="infinite-scroll-trigger" data-next-page="2" data-locale={Astro.currentLocale || defaultLocale}></div>
+        </>
       )}
     </section>
   </Container>
@@ -88,6 +94,7 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
 
     const trigger = document.getElementById('infinite-scroll-trigger');
     const gallery = document.querySelector('[data-spotlight-cards-gallery]');
+    const loadingSkeletons = document.querySelectorAll('[data-loading-skeleton]');
     let nextPage: number | null = Number(trigger?.dataset.nextPage);
     const locale = trigger?.dataset.locale || 'en';
     let loading = false;
@@ -95,6 +102,7 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
     const observer = new IntersectionObserver(async (entries) => {
       if (entries[0]?.isIntersecting && nextPage && !loading) {
         loading = true;
+        loadingSkeletons.forEach(el => el.classList.remove('hidden'));
         try {
           const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
           const html = await res.text();
@@ -102,11 +110,13 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
           temp.innerHTML = html;
           const hasNext = temp.querySelector('[data-has-next]')?.getAttribute('data-has-next') === 'true';
           temp.querySelectorAll('[data-spotlight-card]').forEach(card => gallery?.appendChild(card));
+          loadingSkeletons.forEach(el => gallery?.appendChild(el));
           nextPage = hasNext ? nextPage + 1 : null;
         } catch {
           nextPage = null;
         } finally {
           loading = false;
+          loadingSkeletons.forEach(el => el.classList.add('hidden'));
         }
       }
     });

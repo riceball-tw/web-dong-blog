@@ -1,0 +1,23 @@
+---
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
+import Skeleton from "@/components/atoms/skeleton/Skeleton.vue";
+---
+
+<SpotlightCard themeColor="#e5e7eb">
+  <article class="flex h-full flex-col justify-between gap-8 pt-8">
+    <Skeleton class="absolute size-16 left-0 top-0 ml-4 -translate-y-1/2" />
+    <div>
+      <Skeleton class="mb-4 h-7 w-3/4" />
+      <Skeleton class="h-4 w-full mb-2" />
+      <Skeleton class="h-4 w-full mb-2" />
+      <Skeleton class="h-4 w-2/3" />
+    </div>
+    <div class="flex flex-wrap items-center justify-between">
+      <Skeleton class="h-4 w-24" />
+      <div class="flex gap-2">
+        <Skeleton class="h-6 w-16" />
+        <Skeleton class="h-6 w-16" />
+      </div>
+    </div>
+  </article>
+</SpotlightCard>
