@@ -1,12 +1,15 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
+import type { GetStaticPaths } from "astro";
 import { Badge } from "@/components/atoms/badge/index.ts";
 import Container from "@/components/atoms/container/Container.astro";
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import SpotlightPostCardSkeleton from "@/components/atoms/spotlight-post-card/SpotlightPostCardSkeleton.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
 import * as m from "@/paraglide/messages";
+import { PAGINATION_PAGE_SIZE } from "@/utils/constants.ts";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
@@ -14,16 +17,22 @@ import {
 } from "@/utils/getPosts.ts";
 import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
 
-export function getStaticPaths() {
-	return Object.keys(languages).map((language) => ({
+export const getStaticPaths = (() =>
+	Object.keys(languages).map((language) => ({
 		params: { language },
-	}));
-}
+	}))) satisfies GetStaticPaths;
 
-const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
+const allPosts = dateSortedLocaleRelatedPosts(
+	Astro.currentLocale as LanguageKey,
+);
+const posts = allPosts.slice(0, PAGINATION_PAGE_SIZE);
+const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
 ---
 
-<BlogBase title={m.still_mad_javelina_propel()} description={m.tired_game_husky_sew({number: posts.length}) }>
+<BlogBase 
+  title={m.still_mad_javelina_propel()} 
+  description={m.tangy_empty_rabbit_boost()}
+>
   <Hero>
     <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
       <a data-cy="categories-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/categories')}>
@@ -44,9 +53,8 @@ const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
       </a>
     </div>
     <Fragment slot="headline">
-      {m.tired_game_husky_sew({number: posts.length})}
+      {m.tired_game_husky_sew({number: allPosts.length})}
     </Fragment>
-
   </Hero>
   <Container>
     <section>
@@ -67,7 +75,61 @@ const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
           )
           })
         }
+        {hasNext && Array.from({length: PAGINATION_PAGE_SIZE}, () => {
+          return <div data-loading-skeleton class="hidden"><SpotlightPostCardSkeleton /></div>
+        })}
       </SpotlightCardsGallery>
+      {hasNext && (
+        <>
+          <div id="infinite-scroll-trigger" data-next-page="2" data-locale={Astro.currentLocale || defaultLocale}></div>
+        </>
+      )}
     </section>
   </Container>
 </BlogBase>
+
+{hasNext && (
+  <script>
+    import { getRelativeLocaleUrl } from "astro:i18n";
+
+    const trigger = document.getElementById('infinite-scroll-trigger');
+    const gallery = document.querySelector('[data-spotlight-cards-gallery]');
+    const loadingSkeletons = document.querySelectorAll('[data-loading-skeleton]');
+    let nextPage: number | null = Number(trigger?.dataset.nextPage);
+    const locale = trigger?.dataset.locale || 'en';
+    let loading = false;
+
+    const loadMore = async () => {
+      if (!nextPage || loading) return;
+      loading = true;
+      loadingSkeletons.forEach(el => el.classList.remove('hidden'));
+      try {
+        const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
+        const html = await res.text();
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        const hasNext = temp.querySelector('[data-has-next]')?.getAttribute('data-has-next') === 'true';
+        temp.querySelectorAll('[data-spotlight-card]').forEach(card => gallery?.appendChild(card));
+        loadingSkeletons.forEach(el => gallery?.appendChild(el));
+        nextPage = hasNext ? nextPage + 1 : null;
+      } catch {
+        nextPage = null;
+      } finally {
+        loading = false;
+        loadingSkeletons.forEach(el => el.classList.add('hidden'));
+      }
+    };
+
+    const observer = new IntersectionObserver(async (entries) => {
+      if (entries[0]?.isIntersecting) loadMore();
+    });
+
+    const handleScroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) loadMore();
+    };
+
+    if (trigger) observer.observe(trigger);
+    window.addEventListener('scroll', handleScroll);
+  </script>
+)}
+

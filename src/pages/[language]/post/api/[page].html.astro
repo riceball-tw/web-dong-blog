@@ -1,0 +1,39 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import { PAGINATION_PAGE_SIZE } from "@/utils/constants.ts";
+import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
+import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
+
+export function getStaticPaths() {
+	return Object.keys(languages).flatMap((language) => {
+		const posts = dateSortedLocaleRelatedPosts(language as LanguageKey);
+		const totalPages = Math.ceil(posts.length / PAGINATION_PAGE_SIZE);
+
+		return Array.from({ length: totalPages }, (_, i) => ({
+			params: { language, page: String(i + 1) },
+			props: {
+				posts: posts.slice(
+					i * PAGINATION_PAGE_SIZE,
+					(i + 1) * PAGINATION_PAGE_SIZE,
+				),
+				hasNext: i + 1 < totalPages,
+				locale: language,
+			},
+		}));
+	});
+}
+
+const { posts, hasNext, locale } = Astro.props;
+---
+<div data-has-next={String(hasNext)} style="display:none"></div>
+{posts.map((post) => (
+  <SpotlightPostCard
+    post={{
+      categoryHref: getRelativeLocaleUrl(locale || defaultLocale, `/post/categories/${post.data.category}/`),
+      tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(locale || defaultLocale, `/post/tags/${tag}/`)),
+      slug: post.slug,
+      ...post.data
+    }}
+  />
+))}

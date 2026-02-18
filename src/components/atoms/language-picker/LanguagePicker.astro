@@ -9,22 +9,31 @@ import {
 	removeLanguagePrefix,
 } from "@/utils/i18n.ts";
 
+const SKIP_VALIDATION_PATTERNS = [
+	/^post\/(tags|categories)(\/|$)/, // Taxonomy pages
+	/^post\/(\d+\/?)?$/, // post/1, 2, 3...
+	/^post\/all\/?$/, // post/all
+];
+
 function checkLinkValidity(cleanPath: string, langKey: string) {
+	if (SKIP_VALIDATION_PATTERNS.some((pattern) => cleanPath.match(pattern))) {
+		return true;
+	}
+
 	// Check Post
-	if (
-		cleanPath.match(/^post\/.+/) &&
-		!cleanPath.match(/^post\/(tags|categories)\//)
-	) {
+	if (cleanPath.match(/^post\/.+/)) {
 		const slug = cleanPath.replace(/^post\//, "").replace(/\/$/, "");
 		const expectedSlug = `${langKey}/${slug}`;
 		return publishedPosts.some((p) => p.slug === expectedSlug);
 	}
+
 	// Check Shortpost
 	if (cleanPath.match(/^shortpost\/.+/)) {
 		const slug = cleanPath.replace(/^shortpost\//, "").replace(/\/$/, "");
 		const expectedSlug = `${langKey}/${slug}`;
 		return shortposts.some((p) => p.slug === expectedSlug);
 	}
+
 	return true;
 }
 ---
