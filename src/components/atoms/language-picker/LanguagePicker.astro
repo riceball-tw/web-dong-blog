@@ -63,7 +63,7 @@ function checkLinkValidity(cleanPath: string, langKey: string) {
 
         return (
         <li>
-          {isCurrentLocale ? <span data-cy="current-language" class={`${linkStyle} ${stateStyle}`}>{name}</span> : <a data-cy="avaliable-language" class={`${linkStyle} ${stateStyle}`} href={nextPath}>{name}</a>
+          {isCurrentLocale ? <span data-cy="current-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`}>{name}</span> : <a data-cy="avaliable-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`} href={nextPath}>{name}</a>
           }
         </li>
       )
