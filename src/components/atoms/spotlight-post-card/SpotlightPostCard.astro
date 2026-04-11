@@ -11,11 +11,11 @@ import { defaultLocale, stripLanguageCode } from "@/utils/i18n.ts";
 
 type PostPage = CollectionEntry<"post">;
 
-type PostCard = Pick<PostPage, "slug"> &
+type PostCard = Pick<PostPage, "id"> &
 	PostPage["data"] &
 	CategoryListType &
 	TagsList & { url?: string };
-type CustomCard = Partial<Pick<PostPage, "slug">> &
+type CustomCard = Partial<Pick<PostPage, "id">> &
 	CategoryListType &
 	TagsList & {
 		url?: string;
@@ -43,7 +43,7 @@ const {
 	tags,
 	categoryHref,
 	category,
-	slug,
+	id,
 	url,
 } = Astro.props.post;
 ---
@@ -63,8 +63,8 @@ const {
     <div>
       <h2 class="mb-4 text-lg font-medium">
         {url && <a rel="nofollow" href={url}>{headline}</a>}
-        {slug && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(slug)}/`)}>{headline}</a>}
-        {!url && !slug && headline}
+        {id && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(id)}/`)}>{headline}</a>}
+        {!url && !id && headline}
       </h2>
       <p class="line-clamp-3 prose">{excerpt}</p>
     </div>

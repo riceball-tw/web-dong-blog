@@ -57,7 +57,7 @@ const avaliableCurrentTagPosts = posts
             post={{
               categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
               tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
-              slug: post.slug,
+              id: post.id,
               ...data,
             }}
           />

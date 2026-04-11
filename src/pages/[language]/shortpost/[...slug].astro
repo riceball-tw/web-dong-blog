@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import MarkdownIt from "markdown-it";
 import Container from "@/components/atoms/container/Container.astro";
 import PostImage from "@/components/atoms/post-image/PostImage.astro";
@@ -15,7 +16,7 @@ export async function getStaticPaths() {
 	return Object.keys(languages).flatMap((language) =>
 		dateSortedLocaleRelatedShortposts(language as LanguageKey).map(
 			(shortpost) => ({
-				params: { slug: stripLanguageCode(shortpost.slug), language },
+				params: { slug: stripLanguageCode(shortpost.id), language },
 				props: {
 					shortpost,
 					shortposts: dateSortedLocaleRelatedShortposts(
@@ -29,7 +30,7 @@ export async function getStaticPaths() {
 
 const { shortpost, shortposts } = Astro.props;
 const { headline } = shortpost.data;
-const { Content } = await shortpost.render();
+const { Content } = await render(shortpost);
 const leaveSpaceforLastShortStyle = `padding-bottom: 20vh`;
 // How to Create Excerpts With Astro
 // https://www.paulie.dev/posts/2023/09/how-to-create-excerpts-with-astro/#creating-the-substring
@@ -42,7 +43,7 @@ const createExcerpt = (body: string, maxLength: number = 160) =>
 		.flatMap((str: string) => str.replace(/<\/?[^>]+(>|$)/g, "").split("\n"))
 		.join(" ")
 		.substring(0, maxLength);
-const excerpt = createExcerpt(shortpost.body);
+const excerpt = createExcerpt(shortpost.body || "");
 
 const ogImage = {
 	title: headline,
@@ -55,7 +56,7 @@ const ogImageUrl = `https://astro-blog-og.workers.dev/?${query}`;
 <BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 px-6 sm:mt-[var(--mainNav-height)]">
-      <ShortpostList shortposts={shortposts} currentSlug={shortpost.slug}>
+      <ShortpostList shortposts={shortposts} currentSlug={shortpost.id}>
         <Content components={{ img: PostImage }}  />
       </ShortpostList>
     </main>

@@ -15,13 +15,13 @@ export type Props = {
 
 const { shortposts, currentSlug } = Astro.props;
 const activeShortpostIndexs = shortposts.findIndex(
-	(shortpost) => shortpost.slug === currentSlug,
+	(shortpost) => shortpost.id === currentSlug,
 );
 ---
 <ul class="space-y-4 md:space-y-8">
   {
     shortposts.map((shortpost, index) => {
-      const isActiveShort = shortpost.slug === currentSlug
+      const isActiveShort = shortpost.id === currentSlug
       const isNoActiveShort = !currentSlug
       const HeadingComponent = isActiveShort ? 'h1' : 'h2'
 
@@ -54,7 +54,7 @@ const activeShortpostIndexs = shortposts.findIndex(
             ${isNoActiveShort || !isActiveShort ? '' : 'font-bold'}
             `} 
             
-            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/shortpost/${stripLanguageCode(shortpost.slug)}/#${stripLanguageCode(shortpost.slug)}`).replace(/\/$/, '')}>
+            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/shortpost/${stripLanguageCode(shortpost.id)}/#${stripLanguageCode(shortpost.id)}`).replace(/\/$/, '')}>
             
             <HeadingComponent
               data-publish-date={shortpost.data.publishDate
@@ -62,7 +62,7 @@ const activeShortpostIndexs = shortposts.findIndex(
                 .replace(/\//g, '-')} 
               data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translatedCategory}`}
               data-pagefind-sort="date[data-publish-date]" 
-              style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.slug)}>
+              style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.id)}>
               <span>{shortpost.data.headline}</span>
             </HeadingComponent>
           </a>

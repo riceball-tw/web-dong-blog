@@ -68,7 +68,7 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
             post={{
               categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
               tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
-                slug: post.slug,
+                id: post.id,
                 ...data
               }}
             />
@@ -90,8 +90,6 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
 
 {hasNext && (
   <script>
-    import { getRelativeLocaleUrl } from "astro:i18n";
-
     const trigger = document.getElementById('infinite-scroll-trigger');
     const gallery = document.querySelector('[data-spotlight-cards-gallery]');
     const loadingSkeletons = document.querySelectorAll('[data-loading-skeleton]');
@@ -104,7 +102,7 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
       loading = true;
       loadingSkeletons.forEach(el => el.classList.remove('hidden'));
       try {
-        const res = await fetch(getRelativeLocaleUrl(locale, `/post/api/${nextPage}.html`));
+        const res = await fetch(`/${locale}/post/api/${nextPage}.html`);
         const html = await res.text();
         const temp = document.createElement('div');
         temp.innerHTML = html;

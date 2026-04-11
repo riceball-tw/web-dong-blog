@@ -12,4 +12,4 @@ export const dateSortedPublishedShortposts = shortposts.sort(
 export const dateSortedLocaleRelatedShortposts = (currentLocale: LanguageKey) =>
 	shortposts
 		.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
-		.filter((post) => getLocaleCode(post.slug) === currentLocale);
+		.filter((post) => getLocaleCode(post.id) === currentLocale);
