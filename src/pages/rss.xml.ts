@@ -22,12 +22,12 @@ export const GET = async (context: APIContext) => {
 		description,
 		site: context.site || "",
 		items: [...publishedPosts, ...shortposts].map((collectionItem) => {
-			const { slug } = collectionItem;
+			const { id: slug } = collectionItem;
 			const slugWithoutLocaleCode = stripLanguageCode(slug);
 			const LocaleCode = getLocaleCode(slug);
 
 			if (collectionItem.collection === "shortpost") {
-				const { body } = collectionItem;
+				const body = collectionItem.body || "";
 				const { headline, publishDate, category } = collectionItem.data;
 				return {
 					title: headline,

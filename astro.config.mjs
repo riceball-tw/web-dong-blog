@@ -24,6 +24,12 @@ import {
 export default defineConfig({
 	image: {
 		service: passthroughImageService(), // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "bucket-webdong.webdong.dev",
+			},
+		],
 	},
 	i18n: {
 		defaultLocale,

@@ -159,7 +159,7 @@ export function getStaticPaths() {
                           <a
                             data-astro-prefetch
                             class="inline-block text-lg opacity-80 transition-opacity group-hover/list:opacity-100"
-                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(post.slug)}/`)}
+                            href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(post.id)}/`)}
                           >
                             {post.data.headline}
                           </a>

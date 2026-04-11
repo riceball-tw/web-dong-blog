@@ -32,7 +32,7 @@ const { posts, hasNext, locale } = Astro.props;
     post={{
       categoryHref: getRelativeLocaleUrl(locale || defaultLocale, `/post/categories/${post.data.category}/`),
       tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(locale || defaultLocale, `/post/tags/${tag}/`)),
-      slug: post.slug,
+      id: post.id,
       ...post.data
     }}
   />

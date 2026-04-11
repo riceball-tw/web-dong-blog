@@ -19,7 +19,7 @@ export interface Props {
 const { currentPost, postsInSeries, currentLocale } = Astro.props;
 const currentLocalePostsInSeries = postsInSeries.reduce(
 	(total: CollectionEntry<"post">[], curr) => {
-		if (getLanguageCode(curr.slug) === currentLocale) {
+		if (getLanguageCode(curr.id) === currentLocale) {
 			return [...total, curr];
 		}
 		return total;
@@ -33,12 +33,12 @@ const currentLocalePostsInSeries = postsInSeries.reduce(
 
 <Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series} ${m.stale_level_platypus_savor()}`}>
   <ul class='pb-4'>
-  {currentLocalePostsInSeries.map(({data, slug}) => {
-   const isCurrentPost = currentPost.slug === slug
+  {currentLocalePostsInSeries.map(({data, id}) => {
+   const isCurrentPost = currentPost.id === id
    return (
       <li>
         <a class={`inline-flex items-center gap-2 p-2 px-4 transition-opacity hover:underline no-underline hover:opacity-100 ${isCurrentPost ? 'opacity-100 text-primary' : 'opacity-40'}`} 
-        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(slug)}/`)}>
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(id)}/`)}>
         {isCurrentPost && <span>
           <Icon size={24}  name="material-symbols:arrow-right-alt-rounded" />
         </span>}

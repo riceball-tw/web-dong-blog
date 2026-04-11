@@ -24,14 +24,14 @@ function checkLinkValidity(cleanPath: string, langKey: string) {
 	if (cleanPath.match(/^post\/.+/)) {
 		const slug = cleanPath.replace(/^post\//, "").replace(/\/$/, "");
 		const expectedSlug = `${langKey}/${slug}`;
-		return publishedPosts.some((p) => p.slug === expectedSlug);
+		return publishedPosts.some((p) => p.id === expectedSlug);
 	}
 
 	// Check Shortpost
 	if (cleanPath.match(/^shortpost\/.+/)) {
 		const slug = cleanPath.replace(/^shortpost\//, "").replace(/\/$/, "");
 		const expectedSlug = `${langKey}/${slug}`;
-		return shortposts.some((p) => p.slug === expectedSlug);
+		return shortposts.some((p) => p.id === expectedSlug);
 	}
 
 	return true;

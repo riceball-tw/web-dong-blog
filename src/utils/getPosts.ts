@@ -16,7 +16,7 @@ export const dateSortedPublishedPosts = publishedPosts.sort(
 export const dateSortedLocaleRelatedPosts = (currentLocale: LanguageKey) =>
 	publishedPosts
 		.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
-		.filter((post) => getLocaleCode(post.slug) === currentLocale);
+		.filter((post) => getLocaleCode(post.id) === currentLocale);
 
 export const sortedPostCategoryies = [
 	...new Set(publishedPosts.flatMap((post) => post.data.category)),

@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import CategoryList from "@/components/atoms/category-list/CategoryList.astro";
@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 		return posts.map((post) => {
 			const postsInSeries = getTargetSeriesPosts(posts, post.data.series);
 			return {
-				params: { language, slug: stripLanguageCode(post.slug) },
+				params: { language, slug: stripLanguageCode(post.id) },
 				props: { post, postsInSeries },
 			};
 		});
@@ -59,7 +59,7 @@ const {
 	category,
 	lastModifiedDate,
 } = post.data;
-const { Content, headings } = await post.render();
+const { Content, headings } = await render(post);
 const author =
 	post.data.author && (await getEntry("character", post.data.author?.id));
 const tagHrefs = tags.map((tag) =>
