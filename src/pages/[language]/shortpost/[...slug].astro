@@ -45,15 +45,8 @@ const createExcerpt = (body: string, maxLength: number = 160) =>
 		.substring(0, maxLength);
 const excerpt = createExcerpt(shortpost.body || "");
 
-const ogImage = {
-	title: headline,
-	content: excerpt,
-};
-
-const query = `title=${encodeURIComponent(ogImage.title)}&content=${encodeURIComponent(ogImage.content)}`;
-const ogImageUrl = `https://astro-blog-og.workers.dev/?${query}`;
 ---
-<BlogBase title={headline} description={excerpt} thumbnail={{ src: ogImageUrl, alt: `${headline}` }}>
+<BlogBase title={headline} description={excerpt} thumbnail={{ src: `/og/shortpost/${Astro.currentLocale}/${stripLanguageCode(shortpost.id)}.png`, alt: headline, width: 1200, height: 630 }}>
   <Container>
     <main style={leaveSpaceforLastShortStyle} class="mt-0 pt-8 px-6 sm:mt-[var(--mainNav-height)]">
       <ShortpostList shortposts={shortposts} currentSlug={shortpost.id}>
