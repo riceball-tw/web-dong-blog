@@ -44,7 +44,6 @@ const createExcerpt = (body: string, maxLength: number = 160) =>
 		.join(" ")
 		.substring(0, maxLength);
 const excerpt = createExcerpt(shortpost.body || "");
-
 ---
 <BlogBase title={headline} description={excerpt} thumbnail={{ src: `/og/shortpost/${Astro.currentLocale}/${stripLanguageCode(shortpost.id)}.png`, alt: headline, width: 1200, height: 630 }}>
   <Container>

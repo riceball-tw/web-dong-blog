@@ -36,8 +36,22 @@ function logo() {
 												gradientTransform: "translate(0 204.88)",
 												gradientUnits: "userSpaceOnUse",
 												children: [
-													{ type: "stop", props: { offset: ".26", stopColor: "#b887f7", stopOpacity: ".8" } },
-													{ type: "stop", props: { offset: ".84", stopColor: "#534af7", stopOpacity: ".8" } },
+													{
+														type: "stop",
+														props: {
+															offset: ".26",
+															stopColor: "#b887f7",
+															stopOpacity: ".8",
+														},
+													},
+													{
+														type: "stop",
+														props: {
+															offset: ".84",
+															stopColor: "#534af7",
+															stopOpacity: ".8",
+														},
+													},
 												],
 											},
 										},
@@ -51,8 +65,22 @@ function logo() {
 												gradientTransform: "translate(0 204.88)",
 												gradientUnits: "userSpaceOnUse",
 												children: [
-													{ type: "stop", props: { offset: ".26", stopColor: "#b887f7", stopOpacity: ".8" } },
-													{ type: "stop", props: { offset: ".84", stopColor: "#534af7", stopOpacity: ".8" } },
+													{
+														type: "stop",
+														props: {
+															offset: ".26",
+															stopColor: "#b887f7",
+															stopOpacity: ".8",
+														},
+													},
+													{
+														type: "stop",
+														props: {
+															offset: ".84",
+															stopColor: "#534af7",
+															stopOpacity: ".8",
+														},
+													},
 												],
 											},
 										},
@@ -66,8 +94,22 @@ function logo() {
 												y2: "6.93",
 												gradientUnits: "userSpaceOnUse",
 												children: [
-													{ type: "stop", props: { offset: "0", stopColor: "#b887f7", stopOpacity: "0" } },
-													{ type: "stop", props: { offset: "1", stopColor: "#fff", stopOpacity: ".4" } },
+													{
+														type: "stop",
+														props: {
+															offset: "0",
+															stopColor: "#b887f7",
+															stopOpacity: "0",
+														},
+													},
+													{
+														type: "stop",
+														props: {
+															offset: "1",
+															stopColor: "#fff",
+															stopOpacity: ".4",
+														},
+													},
 												],
 											},
 										},
@@ -206,8 +248,18 @@ export function generateOgImage(title: string, content: string) {
 		width: 1200,
 		height: 630,
 		fonts: [
-			{ name: "font-family", data: fontBold.buffer as ArrayBuffer, weight: 900, style: "normal" },
-			{ name: "font-family", data: fontRegular.buffer as ArrayBuffer, weight: 500, style: "normal" },
+			{
+				name: "font-family",
+				data: fontBold.buffer as ArrayBuffer,
+				weight: 900,
+				style: "normal",
+			},
+			{
+				name: "font-family",
+				data: fontRegular.buffer as ArrayBuffer,
+				weight: 500,
+				style: "normal",
+			},
 		],
 	});
 }
