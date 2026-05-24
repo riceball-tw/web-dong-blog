@@ -24,6 +24,9 @@ pnpm-debug.log*
 # Pagefind for dev server
 public/pagefind
 
+# OG image cache
+public/og-cache
+
 # Lighthouse report
 .lighthouseci
 

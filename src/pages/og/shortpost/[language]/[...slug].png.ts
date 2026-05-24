@@ -26,7 +26,7 @@ const createExcerpt = (body: string, maxLength = 160) =>
 export async function GET({ props }: Props) {
 	const { headline } = props.shortpost.data;
 	const excerpt = createExcerpt(props.shortpost.body || "");
-	return generateOgImage(headline, excerpt);
+	return await generateOgImage(headline, excerpt);
 }
 
 export async function getStaticPaths() {

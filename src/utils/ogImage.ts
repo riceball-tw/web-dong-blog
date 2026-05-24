@@ -1,6 +1,14 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { ImageResponse } from "@vercel/og";
+
+const fontBold = fs.readFileSync(
+	path.resolve("./public/fonts/NotoSansTC-Bold.ttf"),
+);
+const fontRegular = fs.readFileSync(
+	path.resolve("./public/fonts/NotoSansTC-Regular.ttf"),
+);
 
 function logo() {
 	return {
@@ -235,16 +243,20 @@ function ogCard(title: string, content: string) {
 	};
 }
 
-export function generateOgImage(title: string, content: string) {
-	const fontBold = fs.readFileSync(
-		path.resolve("./public/fonts/NotoSansTC-Bold.ttf"),
-	);
-	const fontRegular = fs.readFileSync(
-		path.resolve("./public/fonts/NotoSansTC-Regular.ttf"),
-	);
+const CACHE_DIR = path.resolve("./public/og-cache");
+
+export async function generateOgImage(title: string, content: string) {
+	const hash = crypto.createHash("md5").update(title + content).digest("hex");
+	const cachePath = path.join(CACHE_DIR, `${hash}.png`);
+
+	if (fs.existsSync(cachePath)) {
+		return new Response(fs.readFileSync(cachePath), {
+			headers: { "Content-Type": "image/png" },
+		});
+	}
 
 	// biome-ignore lint/suspicious/noExplicitAny: @vercel/og accepts plain objects but types expect ReactElement
-	return new ImageResponse(ogCard(title, content) as any, {
+	const imageResponse = new ImageResponse(ogCard(title, content) as any, {
 		width: 1200,
 		height: 630,
 		fonts: [
@@ -262,4 +274,10 @@ export function generateOgImage(title: string, content: string) {
 			},
 		],
 	});
+
+	const buffer = Buffer.from(await imageResponse.arrayBuffer());
+	fs.mkdirSync(CACHE_DIR, { recursive: true });
+	fs.writeFileSync(cachePath, buffer);
+
+	return new Response(buffer, { headers: { "Content-Type": "image/png" } });
 }

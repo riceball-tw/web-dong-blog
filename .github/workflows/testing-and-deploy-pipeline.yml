@@ -111,6 +111,13 @@ jobs:
       - name: Git LFS Pull
         run: git lfs pull
 
+      - name: OG Image Cache
+        uses: actions/cache@v4
+        with:
+          path: public/og-cache
+          key: og-cache-${{ hashFiles('src/content/**') }}
+          restore-keys: og-cache-
+
       - name: Build
         run: pnpm build
 

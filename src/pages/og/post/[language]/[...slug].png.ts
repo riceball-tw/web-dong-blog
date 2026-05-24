@@ -14,7 +14,7 @@ interface Props {
 
 export async function GET({ props }: Props) {
 	const { headline, excerpt } = props.post.data;
-	return generateOgImage(headline, excerpt);
+	return await generateOgImage(headline, excerpt);
 }
 
 export async function getStaticPaths() {
