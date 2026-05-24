@@ -1,12 +1,12 @@
 import type { CollectionEntry } from "astro:content";
 import MarkdownIt from "markdown-it";
-import { generateOgImage } from "@/utils/ogImage.ts";
 import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
 import {
 	type LanguageKey,
 	languages,
 	stripLanguageCode,
 } from "@/utils/i18n.ts";
+import { generateOgImage } from "@/utils/ogImage.ts";
 
 interface Props {
 	params: { slug: string; language: string };
