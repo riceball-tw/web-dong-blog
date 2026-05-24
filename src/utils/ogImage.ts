@@ -246,7 +246,10 @@ function ogCard(title: string, content: string) {
 const CACHE_DIR = path.resolve("./public/og-cache");
 
 export async function generateOgImage(title: string, content: string) {
-	const hash = crypto.createHash("md5").update(title + content).digest("hex");
+	const hash = crypto
+		.createHash("md5")
+		.update(title + content)
+		.digest("hex");
 	const cachePath = path.join(CACHE_DIR, `${hash}.png`);
 
 	if (fs.existsSync(cachePath)) {
