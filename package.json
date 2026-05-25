@@ -43,7 +43,7 @@
 		"astro-seo": "^0.8.4",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
-		"hono": "^4.11.7",
+		"hono": "^4.12.23",
 		"lucide-vue-next": "^0.487.0",
 		"markdown-it": "^14.1.0",
 		"playwright": "^1.58.1",
