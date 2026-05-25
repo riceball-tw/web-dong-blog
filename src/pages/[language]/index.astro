@@ -9,7 +9,7 @@ import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/Sp
 import Hero from "@/components/molecules/hero/Hero.astro";
 import GlobalSearchInput from "@/components/organisms/global-search-input/GlobalSearchInput.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale, type TranslationKey } from "@/i18n/i18n";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
@@ -17,18 +17,18 @@ import {
 import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
 import {
 	defaultLocale,
-	type LanguageKey,
 	languages,
 	stripLanguageCode,
 } from "@/utils/i18n.ts";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { projectUpdateBadgeUrl } = (
 	await currentLocaleWebsiteConfig(Astro.currentLocale)
 ).data.setting;
 const categoriesLists = sortedPostCategoryies.map((category) => ({
 	type: category,
-	posts: dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey)
+	posts: dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale))
 		.filter((post) => post.data.category === category)
 		.sort(
 			(a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime(),
@@ -56,11 +56,11 @@ export function getStaticPaths() {
   </slot>
   <Hero>
     <a data-cy="last-update-link" slot="beforeHeadline" class="mx-auto inline-block" href={projectUpdateBadgeUrl}>
-      <Badge class="text-center">{`${m.north_tense_hedgehog_inspire()} ${currentTime}`}</Badge>
+      <Badge class="text-center">{`${t("north_tense_hedgehog_inspire")} ${currentTime}`}</Badge>
     </a>
     <div class="container mx-auto tracking-tight leading-tight text-center" slot="headline" >
         <!-- Line-1 -->
-        <div><span>Webdong.dev</span> <span class="whitespace-nowrap">{m.away_trite_antelope_drip()}</span></div>
+        <div><span>Webdong.dev</span> <span class="whitespace-nowrap">{t("away_trite_antelope_drip")}</span></div>
         <!-- Line-2 -->
         <div class="inline-flex justify-center items-baseline-last gap-2 flex-wrap">
           <!-- Design -->
@@ -69,7 +69,7 @@ export function getStaticPaths() {
             <!-- Placeholder -->
             <span class="invisible hover:-rotate-2 inline-flex items-center gap-1 md:gap-2 border md:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
               <Icon class="md:inline" style="width: 8vw; height:8vw; max-width: 64px; max-height: 64px; min-width: 32px; min-height: 32px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
-              {m.nice_equal_wallaby_slide()}
+              {t("nice_equal_wallaby_slide")}
               <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
               <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
               <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
@@ -82,7 +82,7 @@ export function getStaticPaths() {
             <!-- Real -->
             <span id="draggable" class="absolute hover:-rotate-2 inline-flex items-center gap-1 md:gap-2 border md:border-2 p-1 pr-2 border-current/60 whitespace-nowrap cursor-grab hover:bg-primary/20 hover:text-primary transition">
               <Icon class="md:inline" style="width: 8vw; height:8vw; max-width: 64px; max-height: 64px; min-width: 32px; min-height: 32px;" size={32} name={'material-symbols:edit-document-outline-rounded'}  />
-              {m.nice_equal_wallaby_slide()}
+              {t("nice_equal_wallaby_slide")}
               <span class="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
               <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
               <span class="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 size-1 md:size-2 bg-current/60"></span>
@@ -95,19 +95,19 @@ export function getStaticPaths() {
           </span>
             &
           <!-- <develop/> -->
-            <span class="font-mono whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>']" contenteditable spellcheck="false">{m.watery_pink_hamster_relish()}</span>
+            <span class="font-mono whitespace-nowrap cursor-text rounded hover:ring-2 hover:ring-ring/60 focus:ring-ring/60 focus:ring-2 outline-none focus:bg-primary/10 hover:bg-primary/10 before:content-['<'] after:content-['/>']" contenteditable spellcheck="false">{t("watery_pink_hamster_relish")}</span>
         </div>
 
         <!-- Line-3 -->
           <div>
-             {m.pretty_key_guppy_amuse()}<span class="[&:lang(en)]:italic">{m.inner_petty_giraffe_drip()}</span><Icon style="width: 5vw; height:5vw; max-width: 96px; max-height: 96px; min-width: 32px; min-height: 32px;" class="hidden md:inline animate-bounce" size={96} name={'material-symbols:sentiment-excited-outline-rounded'}  />
+             {t("pretty_key_guppy_amuse")}<span class="[&:lang(en)]:italic">{t("inner_petty_giraffe_drip")}</span><Icon style="width: 5vw; height:5vw; max-width: 96px; max-height: 96px; min-width: 32px; min-height: 32px;" class="hidden md:inline animate-bounce" size={96} name={'material-symbols:sentiment-excited-outline-rounded'}  />
           </div>
     </div>
-    {import.meta.env.PROD && <GlobalSearchInput placeholderText={m.awake_quiet_ape_emerge()}/>}
+    {import.meta.env.PROD && <GlobalSearchInput placeholderText={t("awake_quiet_ape_emerge")}/>}
   </Hero>
 
   <section>
-    <h2 class="sr-only">{m.tame_mealy_moose_nudge()}</h2>
+    <h2 class="sr-only">{t("tame_mealy_moose_nudge")}</h2>
     <Container>
       <div class="flex flex-wrap gap-4">
         <SpotlightCardsGallery minCardWidth={700}>
@@ -123,9 +123,9 @@ export function getStaticPaths() {
                         (() => {
                           const snakedCategoryType = toSnakeCase(categoriesList.type)
                           const categoryI18nMethodName = `category_${snakedCategoryType}`;
-                          const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
-                          if (typeof categoryI18n === 'function') {
-                            return categoryI18n();
+                          const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+                          if (categoryTranslation !== categoryI18nMethodName) {
+                            return categoryTranslation;
                           }
                           // eslint-disable-next-line no-console
                           console.warn(`Category translation not found: ${categoriesList.type}`);
@@ -137,7 +137,7 @@ export function getStaticPaths() {
                   <span class="opacity-60 transition-opacity group-hover:opacity-100">
                     {categoriesList.posts.length} 
                     {
-                     categoriesList.posts.length > 1 ? m.suave_close_fireant_play() : m.busy_misty_skunk_praise()
+                     categoriesList.posts.length > 1 ? t("suave_close_fireant_play") : t("busy_misty_skunk_praise")
                     }
                   </span>
                 </div>

@@ -6,12 +6,12 @@ import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale, type TranslationKey } from "@/i18n/i18n";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
 } from "@/utils/getPosts.ts";
-import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
 
 export async function getStaticPaths() {
@@ -19,13 +19,14 @@ export async function getStaticPaths() {
 		Object.keys(languages).map((language) => ({
 			params: { slug: category, language },
 			props: {
-				posts: dateSortedLocaleRelatedPosts(language as LanguageKey),
+				posts: dateSortedLocaleRelatedPosts(getLocale(language)),
 				categories: sortedPostCategoryies,
 			},
 		})),
 	);
 }
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { slug } = Astro.params;
 const { posts, categories } = Astro.props;
 
@@ -36,11 +37,9 @@ const avaliableCurrentCategoryPosts = posts
 const translatedCategory = (() => {
 	const snakedCategoryType = toSnakeCase(slug);
 	const categoryI18nMethodName = `category_${snakedCategoryType}`;
-	const categoryI18n = m[
-		categoryI18nMethodName as keyof typeof m
-	] as () => string;
-	if (typeof categoryI18n === "function") {
-		return categoryI18n();
+	const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+	if (categoryTranslation !== categoryI18nMethodName) {
+		return categoryTranslation;
 	}
 	// eslint-disable-next-line no-console
 	console.warn(`Category translation not found: ${slug}`);
@@ -48,21 +47,21 @@ const translatedCategory = (() => {
 })();
 ---
 
-<BlogBase title={`${m.grassy_smart_sheep_tickle()}${translatedCategory}`} description={`m.fluffy_active_earthworm_feel()`}>
+<BlogBase title={`${t("grassy_smart_sheep_tickle")}${translatedCategory}`} description={t("fluffy_active_earthworm_feel")}>
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>
         <a data-cy="categories-link" class="flex gap-2 items-center" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/`)}>
             <span class="flex items-center gap-2">
               <span class="text-base mb-0.5 font-bold">@</span>
-              <span>{m.left_tame_zebra_fade({number: categories.length})}
+              <span>{t("left_tame_zebra_fade", {number: categories.length})}
               </span>
             </span>
         </a>
       </Badge>
     </div>
     <Fragment slot="headline">
-      {m.grassy_smart_sheep_tickle()}<span>{translatedCategory}</span>
+      {t("grassy_smart_sheep_tickle")}<span>{translatedCategory}</span>
     </Fragment>
   </Hero>
   <Container>
@@ -83,7 +82,7 @@ const translatedCategory = (() => {
         })}
         </SpotlightCardsGallery> : 
         <div class="text-center">
-          <p class="text-2xl">{m.lofty_new_gazelle_cut()}</p>
+          <p class="text-2xl">{t("lofty_new_gazelle_cut")}</p>
         </div>
       }
   </Container>

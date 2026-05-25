@@ -1,17 +1,21 @@
-export const baseUrl = "https://www.webdong.dev";
+import {
+	defaultLocale,
+	languages,
+	prefixDefaultLocale,
+	type LanguageKey,
+	type LanguageValue,
+} from "../i18n/i18n";
 
-export const languages = {
-	en: "English",
-	"zh-cn": "简体中文",
-	"zh-tw": "繁體中文",
-} as const;
+export { defaultLocale, languages, prefixDefaultLocale };
+export type { LanguageKey, LanguageValue };
+
+export const baseUrl = "https://www.webdong.dev";
 
 export const languageFallback = {
 	"zh-cn": "zh-tw",
 	en: "zh-tw",
 } as const;
 
-// https://en.wikipedia.org/wiki/IETF_language_tag
 // IETF language tag
 export const languageTags = {
 	en: "en",
@@ -19,16 +23,9 @@ export const languageTags = {
 	"zh-tw": "zh-Hant-TW",
 } as const;
 
-// To address Missing region-independant link for that language Problem, Here's a table storing existing region data
 export const regionTags = {
 	zh: "zh-Hant-TW",
 } as const;
-
-export const defaultLocale = "zh-tw";
-export const prefixDefaultLocale = true;
-
-export type LanguageKey = keyof typeof languages;
-export type LanguageValue = (typeof languages)[LanguageKey];
 
 export function stripLanguageCode(str: string) {
 	return str.replace(/^[a-z]{2}(-[a-z]{2})?\//i, "");

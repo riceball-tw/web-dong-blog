@@ -5,10 +5,12 @@ import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale, type TranslationKey } from "@/i18n/i18n";
 import { sortedPostCategoryies } from "@/utils/getPosts.ts";
 import { defaultLocale, languages } from "@/utils/i18n.ts";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
+
+const t = useTranslations(getLocale(Astro.currentLocale));
 
 export function getStaticPaths() {
 	return Object.keys(languages).map((language) => ({
@@ -17,9 +19,9 @@ export function getStaticPaths() {
 }
 ---
 
-<BlogBase title={m.salty_kind_crossbill_support()} description={m.swift_sweet_tiger_gasp()}>
+<BlogBase title={t("salty_kind_crossbill_support")} description={t("swift_sweet_tiger_gasp")}>
   <Hero>
-    <Fragment slot="headline">{m.that_cuddly_oryx_play({number: sortedPostCategoryies.length})}</Fragment>
+    <Fragment slot="headline">{t("that_cuddly_oryx_play", {number: sortedPostCategoryies.length})}</Fragment>
   </Hero>
 
   <Container>
@@ -35,9 +37,9 @@ export function getStaticPaths() {
                         (() => {
                           const snakedCategoryType = toSnakeCase(category)
                           const categoryI18nMethodName = `category_${snakedCategoryType}`;
-                          const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
-                          if (typeof categoryI18n === 'function') {
-                            return categoryI18n();
+                          const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+                          if (categoryTranslation !== categoryI18nMethodName) {
+                            return categoryTranslation;
                           }
                           // eslint-disable-next-line no-console
                           console.warn(`Category translation not found: ${category}`);

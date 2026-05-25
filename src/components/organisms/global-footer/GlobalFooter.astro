@@ -2,10 +2,11 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Logo from "@/components/atoms/logo/Logo.astro";
 import Logomark from "@/components/atoms/logomark/Logomark.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
 import { defaultLocale } from "@/utils/i18n.ts";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const globalWebsiteConfig = (
 	await currentLocaleWebsiteConfig(Astro.currentLocale)
 ).data;
@@ -20,11 +21,11 @@ const { navigation: globalWebsiteNavigation } = globalWebsiteConfig;
 
 const footerSections = [
 	{
-		title: m.swift_steep_lobster_push(),
+		title: t("swift_steep_lobster_push"),
 		links: globalWebsiteSocial,
 	},
 	{
-		title: m.maroon_awful_flea_twirl(),
+		title: t("maroon_awful_flea_twirl"),
 		links: globalWebsiteNavigation,
 	},
 ];
@@ -35,7 +36,7 @@ const footerSections = [
       <div>
         <a
         data-astro-prefetch
-        title={m.funny_small_coyote_chop()}
+        title={t("funny_small_coyote_chop")}
         href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}
         class="inline-flex items-center gap-1"
         >
@@ -44,7 +45,7 @@ const footerSections = [
         </a>
         <p class="tracking-wider text-xs">{ websiteSlogan }</p>
       </div>
-      <small class="max-w-prose text-muted-foreground tracking-widest">{m.weak_kind_cowfish_hint({websiteName})} <a class="underline" href={websiteCopyright.url}>{ websiteCopyright.title }</a> {m.north_that_shrimp_fold()} <a class="underline" href={`mailto:${websiteEmail}`}>email</a></small>
+      <small class="max-w-prose text-muted-foreground tracking-widest">{t("weak_kind_cowfish_hint", {websiteName})} <a class="underline" href={websiteCopyright.url}>{ websiteCopyright.title }</a> {t("north_that_shrimp_fold")} <a class="underline" href={`mailto:${websiteEmail}`}>email</a></small>
     </div>
 
     <!-- Footer Sections -->

@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import Accordion from "@/components/atoms/accordion/Accordion.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import {
 	defaultLocale,
 	getLanguageCode,
@@ -16,6 +16,7 @@ export interface Props {
 	currentPost: CollectionEntry<"post">;
 	postsInSeries: CollectionEntry<"post">[];
 }
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { currentPost, postsInSeries, currentLocale } = Astro.props;
 const currentLocalePostsInSeries = postsInSeries.reduce(
 	(total: CollectionEntry<"post">[], curr) => {
@@ -31,7 +32,7 @@ const currentLocalePostsInSeries = postsInSeries.reduce(
 <div data-cy="series-summary" data-pagefind-ignore="all">
 
 
-<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series} ${m.stale_level_platypus_savor()}`}>
+<Accordion iconName="material-symbols:import-contacts-outline-rounded" isOpened={false} summary={`${currentPost.data.series} ${t("stale_level_platypus_savor")}`}>
   <ul class='pb-4'>
   {currentLocalePostsInSeries.map(({data, id}) => {
    const isCurrentPost = currentPost.id === id

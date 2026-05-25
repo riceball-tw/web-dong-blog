@@ -17,11 +17,10 @@ import TagList from "@/components/atoms/tag-list/TagList.astro";
 import Video from "@/components/atoms/video/Video.astro";
 import PostJSONLD from "@/components/utility/PostJSONLD.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
 import {
 	defaultLocale,
-	type LanguageKey,
 	languages,
 	stripLanguageCode,
 } from "@/utils/i18n.ts";
@@ -36,7 +35,7 @@ export async function getStaticPaths() {
 			: [];
 	}
 	return Object.keys(languages).flatMap((language) => {
-		const posts = dateSortedLocaleRelatedPosts(language as LanguageKey);
+		const posts = dateSortedLocaleRelatedPosts(getLocale(language));
 		return posts.map((post) => {
 			const postsInSeries = getTargetSeriesPosts(posts, post.data.series);
 			return {
@@ -47,6 +46,7 @@ export async function getStaticPaths() {
 	});
 }
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { post, postsInSeries } = Astro.props;
 const {
 	icon,
@@ -124,14 +124,14 @@ const isSubheadlineEqualHeadline = subHeadline === headline;
           <PostTableOfContent {headings} />
           {
             postsInSeries.length ? 
-              <PostSeries currentLocale={Astro.currentLocale as LanguageKey} currentPost={post} 
+              <PostSeries currentLocale={getLocale(Astro.currentLocale)} currentPost={post} 
               postsInSeries={postsInSeries} />
           : ''
           }
           <!-- Post Date Info -->
           <div class="inline-flex w-full flex-col gap-2 p-4">
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              {m.zesty_gaudy_scallop_imagine()}
+              {t("zesty_gaudy_scallop_imagine")}
               <time data-pagefind-sort="date">
                 {
                   publishDate
@@ -141,14 +141,14 @@ const isSubheadlineEqualHeadline = subHeadline === headline;
               </time>
             </div>
             <div class="inline-flex items-center gap-2 text-sm opacity-40 hover:opacity-100">
-              <span>{m.extra_ago_ladybug_animate()}</span>
+              <span>{t("extra_ago_ladybug_animate")}</span>
                 <span data-pagefind-ignore="all">
                 {
                   lastModifiedDate ?
                   lastModifiedDate
                     .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
                     .replace(/\//g, '-')
-                    : m.strong_best_tapir_pop()
+                    : t("strong_best_tapir_pop")
                 }
                 </span>
             </div>

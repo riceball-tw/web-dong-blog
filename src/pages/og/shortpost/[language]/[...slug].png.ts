@@ -1,8 +1,8 @@
 import type { CollectionEntry } from "astro:content";
 import MarkdownIt from "markdown-it";
 import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
+import { getLocale } from "@/i18n/i18n";
 import {
-	type LanguageKey,
 	languages,
 	stripLanguageCode,
 } from "@/utils/i18n.ts";
@@ -31,7 +31,7 @@ export async function GET({ props }: Props) {
 
 export async function getStaticPaths() {
 	return Object.keys(languages).flatMap((language) =>
-		dateSortedLocaleRelatedShortposts(language as LanguageKey).map(
+		dateSortedLocaleRelatedShortposts(getLocale(language)).map(
 			(shortpost) => ({
 				params: { slug: stripLanguageCode(shortpost.id), language },
 				props: { shortpost },

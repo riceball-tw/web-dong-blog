@@ -3,9 +3,9 @@ import Container from "@/components/atoms/container/Container.astro";
 import ShortpostList from "@/components/atoms/shortpost-list/ShortpostList.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
-import { type LanguageKey, languages } from "@/utils/i18n.ts";
+import { languages } from "@/utils/i18n.ts";
 
 export function getStaticPaths() {
 	return Object.keys(languages).map((language) => ({
@@ -13,21 +13,22 @@ export function getStaticPaths() {
 	}));
 }
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const shortposts = dateSortedLocaleRelatedShortposts(
-	Astro.currentLocale as LanguageKey,
+	getLocale(Astro.currentLocale),
 );
 ---
 
-<BlogBase title={m.sea_same_gopher_burn()} description={m.round_even_leopard_drip({number: shortposts.length})}>
+<BlogBase title={t("sea_same_gopher_burn")} description={t("round_even_leopard_drip", {number: shortposts.length})}>
   <Hero>
     <Fragment slot="headline">
-      {m.round_even_leopard_drip({number: shortposts.length})}
+      {t("round_even_leopard_drip", {number: shortposts.length})}
     </Fragment>
   </Hero>
   
   <Container>
     <section class="px-6">
-      <h2 class="sr-only">{m.spicy_quiet_ibex_clasp()}</h2>
+      <h2 class="sr-only">{t("spicy_quiet_ibex_clasp")}</h2>
       <ShortpostList shortposts={shortposts}>
       </ShortpostList>
     </section>

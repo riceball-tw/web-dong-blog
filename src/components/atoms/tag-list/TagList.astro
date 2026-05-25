@@ -1,9 +1,10 @@
 ---
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import type { TagsList } from "@/types/tag-list";
 
 export interface Props extends TagsList {}
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { tags, tagHrefs } = Astro.props;
 ---
 
@@ -12,13 +13,13 @@ const { tags, tagHrefs } = Astro.props;
     tagHrefs ? tagHrefs.map((href, index) => (
       <li data-cy="tag">
         <a data-cy="tag-link" data-astro-prefetch class="p-1.5 flex gap-1 opacity-60 hover:opacity-100" {href}>
-          <span>#</span><span data-pagefind-filter={`${`${m.teary_wide_impala_coax()}`}:${tags[index]}`}>{tags[index]}</span>
+          <span>#</span><span data-pagefind-filter={`${`${t("teary_wide_impala_coax")}`}:${tags[index]}`}>{tags[index]}</span>
         </a>
       </li>
   )) : tags.map((tag) => (
       <li data-cy="tag">
         <span class="p-1.5 flex gap-1 opacity-60 hover:opacity-100">
-          <span>#</span><span data-pagefind-filter={`${`${m.teary_wide_impala_coax()}`}:${tag}`}>{tag}</span>
+          <span>#</span><span data-pagefind-filter={`${`${t("teary_wide_impala_coax")}`}:${tag}`}>{tag}</span>
         </span>
       </li>
     ))

@@ -2,12 +2,13 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Button } from "@/components/atoms/button/index.ts";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
+import { useTranslations, getLocale } from "@/i18n/i18n";
 import { defaultLocale } from "@/utils/i18n.ts";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const title = "404";
 
-const description = m.dizzy_minor_samuel_embrace();
+const description = t("dizzy_minor_samuel_embrace");
 ---
 
 <BlogBase title={title} description={description}>
@@ -15,16 +16,16 @@ const description = m.dizzy_minor_samuel_embrace();
     <h1 class="text-3xl">
       <div class="mb-8 text-8xl font-semibold">404</div>
     </h1>
-    <p class="text-lg">{m.house_kind_samuel_fry()}</p>
+    <p class="text-lg">{t("house_kind_samuel_fry")}</p>
     <div class="my-8 mt-12 flex gap-4">
       <a data-cy="home-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}>
         <Button as="span" size="lg">
-          {m.whole_gross_goat_hope()}
+          {t("whole_gross_goat_hope")}
         </Button>
       </a>
       <a data-cy="post-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post')}>
         <Button variant="outline" as="span" size="lg">
-          {m.day_lazy_swan_laugh()}
+          {t("day_lazy_swan_laugh")}
         </Button>
       </a>
     </div>
