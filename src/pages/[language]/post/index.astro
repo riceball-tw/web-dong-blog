@@ -7,8 +7,8 @@ import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
 import SpotlightPostCardSkeleton from "@/components/atoms/spotlight-post-card/SpotlightPostCardSkeleton.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import { useTranslations, getLocale } from "@/i18n/i18n";
 import { PAGINATION_PAGE_SIZE } from "@/utils/constants.ts";
 import {
 	dateSortedLocaleRelatedPosts,
@@ -23,9 +23,7 @@ export const getStaticPaths = (() =>
 	}))) satisfies GetStaticPaths;
 
 const t = useTranslations(getLocale(Astro.currentLocale));
-const allPosts = dateSortedLocaleRelatedPosts(
-	getLocale(Astro.currentLocale),
-);
+const allPosts = dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale));
 const posts = allPosts.slice(0, PAGINATION_PAGE_SIZE);
 const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
 ---

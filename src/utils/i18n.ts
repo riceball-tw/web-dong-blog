@@ -1,9 +1,9 @@
 import {
 	defaultLocale,
-	languages,
-	prefixDefaultLocale,
 	type LanguageKey,
 	type LanguageValue,
+	languages,
+	prefixDefaultLocale,
 } from "../i18n/i18n";
 
 export { defaultLocale, languages, prefixDefaultLocale };

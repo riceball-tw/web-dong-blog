@@ -4,27 +4,20 @@ import MarkdownIt from "markdown-it";
 import Container from "@/components/atoms/container/Container.astro";
 import PostImage from "@/components/atoms/post-image/PostImage.astro";
 import ShortpostList from "@/components/atoms/shortpost-list/ShortpostList.astro";
+import { getLocale } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
 import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
-import { getLocale } from "@/i18n/i18n";
-import {
-	languages,
-	stripLanguageCode,
-} from "@/utils/i18n.ts";
+import { languages, stripLanguageCode } from "@/utils/i18n.ts";
 
 export async function getStaticPaths() {
 	return Object.keys(languages).flatMap((language) =>
-		dateSortedLocaleRelatedShortposts(getLocale(language)).map(
-			(shortpost) => ({
-				params: { slug: stripLanguageCode(shortpost.id), language },
-				props: {
-					shortpost,
-					shortposts: dateSortedLocaleRelatedShortposts(
-						getLocale(language),
-					),
-				},
-			}),
-		),
+		dateSortedLocaleRelatedShortposts(getLocale(language)).map((shortpost) => ({
+			params: { slug: stripLanguageCode(shortpost.id), language },
+			props: {
+				shortpost,
+				shortposts: dateSortedLocaleRelatedShortposts(getLocale(language)),
+			},
+		})),
 	);
 }
 

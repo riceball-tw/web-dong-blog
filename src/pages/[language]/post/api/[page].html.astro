@@ -1,9 +1,9 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import { getLocale } from "@/i18n/i18n";
 import { PAGINATION_PAGE_SIZE } from "@/utils/constants.ts";
 import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
-import { getLocale } from "@/i18n/i18n";
 import { defaultLocale, languages } from "@/utils/i18n.ts";
 
 export function getStaticPaths() {

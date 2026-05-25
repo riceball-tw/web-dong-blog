@@ -1,10 +1,7 @@
 import type { CollectionEntry } from "astro:content";
-import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
 import { getLocale } from "@/i18n/i18n";
-import {
-	languages,
-	stripLanguageCode,
-} from "@/utils/i18n.ts";
+import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
+import { languages, stripLanguageCode } from "@/utils/i18n.ts";
 import { generateOgImage } from "@/utils/ogImage.ts";
 
 interface Props {

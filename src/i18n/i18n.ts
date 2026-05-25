@@ -49,8 +49,9 @@ export function useTranslations(targetLanguage?: LanguageKey) {
 		key: keyof typeof enTranslation,
 		params?: Record<string, string | number>,
 	) {
-		const translation =
-			getTranslationFile(targetLanguage ?? defaultLocale)?.[key];
+		const translation = getTranslationFile(targetLanguage ?? defaultLocale)?.[
+			key
+		];
 
 		if (!translation && translation !== "") {
 			return getTranslationFile(defaultLocale)?.[key] ?? key;

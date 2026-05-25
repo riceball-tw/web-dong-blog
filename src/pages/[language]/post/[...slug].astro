@@ -16,14 +16,10 @@ import SupportMe from "@/components/atoms/support-me/SupportMe.astro";
 import TagList from "@/components/atoms/tag-list/TagList.astro";
 import Video from "@/components/atoms/video/Video.astro";
 import PostJSONLD from "@/components/utility/PostJSONLD.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import { useTranslations, getLocale } from "@/i18n/i18n";
 import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
-import {
-	defaultLocale,
-	languages,
-	stripLanguageCode,
-} from "@/utils/i18n.ts";
+import { defaultLocale, languages, stripLanguageCode } from "@/utils/i18n.ts";
 
 export async function getStaticPaths() {
 	function getTargetSeriesPosts(

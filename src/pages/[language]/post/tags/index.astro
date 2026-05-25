@@ -4,8 +4,8 @@ import Container from "@/components/atoms/container/Container.astro";
 import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import { useTranslations, getLocale } from "@/i18n/i18n";
 import { sortedPostTags } from "@/utils/getPosts.ts";
 import { defaultLocale, languages } from "@/utils/i18n.ts";
 

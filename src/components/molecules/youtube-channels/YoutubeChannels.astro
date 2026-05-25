@@ -1,7 +1,7 @@
 ---
 import { Badge } from "@/components/atoms/badge/index.ts";
 import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
-import { useTranslations, getLocale } from "@/i18n/i18n";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 
 const t = useTranslations(getLocale(Astro.currentLocale));
 const { youtubeChannels } = Astro.props;
