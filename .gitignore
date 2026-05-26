@@ -44,4 +44,3 @@ functions/types.d.ts
 
 # Cypress
 cypress/screenshots
-src/pages/\[language]/index.astro
