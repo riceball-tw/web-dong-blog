@@ -8,18 +8,14 @@ import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import GlobalSearchInput from "@/components/organisms/global-search-input/GlobalSearchInput.astro";
+import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import { useTranslations, getLocale, type TranslationKey } from "@/i18n/i18n";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
 } from "@/utils/getPosts.ts";
 import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
-import {
-	defaultLocale,
-	languages,
-	stripLanguageCode,
-} from "@/utils/i18n.ts";
+import { defaultLocale, languages, stripLanguageCode } from "@/utils/i18n.ts";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
 
 const t = useTranslations(getLocale(Astro.currentLocale));
