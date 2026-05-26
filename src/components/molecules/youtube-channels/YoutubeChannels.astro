@@ -1,8 +1,9 @@
 ---
 import { Badge } from "@/components/atoms/badge/index.ts";
 import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
-import * as m from "@/paraglide/messages";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { youtubeChannels } = Astro.props;
 const uniqueCategories = youtubeChannels
 	.map((channel: { category: string }) => channel.category)
@@ -75,7 +76,7 @@ const uniqueCategories = youtubeChannels
             <img
               class="mx-auto mb-4 rounded-full grayscale transition-all group-hover:grayscale-0"
               src={channel.thumbnail.url}
-              alt={m.happy_weak_ray_grip({name: channel.title})}
+              alt={t("happy_weak_ray_grip", {name: channel.title})}
               width={width}
               height={height}
             />

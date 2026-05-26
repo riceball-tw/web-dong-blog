@@ -7,31 +7,30 @@ import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/Sp
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
 import SpotlightPostCardSkeleton from "@/components/atoms/spotlight-post-card/SpotlightPostCardSkeleton.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
 import { PAGINATION_PAGE_SIZE } from "@/utils/constants.ts";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
 	sortedPostTags,
 } from "@/utils/getPosts.ts";
-import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
 
 export const getStaticPaths = (() =>
 	Object.keys(languages).map((language) => ({
 		params: { language },
 	}))) satisfies GetStaticPaths;
 
-const allPosts = dateSortedLocaleRelatedPosts(
-	Astro.currentLocale as LanguageKey,
-);
+const t = useTranslations(getLocale(Astro.currentLocale));
+const allPosts = dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale));
 const posts = allPosts.slice(0, PAGINATION_PAGE_SIZE);
 const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
 ---
 
 <BlogBase 
-  title={m.still_mad_javelina_propel()} 
-  description={m.tangy_empty_rabbit_boost()}
+  title={t("still_mad_javelina_propel")} 
+  description={t("tangy_empty_rabbit_boost")}
 >
   <Hero>
     <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
@@ -39,7 +38,7 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
         <Badge>
           <span class="flex items-center gap-2">
             <span class="text-base mb-0.5 font-bold">@</span>
-            <span>{m.left_tame_zebra_fade({number: sortedPostCategoryies.length})}</span>
+            <span>{t("left_tame_zebra_fade", {number: sortedPostCategoryies.length})}</span>
           </span>
         </Badge>
       </a>
@@ -47,18 +46,18 @@ const hasNext = allPosts.length > PAGINATION_PAGE_SIZE;
         <Badge>
           <span class="flex items-center gap-2">
             <span class="text-base font-bold">#</span>
-            <span>{m.mushy_swift_beaver_earn({number: sortedPostTags.length})}</span>
+            <span>{t("mushy_swift_beaver_earn", {number: sortedPostTags.length})}</span>
           </span>
         </Badge>
       </a>
     </div>
     <Fragment slot="headline">
-      {m.tired_game_husky_sew({number: allPosts.length})}
+      {t("tired_game_husky_sew", {number: allPosts.length})}
     </Fragment>
   </Hero>
   <Container>
     <section>
-      <h2 class="sr-only">{m.born_full_liger_create()}</h2>
+      <h2 class="sr-only">{t("born_full_liger_create")}</h2>
       <SpotlightCardsGallery>
         {
           posts.map((post) => {

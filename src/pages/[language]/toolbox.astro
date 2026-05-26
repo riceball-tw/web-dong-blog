@@ -5,11 +5,12 @@ import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightP
 import YoutubeChannels from "@/components/molecules/youtube-channels/YoutubeChannels.astro";
 import GlobalFooter from "@/components/organisms/global-footer/GlobalFooter.astro";
 import Navbar from "@/components/organisms/global-navbar/GlobalNavbar.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import Base from "@/layouts/Base.astro";
-import * as m from "@/paraglide/messages";
 import { toolboxs } from "@/utils/getToolboxs.ts";
 import { languages } from "@/utils/i18n.ts";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const categorizedSites = toolboxs.reduce(
 	(categorizedData: Record<string, any[]>, site) => {
 		const { data } = site;
@@ -225,9 +226,9 @@ export function getStaticPaths() {
   refreshCategory();
 </script>
 
-<Base title={m.plain_helpful_pig_commend()} description={m.mean_mean_starfish_animate()}>
+<Base title={t("plain_helpful_pig_commend")} description={t("mean_mean_starfish_animate")}>
   <Navbar>
-    <button class="cursor-pointer" data-nav-toggle aria-label={m.ornate_cuddly_peacock_spur()}  
+    <button class="cursor-pointer" data-nav-toggle aria-label={t("ornate_cuddly_peacock_spur")}  
       ><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"
         ><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path></svg
       ></button
@@ -244,7 +245,7 @@ export function getStaticPaths() {
           <a
             href={`#dev&design`}
             class="inline-block w-full p-4 font-medium tracking-wider transition-opacity before:mr-2 group-hover:opacity-60 group-hover:hover:opacity-100"
-            >{m.away_quaint_pony_file()}<sup class="p-2">{youtubeChannelInfos.length}</sup>
+            >{t("away_quaint_pony_file")}<sup class="p-2">{youtubeChannelInfos.length}</sup>
           </a>
         </li>
         {
@@ -272,16 +273,16 @@ export function getStaticPaths() {
         <Container>
           <section class="px-6 mx-auto my-16 flex" style="max-width: 1450px;">
             <h1 class="mx-auto text-center text-3xl font-bold md:text-5xl">
-              {m.misty_tangy_blackbird_dine()}<span class="text-primary">{m.gray_candid_herring_beam()}</span>{m.super_arable_mayfly_fulfill()}<span
-                class="text-primary">{m.mealy_sea_salmon_advise()}</span
-              >{m.only_slimy_eel_climb()}
+              {t("misty_tangy_blackbird_dine")}<span class="text-primary">{t("gray_candid_herring_beam")}</span>{t("super_arable_mayfly_fulfill")}<span
+                class="text-primary">{t("mealy_sea_salmon_advise")}</span
+              >{t("only_slimy_eel_climb")}
             </h1>
           </section>
         </Container>
         <Container>
           <section class="flex flex-col px-6">
           <h2 id="dev&design" class="py-8 text-xl font-bold tracking-widest before:mr-2 md:pb-16">
-            <a href={`#dev&design`}>{m.away_quaint_pony_file()}</a>
+            <a href={`#dev&design`}>{t("away_quaint_pony_file")}</a>
           </h2>
 
           <YoutubeChannels youtubeChannels={youtubeChannels} />
@@ -315,8 +316,8 @@ export function getStaticPaths() {
         <Container>
           <section class="mx-auto py-16 flex px-6" style="max-width: 1450px;">
             <h2 style="max-width: 900px" class="mx-auto text-center text-3xl font-bold md:text-5xl">
-              {m.antsy_just_boar_burn()} <span class="text-primary">{m.bad_zesty_anaconda_propel()} </span
-              >{m.every_dark_haddock_hug()} {m.sound_bland_mammoth_animate()} <a class="underline" href="https://github.com/riceball-tw/astro-blog">{m.careful_weak_emu_belong()}</a>{m.wide_salty_rabbit_reside()}
+              {t("antsy_just_boar_burn")} <span class="text-primary">{t("bad_zesty_anaconda_propel")} </span
+              >{t("every_dark_haddock_hug")} {t("sound_bland_mammoth_animate")} <a class="underline" href="https://github.com/riceball-tw/astro-blog">{t("careful_weak_emu_belong")}</a>{t("wide_salty_rabbit_reside")}
             </h2>
           </section>
         </Container>

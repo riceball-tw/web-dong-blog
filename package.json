@@ -9,7 +9,7 @@
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
-		"build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && astro build && pagefind --site dist",
+		"build": "astro build && pagefind --site dist",
 		"build:staging": "astro build --mode staging && pagefind --site dist",
 		"preview": "astro preview",
 		"astro": "astro",
@@ -19,8 +19,7 @@
 		"lint:fix": "biome check --write",
 		"lighthouse": "lhci autorun",
 		"cypress:open": "cypress open",
-		"cypress:run": "cypress run",
-		"postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide"
+		"cypress:run": "cypress run"
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.8",
@@ -31,7 +30,6 @@
 		"@astrojs/sitemap": "^3.7.2",
 		"@astrojs/vue": "^6.0.1",
 		"@cloudflare/pages-plugin-vercel-og": "^0.1.2",
-		"@inlang/paraglide-astro": "^0.2.6",
 		"@pagefind/default-ui": "^1.4.0",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/react": "^18.3.27",
@@ -73,7 +71,6 @@
 		"@iconify-json/devicon-plain": "^1.2.52",
 		"@iconify-json/material-symbols": "^1.2.53",
 		"@iconify-json/simple-icons": "^1.2.69",
-		"@inlang/paraglide-js": "1.11.2",
 		"@lhci/cli": "^0.13.0",
 		"@tailwindcss/typography": "^0.5.19",
 		"@types/markdown-it": "^14.1.2",

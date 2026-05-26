@@ -5,14 +5,14 @@ import Container from "@/components/atoms/container/Container.astro";
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
-import * as m from "@/paraglide/messages";
 import {
 	dateSortedLocaleRelatedPosts,
 	sortedPostCategoryies,
 	sortedPostTags,
 } from "@/utils/getPosts.ts";
-import { defaultLocale, type LanguageKey, languages } from "@/utils/i18n.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
 
 export function getStaticPaths() {
 	return Object.keys(languages).map((language) => ({
@@ -20,15 +20,16 @@ export function getStaticPaths() {
 	}));
 }
 
-const posts = dateSortedLocaleRelatedPosts(Astro.currentLocale as LanguageKey);
+const t = useTranslations(getLocale(Astro.currentLocale));
+const posts = dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale));
 const total = posts.length;
 const isFirstPage = true;
 const showBadges = isFirstPage;
 ---
 
 <BlogBase 
-  title={m.still_mad_javelina_propel()} 
-  description={m.tired_game_husky_sew({number: total})}
+  title={t("still_mad_javelina_propel")} 
+  description={t("tired_game_husky_sew", {number: total})}
 >
   <Hero>
     {showBadges && (
@@ -37,7 +38,7 @@ const showBadges = isFirstPage;
           <Badge>
             <span class="flex items-center gap-2">
               <span class="text-base mb-0.5 font-bold">@</span>
-              <span>{m.left_tame_zebra_fade({number: sortedPostCategoryies.length})}</span>
+              <span>{t("left_tame_zebra_fade", {number: sortedPostCategoryies.length})}</span>
             </span>
           </Badge>
         </a>
@@ -45,19 +46,19 @@ const showBadges = isFirstPage;
           <Badge>
             <span class="flex items-center gap-2">
               <span class="text-base font-bold">#</span>
-              <span>{m.mushy_swift_beaver_earn({number: sortedPostTags.length})}</span>
+              <span>{t("mushy_swift_beaver_earn", {number: sortedPostTags.length})}</span>
             </span>
           </Badge>
         </a>
       </div>
     )}
     <Fragment slot="headline">
-      {m.tired_game_husky_sew({number: total})}
+      {t("tired_game_husky_sew", {number: total})}
     </Fragment>
   </Hero>
   <Container>
     <section>
-      <h2 class="sr-only">{m.born_full_liger_create()}</h2>
+      <h2 class="sr-only">{t("born_full_liger_create")}</h2>
       <SpotlightCardsGallery>
         {
           posts.map((post) => {

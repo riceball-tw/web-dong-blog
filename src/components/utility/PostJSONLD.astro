@@ -60,4 +60,4 @@ const postSchema = {
 };
 ---
 
-<script type="application/ld+json" set:html={sanitizeHtml(JSON.stringify(postSchema))}></script>
+<script is:inline type="application/ld+json" set:html={sanitizeHtml(JSON.stringify(postSchema))}></script>

@@ -1,21 +1,20 @@
 ---
-import * as m from "@/paraglide/messages";
+import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
 import type { CategoryList } from "@/types/category-list";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
 
 export interface Props extends CategoryList {}
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { category, categoryHref } = Astro.props;
 const CategoryElement = categoryHref ? "a" : "div";
 
 const translatedCategory = (() => {
 	const snakedCategoryType = toSnakeCase(category || "");
 	const categoryI18nMethodName = `category_${snakedCategoryType}`;
-	const categoryI18n = m[
-		categoryI18nMethodName as keyof typeof m
-	] as () => string;
-	if (typeof categoryI18n === "function") {
-		return categoryI18n();
+	const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+	if (categoryTranslation !== categoryI18nMethodName) {
+		return categoryTranslation;
 	}
 	// eslint-disable-next-line no-console
 	console.warn(`Category translation not found: ${category}`);
@@ -31,5 +30,5 @@ const translatedCategory = (() => {
   }}
 >
   <span>@</span>
-  <span data-cy="category" data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translatedCategory}`}>{translatedCategory}</span>
+  <span data-cy="category" data-pagefind-filter={`${t("swift_whole_pony_dare")}:${translatedCategory}`}>{translatedCategory}</span>
 </CategoryElement>

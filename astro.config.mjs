@@ -3,7 +3,6 @@ import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import vue from "@astrojs/vue";
-import paraglide from "@inlang/paraglide-astro";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, passthroughImageService } from "astro/config";
 import expressiveCode from "astro-expressive-code";
@@ -152,10 +151,6 @@ export default defineConfig({
 				}),
 		icon(),
 		vue(),
-		paraglide({
-			project: "./project.inlang",
-			outdir: "./src/paraglide",
-		}),
 	],
 	vite: {
 		plugins: [tailwindcss()],

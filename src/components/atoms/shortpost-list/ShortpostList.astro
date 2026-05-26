@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
-import * as m from "@/paraglide/messages";
+import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
 import { defaultLocale, stripLanguageCode } from "@/utils/i18n.ts";
 import toSnakeCase from "@/utils/toSnakeCase.ts";
 
@@ -13,6 +13,7 @@ export type Props = {
 	currentSlug?: string;
 };
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { shortposts, currentSlug } = Astro.props;
 const activeShortpostIndexs = shortposts.findIndex(
 	(shortpost) => shortpost.id === currentSlug,
@@ -33,9 +34,9 @@ const activeShortpostIndexs = shortposts.findIndex(
       const translatedCategory = (() => {
         const snakedCategoryType = toSnakeCase(shortpost.data.category || '')
         const categoryI18nMethodName = `category_${snakedCategoryType}`;
-        const categoryI18n = m[categoryI18nMethodName as keyof typeof m] as () => string;
-        if (typeof categoryI18n === 'function') {
-          return categoryI18n();
+        const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+        if (categoryTranslation !== categoryI18nMethodName) {
+          return categoryTranslation;
         }
         // eslint-disable-next-line no-console
         console.warn(`Category translation not found: ${shortpost.data.category}`);
@@ -60,7 +61,7 @@ const activeShortpostIndexs = shortposts.findIndex(
               data-publish-date={shortpost.data.publishDate
                 .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
                 .replace(/\//g, '-')} 
-              data-pagefind-filter={`${m.swift_whole_pony_dare()}:${translatedCategory}`}
+              data-pagefind-filter={`${t("swift_whole_pony_dare")}:${translatedCategory}`}
               data-pagefind-sort="date[data-publish-date]" 
               style=`opacity:${headingOpacity}%; scroll-margin: calc(var(--mainNav-height) + 1rem)` id={stripLanguageCode(shortpost.id)}>
               <span>{shortpost.data.headline}</span>

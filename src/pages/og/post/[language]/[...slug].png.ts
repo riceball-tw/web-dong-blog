@@ -1,10 +1,7 @@
 import type { CollectionEntry } from "astro:content";
+import { getLocale } from "@/i18n/i18n";
 import { dateSortedLocaleRelatedPosts } from "@/utils/getPosts.ts";
-import {
-	type LanguageKey,
-	languages,
-	stripLanguageCode,
-} from "@/utils/i18n.ts";
+import { languages, stripLanguageCode } from "@/utils/i18n.ts";
 import { generateOgImage } from "@/utils/ogImage.ts";
 
 interface Props {
@@ -19,7 +16,7 @@ export async function GET({ props }: Props) {
 
 export async function getStaticPaths() {
 	return Object.keys(languages).flatMap((language) =>
-		dateSortedLocaleRelatedPosts(language as LanguageKey).map((post) => ({
+		dateSortedLocaleRelatedPosts(getLocale(language)).map((post) => ({
 			params: { slug: stripLanguageCode(post.id), language },
 			props: { post },
 		})),

@@ -4,7 +4,9 @@
 
 import "@pagefind/default-ui/css/ui.css";
 import { Button } from "@/components/atoms/button/index.ts";
-import * as m from "@/paraglide/messages";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+
+const t = useTranslations(getLocale(Astro.currentLocale));
 ---
 
 <site-search class="ms-auto" id="search">
@@ -28,10 +30,10 @@ import * as m from "@/paraglide/messages";
 		<div class="dialog-frame flex flex-col gap-4 p-6 md:p-12">
 
 			<div class="flex justify-between pb-2 font-bold">
-				<h2 class="text-xl">{m.basic_orange_skunk_charm()}</h2>
+				<h2 class="text-xl">{t("basic_orange_skunk_charm")}</h2>
 				
 				<Button class="self-end cursor-pointer" data-close-modal variant="outline" size="lg">
-					{m.loose_mellow_gecko_splash()}
+					{t("loose_mellow_gecko_splash")}
 				</Button>
 			</div>
 

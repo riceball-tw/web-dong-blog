@@ -7,10 +7,11 @@ import Logo from "@/components/atoms/logo/Logo.astro";
 import Logomark from "@/components/atoms/logomark/Logomark.astro";
 import ThemeToggleButton from "@/components/atoms/theme-toggle-button/ThemeToggleButton.astro";
 import GlobalSearch from "@/components/organisms/global-search/GlobalSearch.astro";
-import * as m from "@/paraglide/messages";
+import { getLocale, useTranslations } from "@/i18n/i18n";
 import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
 import { defaultLocale } from "@/utils/i18n.ts";
 
+const t = useTranslations(getLocale(Astro.currentLocale));
 const { navigation } = (await currentLocaleWebsiteConfig(Astro.currentLocale))
 	.data;
 const { pathname } = new URL(Astro.request.url);
@@ -28,7 +29,7 @@ const currentPath = pathname.slice(1);
     <div class="flex justify-center md:justify-start gap-2">
         <a
         data-astro-prefetch
-        title={m.funny_small_coyote_chop()}
+        title={t("funny_small_coyote_chop")}
         href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}
         class="hidden md:inline-flex items-center gap-1 whitespace-nowrap px-4 text-lg font-bold tracking-widest"
         >
