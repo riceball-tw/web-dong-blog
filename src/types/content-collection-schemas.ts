@@ -1,4 +1,4 @@
-import { reference, z } from "astro:content";
+import { z } from "astro:content";
 import uniqolor from "uniqolor";
 
 function getDefaultColor() {
@@ -34,7 +34,6 @@ export const postSchema = z.object({
 			name: "material-symbols:article-outline-rounded",
 			title: "文章圖示",
 		}),
-	author: reference("character").optional(),
 	headline: z.string().max(60),
 	subHeadline: z.string(),
 	excerpt: z.string().min(110).max(160),
@@ -88,6 +87,18 @@ export const websiteSchema = z.object({
 				imgUrl: z.string().optional(),
 			}),
 		),
+		author: z
+			.object({
+				name: z.string(),
+				url: z.string().optional(),
+			})
+			.optional(),
+		publisher: z
+			.object({
+				name: z.string(),
+				url: z.string().optional(),
+			})
+			.optional(),
 	}),
 	navigation: z.array(
 		z.object({
@@ -98,12 +109,3 @@ export const websiteSchema = z.object({
 	),
 });
 
-export const characterSchema = z.object({
-	name: z.string(),
-	nameTC: z.string(),
-	social: z
-		.object({
-			url: z.string(),
-		})
-		.optional(),
-});

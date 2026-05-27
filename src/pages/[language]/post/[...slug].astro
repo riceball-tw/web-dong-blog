@@ -56,8 +56,20 @@ const {
 	lastModifiedDate,
 } = post.data;
 const { Content, headings } = await render(post);
-const author =
-	post.data.author && (await getEntry("character", post.data.author?.id));
+
+const websiteEntry = await getEntry("website", `${Astro.currentLocale}/config`);
+if (!websiteEntry) throw new Error(`Website config not found for locale: ${Astro.currentLocale}`);
+
+const { author, publisher } = websiteEntry.data.brand;
+const siteAuthor: { name: string; url?: string } = {
+	name: author?.name ?? websiteEntry.data.brand.name,
+	...(author?.url && { url: author.url }),
+};
+const sitePublisher: { name: string; url?: string } = {
+	name: publisher?.name ?? websiteEntry.data.brand.name,
+	...(publisher?.url && { url: publisher.url }),
+};
+
 const tagHrefs = tags.map((tag) =>
 	getRelativeLocaleUrl(
 		Astro.currentLocale || defaultLocale,
@@ -77,10 +89,8 @@ const isSubheadlineEqualHeadline = subHeadline === headline;
     publishDate={post.data.publishDate}
     keywords={post.data.tags}
     articleSection={post.data.category}
-    author={author && {
-      nameTC: author.data.nameTC,
-      url: author.data?.social?.url,
-    }}
+    publisher={sitePublisher}
+    defaultAuthor={siteAuthor}
   />
   <Container>
     <main class="mt-0 pt-8 px-2 sm:mt-[var(--mainNav-height)]">
