@@ -44,5 +44,4 @@ export const collections = {
 		}),
 		schema: websiteSchema,
 	}),
-
 };

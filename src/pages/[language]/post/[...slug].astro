@@ -58,7 +58,10 @@ const {
 const { Content, headings } = await render(post);
 
 const websiteEntry = await getEntry("website", `${Astro.currentLocale}/config`);
-if (!websiteEntry) throw new Error(`Website config not found for locale: ${Astro.currentLocale}`);
+if (!websiteEntry)
+	throw new Error(
+		`Website config not found for locale: ${Astro.currentLocale}`,
+	);
 
 const { author, publisher } = websiteEntry.data.brand;
 const siteAuthor: { name: string; url?: string } = {
