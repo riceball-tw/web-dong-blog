@@ -1,5 +1,4 @@
 ---
-import { getEntry } from "astro:content";
 import sanitizeHtml from "sanitize-html";
 
 interface Props {
@@ -8,40 +7,37 @@ interface Props {
 	publishDate: Date;
 	keywords: string[];
 	articleSection: string;
-	author:
-		| {
-				nameTC: string;
-				url: string | undefined;
-		  }
-		| undefined;
+	publisher: {
+		name: string;
+		url?: string;
+	};
+	defaultAuthor: {
+		name: string;
+		url?: string;
+	};
 }
 
-const { headline, description, publishDate, keywords, author, articleSection } =
-	Astro.props;
-const mySite = await getEntry("character", "my-site");
-const me = await getEntry("character", "me");
-
-if (!(mySite && me))
-	throw new Error("No site author or site info in content collection");
+const {
+	headline,
+	description,
+	publishDate,
+	keywords,
+	articleSection,
+	publisher,
+	defaultAuthor: siteAuthor,
+} = Astro.props;
 
 const defaultOrganization = {
 	"@type": "Organization",
-	name: mySite.data.nameTC,
-	url: mySite.data?.social?.url,
-};
-const postAuthor = {
-	author: {
-		"@type": "Person",
-		name: author?.nameTC,
-		url: author?.url,
-	},
+	name: publisher.name,
+	url: publisher.url,
 };
 
-const defaultAuthor = {
+const typedAuthor = {
 	author: {
 		"@type": "Person",
-		name: me.data.nameTC,
-		url: me.data?.social?.url,
+		name: siteAuthor.name,
+		url: siteAuthor.url,
 	},
 };
 
@@ -56,7 +52,7 @@ const postSchema = {
 	datePublished: new Date(publishDate).toISOString(),
 	publisher: defaultOrganization,
 	articleSection: articleSection,
-	...(author ? postAuthor : defaultAuthor),
+	...typedAuthor,
 };
 ---
 

@@ -1,7 +1,6 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import {
-	characterSchema,
 	postSchema,
 	shortpostSchema,
 	toolboxSchema,
@@ -44,13 +43,5 @@ export const collections = {
 			generateId: legacySlug,
 		}),
 		schema: websiteSchema,
-	}),
-	character: defineCollection({
-		loader: glob({
-			pattern: "**/*.json",
-			base: "./src/content/character",
-			generateId: legacySlug,
-		}),
-		schema: characterSchema,
 	}),
 };
