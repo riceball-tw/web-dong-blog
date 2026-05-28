@@ -77,7 +77,8 @@ jobs:
     steps:
       - name: Install Git LFS
         run: |
-          apt-get install -y git-lfs
+          apt-get update -qq
+          apt-get install -y -qq git-lfs
           git lfs install
 
       - name: Checkout
