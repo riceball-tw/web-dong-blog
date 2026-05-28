@@ -17,10 +17,13 @@ jobs:
       YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
     steps:
+      - name: Install Git LFS
+        run: |
+          apt-get install -y git-lfs
+          git lfs install
+          
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
 
       - name: Checkout external content
         uses: actions/checkout@v4
