@@ -57,11 +57,6 @@
 			"url": "post"
 		},
 		{
-			"iconName": "material-symbols:service-toolbox-outline-rounded",
-			"name": "工具",
-			"url": "toolbox"
-		},
-		{
 			"iconName": "material-symbols:quick-phrases-rounded",
 			"name": "短文",
 			"url": "shortpost"

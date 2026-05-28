@@ -5,24 +5,6 @@ function getDefaultColor() {
 	return uniqolor.random({ saturation: 90, lightness: [70, 90] }).color;
 }
 
-export const toolboxSchema = z.object({
-	icon: z
-		.object({
-			title: z.string(),
-			name: z.string(),
-		})
-		.default({
-			name: "material-symbols:web-traffic-rounded",
-			title: "鼠標點擊圖示",
-		}),
-	headline: z.string(),
-	url: z.string(),
-	excerpt: z.string(),
-	category: z.string().default("unsorted"),
-	tags: z.array(z.string()).default(["unsorted"]),
-	themeColor: z.string().min(4).max(9).regex(/^#/).default(getDefaultColor),
-});
-
 export const postSchema = z.object({
 	isDraft: z.boolean().default(true),
 	icon: z

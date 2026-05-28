@@ -7,7 +7,6 @@ module.exports = {
 				"http://localhost:4321/zh-tw/",
 				"http://localhost:4321/zh-tw/post",
 				"http://localhost:4321/zh-tw/post/rendering-pattern/", // Complex post demo
-				"http://localhost:4321/zh-tw/toolbox",
 				"http://localhost:4321/zh-tw/shortpost",
 			],
 		},
