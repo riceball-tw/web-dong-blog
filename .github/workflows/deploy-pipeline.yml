@@ -17,10 +17,10 @@ jobs:
       YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
     steps:
-      - name: Install Git LFS
+      - name: Install Git LFS and rsync
         run: |
           apt-get update -qq
-          apt-get install -y -qq git-lfs
+          apt-get install -y -qq git-lfs rsync
           git lfs install
           
       - name: Checkout
