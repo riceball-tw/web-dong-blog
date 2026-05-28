@@ -69,8 +69,8 @@ importers:
         specifier: ^14.1.0
         version: 14.1.0
       playwright:
-        specifier: ^1.58.1
-        version: 1.58.1
+        specifier: ^1.60.0
+        version: 1.60.0
       radix-vue:
         specifier: ^1.9.17
         version: 1.9.17(vue@3.5.27(typescript@5.9.3))
@@ -94,7 +94,7 @@ importers:
         version: 5.1.0
       remark-mermaidjs:
         specifier: ^7.0.0
-        version: 7.0.0(playwright@1.58.1)
+        version: 7.0.0(playwright@1.60.0)
       sanitize-html:
         specifier: ^2.17.0
         version: 2.17.0
@@ -4326,13 +4326,13 @@ packages:
   pkg-types@2.3.0:
     resolution: {integrity: sha512-SIqCzDRg0s9npO5XQ3tNZioRY1uK06lA41ynBC1YmFTmnY6FjUjVt6s4LoADmwoig1qqD0oK8h1p/8mlMx8Oig==}
 
-  playwright-core@1.58.1:
-    resolution: {integrity: sha512-bcWzOaTxcW+VOOGBCQgnaKToLJ65d6AqfLVKEWvexyS3AS6rbXl+xdpYRMGSRBClPvyj44njOWoxjNdL/H9UNg==}
+  playwright-core@1.60.0:
+    resolution: {integrity: sha512-9bW6zvX/m0lEbgTKJ6YppOKx8H3VOPBMOCFh2irXFOT4BbHgrx5hPjwJYLT40Lu+4qtD36qKc/Hn56StUW57IA==}
     engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.58.1:
-    resolution: {integrity: sha512-+2uTZHxSCcxjvGc5C891LrS1/NlxglGxzrC4seZiVjcYVQfUa87wBL6rTDqzGjuoWNjnBzRqKmF6zRYGMvQUaQ==}
+  playwright@1.60.0:
+    resolution: {integrity: sha512-hheHdokM8cdqCb0lcE3s+zT4t4W+vvjpGxsZlDnikarzx8tSzMebh3UiFtgqwFwnTnjYQcsyMF8ei2mCO/tpeA==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -10067,12 +10067,12 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  mermaid-isomorphic@3.0.4(playwright@1.58.1):
+  mermaid-isomorphic@3.0.4(playwright@1.60.0):
     dependencies:
       '@fortawesome/fontawesome-free': 6.7.2
       mermaid: 11.12.2
     optionalDependencies:
-      playwright: 1.58.1
+      playwright: 1.60.0
 
   mermaid@11.12.2:
     dependencies:
@@ -10688,11 +10688,11 @@ snapshots:
       exsolve: 1.0.8
       pathe: 2.0.3
 
-  playwright-core@1.58.1: {}
+  playwright-core@1.60.0: {}
 
-  playwright@1.58.1:
+  playwright@1.60.0:
     dependencies:
-      playwright-core: 1.58.1
+      playwright-core: 1.60.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -11005,16 +11005,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  remark-mermaidjs@7.0.0(playwright@1.58.1):
+  remark-mermaidjs@7.0.0(playwright@1.60.0):
     dependencies:
       '@types/mdast': 4.0.4
       hast-util-from-html-isomorphic: 2.0.0
-      mermaid-isomorphic: 3.0.4(playwright@1.58.1)
+      mermaid-isomorphic: 3.0.4(playwright@1.60.0)
       unified: 11.0.5
       unist-util-visit-parents: 6.0.2
       vfile: 6.0.3
     optionalDependencies:
-      playwright: 1.58.1
+      playwright: 1.60.0
 
   remark-parse@11.0.0:
     dependencies:
