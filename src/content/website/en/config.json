@@ -57,11 +57,6 @@
 			"url": "post"
 		},
 		{
-			"iconName": "material-symbols:service-toolbox-outline-rounded",
-			"name": "Toolbox",
-			"url": "toolbox"
-		},
-		{
 			"iconName": "material-symbols:quick-phrases-rounded",
 			"name": "Shortpost",
 			"url": "shortpost"

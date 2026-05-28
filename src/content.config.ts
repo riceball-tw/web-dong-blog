@@ -3,7 +3,6 @@ import { glob } from "astro/loaders";
 import {
 	postSchema,
 	shortpostSchema,
-	toolboxSchema,
 	websiteSchema,
 } from "@/types/content-collection-schemas.ts";
 
@@ -27,14 +26,6 @@ export const collections = {
 			generateId: legacySlug,
 		}),
 		schema: shortpostSchema,
-	}),
-	toolbox: defineCollection({
-		loader: glob({
-			pattern: "**/*.json",
-			base: "./src/content/toolbox",
-			generateId: legacySlug,
-		}),
-		schema: toolboxSchema,
 	}),
 	website: defineCollection({
 		loader: glob({

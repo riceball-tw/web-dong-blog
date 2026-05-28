@@ -36,7 +36,6 @@ public/og-cache
 # Skip Symbolic link file
 src/content/post
 src/content/shortpost
-src/content/toolbox
 
 # Cloudflare wrangler
 .wrangler
