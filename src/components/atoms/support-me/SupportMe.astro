@@ -1,16 +1,13 @@
 ---
 import Sidenote from "@/components/atoms/sidenote/Sidenote.astro";
 import { getLocale, useTranslations } from "@/i18n/i18n";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig";
 
 const t = useTranslations(getLocale(Astro.currentLocale));
+const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
+const linkHtml = `<a href="${brand.supportMe.githubUrl}">${t("heroic_slow_albatross_soar")}</a>`;
 ---
 
 <Sidenote type="info">
-  <span>
-    {t("fun_plane_jackal_enchant")}
-  </span>
-   <a href="https://github.com/riceball-tw/web-dong-blog">{t("heroic_slow_albatross_soar")}</a>
-   <span>
-     {t("wacky_zany_ostrich_foster")}
-   </span>
+  <span set:html={t("quiet_strict_raven_improve", { blogName: brand.name, link: linkHtml })} />
 </Sidenote>

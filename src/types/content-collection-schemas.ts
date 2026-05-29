@@ -81,6 +81,9 @@ export const websiteSchema = z.object({
 				url: z.string().optional(),
 			})
 			.optional(),
+		supportMe: z.object({
+			githubUrl: z.string().url(),
+		}),
 	}),
 	navigation: z.array(
 		z.object({
