@@ -14,7 +14,7 @@ export const postSchema = z.object({
 		})
 		.default({
 			name: "material-symbols:article-outline-rounded",
-			title: "文章圖示",
+			title: "Article Icon",
 		}),
 	headline: z.string().max(60),
 	subHeadline: z.string(),
