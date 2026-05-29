@@ -91,5 +91,6 @@
 	"category_vue": "Vue",
 	"category_web_performance": "网页效能",
 	"category_functional_programming": "函式程式设计",
-	"category_functional_git": "Git"
+	"category_functional_git": "Git",
+	"sharp_best_swan_accept": "你的浏览器不支持视频，请更新浏览器。"
 }
