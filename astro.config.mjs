@@ -2,7 +2,6 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import vue from "@astrojs/vue";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, passthroughImageService } from "astro/config";
 import expressiveCode from "astro-expressive-code";
@@ -150,7 +149,6 @@ export default defineConfig({
 					},
 				}),
 		icon(),
-		vue(),
 	],
 	vite: {
 		plugins: [tailwindcss()],
