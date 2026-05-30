@@ -11,6 +11,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import remarkMermaid from "remark-mermaidjs";
+import { loadEnv } from "vite";
 import {
 	baseUrl,
 	defaultLocale,
