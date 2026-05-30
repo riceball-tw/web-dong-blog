@@ -3,9 +3,12 @@ import { baseUrl, languages } from "../../../src/utils/i18n.ts";
 Object.keys(languages).forEach((locale) => {
 	describe(`locale ${locale} should work`, () => {
 		const defaultLocale = Cypress.env("defaultLocale");
+		// Extract base path from Cypress baseUrl (e.g., "/dong/")
+		const basePath = new URL(Cypress.config("baseUrl") || "http://localhost:4321")
+			.pathname;
 
 		beforeEach(() => {
-			cy.visit(`/${locale}`);
+			cy.visit(`${locale}`);
 		});
 
 		it(`SEO attributes should be correct`, () => {
@@ -20,15 +23,16 @@ Object.keys(languages).forEach((locale) => {
 			});
 
 			// <link rel="alternate" hreflang="x" href="y"> should exist and correct
+			// Expected format: site + base + locale + /   e.g. https://riceball-tw.github.io/dong/zh-tw/
 			cy.get(`link[rel="alternate"][hreflang="x-default"]`).should(
 				"have.attr",
 				"href",
-				`${baseUrl}/${defaultLocale}/`,
+				`${baseUrl}${basePath}${defaultLocale}/`,
 			);
 			cy.get(`link[rel="alternate"][hreflang="${locale}"]`).should(
 				"have.attr",
 				"href",
-				`${baseUrl}/${locale}/`,
+				`${baseUrl}${basePath}${locale}/`,
 			);
 		});
 
@@ -36,7 +40,7 @@ Object.keys(languages).forEach((locale) => {
 			// Havn't found a way to await scroll end, force click for now
 			cy.dataCy("change-language").click({ force: true });
 			cy.dataCy("avaliable-language").each(($language) => {
-				cy.request("GET", $language.attr("href"))
+				cy.request("GET", $language.prop("href"))
 					.its("status")
 					.should("eq", 200);
 			});
