@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "@/utils/shadcn";
+
+export interface Props extends HTMLAttributes<"div"> {
+	class?: string;
+}
+
+const { class: className, ...attrs } = Astro.props;
+---
+
+<div
+  class:list={[cn("animate-pulse rounded-md border border-foreground/30 bg-background/80 dark:border-foreground/40", className)]}
+  {...attrs}
+>
+  <slot />
+</div>

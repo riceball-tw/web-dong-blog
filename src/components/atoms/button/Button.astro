@@ -1,0 +1,39 @@
+---
+import { cn } from "@/utils/shadcn";
+import { buttonVariants } from ".";
+
+export interface Props {
+	as?: "button" | "span" | "div" | "a";
+	variant?:
+		| "default"
+		| "destructive"
+		| "outline"
+		| "secondary"
+		| "ghost"
+		| "link";
+	size?: "default" | "xs" | "sm" | "lg" | "icon";
+	class?: string;
+}
+
+const {
+	as: Tag = "button",
+	variant = "default",
+	size = "default",
+	class: className,
+	...attrs
+} = Astro.props;
+
+const computedClass = cn(buttonVariants({ variant, size }), className);
+---
+
+{
+	Tag === "button" ? (
+		<button class:list={[computedClass]} {...attrs}>
+			<slot />
+		</button>
+	) : (
+		<span class:list={[computedClass]} {...attrs}>
+			<slot />
+		</span>
+	)
+}

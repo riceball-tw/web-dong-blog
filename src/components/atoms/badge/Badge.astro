@@ -1,0 +1,15 @@
+---
+import { cn } from "@/utils/shadcn";
+import { type BadgeVariants, badgeVariants } from ".";
+
+export interface Props {
+	variant?: BadgeVariants["variant"];
+	class?: string;
+}
+
+const { variant, class: className, ...attrs } = Astro.props;
+---
+
+<div class:list={[cn(badgeVariants({ variant }), className)]} {...attrs}>
+  <slot />
+</div>
