@@ -76,6 +76,7 @@ jobs:
     env:
       YOUTUBEAPIKEY: ${{ secrets.YOUTUBEAPIKEY }}
       PUBLIC_GOOGLEANALYTIC_ID: ${{ vars.PUBLIC_GOOGLEANALYTIC_ID }}
+      PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
     steps:
       # - name: Install Git LFS and rsync
       #   run: |
