@@ -22,12 +22,6 @@ import {
 export default defineConfig({
 	image: {
 		service: passthroughImageService(), // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "bucket-webdong.webdong.dev",
-			},
-		],
 	},
 	i18n: {
 		defaultLocale,
@@ -39,25 +33,7 @@ export default defineConfig({
 	},
 	site: baseUrl,
 	prefetch: true,
-	redirects: {
-		// Typo in post
-		"/post/the-dailies-a-good-way-to-eliminate-teaam-learning-debt":
-			"/post/the-dailies-a-good-way-to-eliminate-team-learning-debt",
-		// spread-operator-rest-operator-the-three-dots-in-javascript
-		"/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/en/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/en/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/zh-cn/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/zh-cn/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/zh-tw/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/zh-tw/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		// dom-api-in-one-go
-		"/post/dom-from-the-begineeing": "/post/dom-api-in-one-go",
-		"/en/post/dom-from-the-begineeing": "/en/post/dom-api-in-one-go",
-		"/zh-cn/post/dom-from-the-begineeing": "/zh-cn/post/dom-api-in-one-go",
-		"/zh-tw/dom-from-the-begineeing": "/zh-tw/post/dom-api-in-one-go",
-	},
+
 	markdown: {
 		remarkPlugins: [
 			[
