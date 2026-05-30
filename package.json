@@ -1,8 +1,7 @@
 {
-	"name": "@webdong/blog",
+	"name": "dong",
 	"type": "module",
-	"version": "0.0.1",
-	"private": true,
+	"version": "1.0.0",
 	"engines": {
 		"node": ">=20.0.0"
 	},
