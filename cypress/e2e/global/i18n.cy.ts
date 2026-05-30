@@ -4,8 +4,9 @@ Object.keys(languages).forEach((locale) => {
 	describe(`locale ${locale} should work`, () => {
 		const defaultLocale = Cypress.env("defaultLocale");
 		// Extract base path from Cypress baseUrl (e.g., "/dong/")
-		const basePath = new URL(Cypress.config("baseUrl") || "http://localhost:4321")
-			.pathname;
+		const basePath = new URL(
+			Cypress.config("baseUrl") || "http://localhost:4321",
+		).pathname;
 
 		beforeEach(() => {
 			cy.visit(`${locale}`);

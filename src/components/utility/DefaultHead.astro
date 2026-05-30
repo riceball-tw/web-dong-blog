@@ -30,7 +30,10 @@ const cleanBase = base.replace(/\/$/, "");
 
 function replaceLocaleInPath(pathname: string, targetLocale: string): string {
 	return pathname
-		.replace(`${cleanBase}/${Astro.currentLocale}`, `${cleanBase}/${targetLocale}`)
+		.replace(
+			`${cleanBase}/${Astro.currentLocale}`,
+			`${cleanBase}/${targetLocale}`,
+		)
 		.replace(/\/?$/, "/");
 }
 ---
