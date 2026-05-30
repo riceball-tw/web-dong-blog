@@ -4,7 +4,13 @@ import { buttonVariants } from ".";
 
 export interface Props {
 	as?: "button" | "span" | "div" | "a";
-	variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+	variant?:
+		| "default"
+		| "destructive"
+		| "outline"
+		| "secondary"
+		| "ghost"
+		| "link";
 	size?: "default" | "xs" | "sm" | "lg" | "icon";
 	class?: string;
 }
