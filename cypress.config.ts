@@ -1,20 +1,16 @@
 import { defineConfig } from "cypress";
-import { loadEnv } from "vite";
-import { resolveBase } from "./src/utils/resolve-base.ts";
 
-const { PUBLIC_BASE_URL } = loadEnv(
-	process.env.NODE_ENV || "development",
-	process.cwd(),
-	"",
-);
-
-const finalBase = resolveBase(PUBLIC_BASE_URL);
+// !IMPORTANTIf astro.config.mjs `base` changes (e.g. PUBLIC_BASE_URL env is set), update
+// the trailing path below to match — Cypress must visit the same base path
+// the Astro dev server serves under.
+const PUBLIC_BASE_URL = "/dong"
 
 export default defineConfig({
 	env: {
 		defaultLocale: "zh-tw",
 	},
 	e2e: {
-		baseUrl: `http://localhost:4321${finalBase}`,
+
+		baseUrl: `http://localhost:4321${PUBLIC_BASE_URL}`,
 	},
 });
