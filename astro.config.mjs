@@ -35,6 +35,11 @@ export default defineConfig({
 	base: finalBase,
 	// !IMPORTANT: Set site url property with your own domain
 	site: baseUrl,
+	redirects: {
+		"/": `${finalBase}${defaultLocale}/`,
+		"/post/": `${finalBase}${defaultLocale}/post/`,
+		"/shortpost/": `${finalBase}${defaultLocale}/shortpost/`,
+	},
 	image: {
 		service: passthroughImageService(), // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
 	},
