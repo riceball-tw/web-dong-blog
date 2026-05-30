@@ -1,5 +1,6 @@
 import { defineConfig } from "cypress";
 import { loadEnv } from "vite";
+import { resolveBase } from "./src/utils/resolve-base.ts";
 
 const { BASE_URL } = loadEnv(
 	process.env.NODE_ENV || "development",
@@ -7,12 +8,7 @@ const { BASE_URL } = loadEnv(
 	"",
 );
 
-// Match the same base URL logic used in astro.config.mjs so Cypress
-// visits the correct paths when BASE_URL is set (e.g. /dong/).
-// Uses Vite's loadEnv which reads .env files and respects process.env.
-const finalBase = BASE_URL
-	? `/${BASE_URL}/`.replace(/\/{2,}/g, "/")
-	: "/";
+const finalBase = resolveBase(BASE_URL);
 
 export default defineConfig({
 	env: {

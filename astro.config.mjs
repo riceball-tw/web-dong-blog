@@ -18,6 +18,7 @@ import {
 	languages,
 	prefixDefaultLocale,
 } from "./src/utils/i18n.ts";
+import { resolveBase } from "./src/utils/resolve-base.ts";
 
 // ENV In the Astro config file
 // https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
@@ -27,10 +28,7 @@ const { BASE_URL } = loadEnv(
 	"",
 );
 
-// Sanitize the BASE_URL from environment variables to ensure it starts and ends with a slash.
-// This avoids double slashes or missing slashes which can cause build errors or invalid URLs.
-// e.g., if BASE_URL is 'foobar', finalBase becomes '/foobar/'
-const finalBase = BASE_URL ? `/${BASE_URL}/`.replace(/\/{2,}/g, "/") : "/";
+const finalBase = resolveBase(BASE_URL);
 
 // https://astro.build/config
 export default defineConfig({
