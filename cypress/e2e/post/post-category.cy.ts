@@ -7,7 +7,7 @@ describe("Post categories page is effective", () => {
 
 	it("Category links is working", () => {
 		cy.dataCy("category-link").each(($link) => {
-			cy.request("GET", $link.attr("href")).its("status").should("eq", 200);
+			cy.request("GET", $link.prop("href")).its("status").should("eq", 200);
 		});
 	});
 });
