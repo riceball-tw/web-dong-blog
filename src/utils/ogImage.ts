@@ -3,12 +3,27 @@ import fs from "node:fs";
 import path from "node:path";
 import { ImageResponse } from "@vercel/og";
 
-const fontBold = fs.readFileSync(
-	path.resolve("./public/fonts/NotoSansTC-Bold.ttf"),
-);
-const fontRegular = fs.readFileSync(
-	path.resolve("./public/fonts/NotoSansTC-Regular.ttf"),
-);
+const fontCache = new Map<number, ArrayBuffer>();
+
+async function loadFullGoogleFont(weight: number) {
+	if (fontCache.has(weight)) {
+		return fontCache.get(weight)!;
+	}
+
+	const url = `https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@${weight}`;
+	const css = await fetch(url).then((res) => res.text());
+	const resource = css.match(/src: url\((.+)\) format\('(.+)'\)/);
+
+	if (resource?.[1]) {
+		const response = await fetch(resource[1]);
+		if (response.status === 200) {
+			const buffer = await response.arrayBuffer();
+			fontCache.set(weight, buffer);
+			return buffer;
+		}
+	}
+	throw new Error(`Failed to load full font weight ${weight}`);
+}
 
 function logo() {
 	return {
@@ -258,6 +273,11 @@ export async function generateOgImage(title: string, content: string) {
 		});
 	}
 
+	const [fontBoldData, fontRegularData] = await Promise.all([
+		loadFullGoogleFont(900),
+		loadFullGoogleFont(500),
+	]);
+
 	// biome-ignore lint/suspicious/noExplicitAny: @vercel/og accepts plain objects but types expect ReactElement
 	const imageResponse = new ImageResponse(ogCard(title, content) as any, {
 		width: 1200,
@@ -265,13 +285,13 @@ export async function generateOgImage(title: string, content: string) {
 		fonts: [
 			{
 				name: "font-family",
-				data: fontBold.buffer as ArrayBuffer,
+				data: fontBoldData,
 				weight: 900,
 				style: "normal",
 			},
 			{
 				name: "font-family",
-				data: fontRegular.buffer as ArrayBuffer,
+				data: fontRegularData,
 				weight: 500,
 				style: "normal",
 			},

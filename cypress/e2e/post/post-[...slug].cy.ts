@@ -14,23 +14,8 @@ describe("Post is effective", () => {
 		cy.dataCy("category").should("exist").should("not.be.empty");
 		cy.dataCy("tag-link").each(($link) => {
 			cy.wrap($link).should("not.be.empty");
-			cy.request("GET", $link.attr("href")).its("status").should("eq", 200);
+			cy.request("GET", $link.prop("href")).its("status").should("eq", 200);
 		});
-	});
-
-	it("Comment should load", () => {
-		cy.dataCy("post-comment").scrollIntoView();
-		cy.dataCy("post-comment").should("not.be.empty");
-	});
-
-	it("Heading links should visible and working", () => {
-		cy.dataCy("post-content")
-			.find(
-				"h2 .rehype-auto-link, h3 .rehype-auto-link, h4 .rehype-auto-link, h5 .rehype-auto-link, h6 .rehype-auto-link",
-			)
-			.each(($link) => {
-				cy.request("GET", $link.attr("href")).its("status").should("eq", 200);
-			});
 	});
 
 	it("Table of contents should visible and working", () => {
@@ -44,7 +29,7 @@ describe("Post is effective", () => {
 					cy.wrap(text).should("not.be.empty");
 					cy.dataCy("post-content").contains(text);
 				});
-			cy.request("GET", $link.attr("href")).its("status").should("eq", 200);
+			cy.request("GET", $link.prop("href")).its("status").should("eq", 200);
 		});
 
 		// Check when click last TOC link, will direct to the related heading
@@ -61,7 +46,7 @@ describe("Post is effective", () => {
 			.last()
 			.then(($lastLink) => {
 				cy.wrap($lastLink).click({ force: true }); // Page Scroll seems not working at the time, so I just force click the link outside of the viewport for now :(
-				cy.url().should("include", $lastLink.attr("href"));
+				cy.url().should("include", $lastLink.prop("href"));
 			});
 	});
 

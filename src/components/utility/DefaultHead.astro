@@ -25,8 +25,16 @@ const seoImage = {
 	alt: thumbnail?.alt ?? brand.thumbnail.alt,
 };
 
-function getPathnameWithoutLocale(pathname: string) {
-	return pathname.replace(`/${Astro.currentLocale}`, "").replace(/\/?$/, "/");
+const base = import.meta.env.BASE_URL ?? "/";
+const cleanBase = base.replace(/\/$/, "");
+
+function replaceLocaleInPath(pathname: string, targetLocale: string): string {
+	return pathname
+		.replace(
+			`${cleanBase}/${Astro.currentLocale}`,
+			`${cleanBase}/${targetLocale}`,
+		)
+		.replace(/\/?$/, "/");
 }
 ---
 
@@ -71,8 +79,7 @@ function getPathnameWithoutLocale(pathname: string) {
             rel: "alternate",
             hreflang: "x-default",
             href: new URL(
-              defaultLocale + 
-            getPathnameWithoutLocale(Astro.url.pathname) ,
+              replaceLocaleInPath(Astro.url.pathname, defaultLocale),
               Astro.site
             ).toString()
           },
@@ -85,7 +92,8 @@ function getPathnameWithoutLocale(pathname: string) {
             return ({
             rel: "alternate",
             hreflang: tag,
-            href: new URL(regionMap[tag] + getPathnameWithoutLocale(Astro.url.pathname),
+            href: new URL(
+              replaceLocaleInPath(Astro.url.pathname, regionMap[tag]),
               Astro.site
             ).toString()
           })}),
@@ -94,8 +102,9 @@ function getPathnameWithoutLocale(pathname: string) {
           ...Object.keys(languageTags).map(tag => ({
             rel: "alternate",
             hreflang: tag,
-            href: new URL(prefixDefaultLocale 
-                ? tag + getPathnameWithoutLocale(Astro.url.pathname) 
+            href: new URL(
+              prefixDefaultLocale
+                ? replaceLocaleInPath(Astro.url.pathname, tag)
                 : Astro.url.pathname,
               Astro.site
             ).toString()

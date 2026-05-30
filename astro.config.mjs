@@ -11,23 +11,37 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import rehypeSlug from "rehype-slug";
 import remarkMermaid from "remark-mermaidjs";
+import { loadEnv } from "vite";
 import {
 	baseUrl,
 	defaultLocale,
 	languages,
 	prefixDefaultLocale,
 } from "./src/utils/i18n.ts";
+import { resolveBase } from "./src/utils/resolve-base.ts";
+
+// ENV In the Astro config file
+// https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
+const { PUBLIC_BASE_URL } = loadEnv(
+	process.env.NODE_ENV || "development",
+	process.cwd(),
+	"",
+);
+
+const finalBase = resolveBase(PUBLIC_BASE_URL);
 
 // https://astro.build/config
 export default defineConfig({
+	base: finalBase,
+	// !IMPORTANT: Set site url property with your own domain
+	site: baseUrl,
+	redirects: {
+		"/": `${finalBase}${defaultLocale}/`,
+		"/post/": `${finalBase}${defaultLocale}/post/`,
+		"/shortpost/": `${finalBase}${defaultLocale}/shortpost/`,
+	},
 	image: {
 		service: passthroughImageService(), // Could not find Sharp: https://docs.astro.build/en/reference/errors/missing-sharp/
-		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "bucket-webdong.webdong.dev",
-			},
-		],
 	},
 	i18n: {
 		defaultLocale,
@@ -37,27 +51,8 @@ export default defineConfig({
 			redirectToDefaultLocale: false,
 		},
 	},
-	site: baseUrl,
 	prefetch: true,
-	redirects: {
-		// Typo in post
-		"/post/the-dailies-a-good-way-to-eliminate-teaam-learning-debt":
-			"/post/the-dailies-a-good-way-to-eliminate-team-learning-debt",
-		// spread-operator-rest-operator-the-three-dots-in-javascript
-		"/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/en/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/en/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/zh-cn/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/zh-cn/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		"/zh-tw/post/spead-operator-rest-operator-the-three-dots-in-javascript":
-			"/zh-tw/post/spread-operator-rest-operator-the-three-dots-in-javascript",
-		// dom-api-in-one-go
-		"/post/dom-from-the-begineeing": "/post/dom-api-in-one-go",
-		"/en/post/dom-from-the-begineeing": "/en/post/dom-api-in-one-go",
-		"/zh-cn/post/dom-from-the-begineeing": "/zh-cn/post/dom-api-in-one-go",
-		"/zh-tw/dom-from-the-begineeing": "/zh-tw/post/dom-api-in-one-go",
-	},
+
 	markdown: {
 		remarkPlugins: [
 			[

@@ -34,8 +34,8 @@ public/og-cache
 .lfs-assets-id
 
 # Skip Symbolic link file
-src/content/post
-src/content/shortpost
+# src/content/post
+# src/content/shortpost
 
 # Cloudflare wrangler
 .wrangler

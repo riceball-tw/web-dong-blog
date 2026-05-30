@@ -54,8 +54,16 @@ function checkLinkValidity(cleanPath: string, langKey: string) {
         const linkStyle = 'rounded-full transition-colors hover:bg-primary-active hover:text-primary-foreground text-xl p-8 inline-block w-full shadow-lg md:shadow-none'
         const stateStyle = isCurrentLocale ? activeStyle : inactiveStyle
 
-        const nextPath = changeLanguage(getLocale(key), Astro.url.pathname);
-        const cleanPath = removeLanguagePrefix(nextPath, Object.keys(languages));
+		// Astro.url.pathname includes the base path (e.g., "/dong/en/").
+		// Strip it before changing language, then re-add it.
+		const base = import.meta.env.BASE_URL ?? "/";
+		const relativePath = Astro.url.pathname.replace(
+			new RegExp(`^${base}`),
+			"/",
+		);
+		const nextPath = changeLanguage(getLocale(key), relativePath);
+		const href = base.replace(/\/$/, "") + nextPath;
+		const cleanPath = removeLanguagePrefix(nextPath, Object.keys(languages));
 
         const isLinkValid = checkLinkValidity(cleanPath, key);
 
@@ -63,7 +71,7 @@ function checkLinkValidity(cleanPath: string, langKey: string) {
 
         return (
         <li>
-          {isCurrentLocale ? <span data-cy="current-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`}>{name}</span> : <a data-cy="avaliable-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`} href={nextPath}>{name}</a>
+          {isCurrentLocale ? <span data-cy="current-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`}>{name}</span> : <a data-cy="avaliable-language" class={`whitespace-nowrap ${linkStyle} ${stateStyle}`} href={href}>{name}</a>
           }
         </li>
       )
