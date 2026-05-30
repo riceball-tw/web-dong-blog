@@ -22,13 +22,13 @@ import { resolveBase } from "./src/utils/resolve-base.ts";
 
 // ENV In the Astro config file
 // https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file
-const { BASE_URL } = loadEnv(
+const { PUBLIC_BASE_URL } = loadEnv(
 	process.env.NODE_ENV || "development",
 	process.cwd(),
 	"",
 );
 
-const finalBase = resolveBase(BASE_URL);
+const finalBase = resolveBase(PUBLIC_BASE_URL);
 
 // https://astro.build/config
 export default defineConfig({
