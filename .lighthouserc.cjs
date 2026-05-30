@@ -4,10 +4,10 @@ module.exports = {
 			numberOfRuns: 1,
 			startServerCommand: "astro preview",
 			url: [
-				"http://localhost:4321/en/",
-				"http://localhost:4321/en/post",
-				"http://localhost:4321/en/post/demo-post/",
-				"http://localhost:4321/en/shortpost",
+				"http://localhost:4321/dong/en/",
+				"http://localhost:4321/dong/en/post",
+				"http://localhost:4321/dong/en/post/demo-post/",
+				"http://localhost:4321/dong/en/shortpost",
 			],
 		},
 		assert: {

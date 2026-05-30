@@ -143,6 +143,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      PUBLIC_BASE_URL: ${{ vars.PUBLIC_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
