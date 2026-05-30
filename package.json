@@ -22,8 +22,8 @@
 		"cypress:run": "cypress run"
 	},
 	"overrides": {
-    "vite": "^7"
-  },
+		"vite": "^7"
+	},
 	"dependencies": {
 		"@astrojs/check": "^0.9.8",
 		"@astrojs/mdx": "^5.0.3",
