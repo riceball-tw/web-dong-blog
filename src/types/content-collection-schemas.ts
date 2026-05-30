@@ -66,7 +66,6 @@ export const websiteSchema = z.object({
 				name: z.string(),
 				iconName: z.string(),
 				url: z.string(),
-				imgUrl: z.string().optional(),
 			}),
 		),
 		author: z
