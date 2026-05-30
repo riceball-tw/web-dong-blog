@@ -78,18 +78,16 @@ jobs:
           name: dist
           path: dist
 
-  deploy:
-    needs: build
+  deploy-github-pages:
+    needs: [build]
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      deployments: write
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
+      pages: write
+      id-token: write
 
-      - name: Environment Setup
-        uses: ./.github/actions/setup
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Download build artifacts
         uses: actions/download-artifact@v4
@@ -97,10 +95,38 @@ jobs:
           name: dist
           path: dist
 
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3.14.1
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy --branch=${{ github.ref_name }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     deployments: write
+  #   steps:
+  #     - name: Checkout Repo
+  #       uses: actions/checkout@v4
+
+  #     - name: Environment Setup
+  #       uses: ./.github/actions/setup
+
+  #     - name: Download build artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: dist
+  #         path: dist
+
+  #     - name: Publish to Cloudflare Pages
+  #       uses: cloudflare/wrangler-action@v3.14.1
+  #       with:
+  #         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  #         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  #         command: pages deploy --branch=${{ github.ref_name }}
+  #         gitHubToken: ${{ secrets.GITHUB_TOKEN }}
